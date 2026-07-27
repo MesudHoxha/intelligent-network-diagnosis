@@ -2,7 +2,7 @@
 
 ## Current phase
 
-04.3 — Local environment and repository initialization
+04.5 — First controlled fault injection
 
 ## Completed
 
@@ -34,3 +34,10 @@
 
 Deploy and manually validate TOP-01:
 HostA -- R1 -- R2 -- HostB
+
+## Latest verified milestone
+
+- TOP-01 baseline validated with 9/9 checks
+- End-to-end traceroute verified
+- First missing-route fault scenario implemented
+- Ground truth and injection metadata generated
