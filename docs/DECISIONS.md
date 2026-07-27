@@ -89,3 +89,26 @@ Status: Approved.
 Decision: Use Ubuntu 24.04 under WSL2 rather than the existing
 VirtualBox Ubuntu VM.
 Status: Confirmed and tested.
+
+## D-044 — PoC-A completion
+
+Decision: The first end-to-end proof of concept is accepted as
+technically complete.
+
+Verified scenario:
+- Missing static route on R1 toward the HostB network
+
+Verified components:
+- Baseline validator
+- Fault injector
+- Evidence collector
+- Rule-based engine
+- Evaluator
+- Experiment runner
+- Automatic restoration
+
+Status: Implemented and tested.
+
+Limitation:
+The result applies only to the implemented controlled scenario and
+must not be interpreted as general model or system performance.

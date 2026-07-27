@@ -41,3 +41,31 @@ HostA -- R1 -- R2 -- HostB
 - End-to-end traceroute verified
 - First missing-route fault scenario implemented
 - Ground truth and injection metadata generated
+
+## Milestone — PoC-A completed
+
+The first end-to-end controlled diagnostic experiment has been
+implemented and tested successfully.
+
+Scenario:
+- C1_MISSING_STATIC_ROUTE
+
+Verified pipeline:
+- Baseline validation
+- Controlled fault injection
+- Ground-truth recording
+- Evidence collection
+- Rule-based diagnosis
+- Automatic evaluation
+- Fault restoration
+- Post-restoration baseline validation
+
+Verified result:
+- Experiment status: COMPLETED
+- Rule-based exact match: true
+- Baseline restored: true
+
+Important limitation:
+This result validates the technical pipeline for one controlled
+scenario. It is not yet a general experimental result about the
+performance of the diagnostic system.

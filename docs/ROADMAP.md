@@ -9,7 +9,7 @@ Status: In progress
 - Initial architecture
 
 ## Phase 1 — End-to-end proof of concept
-Status: Not started
+Status: Completed
 
 - Deploy TOP-01
 - Validate normal routing
@@ -19,7 +19,7 @@ Status: Not started
 - Evaluate against ground truth
 
 ## Phase 2 — Pilot multiclass dataset
-Status: Not started
+Status: In progress
 
 - Normal
 - Missing route
