@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Generated datasets and experiment artifacts
+data/raw/*
+data/interim/*
+data/processed/*
+data/metadata/*
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+!data/processed/.gitkeep
+!data/metadata/.gitkeep
+
+# Trained models and reports
+models/*
+reports/experiments/*
+!models/.gitkeep
+!reports/experiments/.gitkeep
+
+# Containerlab runtime files
+clab-*/
+.clab/
+*.backup
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
