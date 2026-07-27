@@ -46,12 +46,12 @@ run_check \
 run_check \
     "R1 contains route to HostB network" \
     docker exec clab-top01-r1 \
-        ip route show 10.10.2.0/24
+        sh -c 'test -n "$(ip route show 10.10.2.0/24)"'
 
 run_check \
     "R2 contains route to HostA network" \
     docker exec clab-top01-r2 \
-        ip route show 10.10.1.0/24
+        sh -c 'test -n "$(ip route show 10.10.1.0/24)"'
 
 run_check \
     "IPv4 forwarding is enabled on R1" \

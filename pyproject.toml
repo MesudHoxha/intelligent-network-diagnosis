@@ -1,0 +1,15 @@
+[project]
+name = "intelligent-network-diagnosis"
+version = "0.1.0"
+description = "Hybrid intelligent system for diagnosing computer network problems"
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic",
+    "pyyaml",
+    "rich",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-ra"
