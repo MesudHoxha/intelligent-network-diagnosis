@@ -112,3 +112,47 @@ Status: Implemented and tested.
 Limitation:
 The result applies only to the implemented controlled scenario and
 must not be interpreted as general model or system performance.
+
+## D-045 — PoC-B completion
+
+Decision: Accept C2_WRONG_NEXT_HOP as the second end-to-end
+controlled proof of concept while preserving the verified
+behavior of C1_MISSING_STATIC_ROUTE.
+
+Verified C2 behavior:
+
+- R1's correct next-hop is replaced with 10.10.12.254.
+- HostB becomes unreachable during the injected fault.
+- The collector identifies the configured next-hop.
+- The collector determines that this next-hop is unreachable.
+- Rule R_ROUTING_002 diagnoses wrong_next_hop.
+- Automatic evaluation reports exact_match: true.
+- Restoration returns TOP-01 to its 9/9 baseline.
+- C1 continues to match R_ROUTING_001 after the extension.
+
+Status: Implemented and tested.
+
+Limitation:
+The result covers two deterministic controlled routing scenarios.
+It is not evidence of general system or model performance.
+
+## D-046 — Static-routing evidence
+
+Decision: For the current static-routing scenarios, collect route
+presence, parse the configured next-hop, and test that next-hop
+through an active reachability probe.
+
+The neighbor table from `ip neigh` is not mandatory at this stage.
+It may be added later as complementary evidence if another
+scenario requires it.
+
+Status: Implemented and tested for TOP-01 C1 and C2.
+
+## D-047 — Ground-truth isolation
+
+Decision: Evidence collection and diagnostic methods must not
+read ground-truth data. Ground truth may be used by the evaluator
+only after a diagnosis has been produced.
+
+Status: Confirmed for the current Collector and Rule Engine
+through source audit.

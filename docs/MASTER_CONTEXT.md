@@ -42,7 +42,7 @@ supporting evidence, and recommend diagnostic actions.
 
 - Windows 11
 - Ubuntu 24.04 on WSL2
-- Docker Desktop with WSL integration
+- Docker Engine running natively inside Ubuntu WSL2
 - Containerlab
 - Linux containers
 - FRRouting
@@ -71,3 +71,28 @@ will proceed incrementally.
 - Mandatory paid APIs, cloud services, software, or datasets
 - Training large language models
 - Autonomous configuration changes without administrator approval
+
+## Current implemented baseline
+
+The currently tested laboratory baseline is TOP-01:
+
+HostA -- R1 -- R2 -- HostB
+
+Implemented and tested controlled scenarios:
+
+- C1_MISSING_STATIC_ROUTE
+- C2_WRONG_NEXT_HOP
+
+Current rule-based coverage:
+
+- R_ROUTING_001 diagnoses a missing static route on R1.
+- R_ROUTING_002 diagnoses an unreachable configured next-hop
+  on the static route on R1.
+
+The evidence collector currently records route presence, the
+configured next-hop, and active next-hop reachability. Both
+controlled scenarios have completed end-to-end with exact-match
+evaluation and successful restoration of the 9/9 baseline.
+
+The Machine Learning and hybrid diagnostic approaches have not
+yet been implemented or evaluated.

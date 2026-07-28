@@ -15,6 +15,11 @@ REQUIRED_EVIDENCE = [
     "destination_reachable_from_r2",
 ]
 
+NEXT_HOP_EVIDENCE = [
+    "route_next_hop_on_r1",
+    "route_next_hop_reachable_from_r1",
+]
+
 
 def read_json(path: Path) -> dict[str, Any]:
     if not path.exists():
@@ -140,6 +145,95 @@ def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
                 "appropriate next-hop."
             ),
         }
+
+    wrong_next_hop_candidate = (
+        evidence["source_gateway_reachable"] is True
+        and evidence["destination_reachable"] is False
+        and evidence[
+            "route_to_destination_exists_on_r1"
+        ] is True
+        and evidence["transit_next_hop_reachable"] is True
+        and evidence[
+            "destination_reachable_from_r2"
+        ] is True
+    )
+
+    if wrong_next_hop_candidate:
+        missing_next_hop_evidence = [
+            key
+            for key in NEXT_HOP_EVIDENCE
+            if key not in evidence or evidence[key] is None
+        ]
+
+        if missing_next_hop_evidence:
+            return {
+                **base_result,
+                "status": "INSUFFICIENT_EVIDENCE",
+                "diagnosis": None,
+                "matched_rules": [],
+                "missing_evidence": (
+                    missing_next_hop_evidence
+                ),
+                "supporting_evidence": [],
+                "contradicting_evidence": [],
+                "recommendation": (
+                    "Collect the configured route next-hop and "
+                    "test its reachability before classifying "
+                    "the routing fault."
+                ),
+            }
+
+        if (
+            evidence[
+                "route_next_hop_reachable_from_r1"
+            ]
+            is False
+        ):
+            observed_next_hop = str(
+                evidence["route_next_hop_on_r1"]
+            )
+
+            return {
+                **base_result,
+                "status": "DIAGNOSIS_PRODUCED",
+                "diagnosis": {
+                    "category": "routing",
+                    "fault_type": "wrong_next_hop",
+                    "location": "r1",
+                    "affected_prefix": "10.10.2.0/24",
+                    "observed_next_hop": (
+                        observed_next_hop
+                    ),
+                },
+                "matched_rules": ["R_ROUTING_002"],
+                "rule_support_score": 1.0,
+                "score_interpretation": (
+                    "Deterministic rule support, not a "
+                    "calibrated probability."
+                ),
+                "supporting_evidence": [
+                    "HostA reaches its local gateway R1.",
+                    "HostA does not reach HostB end-to-end.",
+                    (
+                        "R1 contains a route toward "
+                        "10.10.2.0/24."
+                    ),
+                    (
+                        "The route-configured next-hop "
+                        f"{observed_next_hop} is unreachable "
+                        "from R1."
+                    ),
+                    "R1 still reaches the transit neighbor R2.",
+                    "R2 still reaches HostB.",
+                ],
+                "contradicting_evidence": [],
+                "recommendation": (
+                    "Inspect the static route on R1 and replace "
+                    f"the unreachable next-hop "
+                    f"{observed_next_hop} with the verified "
+                    "transit next-hop."
+                ),
+            }
 
     return {
         **base_result,

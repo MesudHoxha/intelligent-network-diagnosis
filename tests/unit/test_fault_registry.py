@@ -4,6 +4,9 @@ import pytest
 
 from src.fault_injection.common import FaultInjectionError
 from src.fault_injection.missing_route import inject_missing_route
+from src.fault_injection.wrong_next_hop import (
+    inject_wrong_next_hop,
+)
 from src.fault_injection.registry import (
     FAULT_INJECTORS,
     inject_fault,
@@ -14,6 +17,13 @@ def test_missing_route_injector_is_registered() -> None:
     assert (
         FAULT_INJECTORS["missing_static_route"]
         is inject_missing_route
+    )
+
+
+def test_wrong_next_hop_injector_is_registered() -> None:
+    assert (
+        FAULT_INJECTORS["wrong_next_hop"]
+        is inject_wrong_next_hop
     )
 
 

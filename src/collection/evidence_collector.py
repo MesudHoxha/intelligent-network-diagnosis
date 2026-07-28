@@ -68,6 +68,21 @@ def route_exists(result: dict[str, object]) -> bool | None:
     return bool(str(result["stdout"]).strip())
 
 
+def route_next_hop(
+    result: dict[str, object],
+) -> str | None:
+    if result["return_code"] != 0:
+        return None
+
+    fields = str(result["stdout"]).split()
+
+    for index, field in enumerate(fields[:-1]):
+        if field == "via":
+            return fields[index + 1]
+
+    return None
+
+
 def write_json(path: Path, data: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -78,6 +93,11 @@ def write_json(path: Path, data: object) -> None:
 
 
 def collect_evidence(output_directory: Path) -> dict[str, object]:
+    r1_route_to_hostb = route_result(
+        "clab-top01-r1",
+        "10.10.2.0/24",
+    )
+
     raw_results = {
         "hosta_ping_gateway": ping_result(
             "clab-top01-hosta",
@@ -87,10 +107,7 @@ def collect_evidence(output_directory: Path) -> dict[str, object]:
             "clab-top01-hosta",
             "10.10.2.10",
         ),
-        "r1_route_to_hostb": route_result(
-            "clab-top01-r1",
-            "10.10.2.0/24",
-        ),
+        "r1_route_to_hostb": r1_route_to_hostb,
         "r1_ping_r2": ping_result(
             "clab-top01-r1",
             "10.10.12.2",
@@ -100,6 +117,18 @@ def collect_evidence(output_directory: Path) -> dict[str, object]:
             "10.10.2.10",
         ),
     }
+
+    configured_next_hop = route_next_hop(
+        r1_route_to_hostb
+    )
+
+    if configured_next_hop is not None:
+        raw_results[
+            "r1_ping_configured_next_hop"
+        ] = ping_result(
+            "clab-top01-r1",
+            configured_next_hop,
+        )
 
     for probe_name, result in raw_results.items():
         write_json(
@@ -123,6 +152,17 @@ def collect_evidence(output_directory: Path) -> dict[str, object]:
         ),
         "route_to_destination_exists_on_r1": route_exists(
             raw_results["r1_route_to_hostb"]
+        ),
+        "route_next_hop_on_r1": configured_next_hop,
+        "route_next_hop_reachable_from_r1": (
+            ping_succeeded(
+                raw_results[
+                    "r1_ping_configured_next_hop"
+                ]
+            )
+            if "r1_ping_configured_next_hop"
+            in raw_results
+            else None
         ),
         "transit_next_hop_reachable": ping_succeeded(
             raw_results["r1_ping_r2"]
