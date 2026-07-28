@@ -1,13 +1,11 @@
 from collections.abc import Callable
 from typing import Any
 
-from src.fault_injection.missing_route import (
-    FaultInjectionError,
-    inject_missing_route,
-)
+from src.fault_injection.common import FaultInjectionError
+from src.fault_injection.missing_route import inject_missing_route
 
 
-FaultInjector = Callable[..., dict[str, object]]
+FaultInjector = Callable[..., object]
 
 
 FAULT_INJECTORS: dict[str, FaultInjector] = {
@@ -19,7 +17,7 @@ def inject_fault(
     fault_type: str,
     *args: Any,
     **kwargs: Any,
-) -> dict[str, object]:
+) -> object:
     try:
         injector = FAULT_INJECTORS[fault_type]
     except KeyError as error:

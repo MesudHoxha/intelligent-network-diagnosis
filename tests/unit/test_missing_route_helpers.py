@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from src.fault_injection.missing_route import (
+from src.fault_injection.common import (
     CommandResult,
     route_exists,
 )
@@ -15,7 +15,7 @@ def make_result(stdout: str) -> CommandResult:
     )
 
 
-@patch("src.fault_injection.missing_route.docker_exec")
+@patch("src.fault_injection.common.docker_exec")
 def test_route_exists_returns_true_for_nonempty_output(
     mock_docker_exec,
 ) -> None:
@@ -29,7 +29,7 @@ def test_route_exists_returns_true_for_nonempty_output(
     ) is True
 
 
-@patch("src.fault_injection.missing_route.docker_exec")
+@patch("src.fault_injection.common.docker_exec")
 def test_route_exists_returns_false_for_empty_output(
     mock_docker_exec,
 ) -> None:

@@ -2,10 +2,8 @@ from pathlib import Path
 
 import pytest
 
-from src.fault_injection.missing_route import (
-    FaultInjectionError,
-    inject_missing_route,
-)
+from src.fault_injection.common import FaultInjectionError
+from src.fault_injection.missing_route import inject_missing_route
 from src.fault_injection.registry import (
     FAULT_INJECTORS,
     inject_fault,

@@ -11,7 +11,7 @@ import yaml
 
 from src.collection.evidence_collector import collect_evidence
 from src.evaluation.evaluator import evaluate_experiment
-from src.fault_injection.missing_route import FaultInjectionError
+from src.fault_injection.common import FaultInjectionError
 from src.fault_injection.registry import inject_fault
 from src.rules.rule_engine import run_rule_engine
 
