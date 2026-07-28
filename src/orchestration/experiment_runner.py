@@ -11,10 +11,8 @@ import yaml
 
 from src.collection.evidence_collector import collect_evidence
 from src.evaluation.evaluator import evaluate_experiment
-from src.fault_injection.missing_route import (
-    FaultInjectionError,
-    inject_missing_route,
-)
+from src.fault_injection.missing_route import FaultInjectionError
+from src.fault_injection.registry import inject_fault
 from src.rules.rule_engine import run_rule_engine
 
 
@@ -202,12 +200,8 @@ def run_experiment(
 
         fault_type = scenario["fault"]["type"]
 
-        if fault_type != "missing_static_route":
-            raise ExperimentRunnerError(
-                f"Unsupported fault type: {fault_type}"
-            )
-
-        inject_missing_route(
+        inject_fault(
+            fault_type,
             scenario_path=scenario_path,
             output_directory=experiment_directory,
         )
