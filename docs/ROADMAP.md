@@ -25,7 +25,9 @@ Status: In progress
 - Normal: first real control completed; variants pending
 - Missing route: end-to-end completed; variants pending
 - Wrong next-hop: end-to-end completed; variants pending
-- Reproducible batch generation: not started
+- Batch Plan v1 contract and canonical smoke plan: completed
+  and tested
+- Reproducible batch runner and dataset aggregation: not started
 - Group-aware dataset splitting: not started
 - Wrong gateway: not started
 - Interface down: not started

@@ -124,5 +124,16 @@ These three individual experiments validate the artifact
 contracts and controlled execution paths. They do not yet form
 a training dataset or establish general diagnostic performance.
 
+Batch Plan v1 now defines the validated input contract for
+reproducible dataset-batch planning. It preserves listed execution
+order, expands repetition counts into a deterministic experiment
+sequence, and rejects invalid plan structure or scenario references
+before execution.
+
+The canonical B0_SMOKE_CANONICAL plan validates as three planned
+experiments in the order N0, C1, and C2. This validates planning
+only. No batch runner has executed the plan, and no training dataset
+has been generated.
+
 The Machine Learning and hybrid diagnostic approaches have not
 yet been implemented or evaluated.

@@ -26,7 +26,9 @@
 - Dataset Row v1 builder and JSON Schema
 - Historical Dataset Row v1 exports for C1 and C2
 - Real Dataset Row v1 export for N0
-- Full automated test suite with 32 passing tests
+- Batch Plan v1 runtime validator and JSON Schema
+- Canonical B0 smoke plan with the listed order N0, C1, and C2
+- Full automated test suite with 46 passing tests
 
 ## Latest verified experiments
 
@@ -67,9 +69,9 @@ Final post-experiment baseline:
 
 ## Active
 
+- Implement a reproducible runner that consumes Batch Plan v1
 - Design parameterized normal, C1, and C2 experiment variants
-- Implement reproducible batch dataset generation
-- Validate generated rows against Dataset Row v1
+- Validate every generated row against Dataset Row v1
 - Prepare group-aware dataset splitting through split_group_id
 
 ## Open issues
@@ -80,7 +82,7 @@ Final post-experiment baseline:
 - Missing-evidence experiments
 - Unseen scenario or topology variants
 - Controlled multiple-fault subset
-- Reproducible dataset-batch generation
+- Reproducible batch execution and dataset aggregation
 - Scenario- or topology-grouped dataset splitting
 - Machine Learning method implementation
 - Hybrid method implementation
@@ -88,16 +90,22 @@ Final post-experiment baseline:
 
 ## Next milestone
 
-Create and validate the first reproducible dataset batch
-containing repeated normal experiments and parameterized C1/C2
-experiments. Do not begin ML training until batch generation,
-contract validation, and group-aware splitting are verified.
+Implement and test a reproducible batch runner that consumes
+validated Batch Plan v1, preserves listed order, invokes the existing
+experiment runner, and validates every completed Dataset Row v1.
+
+After runner tests pass, execute B0_SMOKE_CANONICAL. Do not begin ML
+training until batch execution, contract validation, and group-aware
+splitting are verified.
 
 ## Important limitation
 
 Experiment Manifest v2, Dataset Row v1, and the first real N0 row
-validate the artifact contracts and normal execution path. The
-project still has only three individually verified experiments.
+validate the artifact contracts and normal execution path. Batch
+Plan v1 validates plan structure and deterministic expansion only;
+it has not yet executed repeated experiments.
+
+The project still has only three individually verified experiments.
 It does not yet have a training dataset, establish general
 diagnostic accuracy, or compare rule-based, Machine Learning,
 and hybrid methods.

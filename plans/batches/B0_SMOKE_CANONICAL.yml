@@ -1,0 +1,24 @@
+schema_version: 1
+
+batch:
+  id: B0_SMOKE_CANONICAL
+  description: >-
+    Validate deterministic sequential batch planning with one
+    canonical execution of N0, C1, and C2.
+
+  execution:
+    order: listed
+    failure_policy: stop
+
+  entries:
+    - entry_id: n0_canonical
+      scenario_path: scenarios/routing/N0_NORMAL_OPERATION.yml
+      repetitions: 1
+
+    - entry_id: c1_canonical
+      scenario_path: scenarios/routing/C1_MISSING_STATIC_ROUTE.yml
+      repetitions: 1
+
+    - entry_id: c2_canonical
+      scenario_path: scenarios/routing/C2_WRONG_NEXT_HOP.yml
+      repetitions: 1

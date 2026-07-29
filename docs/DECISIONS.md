@@ -192,3 +192,25 @@ scenario variants from crossing dataset partitions.
 Status: Implemented and tested through historical C1/C2 exports
 and the first real N0 no-fault row. Reproducible batch generation
 and ML training have not started.
+
+## D-050 — Dataset-batch planning contract
+
+Decision: Use Batch Plan v1 as the canonical input contract for
+reproducible dataset-batch planning.
+
+The first version uses execution_order=listed and
+failure_policy=stop. Repetition counts are expanded into a
+deterministic sequence before execution, and referenced scenario
+files must pass plan validation.
+
+The contract is represented by a runtime validator and a JSON
+Schema document.
+
+Status: Implemented and covered by automated tests. The canonical
+B0_SMOKE_CANONICAL plan validates as three planned experiments in
+the order N0, C1, and C2. The full test suite has 46 passing tests.
+
+Limitation:
+Batch execution, repeated laboratory experiments, dataset
+aggregation, and ML training have not started. Validation of B0
+does not mean that it has been executed as a batch.

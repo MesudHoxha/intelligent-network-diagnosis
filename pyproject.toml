@@ -7,6 +7,7 @@ dependencies = [
     "pydantic",
     "pyyaml",
     "rich",
+    "jsonschema>=4.18,<5",
 ]
 
 [tool.pytest.ini_options]
