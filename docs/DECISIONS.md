@@ -189,9 +189,10 @@ evaluation results must not be used as model features.
 Dataset splitting must use split_group_id to prevent related
 scenario variants from crossing dataset partitions.
 
-Status: Implemented and tested through historical C1/C2 exports
-and the first real N0 no-fault row. Reproducible batch generation
-and ML training have not started.
+Status: Implemented and tested through historical C1/C2 exports,
+the first real N0 no-fault row, and the first real three-row B0
+smoke batch. Repeated parameterized dataset generation and ML
+training have not started.
 
 ## D-050 — Dataset-batch planning contract
 
@@ -212,9 +213,10 @@ the order N0, C1, and C2. The current full test suite has 53 passing
 tests.
 
 Limitation:
-Validation and expansion of B0 do not mean that it has been executed
-as a real laboratory batch. Repeated experiments and ML training
-have not started.
+Validation and deterministic expansion of a batch plan do not by
+themselves demonstrate successful laboratory execution. Real
+execution must be verified separately through batch metadata,
+Dataset Row v1 records, and the final laboratory baseline.
 
 ## D-051 — Batch execution and aggregation contract
 
@@ -236,10 +238,31 @@ Default experiment and batch-run identifiers use UTC timestamps with
 microsecond precision plus UUID values to avoid collisions during
 repeated execution.
 
-Status: Implemented and covered by isolated automated tests. The full
-suite has 53 passing tests.
+Status: Implemented, covered by 53 automated tests, and verified
+through the first real B0_SMOKE_CANONICAL laboratory batch.
 
 Limitation:
-B0_SMOKE_CANONICAL has not yet been executed through the real
-laboratory. Therefore, no claim is made yet about real batch
-completion or a batch-generated training dataset.
+The verified B0 output contains only three canonical smoke samples.
+It validates batch execution and aggregation, but it is not yet a
+training dataset.
+
+## D-052 — First real canonical smoke batch
+
+Decision: Accept the successful B0_SMOKE_CANONICAL execution as the
+first end-to-end validation of Batch Runner v1 and real Dataset Row
+v1 aggregation.
+
+The accepted batch run is
+b0_smoke_canonical-20260729T110541686889Z-3866a05ce64f4363afec8ae7ace6ef97.
+It executed N0_NORMAL_OPERATION, C1_MISSING_STATIC_ROUTE, and
+C2_WRONG_NEXT_HOP in listed order with failure_policy=stop.
+
+Status: Completed and semantically verified on 2026-07-29. All three
+experiments completed, all three Dataset Row v1 records passed
+contract and cross-artifact checks, and TOP-01 finished with a valid
+9/9 baseline.
+
+Limitation:
+This is a smoke-validation artifact with three rows. Repeated and
+parameterized variants, group-aware splitting, ML training, hybrid
+diagnosis, and comparative evaluation have not yet been completed.

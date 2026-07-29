@@ -141,10 +141,16 @@ New experiment identifiers and default batch-run identifiers use UTC
 timestamps with microsecond precision plus UUID values to prevent
 collisions during repeated execution.
 
-These behaviors are implemented and covered by isolated automated
-tests. The canonical B0_SMOKE_CANONICAL plan has still not been
-executed as a real laboratory batch, and no batch-generated training
-dataset exists yet.
+These behaviors are implemented, covered by automated tests, and
+verified through the first real B0_SMOKE_CANONICAL laboratory batch.
+The batch completed on 2026-07-29 in the listed order N0, C1, and C2,
+with three COMPLETED experiments, three validated Dataset Row v1
+records, and a final valid TOP-01 9/9 baseline.
+
+The generated JSONL file is a three-row smoke dataset that validates
+orchestration, aggregation, and cross-artifact semantics. It is not
+yet a training dataset and does not establish general diagnostic
+performance.
 
 The Machine Learning and hybrid diagnostic approaches have not yet
 been implemented or evaluated.

@@ -2,7 +2,7 @@
 
 ## Current phase
 
-05 — Dataset preparation after PoC-B
+05 — Parameterized pilot dataset generation
 
 ## Implemented and tested
 
@@ -33,12 +33,14 @@
 - Per-row Dataset Row v1 revalidation and duplicate-output protection
 - Collision-resistant experiment and batch-run identifiers
 - Full automated test suite with 53 passing tests
+- First real B0_SMOKE_CANONICAL batch completed with three validated
+  Dataset Row v1 records and a final TOP-01 9/9 baseline
 
 ## Latest verified experiments
 
 N0:
 
-- Experiment: n0_normal_operation-20260728T133851Z
+- Experiment: n0_normal_operation-20260729T110541689385Z-a5ea12650fbf41d6ab75e457cc4dcd4b
 - Status: COMPLETED
 - Diagnosis status: NO_FAULT_DETECTED
 - Exact match: true
@@ -49,7 +51,7 @@ N0:
 
 C1:
 
-- Experiment: c1_missing_static_route-20260728T120013Z
+- Experiment: c1_missing_static_route-20260729T110558625085Z-ea6ab2af89aa4b6bb20ffb62be0fc0f6
 - Status: COMPLETED
 - Matched rule: R_ROUTING_001
 - Exact match: true
@@ -57,7 +59,7 @@ C1:
 
 C2:
 
-- Experiment: c2_wrong_next_hop-20260728T120038Z
+- Experiment: c2_wrong_next_hop-20260729T110622965087Z-7f79703b0d3748d181cdeff24004cc20
 - Status: COMPLETED
 - Observed next-hop: 10.10.12.254
 - Next-hop reachable: false
@@ -71,11 +73,24 @@ Final post-experiment baseline:
 - Failed checks: 0
 - Status: VALID
 
+## Latest verified batch
+
+- Batch ID: B0_SMOKE_CANONICAL
+- Batch run ID:
+  b0_smoke_canonical-20260729T110541686889Z-3866a05ce64f4363afec8ae7ace6ef97
+- Status: COMPLETED
+- Failure policy: stop
+- Execution order: N0, C1, C2
+- Planned/completed experiments: 3/3
+- Validated Dataset Row v1 records: 3
+- Semantic verification: PASS
+- Final TOP-01 baseline: 9/9 VALID
+- Interpretation: smoke dataset, not a training dataset
+
 ## Active
 
-- Execute B0_SMOKE_CANONICAL through Batch Runner v1
-- Verify the real batch metadata and aggregated Dataset Row v1 records
 - Design parameterized normal, C1, and C2 experiment variants
+- Define the first repeated pilot dataset campaign
 - Prepare group-aware dataset splitting through split_group_id
 
 ## Open issues
@@ -86,7 +101,8 @@ Final post-experiment baseline:
 - Missing-evidence experiments
 - Unseen scenario or topology variants
 - Controlled multiple-fault subset
-- First real B0_SMOKE_CANONICAL execution and artifact verification
+- Larger reproducible dataset generation beyond the canonical
+  three-row smoke batch
 - Scenario- or topology-grouped dataset splitting
 - Machine Learning method implementation
 - Hybrid method implementation
@@ -94,23 +110,21 @@ Final post-experiment baseline:
 
 ## Next milestone
 
-Execute B0_SMOKE_CANONICAL through Batch Runner v1 as the first real
-batch. Verify the N0, C1, and C2 execution order, the COMPLETED batch
-result, all three validated Dataset Row v1 records, and the final
-TOP-01 baseline.
+Define and implement the first reproducible parameterized variants
+for N0, C1, and C2. Then create a pilot batch plan with repetitions
+and verify class counts, Dataset Row v1 validity, split_group_id
+assignments, and baseline restoration across the campaign.
 
-Do not begin ML training until real batch execution, artifact
-validation, parameterized dataset generation, and group-aware
-splitting are verified.
+Do not begin ML training until parameterized dataset generation and
+group-aware splitting are implemented and verified.
 
 ## Important limitation
 
-Batch Runner v1 has been validated through isolated automated tests,
-not through a real multi-experiment laboratory batch. The canonical
-B0 plan has not yet produced real batch metadata or an aggregated
-dataset.
+Batch Runner v1 and the canonical B0 plan have been verified through
+one real multi-experiment laboratory batch. The resulting JSONL file
+contains only three canonical smoke samples.
 
-The project still has only three individually verified experiments.
-It does not yet have a training dataset, establish general
-diagnostic accuracy, or compare rule-based, Machine Learning,
-and hybrid methods.
+The project does not yet have a sufficiently varied training
+dataset, establish general diagnostic accuracy, or compare the
+rule-based, Machine Learning, and hybrid methods. Repeated and
+parameterized variants plus group-aware splitting remain required.
