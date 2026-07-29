@@ -28,7 +28,11 @@
 - Real Dataset Row v1 export for N0
 - Batch Plan v1 runtime validator and JSON Schema
 - Canonical B0 smoke plan with the listed order N0, C1, and C2
-- Full automated test suite with 46 passing tests
+- Batch Runner v1 orchestration over the existing experiment runner
+- Fail-stop batch metadata persistence and atomic JSONL aggregation
+- Per-row Dataset Row v1 revalidation and duplicate-output protection
+- Collision-resistant experiment and batch-run identifiers
+- Full automated test suite with 53 passing tests
 
 ## Latest verified experiments
 
@@ -69,9 +73,9 @@ Final post-experiment baseline:
 
 ## Active
 
-- Implement a reproducible runner that consumes Batch Plan v1
+- Execute B0_SMOKE_CANONICAL through Batch Runner v1
+- Verify the real batch metadata and aggregated Dataset Row v1 records
 - Design parameterized normal, C1, and C2 experiment variants
-- Validate every generated row against Dataset Row v1
 - Prepare group-aware dataset splitting through split_group_id
 
 ## Open issues
@@ -82,7 +86,7 @@ Final post-experiment baseline:
 - Missing-evidence experiments
 - Unseen scenario or topology variants
 - Controlled multiple-fault subset
-- Reproducible batch execution and dataset aggregation
+- First real B0_SMOKE_CANONICAL execution and artifact verification
 - Scenario- or topology-grouped dataset splitting
 - Machine Learning method implementation
 - Hybrid method implementation
@@ -90,20 +94,21 @@ Final post-experiment baseline:
 
 ## Next milestone
 
-Implement and test a reproducible batch runner that consumes
-validated Batch Plan v1, preserves listed order, invokes the existing
-experiment runner, and validates every completed Dataset Row v1.
+Execute B0_SMOKE_CANONICAL through Batch Runner v1 as the first real
+batch. Verify the N0, C1, and C2 execution order, the COMPLETED batch
+result, all three validated Dataset Row v1 records, and the final
+TOP-01 baseline.
 
-After runner tests pass, execute B0_SMOKE_CANONICAL. Do not begin ML
-training until batch execution, contract validation, and group-aware
+Do not begin ML training until real batch execution, artifact
+validation, parameterized dataset generation, and group-aware
 splitting are verified.
 
 ## Important limitation
 
-Experiment Manifest v2, Dataset Row v1, and the first real N0 row
-validate the artifact contracts and normal execution path. Batch
-Plan v1 validates plan structure and deterministic expansion only;
-it has not yet executed repeated experiments.
+Batch Runner v1 has been validated through isolated automated tests,
+not through a real multi-experiment laboratory batch. The canonical
+B0 plan has not yet produced real batch metadata or an aggregated
+dataset.
 
 The project still has only three individually verified experiments.
 It does not yet have a training dataset, establish general

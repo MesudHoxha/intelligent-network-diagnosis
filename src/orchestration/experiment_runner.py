@@ -6,6 +6,7 @@ import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Sequence
+from uuid import uuid4
 
 import yaml
 
@@ -25,6 +26,21 @@ class ExperimentRunnerError(RuntimeError):
 
 def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
+
+
+
+def build_experiment_id(
+    scenario_id: str,
+) -> str:
+    timestamp = datetime.now(
+        timezone.utc
+    ).strftime("%Y%m%dT%H%M%S%fZ")
+
+    return (
+        f"{scenario_id.lower()}-"
+        f"{timestamp}-"
+        f"{uuid4().hex}"
+    )
 
 
 def write_json(path: Path, data: object) -> None:
@@ -215,12 +231,8 @@ def run_experiment(
 
     diagnostic_method = "rule_based"
 
-    timestamp = datetime.now(
-        timezone.utc
-    ).strftime("%Y%m%dT%H%M%SZ")
-
-    experiment_id = (
-        f"{scenario_id.lower()}-{timestamp}"
+    experiment_id = build_experiment_id(
+        scenario_id
     )
     experiment_directory = output_root / experiment_id
 

@@ -27,7 +27,8 @@ Status: In progress
 - Wrong next-hop: end-to-end completed; variants pending
 - Batch Plan v1 contract and canonical smoke plan: completed
   and tested
-- Reproducible batch runner and dataset aggregation: not started
+- Reproducible batch runner and dataset aggregation: implemented
+  and tested in isolation; first real B0 execution pending
 - Group-aware dataset splitting: not started
 - Wrong gateway: not started
 - Interface down: not started

@@ -198,8 +198,8 @@ and ML training have not started.
 Decision: Use Batch Plan v1 as the canonical input contract for
 reproducible dataset-batch planning.
 
-The first version uses execution_order=listed and
-failure_policy=stop. Repetition counts are expanded into a
+The first version uses execution.order=listed and
+execution.failure_policy=stop. Repetition counts are expanded into a
 deterministic sequence before execution, and referenced scenario
 files must pass plan validation.
 
@@ -208,9 +208,38 @@ Schema document.
 
 Status: Implemented and covered by automated tests. The canonical
 B0_SMOKE_CANONICAL plan validates as three planned experiments in
-the order N0, C1, and C2. The full test suite has 46 passing tests.
+the order N0, C1, and C2. The current full test suite has 53 passing
+tests.
 
 Limitation:
-Batch execution, repeated laboratory experiments, dataset
-aggregation, and ML training have not started. Validation of B0
-does not mean that it has been executed as a batch.
+Validation and expansion of B0 do not mean that it has been executed
+as a real laboratory batch. Repeated experiments and ML training
+have not started.
+
+## D-051 — Batch execution and aggregation contract
+
+Decision: Use Batch Runner v1 as the canonical orchestration layer
+between Batch Plan v1, the existing experiment runner, and Dataset
+Row v1 aggregation.
+
+The runner must preserve listed order, use failure_policy=stop,
+require a COMPLETED experiment result, validate every generated
+Dataset Row v1, require sample_id to match experiment_id, and reject
+duplicate sample identifiers or experiment directories.
+
+Batch-level metadata is persisted throughout execution. The final
+JSONL dataset is written atomically only after every planned
+experiment succeeds. Existing dataset and batch-result outputs must
+not be overwritten.
+
+Default experiment and batch-run identifiers use UTC timestamps with
+microsecond precision plus UUID values to avoid collisions during
+repeated execution.
+
+Status: Implemented and covered by isolated automated tests. The full
+suite has 53 passing tests.
+
+Limitation:
+B0_SMOKE_CANONICAL has not yet been executed through the real
+laboratory. Therefore, no claim is made yet about real batch
+completion or a batch-generated training dataset.
