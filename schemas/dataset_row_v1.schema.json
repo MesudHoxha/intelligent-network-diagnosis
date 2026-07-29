@@ -1,0 +1,198 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Dataset Row v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "sample_id",
+    "metadata",
+    "features",
+    "labels",
+    "quality"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "sample_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "experiment_id",
+        "scenario_id",
+        "variant_id",
+        "split_group_id",
+        "topology_id",
+        "collected_at_utc"
+      ],
+      "properties": {
+        "experiment_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scenario_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "variant_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "split_group_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "topology_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "collected_at_utc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "features": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_gateway_reachable",
+        "destination_reachable",
+        "route_to_destination_exists_on_r1",
+        "route_next_hop_present_on_r1",
+        "route_next_hop_reachable_from_r1",
+        "transit_next_hop_reachable",
+        "destination_reachable_from_r2"
+      ],
+      "properties": {
+        "source_gateway_reachable": {
+          "type": "string",
+          "enum": [
+            "true",
+            "false",
+            "unavailable"
+          ]
+        },
+        "destination_reachable": {
+          "type": "string",
+          "enum": [
+            "true",
+            "false",
+            "unavailable"
+          ]
+        },
+        "route_to_destination_exists_on_r1": {
+          "type": "string",
+          "enum": [
+            "true",
+            "false",
+            "unavailable"
+          ]
+        },
+        "route_next_hop_present_on_r1": {
+          "type": "string",
+          "enum": [
+            "true",
+            "false",
+            "unavailable"
+          ]
+        },
+        "route_next_hop_reachable_from_r1": {
+          "type": "string",
+          "enum": [
+            "true",
+            "false",
+            "unavailable"
+          ]
+        },
+        "transit_next_hop_reachable": {
+          "type": "string",
+          "enum": [
+            "true",
+            "false",
+            "unavailable"
+          ]
+        },
+        "destination_reachable_from_r2": {
+          "type": "string",
+          "enum": [
+            "true",
+            "false",
+            "unavailable"
+          ]
+        }
+      }
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fault_category",
+        "fault_type",
+        "fault_location",
+        "affected_prefix"
+      ],
+      "properties": {
+        "fault_category": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "fault_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fault_location": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "affected_prefix": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "experiment_completed",
+        "collector_completed",
+        "baseline_before_valid",
+        "baseline_after_valid",
+        "unavailable_feature_count"
+      ],
+      "properties": {
+        "experiment_completed": {
+          "type": "boolean"
+        },
+        "collector_completed": {
+          "type": "boolean"
+        },
+        "baseline_before_valid": {
+          "type": "boolean"
+        },
+        "baseline_after_valid": {
+          "type": "boolean"
+        },
+        "unavailable_feature_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 7
+        }
+      }
+    }
+  }
+}

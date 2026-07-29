@@ -3,6 +3,8 @@ schema_version: 1
 scenario:
   id: C1_MISSING_STATIC_ROUTE
   name: Missing static route on R1
+  kind: fault
+  variant_id: canonical
   category: routing
   description: >
     Remove the static route from R1 toward the HostB network while

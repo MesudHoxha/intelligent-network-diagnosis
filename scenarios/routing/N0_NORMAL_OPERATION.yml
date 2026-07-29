@@ -1,0 +1,38 @@
+schema_version: 1
+
+scenario:
+  id: N0_NORMAL_OPERATION
+  name: Normal TOP-01 operation
+  kind: normal
+  variant_id: canonical
+  category: baseline
+  description: >
+    Observe the healthy TOP-01 routing state without injecting
+    or restoring a fault.
+
+  topology:
+    id: TOP_01
+    file: labs/topologies/top01_routed/topology.clab.yml
+
+  preconditions:
+    - id: baseline_end_to_end_connectivity
+      description: HostA reaches HostB before evidence collection
+    - id: expected_route_present
+      description: R1 contains the valid route toward HostB
+    - id: expected_next_hop_reachable
+      description: R1 reaches the configured R2 next-hop
+
+  expected_effects:
+    - id: no_fault_injected
+      description: No configuration change is performed
+    - id: end_to_end_connectivity_remains_available
+      description: HostA continues to reach HostB
+    - id: baseline_remains_valid
+      description: TOP-01 remains valid after evidence collection
+
+  ground_truth:
+    fault_category: null
+    fault_type: no_fault
+    fault_location: null
+    affected_prefix: null
+    root_cause: null

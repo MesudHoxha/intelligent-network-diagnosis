@@ -71,7 +71,10 @@ Status: Approved for implementation.
 ## D-040 — Normal class
 
 Decision: Include valid no-fault experiments in the dataset.
-Status: Approved.
+
+Status: Implemented and tested for the first real normal
+experiment N0_NORMAL_OPERATION. Reproducible normal variants
+and batch generation remain pending.
 
 ## D-041 — Missing evidence
 
@@ -156,3 +159,36 @@ only after a diagnosis has been produced.
 
 Status: Confirmed for the current Collector and Rule Engine
 through source audit.
+
+## D-048 — Experiment manifest contract
+
+Decision: Use Experiment Manifest v2 as the canonical contract
+for newly executed experiments.
+
+The manifest records the experiment, scenario and topology
+identities; scenario schema version and kind; variant and split
+group; diagnostic method; artifact paths; timestamps; current
+state; and complete state history.
+
+The contract is represented by a runtime validator and a
+JSON Schema document.
+
+Status: Implemented and covered by automated tests. Its real
+normal execution path was verified through
+n0_normal_operation-20260728T133851Z.
+
+## D-049 — Dataset row contract
+
+Decision: Use Dataset Row v1 with one row per completed
+experiment and fault_type as the initial supervised-learning
+target.
+
+Diagnostic features use true, false, or unavailable. Scenario
+identity, concrete IP addresses, ground truth, rule outputs, and
+evaluation results must not be used as model features.
+Dataset splitting must use split_group_id to prevent related
+scenario variants from crossing dataset partitions.
+
+Status: Implemented and tested through historical C1/C2 exports
+and the first real N0 no-fault row. Reproducible batch generation
+and ML training have not started.

@@ -78,8 +78,9 @@ The currently tested laboratory baseline is TOP-01:
 
 HostA -- R1 -- R2 -- HostB
 
-Implemented and tested controlled scenarios:
+Implemented and tested controlled experiments:
 
+- N0_NORMAL_OPERATION as the first real no-fault control
 - C1_MISSING_STATIC_ROUTE
 - C2_WRONG_NEXT_HOP
 
@@ -88,11 +89,40 @@ Current rule-based coverage:
 - R_ROUTING_001 diagnoses a missing static route on R1.
 - R_ROUTING_002 diagnoses an unreachable configured next-hop
   on the static route on R1.
+- Healthy evidence produces NO_FAULT_DETECTED without a fault
+  diagnosis.
 
-The evidence collector currently records route presence, the
-configured next-hop, and active next-hop reachability. Both
-controlled scenarios have completed end-to-end with exact-match
-evaluation and successful restoration of the 9/9 baseline.
+The evidence collector currently records seven diagnostic
+features covering source reachability, destination reachability,
+route presence, configured next-hop presence and reachability,
+transit reachability, and destination reachability from R2.
+
+The experiment runner supports both fault and normal scenarios.
+Normal experiments do not call fault injection or restoration.
+Every new run produces Experiment Manifest v2 with scenario
+metadata, split-group metadata, timestamps, and state history.
+
+Dataset Row v1 defines one row per completed experiment. Its
+target is fault_type, its diagnostic features use the tri-state
+values true, false, and unavailable, and split_group_id is
+preserved for group-aware dataset splitting. Scenario identity,
+concrete IP addresses, ground truth, rule outputs, and evaluation
+results are not model features.
+
+C1 and C2 have completed end-to-end with exact-match evaluation
+and successful restoration of the TOP-01 9/9 baseline. Their
+historical experiment artifacts can be exported as Dataset Row
+v1.
+
+The first real normal experiment,
+n0_normal_operation-20260728T133851Z, completed with
+NO_FAULT_DETECTED, exact_match true, seven true features, no
+unavailable features, and valid baselines before and after the
+run.
+
+These three individual experiments validate the artifact
+contracts and controlled execution paths. They do not yet form
+a training dataset or establish general diagnostic performance.
 
 The Machine Learning and hybrid diagnostic approaches have not
 yet been implemented or evaluated.

@@ -14,15 +14,32 @@
 - TOP-01 baseline validation with 9/9 checks
 - C1_MISSING_STATIC_ROUTE fault injection and restoration
 - C2_WRONG_NEXT_HOP fault injection and restoration
-- Evidence collection for route presence and next-hop state
+- N0_NORMAL_OPERATION no-fault execution path
+- Evidence collection with seven tri-state diagnostic features
 - Rule R_ROUTING_001 for missing_static_route
 - Rule R_ROUTING_002 for wrong_next_hop
+- NO_FAULT_DETECTED result for healthy evidence
 - Automatic rule-based evaluation
 - End-to-end experiment orchestration
 - Ground-truth isolation from Collector and Rule Engine
-- Full automated test suite with 18 passing tests
+- Experiment Manifest v2 runtime contract and JSON Schema
+- Dataset Row v1 builder and JSON Schema
+- Historical Dataset Row v1 exports for C1 and C2
+- Real Dataset Row v1 export for N0
+- Full automated test suite with 32 passing tests
 
 ## Latest verified experiments
+
+N0:
+
+- Experiment: n0_normal_operation-20260728T133851Z
+- Status: COMPLETED
+- Diagnosis status: NO_FAULT_DETECTED
+- Exact match: true
+- Baseline restored: false
+- Baseline valid after: true
+- Diagnostic features true: 7/7
+- Unavailable features: 0
 
 C1:
 
@@ -50,19 +67,20 @@ Final post-experiment baseline:
 
 ## Active
 
-- Define the detailed experiment-manifest schema
-- Define the dataset-row and feature schema
 - Design parameterized normal, C1, and C2 experiment variants
-- Prepare reproducible batch dataset generation
+- Implement reproducible batch dataset generation
+- Validate generated rows against Dataset Row v1
+- Prepare group-aware dataset splitting through split_group_id
 
 ## Open issues
 
 - Final FRRouting container image for later routing extensions
 - Final set of pilot fault classes beyond C1 and C2
-- Normal no-fault dataset generation
+- Repeated normal samples and parameterized normal variants
 - Missing-evidence experiments
 - Unseen scenario or topology variants
 - Controlled multiple-fault subset
+- Reproducible dataset-batch generation
 - Scenario- or topology-grouped dataset splitting
 - Machine Learning method implementation
 - Hybrid method implementation
@@ -70,12 +88,16 @@ Final post-experiment baseline:
 
 ## Next milestone
 
-Create and validate the first reproducible dataset batch containing
-normal operation and parameterized C1/C2 experiments, without
-beginning ML training before the dataset contract is verified.
+Create and validate the first reproducible dataset batch
+containing repeated normal experiments and parameterized C1/C2
+experiments. Do not begin ML training until batch generation,
+contract validation, and group-aware splitting are verified.
 
 ## Important limitation
 
-PoC-B verifies the technical pipeline for two controlled routing
-faults. It does not establish general diagnostic accuracy and does
-not yet compare rule-based, Machine Learning, and hybrid methods.
+Experiment Manifest v2, Dataset Row v1, and the first real N0 row
+validate the artifact contracts and normal execution path. The
+project still has only three individually verified experiments.
+It does not yet have a training dataset, establish general
+diagnostic accuracy, or compare rule-based, Machine Learning,
+and hybrid methods.

@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Experiment Manifest v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "experiment_id",
+    "scenario_id",
+    "scenario_schema_version",
+    "scenario_kind",
+    "topology_id",
+    "variant_id",
+    "split_group_id",
+    "diagnostic_method",
+    "scenario_path",
+    "experiment_directory",
+    "created_at_utc",
+    "current_state",
+    "state_history"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 2
+    },
+    "experiment_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scenario_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scenario_schema_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "scenario_kind": {
+      "type": "string",
+      "enum": [
+        "fault",
+        "normal"
+      ]
+    },
+    "topology_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "variant_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "split_group_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "diagnostic_method": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scenario_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "experiment_directory": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "current_state": {
+      "type": "string",
+      "enum": [
+        "CREATED",
+        "BASELINE_VALIDATED",
+        "FAULT_CONFIRMED",
+        "NORMAL_CONFIRMED",
+        "EVIDENCE_COLLECTED",
+        "DIAGNOSIS_PRODUCED",
+        "EVALUATED",
+        "FAULT_RESTORED",
+        "BASELINE_RESTORED",
+        "POST_RUN_VALIDATED",
+        "FAILED",
+        "COMPLETED"
+      ]
+    },
+    "state_history": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "state",
+          "timestamp_utc"
+        ],
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "CREATED",
+              "BASELINE_VALIDATED",
+              "FAULT_CONFIRMED",
+              "NORMAL_CONFIRMED",
+              "EVIDENCE_COLLECTED",
+              "DIAGNOSIS_PRODUCED",
+              "EVALUATED",
+              "FAULT_RESTORED",
+              "BASELINE_RESTORED",
+              "POST_RUN_VALIDATED",
+              "FAILED",
+              "COMPLETED"
+            ]
+          },
+          "timestamp_utc": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "completed_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "message"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "current_state": {
+            "const": "COMPLETED"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "completed_at_utc"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "current_state": {
+            "const": "FAILED"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "error"
+        ]
+      }
+    }
+  ]
+}

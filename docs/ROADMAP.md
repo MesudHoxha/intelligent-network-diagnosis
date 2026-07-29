@@ -21,12 +21,15 @@ Status: Completed
 ## Phase 2 — Pilot multiclass dataset
 Status: In progress
 
-- Normal
-- Missing route
-- Wrong next-hop
-- Wrong gateway
-- Interface down
-- ACL block
+- Dataset artifact contracts: completed and tested
+- Normal: first real control completed; variants pending
+- Missing route: end-to-end completed; variants pending
+- Wrong next-hop: end-to-end completed; variants pending
+- Reproducible batch generation: not started
+- Group-aware dataset splitting: not started
+- Wrong gateway: not started
+- Interface down: not started
+- ACL block: not started
 
 ## Phase 3 — Rule-based baseline
 Status: Not started
