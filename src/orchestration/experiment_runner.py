@@ -14,6 +14,10 @@ from src.collection.evidence_collector import collect_evidence
 from src.contracts.experiment_manifest import (
     validate_experiment_manifest,
 )
+from src.contracts.observation_profile import (
+    ObservationProfileContractError,
+    validate_observation_profile,
+)
 from src.evaluation.evaluator import evaluate_experiment
 from src.fault_injection.common import FaultInjectionError
 from src.fault_injection.registry import inject_fault
@@ -103,6 +107,13 @@ def load_scenario_definition(
         raise ExperimentRunnerError(
             "Scenario document does not contain 'scenario'."
         )
+
+    try:
+        validate_observation_profile(scenario)
+    except ObservationProfileContractError as error:
+        raise ExperimentRunnerError(
+            f"Invalid Observation Profile v1: {error}"
+        ) from error
 
     return schema_version, scenario
 

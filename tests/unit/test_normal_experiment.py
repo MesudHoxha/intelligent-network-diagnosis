@@ -21,6 +21,18 @@ scenario:
   topology:
     id: TOP_01
     file: topology.yml
+  observation:
+    schema_version: 1
+    direction: hosta_to_hostb
+    source_container: clab-top01-hosta
+    source_gateway_address: 10.10.1.1
+    destination_address: 10.10.2.10
+    destination_prefix: 10.10.2.0/24
+    route_observer_node: r1
+    route_observer_container: clab-top01-r1
+    expected_next_hop: 10.10.12.2
+    transit_node: r2
+    transit_container: clab-top01-r2
   ground_truth:
     fault_category: null
     fault_type: no_fault
