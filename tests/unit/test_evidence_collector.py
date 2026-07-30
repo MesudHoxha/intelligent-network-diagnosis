@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 from unittest.mock import call, patch
 
@@ -80,6 +81,19 @@ def test_collect_evidence_uses_observation_profile(
     collect_evidence(
         tmp_path,
         secondary_profile(),
+    )
+
+    saved_evidence = json.loads(
+        (
+            tmp_path / "parsed" / "evidence.json"
+        ).read_text(encoding="utf-8")
+    )
+
+    assert saved_evidence["destination_address"] == (
+        "10.10.22.10"
+    )
+    assert saved_evidence["destination_prefix"] == (
+        "10.10.22.0/24"
     )
 
     mock_route_result.assert_called_once_with(

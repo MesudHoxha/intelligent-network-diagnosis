@@ -70,6 +70,8 @@ scenario:
             "collected_at_utc": (
                 "2026-07-28T12:00:10+00:00"
             ),
+            "destination_address": "10.10.2.10",
+            "destination_prefix": "10.10.2.0/24",
             "source_gateway_reachable": True,
             "destination_reachable": True,
             "route_to_destination_exists_on_r1": True,

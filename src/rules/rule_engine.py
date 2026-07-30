@@ -8,6 +8,7 @@ from typing import Any
 
 
 REQUIRED_EVIDENCE = [
+    "destination_prefix",
     "source_gateway_reachable",
     "destination_reachable",
     "route_to_destination_exists_on_r1",
@@ -74,6 +75,10 @@ def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
             ),
         }
 
+    destination_prefix = str(
+        evidence["destination_prefix"]
+    )
+
     normal_operation = (
         evidence["source_gateway_reachable"] is True
         and evidence["destination_reachable"] is True
@@ -123,7 +128,7 @@ def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
                 "category": "routing",
                 "fault_type": "missing_static_route",
                 "location": "r1",
-                "affected_prefix": "10.10.2.0/24",
+                "affected_prefix": destination_prefix,
             },
             "matched_rules": ["R_ROUTING_001"],
             "rule_support_score": 1.0,
@@ -134,14 +139,18 @@ def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
             "supporting_evidence": [
                 "HostA reaches its local gateway R1.",
                 "HostA does not reach HostB end-to-end.",
-                "R1 does not contain a route toward 10.10.2.0/24.",
+                (
+                    "R1 does not contain a route toward "
+                    f"{destination_prefix}."
+                ),
                 "R1 still reaches the transit next-hop R2.",
                 "R2 still reaches HostB.",
             ],
             "contradicting_evidence": [],
             "recommendation": (
                 "Inspect the routing table on R1 and configure a "
-                "valid route toward 10.10.2.0/24 through the "
+                "valid route toward "
+                f"{destination_prefix} through the "
                 "appropriate next-hop."
             ),
         }
@@ -200,7 +209,7 @@ def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
                     "category": "routing",
                     "fault_type": "wrong_next_hop",
                     "location": "r1",
-                    "affected_prefix": "10.10.2.0/24",
+                    "affected_prefix": destination_prefix,
                     "observed_next_hop": (
                         observed_next_hop
                     ),
@@ -216,7 +225,7 @@ def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
                     "HostA does not reach HostB end-to-end.",
                     (
                         "R1 contains a route toward "
-                        "10.10.2.0/24."
+                        f"{destination_prefix}."
                     ),
                     (
                         "The route-configured next-hop "

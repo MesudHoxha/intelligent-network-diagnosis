@@ -154,6 +154,8 @@ def collect_evidence(
         "collected_at_utc": datetime.now(
             timezone.utc
         ).isoformat(),
+        "destination_address": profile.destination_address,
+        "destination_prefix": profile.destination_prefix,
         "source_gateway_reachable": ping_succeeded(
             raw_results["hosta_ping_gateway"]
         ),

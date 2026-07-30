@@ -9,6 +9,8 @@ def make_evidence(
     evidence: dict[str, Any] = {
         "schema_version": 1,
         "topology_id": "TOP_01",
+        "destination_address": "10.10.2.10",
+        "destination_prefix": "10.10.2.0/24",
         "source_gateway_reachable": True,
         "destination_reachable": True,
         "route_to_destination_exists_on_r1": True,
@@ -47,6 +49,9 @@ def test_diagnose_recognizes_missing_route() -> None:
     assert result["matched_rules"] == [
         "R_ROUTING_001"
     ]
+    assert result["diagnosis"]["affected_prefix"] == (
+        "10.10.2.0/24"
+    )
 
 
 def test_diagnose_recognizes_wrong_next_hop() -> None:
@@ -68,6 +73,9 @@ def test_diagnose_recognizes_wrong_next_hop() -> None:
     assert result["matched_rules"] == [
         "R_ROUTING_002"
     ]
+    assert result["diagnosis"]["affected_prefix"] == (
+        "10.10.2.0/24"
+    )
 
 
 def test_wrong_next_hop_requires_next_hop_evidence(
@@ -86,4 +94,60 @@ def test_wrong_next_hop_requires_next_hop_evidence(
     assert result["missing_evidence"] == [
         "route_next_hop_on_r1",
         "route_next_hop_reachable_from_r1",
+    ]
+
+
+def test_missing_route_uses_alternate_destination_prefix(
+) -> None:
+    evidence = make_evidence(
+        destination_address="10.10.22.10",
+        destination_prefix="10.10.22.0/24",
+        destination_reachable=False,
+        route_to_destination_exists_on_r1=False,
+        route_next_hop_on_r1=None,
+        route_next_hop_reachable_from_r1=None,
+    )
+
+    result = diagnose(evidence)
+
+    assert result["status"] == "DIAGNOSIS_PRODUCED"
+    assert result["diagnosis"]["fault_type"] == (
+        "missing_static_route"
+    )
+    assert result["diagnosis"]["affected_prefix"] == (
+        "10.10.22.0/24"
+    )
+
+
+def test_wrong_next_hop_uses_alternate_destination_prefix(
+) -> None:
+    evidence = make_evidence(
+        destination_address="10.10.22.10",
+        destination_prefix="10.10.22.0/24",
+        destination_reachable=False,
+        route_next_hop_on_r1="10.10.12.254",
+        route_next_hop_reachable_from_r1=False,
+    )
+
+    result = diagnose(evidence)
+
+    assert result["status"] == "DIAGNOSIS_PRODUCED"
+    assert result["diagnosis"]["fault_type"] == (
+        "wrong_next_hop"
+    )
+    assert result["diagnosis"]["affected_prefix"] == (
+        "10.10.22.0/24"
+    )
+
+
+def test_diagnose_requires_destination_prefix(
+) -> None:
+    evidence = make_evidence()
+    evidence.pop("destination_prefix")
+
+    result = diagnose(evidence)
+
+    assert result["status"] == "INSUFFICIENT_EVIDENCE"
+    assert result["missing_evidence"] == [
+        "destination_prefix"
     ]
