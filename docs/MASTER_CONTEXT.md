@@ -147,10 +147,27 @@ The batch completed on 2026-07-29 in the listed order N0, C1, and C2,
 with three COMPLETED experiments, three validated Dataset Row v1
 records, and a final valid TOP-01 9/9 baseline.
 
-The generated JSONL file is a three-row smoke dataset that validates
-orchestration, aggregation, and cross-artifact semantics. It is not
-yet a training dataset and does not establish general diagnostic
-performance.
+The first parameterized routing pilot was verified through
+P1_ROUTING_VARIANTS. The accepted batch run is
+p1_routing_variants-20260730T082450785454Z-
+f283bfdd9ccc4b04afbc6462f6073a63.
+
+P1 executed canonical and alternate HostB-subnet variants for N0,
+C1, and C2 with two repetitions per variant. All 12 experiments
+completed, all 12 Dataset Row v1 records passed validation, all 12
+rule-based evaluations produced exact_match true, and TOP-01 ended
+with a valid 13/13 baseline.
+
+Batch status COMPLETED represents successful technical execution and
+dataset aggregation. It does not imply diagnostic correctness.
+Rule-based exact-match evaluation is verified separately and remains
+excluded from Dataset Row v1 model features.
+
+The earlier P1 batch with 8/12 exact matches is retained as
+regression evidence and is not accepted for subsequent ML work.
+The corrected 12-row batch validates the parameterized pipeline, but
+it remains a small pilot dataset and does not establish general
+diagnostic performance.
 
 The Machine Learning and hybrid diagnostic approaches have not yet
 been implemented or evaluated.

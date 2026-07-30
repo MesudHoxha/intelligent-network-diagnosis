@@ -72,9 +72,9 @@ Status: Approved for implementation.
 
 Decision: Include valid no-fault experiments in the dataset.
 
-Status: Implemented and tested for the first real normal
-experiment N0_NORMAL_OPERATION. Reproducible normal variants
-and batch generation remain pending.
+Status: Implemented and tested for canonical and alternate
+HostB-subnet variants. Both variants completed twice in the
+accepted P1_ROUTING_VARIANTS pilot batch.
 
 ## D-041 — Missing evidence
 
@@ -190,9 +190,10 @@ Dataset splitting must use split_group_id to prevent related
 scenario variants from crossing dataset partitions.
 
 Status: Implemented and tested through historical C1/C2 exports,
-the first real N0 no-fault row, and the first real three-row B0
-smoke batch. Repeated parameterized dataset generation and ML
-training have not started.
+the first real N0 no-fault row, the three-row B0 smoke batch, and
+the accepted 12-row P1 routing-variants pilot. Parameterized
+generation has started at pilot scale; group-aware splitting and
+ML training have not started.
 
 ## D-050 — Dataset-batch planning contract
 
@@ -209,7 +210,7 @@ Schema document.
 
 Status: Implemented and covered by automated tests. The canonical
 B0_SMOKE_CANONICAL plan validates as three planned experiments in
-the order N0, C1, and C2. The current full test suite has 53 passing
+the order N0, C1, and C2. The current full test suite has 80 passing
 tests.
 
 Limitation:
@@ -238,13 +239,14 @@ Default experiment and batch-run identifiers use UTC timestamps with
 microsecond precision plus UUID values to avoid collisions during
 repeated execution.
 
-Status: Implemented, covered by 53 automated tests, and verified
-through the first real B0_SMOKE_CANONICAL laboratory batch.
+Status: Implemented, covered within the full automated suite of
+80 passing tests, and verified through the real B0 smoke batch and
+the 12-experiment P1 routing-variants pilot.
 
 Limitation:
-The verified B0 output contains only three canonical smoke samples.
-It validates batch execution and aggregation, but it is not yet a
-training dataset.
+The contract establishes technical execution and valid aggregation.
+Batch status COMPLETED does not by itself establish diagnostic
+correctness or general model performance.
 
 ## D-052 — First real canonical smoke batch
 
@@ -266,3 +268,51 @@ Limitation:
 This is a smoke-validation artifact with three rows. Repeated and
 parameterized variants, group-aware splitting, ML training, hybrid
 diagnosis, and comparative evaluation have not yet been completed.
+
+## D-053 — Batch completion and diagnostic quality
+
+Decision: Preserve COMPLETED as the technical batch-execution and
+aggregation status. Diagnostic correctness, including exact_match,
+is a separate evaluation result and must not redefine batch
+completion.
+
+A technically completed experiment may still provide a valid
+ground-truth-labelled Dataset Row v1 when the rule-based method makes
+an incorrect prediction. Rejecting such rows according to rule-based
+accuracy would bias the dataset and weaken the later comparison
+between rule-based, Machine Learning, and hybrid methods.
+
+Rule outputs and evaluation results remain excluded from model
+features. A reusable batch-level evaluation summary or
+validation_status may be implemented later as a separate reporting
+layer, but it is not part of Batch Runner v1 completion semantics.
+
+Status: Approved after audit on 2026-07-30.
+
+## D-054 — First parameterized routing pilot batch
+
+Decision: Accept the corrected P1_ROUTING_VARIANTS execution as the
+first verified parameterized routing pilot dataset.
+
+The accepted batch run is
+p1_routing_variants-20260730T082450785454Z-
+f283bfdd9ccc4b04afbc6462f6073a63.
+
+It contains canonical and alternate HostB-subnet variants for N0,
+C1, and C2 with two repetitions per variant. It produced 12 completed
+experiments, 12 valid Dataset Row v1 records, 12/12 rule-based exact
+matches, and a final valid TOP-01 13/13 baseline.
+
+The earlier batch
+p1_routing_variants-20260730T074627928794Z-
+2b0c7bd987aa4a25aca81133275ae2d3
+remains unchanged as regression evidence. Its COMPLETED status is
+technically valid, but its 8/12 exact-match result means it is not the
+accepted P1 artifact for subsequent ML work.
+
+Status: Completed and semantically verified on 2026-07-30.
+
+Limitation:
+Twelve rows, three classes, two subnet variants, and two repetitions
+are sufficient for pipeline validation, not for final ML training or
+claims of general diagnostic performance.

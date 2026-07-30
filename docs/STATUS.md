@@ -32,11 +32,15 @@
 - Fail-stop batch metadata persistence and atomic JSONL aggregation
 - Per-row Dataset Row v1 revalidation and duplicate-output protection
 - Collision-resistant experiment and batch-run identifiers
-- Full automated test suite with 53 passing tests
+- Full automated test suite with 80 passing tests
 - First real B0_SMOKE_CANONICAL batch completed with three validated
   Dataset Row v1 records and a final TOP-01 9/9 baseline
+- Canonical and alternate HostB-subnet variants for N0, C1, and C2
+- Observation-derived affected-prefix diagnosis for routing variants
+- P1_ROUTING_VARIANTS completed with 12 validated Dataset Row v1
+  records, 12/12 exact matches, and a final TOP-01 13/13 baseline
 
-## Latest verified experiments
+## Representative verified experiments
 
 N0:
 
@@ -75,34 +79,41 @@ Final post-experiment baseline:
 
 ## Latest verified batch
 
-- Batch ID: B0_SMOKE_CANONICAL
+- Batch ID: P1_ROUTING_VARIANTS
 - Batch run ID:
-  b0_smoke_canonical-20260729T110541686889Z-3866a05ce64f4363afec8ae7ace6ef97
+  p1_routing_variants-20260730T082450785454Z-
+  f283bfdd9ccc4b04afbc6462f6073a63
 - Status: COMPLETED
 - Failure policy: stop
-- Execution order: N0, C1, C2
-- Planned/completed experiments: 3/3
-- Validated Dataset Row v1 records: 3
+- Planned/completed experiments: 12/12
+- Validated Dataset Row v1 records: 12
+- Scenario/variant combinations: 6
+- Repetitions per combination: 2
+- Rule-based exact matches: 12/12
+- Affected-prefix correctness: 12/12
 - Semantic verification: PASS
-- Final TOP-01 baseline: 9/9 VALID
-- Interpretation: smoke dataset, not a training dataset
+- Final TOP-01 baseline: 13/13 VALID
+- Interpretation: parameterized pilot dataset, not a final
+  training dataset
 
 ## Active
 
-- Design parameterized normal, C1, and C2 experiment variants
-- Define the first repeated pilot dataset campaign
-- Prepare group-aware dataset splitting through split_group_id
+- Verify split_group_id assignments across the accepted P1 dataset
+- Implement and test group-aware dataset splitting
+- Define the next controlled dataset expansion beyond the 12-row
+  routing pilot
+- Keep rule-based evaluation reporting separate from Dataset Row v1
+  features and Batch Runner completion semantics
 
 ## Open issues
 
+- Reusable batch-level evaluation summary or validation report
 - Final FRRouting container image for later routing extensions
 - Final set of pilot fault classes beyond C1 and C2
-- Repeated normal samples and parameterized normal variants
 - Missing-evidence experiments
 - Unseen scenario or topology variants
 - Controlled multiple-fault subset
-- Larger reproducible dataset generation beyond the canonical
-  three-row smoke batch
+- Larger and more varied dataset beyond the 12-row P1 pilot
 - Scenario- or topology-grouped dataset splitting
 - Machine Learning method implementation
 - Hybrid method implementation
@@ -110,21 +121,23 @@ Final post-experiment baseline:
 
 ## Next milestone
 
-Define and implement the first reproducible parameterized variants
-for N0, C1, and C2. Then create a pilot batch plan with repetitions
-and verify class counts, Dataset Row v1 validity, split_group_id
-assignments, and baseline restoration across the campaign.
+Verify the split_group_id assignments in the accepted P1 dataset
+and implement a reproducible group-aware train/validation/test
+split. After the split contract is tested, define the next
+controlled increase in dataset diversity and sample count.
 
-Do not begin ML training until parameterized dataset generation and
-group-aware splitting are implemented and verified.
+Do not begin final ML training until group-aware splitting and a
+sufficiently varied dataset campaign are implemented and verified.
 
 ## Important limitation
 
-Batch Runner v1 and the canonical B0 plan have been verified through
-one real multi-experiment laboratory batch. The resulting JSONL file
-contains only three canonical smoke samples.
+The accepted P1 JSONL file contains 12 rows from three classes,
+two HostB-subnet variants, and two repetitions per combination.
+It validates parameterized execution, evidence-based diagnosis,
+aggregation, and restoration, but it is not large or diverse
+enough for final ML training.
 
-The project does not yet have a sufficiently varied training
-dataset, establish general diagnostic accuracy, or compare the
-rule-based, Machine Learning, and hybrid methods. Repeated and
-parameterized variants plus group-aware splitting remain required.
+The project has not yet established general diagnostic accuracy
+or compared the rule-based, Machine Learning, and hybrid methods.
+Group-aware splitting, additional controlled variation, ML, and
+hybrid evaluation remain required.
