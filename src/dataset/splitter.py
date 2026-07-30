@@ -110,11 +110,10 @@ def allocate_group_counts(
 
 def stable_group_key(
     seed: int,
-    label: str,
     group_id: str,
 ) -> tuple[str, str]:
     payload = (
-        f"{seed}\0{label}\0{group_id}"
+        f"{seed}\0{group_id}"
         .encode("utf-8")
     )
 
@@ -131,6 +130,9 @@ def plan_group_aware_split(
     train_ratio: float = 0.6,
     validation_ratio: float = 0.2,
     test_ratio: float = 0.2,
+    expected_fault_types: (
+        Sequence[str] | None
+    ) = None,
 ) -> SplitResult:
     if (
         isinstance(seed, bool)
@@ -153,8 +155,7 @@ def plan_group_aware_split(
 
     seen_sample_ids: set[str] = set()
     dataset_schema_version: int | None = None
-    group_labels: dict[str, str] = {}
-    groups_by_label: dict[
+    group_labels: dict[
         str,
         set[str],
     ] = defaultdict(set)
@@ -236,80 +237,151 @@ def plan_group_aware_split(
 
         seen_sample_ids.add(sample_id)
 
-        previous_label = group_labels.setdefault(
-            group_id,
-            label,
-        )
-
-        if previous_label != label:
-            raise DatasetSplitError(
-                "Each split_group_id must contain "
-                "exactly one fault_type in Split "
-                f"Contract v1; {group_id!r} contains "
-                f"{previous_label!r} and {label!r}."
-            )
-
-        groups_by_label[label].add(group_id)
+        group_labels[group_id].add(label)
         validated_rows.append(row)
 
-    insufficient = {
-        label: len(group_ids)
-        for label, group_ids in sorted(
-            groups_by_label.items()
-        )
-        if len(group_ids) < len(PARTITION_NAMES)
+    observed_fault_types = {
+        label
+        for labels in group_labels.values()
+        for label in labels
     }
 
-    if insufficient:
+    if expected_fault_types is None:
+        required_fault_types = sorted(
+            observed_fault_types
+        )
+    else:
+        if (
+            isinstance(
+                expected_fault_types,
+                (str, bytes),
+            )
+            or not expected_fault_types
+        ):
+            raise DatasetSplitError(
+                "expected_fault_types must be a "
+                "non-empty sequence of strings."
+            )
+
+        normalized_fault_types: list[str] = []
+
+        for fault_type in expected_fault_types:
+            if (
+                not isinstance(fault_type, str)
+                or not fault_type.strip()
+            ):
+                raise DatasetSplitError(
+                    "expected_fault_types must "
+                    "contain non-empty strings."
+                )
+
+            normalized_fault_types.append(
+                fault_type
+            )
+
+        if (
+            len(set(normalized_fault_types))
+            != len(normalized_fault_types)
+        ):
+            raise DatasetSplitError(
+                "expected_fault_types cannot "
+                "contain duplicates."
+            )
+
+        required_fault_types = sorted(
+            normalized_fault_types
+        )
+        required_fault_type_set = set(
+            required_fault_types
+        )
+        missing_fault_types = sorted(
+            required_fault_type_set
+            - observed_fault_types
+        )
+        unexpected_fault_types = sorted(
+            observed_fault_types
+            - required_fault_type_set
+        )
+
+        if (
+            missing_fault_types
+            or unexpected_fault_types
+        ):
+            raise DatasetSplitError(
+                "Source fault_type coverage does "
+                "not match expected_fault_types: "
+                "missing="
+                f"{missing_fault_types}, "
+                "unexpected="
+                f"{unexpected_fault_types}."
+            )
+
+    required_fault_type_set = set(
+        required_fault_types
+    )
+    incomplete_groups = {
+        group_id: sorted(
+            required_fault_type_set - labels
+        )
+        for group_id, labels
+        in sorted(group_labels.items())
+        if labels != required_fault_type_set
+    }
+
+    if incomplete_groups:
         details = ", ".join(
-            f"{label}={count}"
-            for label, count
-            in insufficient.items()
+            f"{group_id} missing "
+            f"{'/'.join(missing_labels)}"
+            for group_id, missing_labels
+            in incomplete_groups.items()
         )
 
         raise DatasetSplitError(
-            "Insufficient independent split groups "
-            "for three-way class coverage: "
-            f"{details}. Each fault_type requires "
-            "at least 3 split_group_id values."
+            "Every evaluation-context "
+            "split_group_id must contain every "
+            "fault_type present in the source "
+            f"dataset; {details}."
         )
 
+    if len(group_labels) < len(PARTITION_NAMES):
+        raise DatasetSplitError(
+            "Insufficient evaluation-context "
+            "split groups for a three-way split: "
+            f"found {len(group_labels)}, require "
+            f"at least {len(PARTITION_NAMES)}."
+        )
+
+    ordered_groups = sorted(
+        group_labels,
+        key=lambda group_id: (
+            stable_group_key(
+                seed,
+                group_id,
+            )
+        ),
+    )
+
+    counts = allocate_group_counts(
+        len(ordered_groups),
+        ratios,
+    )
     group_partitions: dict[str, str] = {}
+    start = 0
 
-    for label, group_ids in sorted(
-        groups_by_label.items()
-    ):
-        ordered_groups = sorted(
-            group_ids,
-            key=lambda group_id: (
-                stable_group_key(
-                    seed,
-                    label,
-                    group_id,
-                )
-            ),
+    for partition_name in PARTITION_NAMES:
+        end = (
+            start
+            + counts[partition_name]
         )
 
-        counts = allocate_group_counts(
-            len(ordered_groups),
-            ratios,
-        )
-        start = 0
-
-        for partition_name in PARTITION_NAMES:
-            end = (
-                start
-                + counts[partition_name]
+        for group_id in ordered_groups[
+            start:end
+        ]:
+            group_partitions[group_id] = (
+                partition_name
             )
 
-            for group_id in ordered_groups[
-                start:end
-            ]:
-                group_partitions[group_id] = (
-                    partition_name
-                )
-
-            start = end
+        start = end
 
     partition_rows: dict[
         str,
@@ -364,12 +436,15 @@ def plan_group_aware_split(
                     for row in rows_in_partition
                 ).items()
             )),
-            "class_group_counts": dict(sorted(
-                Counter(
-                    group_labels[group_id]
+            "class_group_counts": {
+                label: sum(
+                    label in group_labels[
+                        group_id
+                    ]
                     for group_id in group_ids
-                ).items()
-            )),
+                )
+                for label in required_fault_types
+            },
         }
 
     return SplitResult(
@@ -378,9 +453,9 @@ def plan_group_aware_split(
             for name in PARTITION_NAMES
         },
         manifest={
-            "schema_version": 1,
+            "schema_version": 2,
             "algorithm": (
-                "stratified_group_hash_v1"
+                "complete_context_group_hash_v2"
             ),
             "source_dataset_schema_version": (
                 dataset_schema_version
@@ -394,8 +469,16 @@ def plan_group_aware_split(
                 group_partitions
             ),
             "class_count": len(
-                groups_by_label
+                required_fault_types
             ),
+            "required_fault_types": (
+                required_fault_types
+            ),
+            "source_group_class_coverage": {
+                group_id: sorted(labels)
+                for group_id, labels
+                in sorted(group_labels.items())
+            },
             "partitions": (
                 manifest_partitions
             ),
@@ -469,6 +552,9 @@ def write_group_aware_split(
     train_ratio: float = 0.6,
     validation_ratio: float = 0.2,
     test_ratio: float = 0.2,
+    expected_fault_types: (
+        Sequence[str] | None
+    ) = None,
 ) -> dict[str, Any]:
     if output_directory.exists():
         raise DatasetSplitError(
@@ -493,6 +579,9 @@ def write_group_aware_split(
         train_ratio=train_ratio,
         validation_ratio=validation_ratio,
         test_ratio=test_ratio,
+        expected_fault_types=(
+            expected_fault_types
+        ),
     )
 
     payloads = {
@@ -550,7 +639,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=(
             "Create a deterministic, "
-            "class-stratified, group-aware "
+            "complete-context, group-aware "
             "train/validation/test split."
         )
     )
@@ -585,6 +674,15 @@ def build_parser() -> argparse.ArgumentParser:
         type=float,
         default=0.2,
     )
+    parser.add_argument(
+        "--required-fault-type",
+        dest="expected_fault_types",
+        action="append",
+        help=(
+            "Required source fault_type. Repeat "
+            "once per expected class."
+        ),
+    )
 
     return parser
 
@@ -605,6 +703,9 @@ def main() -> int:
             ),
             test_ratio=(
                 arguments.test_ratio
+            ),
+            expected_fault_types=(
+                arguments.expected_fault_types
             ),
         )
     except (

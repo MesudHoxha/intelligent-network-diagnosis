@@ -87,7 +87,7 @@ Decision: Split datasets by scenario or topology groups rather than
 only random row-level splitting.
 
 Status: Implemented and tested through the deterministic group-aware
-splitter specified in D-055.
+splitter specified in D-055 and corrected by D-058.
 
 ## D-043 — Main development environment
 
@@ -194,12 +194,13 @@ scenario variants from crossing dataset partitions.
 Status: Implemented and tested through historical C1/C2 exports,
 the first real N0 no-fault row, the three-row B0 smoke batch, and
 the accepted 12-row P1 routing-variants pilot. Parameterized
-generation has started at pilot scale. Group-aware splitting is
-implemented and tested, but P1 has insufficient independent groups
-for a valid three-way split. Dataset Row v1 remains the immutable
-historical P1 contract and adapts Evidence v2 only for the legacy
-TOP-01 r1/r2 binding. Dataset Row v2 supersedes it as the canonical
-contract for new rows under D-057. ML training has not started.
+generation has started at pilot scale. Complete evaluation-context
+splitting is implemented and tested under D-058, but P1 uses
+historical class-specific groups that do not contain the complete
+required class set. Dataset Row v1 remains the immutable historical
+P1 contract and adapts Evidence v2 only for the legacy TOP-01 r1/r2
+binding. Dataset Row v2 supersedes it as the canonical contract for
+new rows under D-057. ML training has not started.
 
 ## D-050 — Dataset-batch planning contract
 
@@ -332,36 +333,24 @@ claims of general diagnostic performance.
 Decision: Use a deterministic, class-stratified, group-aware
 train/validation/test splitter.
 
-Every split_group_id must be assigned wholly to exactly one partition,
-and every split group must contain exactly one fault_type. Related
-repetitions and scenario variants represented by the same group must
-never cross partition boundaries.
+The original implementation assigned every split_group_id wholly to
+one partition, required exactly one fault_type in each group, and used
+the algorithm identifier stratified_group_hash_v1.
 
-The splitter uses algorithm identifier stratified_group_hash_v1, default
-seed 20260730, and default ratios 0.6/0.2/0.2. Group allocation preserves
-at least one group of every class in every partition. Consequently, each
-fault_type requires at least three independent split_group_id values for
-three-way class coverage.
-
-Feasibility and validation of a homogeneous supported Dataset Row
-version must complete before the output directory is created. A
-successful split writes train, validation, and test JSONL files plus a
-manifest containing the source dataset schema version, group and class
-counts, and SHA-256 hashes for the source and outputs.
-
-Status: Implemented in src/dataset/splitter.py. Under D-057, the
-splitter accepts homogeneous Dataset Row v1 or v2 sources and rejects
-mixed versions. The complete automated suite has 126 passing tests.
-The accepted P1 dataset was verified to be correctly rejected without
-output because each class has only one independent split group.
+Status: The original contract was implemented and tested. Its
+single-class grouping semantics and per-class allocation were
+superseded by D-058 after the P2-R2 audit showed that classes from the
+same laboratory context could otherwise cross partitions. The
+requirements for deterministic whole-group allocation, homogeneous
+Dataset Row versions, pre-output feasibility validation, output
+hashes, and a split manifest remain in force under D-058.
 
 Limitation:
 
-Implementation of the splitter does not make P1 training-ready.
-Repetitions and related variants sharing one split_group_id do not count
-as independent groups. A controlled dataset expansion must provide at
-least three independent groups per fault_type before a three-way split
-can succeed.
+The original splitter did not make P1 training-ready and did not
+prevent shared laboratory context from appearing across partitions
+through different fault classes. D-058 defines the corrected
+evaluation-context boundary.
 
 ## D-056 — Role-neutral observation and evidence contract
 
@@ -435,5 +424,58 @@ Limitation:
 The real regression used only the existing TOP-01 laboratory and
 created a three-row smoke dataset. It verifies the v2 contract and
 pipeline integration, not a real TOP-02 laboratory, sufficient
-independent split groups, ML readiness, or general diagnostic
+complete evaluation contexts, ML readiness, or general diagnostic
 performance.
+
+## D-058 — Evaluation-context grouping protocol
+
+Decision: Use split_group_id as the complete evaluation-context
+boundary for train/validation/test splitting.
+
+One evaluation context is defined by its topology graph and forwarding
+configuration, directed diagnostic path, route-observer and transit
+role binding, logical fault-injection location, and diagnostic
+evidence producers. All approved no-fault and fault classes generated
+from that context must use the same split_group_id and remain wholly
+inside one partition.
+
+Repetitions, alternate IP addresses or subnets on the same logical
+path, node renaming, timestamps, experiment identifiers, and small
+parameter variations do not create new groups. A nominal reverse
+direction also does not create a group when it only relabels an
+otherwise equivalent causal path.
+
+The splitter uses algorithm identifier
+complete_context_group_hash_v2. It requires every group to contain
+every required fault_type, supports an explicit expected_fault_types
+set, requires at least three complete context groups for a three-way
+split, and produces a deterministic whole-group allocation. Dataset
+Row v2 remains unchanged; no parallel evaluation_context_id field is
+introduced.
+
+Five complete contexts are the readiness target for the first ML
+experiment. With the default 0.6/0.2/0.2 ratios, they produce a 3/1/1
+group allocation. With three current classes and two repetitions per
+class and context, the minimum planned campaign contains 30 rows.
+
+The planned context matrix contains one TOP-01 context, three
+materially distinct TOP-02 contexts, and one TOP-03 asymmetric
+context. These are planned coverage slots, not claims that TOP-02 or
+TOP-03 has been implemented. Any two designs that collapse to the
+same causal context must share one group, and another reviewed context
+must be added.
+
+The historical P1 and P2-R1 smoke datasets remain unchanged. Their
+class-specific split_group_id values are valid historical metadata but
+do not satisfy this protocol and must be rejected as ML split sources.
+
+Status: Approved and implemented in src/dataset/splitter.py. The
+complete automated suite has 128 passing tests. The historical P1
+dataset was verified to be rejected because its evaluation-context
+groups do not contain the complete current class set. The protocol is
+recorded in docs/EVALUATION_GROUP_PROTOCOL.md.
+
+ML readiness remains blocked until all five reviewed contexts are
+implemented, each contains the complete approved class set, the
+expanded campaign succeeds, and the generated split manifest passes
+an explicit no-cross-partition group audit.

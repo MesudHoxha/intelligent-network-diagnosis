@@ -47,7 +47,7 @@
 - Dataset Row v2 as the default Batch Runner output
 - Mixed-version dataset rejection at the batch boundary
 - Collision-resistant experiment and batch-run identifiers
-- Full automated test suite with 126 passing tests
+- Full automated test suite with 128 passing tests
 - First real B0_SMOKE_CANONICAL batch completed with three validated
   Dataset Row v1 records and a final TOP-01 9/9 baseline
 - Canonical and alternate HostB-subnet variants for N0, C1, and C2
@@ -58,14 +58,24 @@
 - Split manifest with source/output hashes and partition statistics
 - Homogeneous Dataset Row v1/v2 support in the splitter
 - Mixed-version source rejection and source-version manifest metadata
-- Verified rejection of P1 before output creation because every class
-  has only one independent split group
+- Verified rejection of P1 before output creation because every
+  historical class-specific group lacks the complete required class
+  set
 - Real B0 regression completed for N0, C1, and C2 using Evidence v2
 - Three regression diagnoses with exact_match true
 - TOP-01 remained valid with 13/13 checks before and after the
   Evidence v2 regression
 - Real B0 regression produced three validated Dataset Row v2 records
 - Dataset Row v2 role-neutral feature and metadata audit passed
+- Evaluation Group Protocol v1
+- split_group_id defined as the complete evaluation-context boundary
+- Complete multi-class group enforcement for N0, C1, and C2
+- Explicit expected_fault_types coverage validation
+- Deterministic complete_context_group_hash_v2 allocation
+- Minimum three-context feasibility check before output creation
+- Five-context 3/1/1 ML-readiness target
+- Planned context matrix covering TOP-01, TOP-02, and TOP-03
+- Verified real P1 rejection under the complete-context protocol
 
 ## Representative verified experiments
 
@@ -160,19 +170,40 @@ Final post-experiment baseline:
 - Interpretation: real Dataset Row v2 pipeline regression, not a
   training dataset or multi-topology evaluation
 
+## Latest P2-R2 verification
+
+- Evaluation Group Protocol version: 1
+- Split algorithm: complete_context_group_hash_v2
+- Grouping boundary: complete multi-class evaluation context
+- Current required classes: no_fault, missing_static_route,
+  wrong_next_hop
+- Target context count before ML: 5
+- Default group allocation target: 3/1/1
+- Minimum planned campaign: 30 rows with two repetitions
+- Targeted splitter tests: 14/14 passed
+- Full automated suite: 128/128 passed
+- Compile and diff checks: PASS
+- Real historical P1 rejection audit: PASS
+- Protocol audit: PASS
+- Docker/laboratory execution: not required for this contract stage
+- Interpretation: grouping semantics and readiness gate are verified;
+  the five planned contexts are not yet implemented
+
 ## Active
 
-- Design and implement a real TOP-02 laboratory with a distinct
-  topology and observation context
-- Add a TOP-02 baseline validator and controlled scenario bindings
+- Translate the planned G02, G03, and G04 TOP-02 slots into concrete
+  reviewed graphs, forwarding configurations, observation roles, and
+  fault-injection locations
+- Define one shared multi-class split_group_id binding for future G01
+  TOP-01 campaign rows without rewriting historical datasets
+- Design and implement the first real TOP-02 laboratory only after
+  its causal distinction is documented
+- Add the matching TOP-02 baseline validator and controlled N0, C1,
+  and C2 scenario bindings
 - Verify real TOP-02 Evidence v2 and Dataset Row v2 artifacts before
   expanding the dataset campaign
-- Define the controlled dataset expansion beyond the 12-row routing
-  pilot using genuinely independent topology and observation groups
-- Provide at least three independent split_group_id values for every
-  fault_type before producing the first three-way split
-- Preserve controlled variation and group independence while
-  increasing dataset diversity
+- Preserve complete evaluation contexts and whole-group partitioning
+  while increasing dataset diversity
 - Keep rule-based evaluation reporting separate from dataset features
   and Batch Runner completion semantics
 
@@ -186,35 +217,38 @@ Final post-experiment baseline:
 - Unseen scenario or topology variants
 - Controlled multiple-fault subset
 - Larger and more varied dataset beyond the 12-row P1 pilot
-- Sufficient independent split groups for every fault class
+- Five implemented and reviewed complete evaluation contexts
+- Shared multi-class group bindings for future campaign rows
+- Real TOP-03 asymmetric context
+- First valid train/validation/test split under D-058
 - Machine Learning method implementation
 - Hybrid method implementation
 - OSPF implementation; its current status remains proposed
 
 ## Next milestone
 
-Design, implement, and test TOP-02 as the first real laboratory with a
-distinct topology and observation context. Add its baseline validator
-and controlled scenario bindings, then verify Evidence v2 and Dataset
-Row v2 artifacts before including TOP-02 in the next dataset campaign.
+Complete the concrete design review for the three planned TOP-02
+evaluation contexts. For each context, freeze its graph/configuration
+fingerprint, directed path, route-observer/transit binding,
+fault-injection location, evidence producers, and shared
+split_group_id before implementing the first TOP-02 laboratory.
 
-Do not begin ML training until TOP-02, the expanded dataset, group
-independence, class coverage, and the generated split manifest are
-verified.
+Do not begin ML training until all five reviewed contexts, the
+expanded complete-class campaign, and the generated split manifest
+are verified.
 
 ## Important limitation
 
 The accepted P1 JSONL file contains 12 rows from three classes,
 two HostB-subnet variants, and two repetitions per combination.
 It validates parameterized execution, evidence-based diagnosis,
-aggregation, and restoration, but it contains only three independent
-split groups: one for each class.
+aggregation, and restoration. Its three split groups are historical
+class-specific identifiers, not three complete evaluation contexts.
 
-The group-aware splitter is implemented and verified, but it
-correctly refuses P1 because no class has the three independent
-groups required for train/validation/test coverage. This refusal is
-a dataset-feasibility result, not a failure of the accepted P1
-pipeline artifact.
+The evaluation-context-aware splitter is implemented and verified.
+It correctly refuses P1 because every historical group is missing the
+other required fault types. This refusal is a dataset-feasibility
+result, not a failure of the accepted P1 pipeline artifact.
 
 P2-R0 made the observation, evidence, and rule layers role-neutral.
 P2-R1 now makes Dataset Row v2 the role-neutral canonical dataset
@@ -228,6 +262,12 @@ historical TOP_01, hosta_to_hostb, r1/r2 context. Migrating historical
 rows does not create new experimental evidence or independent split
 groups. The three-row P2-R1 regression validates pipeline integration
 only and is not a training dataset.
+
+P2-R2 defines five complete evaluation contexts as the target for the
+first ML experiment and plans coverage across TOP-01, TOP-02, and
+TOP-03. Only TOP-01 is currently implemented. The planned TOP-02 and
+TOP-03 labels are design commitments, not verified laboratory
+artifacts. No successful D-058 train/validation/test split exists yet.
 
 The project has not yet established general diagnostic accuracy or
 compared the rule-based, Machine Learning, and hybrid methods.

@@ -206,25 +206,39 @@ The corrected 12-row batch validates the parameterized pipeline, but
 it remains a small pilot dataset and does not establish general
 diagnostic performance.
 
-A deterministic, class-stratified, group-aware dataset splitter is
-now implemented with the algorithm identifier
-stratified_group_hash_v1. It assigns every split_group_id wholly to
-one of train, validation, or test and requires every split group to
-contain exactly one fault_type.
+A deterministic evaluation-context-aware dataset splitter is now
+implemented with the algorithm identifier
+complete_context_group_hash_v2. It assigns every split_group_id wholly
+to one of train, validation, or test.
 
-For three-way class coverage, every fault_type must have at least
-three independent split_group_id values. The splitter validates this
-feasibility before creating its output directory and writes a
-manifest with source and output hashes when splitting succeeds.
-It accepts a homogeneous Dataset Row v1 or Dataset Row v2 source,
-records source_dataset_schema_version in the split manifest, and
-rejects mixed-version input.
+Under D-058, split_group_id represents one complete causal diagnostic
+context rather than one class-specific scenario group. Each group must
+contain every required fault_type. The current approved class set is
+no_fault, missing_static_route, and wrong_next_hop. Repetitions and
+cosmetic or parameter-only variants remain in the same group.
 
-The accepted P1 dataset passed its split-group integrity audit, but it
-contains only three independent groups: one for each of no_fault,
-missing_static_route, and wrong_next_hop. It is therefore correctly
-rejected for three-way splitting without creating output. P1 remains
-an accepted pipeline-validation artifact, not an ML-training dataset.
+The splitter can validate an explicit expected_fault_types set,
+requires at least three complete context groups for a three-way split,
+and validates feasibility before creating its output directory. A
+successful split writes a manifest with the required class set,
+per-group class coverage, partition statistics, and source and output
+hashes. It accepts a homogeneous Dataset Row v1 or Dataset Row v2
+source, records source_dataset_schema_version, and rejects
+mixed-version input.
+
+Five complete contexts are the target before the first ML experiment,
+which produces a 3/1/1 group allocation under the default
+0.6/0.2/0.2 ratios. With the three current classes and two repetitions
+per class and context, the minimum planned campaign contains 30 rows.
+The reviewed plan reserves one TOP-01 context, three materially
+different TOP-02 contexts, and one TOP-03 asymmetric context. TOP-02
+and TOP-03 remain planned and have not been implemented.
+
+The accepted P1 dataset retains its historical class-specific
+split_group_id values. It is correctly rejected because each old
+group is missing the other classes required for a complete evaluation
+context. P1 remains an accepted pipeline-validation artifact, not an
+ML-training dataset.
 
 P2-R0 removed the fixed topology and node-name coupling from the
 observation, collection, and rule-diagnosis layers while preserving
@@ -253,7 +267,20 @@ record contained the seven role-neutral features with the TOP-01
 hosta_to_hostb, r1/r2 observation context in metadata. All three rule
 evaluations produced exact_match true, and TOP-01 remained valid with
 13/13 checks before and after the batch. The complete automated suite
-has 126 passing tests.
+had 126 passing tests.
+
+P2-R2 formalized the evaluation-group protocol without changing
+Dataset Row v2. The splitter now enforces complete multi-class
+evaluation-context groups, exact expected-class coverage when
+provided, a minimum of three groups, and deterministic whole-group
+allocation. The full suite has 128 passing tests. A direct audit of
+the real historical P1 JSONL confirmed its required rejection under
+the new protocol.
+
+The current scenario files and historical datasets have not been
+relabelled to manufacture new groups. Shared multi-class bindings for
+future TOP-01 campaign rows and the concrete TOP-02 and TOP-03
+laboratories remain to be implemented and verified.
 
 The Machine Learning and hybrid diagnostic approaches have not yet
 been implemented or evaluated.

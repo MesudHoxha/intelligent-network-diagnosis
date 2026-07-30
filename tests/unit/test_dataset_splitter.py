@@ -26,6 +26,8 @@ def make_row(
     label: str,
     group_number: int,
     repetition: int = 1,
+    *,
+    class_specific_group: bool = False,
 ) -> dict[str, object]:
     sample_id = (
         f"{label}-{group_number}-{repetition}"
@@ -41,7 +43,12 @@ def make_row(
                 f"independent-{group_number}"
             ),
             "split_group_id": (
-                f"{label}-group-{group_number}"
+                (
+                    f"{label}-"
+                    if class_specific_group
+                    else ""
+                )
+                + f"context-{group_number}"
             ),
             "topology_id": "TOP_02",
             "direction": "client_to_server",
@@ -85,19 +92,23 @@ def make_row(
 
 def valid_rows(
     *,
-    groups_per_class: int = 3,
+    context_group_count: int = 3,
     repetitions: int = 2,
+    class_specific_groups: bool = False,
 ) -> list[dict[str, object]]:
     return [
         make_row(
             label,
             group_number,
             repetition,
+            class_specific_group=(
+                class_specific_groups
+            ),
         )
         for label in FAULT_TYPES
         for group_number in range(
             1,
-            groups_per_class + 1,
+            context_group_count + 1,
         )
         for repetition in range(
             1,
@@ -130,6 +141,13 @@ def test_groups_do_not_cross_partitions_and_all_classes_are_covered(
         ]
         == 2
     )
+    assert result.manifest["schema_version"] == 2
+    assert result.manifest["algorithm"] == (
+        "complete_context_group_hash_v2"
+    )
+    assert result.manifest[
+        "required_fault_types"
+    ] == sorted(FAULT_TYPES)
 
     for partition_name, rows in (
         result.partitions.items()
@@ -153,16 +171,18 @@ def test_groups_do_not_cross_partitions_and_all_classes_are_covered(
 def test_split_is_deterministic_when_input_order_changes(
 ) -> None:
     rows = valid_rows(
-        groups_per_class=5
+        context_group_count=5
     )
 
     first = plan_group_aware_split(
         rows,
         seed=123,
+        expected_fault_types=FAULT_TYPES,
     )
     second = plan_group_aware_split(
         list(reversed(rows)),
         seed=123,
+        expected_fault_types=FAULT_TYPES,
     )
 
     assert (
@@ -182,19 +202,15 @@ def test_split_is_deterministic_when_input_order_changes(
         ] == [3, 1, 1]
 
 
-def test_rejects_p1_like_class_group_structure(
+def test_rejects_less_than_three_context_groups(
 ) -> None:
     with pytest.raises(
         DatasetSplitError,
-        match=(
-            "missing_static_route=1, "
-            "no_fault=1, "
-            "wrong_next_hop=1"
-        ),
+        match="found 1, require at least 3",
     ):
         plan_group_aware_split(
             valid_rows(
-                groups_per_class=1
+                context_group_count=1
             )
         )
 
@@ -213,7 +229,7 @@ def test_infeasible_split_creates_no_output(
         "".join(
             json.dumps(row) + "\n"
             for row in valid_rows(
-                groups_per_class=1
+                context_group_count=1
             )
         ),
         encoding="utf-8",
@@ -221,7 +237,7 @@ def test_infeasible_split_creates_no_output(
 
     with pytest.raises(
         DatasetSplitError,
-        match="Insufficient independent",
+        match="Insufficient evaluation-context",
     ):
         write_group_aware_split(
             source_path,
@@ -234,22 +250,65 @@ def test_infeasible_split_creates_no_output(
     )
 
 
-def test_rejects_group_with_multiple_labels(
+def test_rejects_p1_like_class_specific_groups(
 ) -> None:
-    rows = valid_rows()
-    rows[-1]["metadata"][
-        "split_group_id"
-    ] = (
-        rows[0]["metadata"][
-            "split_group_id"
-        ]
+    rows = valid_rows(
+        context_group_count=1,
+        class_specific_groups=True,
     )
 
     with pytest.raises(
         DatasetSplitError,
-        match="exactly one fault_type",
+        match=(
+            "Every evaluation-context "
+            "split_group_id must contain every "
+            "fault_type"
+        ),
     ):
         plan_group_aware_split(rows)
+
+
+def test_rejects_incomplete_context_class_coverage(
+) -> None:
+    rows = [
+        row
+        for row in valid_rows()
+        if not (
+            row["metadata"]["split_group_id"]
+            == "context-3"
+            and row["labels"]["fault_type"]
+            == "wrong_next_hop"
+        )
+    ]
+
+    with pytest.raises(
+        DatasetSplitError,
+        match=(
+            "context-3 missing wrong_next_hop"
+        ),
+    ):
+        plan_group_aware_split(rows)
+
+
+def test_rejects_globally_missing_expected_class(
+) -> None:
+    rows = [
+        row
+        for row in valid_rows()
+        if row["labels"]["fault_type"]
+        != "wrong_next_hop"
+    ]
+
+    with pytest.raises(
+        DatasetSplitError,
+        match=(
+            "missing=\\['wrong_next_hop'\\]"
+        ),
+    ):
+        plan_group_aware_split(
+            rows,
+            expected_fault_types=FAULT_TYPES,
+        )
 
 
 def test_rejects_duplicate_sample_id(
@@ -366,11 +425,16 @@ def test_writes_manifest_and_refuses_overwrite(
     manifest = write_group_aware_split(
         source_path,
         output_directory,
+        expected_fault_types=FAULT_TYPES,
     )
 
     assert (
         manifest["source_row_count"]
         == 18
+    )
+    assert manifest["source_group_count"] == 3
+    assert manifest["required_fault_types"] == (
+        sorted(FAULT_TYPES)
     )
 
     for partition_name in (
