@@ -169,5 +169,22 @@ The corrected 12-row batch validates the parameterized pipeline, but
 it remains a small pilot dataset and does not establish general
 diagnostic performance.
 
+A deterministic, class-stratified, group-aware dataset splitter is
+now implemented with the algorithm identifier
+stratified_group_hash_v1. It assigns every split_group_id wholly to
+one of train, validation, or test and requires every split group to
+contain exactly one fault_type.
+
+For three-way class coverage, every fault_type must have at least
+three independent split_group_id values. The splitter validates this
+feasibility before creating its output directory and writes a
+manifest with source and output hashes when splitting succeeds.
+
+The accepted P1 dataset passed its split-group integrity audit, but it
+contains only three independent groups: one for each of no_fault,
+missing_static_route, and wrong_next_hop. It is therefore correctly
+rejected for three-way splitting without creating output. P1 remains
+an accepted pipeline-validation artifact, not an ML-training dataset.
+
 The Machine Learning and hybrid diagnostic approaches have not yet
 been implemented or evaluated.

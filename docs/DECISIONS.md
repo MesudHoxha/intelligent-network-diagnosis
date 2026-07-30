@@ -85,7 +85,9 @@ Status: Approved.
 
 Decision: Split datasets by scenario or topology groups rather than
 only random row-level splitting.
-Status: Approved.
+
+Status: Implemented and tested through the deterministic group-aware
+splitter specified in D-055.
 
 ## D-043 — Main development environment
 
@@ -192,8 +194,9 @@ scenario variants from crossing dataset partitions.
 Status: Implemented and tested through historical C1/C2 exports,
 the first real N0 no-fault row, the three-row B0 smoke batch, and
 the accepted 12-row P1 routing-variants pilot. Parameterized
-generation has started at pilot scale; group-aware splitting and
-ML training have not started.
+generation has started at pilot scale. Group-aware splitting is
+implemented and tested, but P1 has insufficient independent groups
+for a valid three-way split. ML training has not started.
 
 ## D-050 — Dataset-batch planning contract
 
@@ -210,7 +213,7 @@ Schema document.
 
 Status: Implemented and covered by automated tests. The canonical
 B0_SMOKE_CANONICAL plan validates as three planned experiments in
-the order N0, C1, and C2. The current full test suite has 80 passing
+the order N0, C1, and C2. The current full test suite has 91 passing
 tests.
 
 Limitation:
@@ -316,3 +319,36 @@ Limitation:
 Twelve rows, three classes, two subnet variants, and two repetitions
 are sufficient for pipeline validation, not for final ML training or
 claims of general diagnostic performance.
+## D-055 — Group-aware dataset splitting contract
+
+Decision: Use a deterministic, class-stratified, group-aware
+train/validation/test splitter.
+
+Every split_group_id must be assigned wholly to exactly one partition,
+and every split group must contain exactly one fault_type. Related
+repetitions and scenario variants represented by the same group must
+never cross partition boundaries.
+
+The splitter uses algorithm identifier stratified_group_hash_v1, default
+seed 20260730, and default ratios 0.6/0.2/0.2. Group allocation preserves
+at least one group of every class in every partition. Consequently, each
+fault_type requires at least three independent split_group_id values for
+three-way class coverage.
+
+Feasibility and Dataset Row v1 validation must complete before the output
+directory is created. A successful split writes train, validation, and
+test JSONL files plus a manifest containing group and class counts and
+SHA-256 hashes for the source and outputs.
+
+Status: Implemented in src/dataset/splitter.py and covered by 11 targeted
+tests. The complete automated suite has 91 passing tests. The accepted
+P1 dataset was verified to be correctly rejected without output because
+each class has only one independent split group.
+
+Limitation:
+
+Implementation of the splitter does not make P1 training-ready.
+Repetitions and related variants sharing one split_group_id do not count
+as independent groups. A controlled dataset expansion must provide at
+least three independent groups per fault_type before a three-way split
+can succeed.

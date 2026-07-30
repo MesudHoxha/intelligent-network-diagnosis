@@ -32,13 +32,19 @@
 - Fail-stop batch metadata persistence and atomic JSONL aggregation
 - Per-row Dataset Row v1 revalidation and duplicate-output protection
 - Collision-resistant experiment and batch-run identifiers
-- Full automated test suite with 80 passing tests
+- Full automated test suite with 91 passing tests
 - First real B0_SMOKE_CANONICAL batch completed with three validated
   Dataset Row v1 records and a final TOP-01 9/9 baseline
 - Canonical and alternate HostB-subnet variants for N0, C1, and C2
 - Observation-derived affected-prefix diagnosis for routing variants
 - P1_ROUTING_VARIANTS completed with 12 validated Dataset Row v1
   records, 12/12 exact matches, and a final TOP-01 13/13 baseline
+- Deterministic, class-stratified, group-aware dataset splitter
+- Split manifest with source/output hashes and partition statistics
+- Eleven targeted splitter tests, including leakage and feasibility
+  checks
+- Verified rejection of P1 before output creation because every class
+  has only one independent split group
 
 ## Representative verified experiments
 
@@ -98,10 +104,12 @@ Final post-experiment baseline:
 
 ## Active
 
-- Verify split_group_id assignments across the accepted P1 dataset
-- Implement and test group-aware dataset splitting
 - Define the next controlled dataset expansion beyond the 12-row
   routing pilot
+- Provide at least three independent split_group_id values for every
+  fault_type before producing the first three-way split
+- Preserve controlled variation and group independence while
+  increasing dataset diversity
 - Keep rule-based evaluation reporting separate from Dataset Row v1
   features and Batch Runner completion semantics
 
@@ -114,30 +122,37 @@ Final post-experiment baseline:
 - Unseen scenario or topology variants
 - Controlled multiple-fault subset
 - Larger and more varied dataset beyond the 12-row P1 pilot
-- Scenario- or topology-grouped dataset splitting
+- Sufficient independent split groups for every fault class
 - Machine Learning method implementation
 - Hybrid method implementation
 - OSPF implementation; its current status remains proposed
 
 ## Next milestone
 
-Verify the split_group_id assignments in the accepted P1 dataset
-and implement a reproducible group-aware train/validation/test
-split. After the split contract is tested, define the next
-controlled increase in dataset diversity and sample count.
+Design the next controlled dataset campaign so that every fault_type
+has at least three independent split_group_id values. After producing
+those groups, execute the campaign and generate the first successful,
+reproducible train/validation/test split.
 
-Do not begin final ML training until group-aware splitting and a
-sufficiently varied dataset campaign are implemented and verified.
+Do not begin ML training until the expanded dataset, group
+independence, class coverage, and generated split manifest are
+verified.
 
 ## Important limitation
 
 The accepted P1 JSONL file contains 12 rows from three classes,
 two HostB-subnet variants, and two repetitions per combination.
 It validates parameterized execution, evidence-based diagnosis,
-aggregation, and restoration, but it is not large or diverse
-enough for final ML training.
+aggregation, and restoration, but it contains only three independent
+split groups: one for each class.
 
-The project has not yet established general diagnostic accuracy
-or compared the rule-based, Machine Learning, and hybrid methods.
-Group-aware splitting, additional controlled variation, ML, and
-hybrid evaluation remain required.
+The group-aware splitter is implemented and verified, but it
+correctly refuses P1 because no class has the three independent
+groups required for train/validation/test coverage. This refusal is
+a dataset-feasibility result, not a failure of the accepted P1
+pipeline artifact.
+
+The project has not yet established general diagnostic accuracy or
+compared the rule-based, Machine Learning, and hybrid methods.
+Additional controlled variation, the first successful grouped split,
+ML implementation, and hybrid evaluation remain required.
