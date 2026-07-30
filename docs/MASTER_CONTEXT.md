@@ -277,10 +277,31 @@ allocation. The full suite has 128 passing tests. A direct audit of
 the real historical P1 JSONL confirmed its required rejection under
 the new protocol.
 
+P2-R3 completed the TOP-02 context-design review without changing
+laboratory or implementation files. The future G01 binding is frozen
+as CTX_G01_TOP01_LINEAR_2R. The three TOP-02 designs are frozen as:
+
+- G02: TOP_02_CHAIN and CTX_G02_TOP02_CHAIN_3R;
+- G03: TOP_02_BRANCH and CTX_G03_TOP02_BRANCH_MID; and
+- G04: TOP_02_DUAL_TRANSIT and
+  CTX_G04_TOP02_DUAL_TRANSIT.
+
+G02 is a three-router chain with downstream forwarding after the
+observed transit. G03 places the route observer at an interior,
+two-arm branch. G04 uses two live transit arms and moves the C2 route
+to an unreachable next hop on the other transit segment.
+
+The designs retain static routing, Observation Profile v1, Evidence
+v2, Dataset Row v2, and the approved N0/C1/C2 semantics. Their
+semantic descriptors are recorded in docs/TOP02_CONTEXT_DESIGN.md.
+Real SHA-256 artifact fingerprints remain pending until the topology,
+validator, and scenario files exist.
+
 The current scenario files and historical datasets have not been
-relabelled to manufacture new groups. Shared multi-class bindings for
-future TOP-01 campaign rows and the concrete TOP-02 and TOP-03
-laboratories remain to be implemented and verified.
+relabelled to manufacture new groups. No TOP-02 laboratory, evidence,
+dataset row, or split artifact was created by the design review.
+P2-R4 will implement only G02 TOP_02_CHAIN before G03 and G04.
+TOP-03 remains planned.
 
 The Machine Learning and hybrid diagnostic approaches have not yet
 been implemented or evaluated.

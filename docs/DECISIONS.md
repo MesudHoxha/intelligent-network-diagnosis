@@ -479,3 +479,53 @@ ML readiness remains blocked until all five reviewed contexts are
 implemented, each contains the complete approved class set, the
 expanded campaign succeeds, and the generated split manifest passes
 an explicit no-cross-partition group audit.
+
+## D-059 — Frozen TOP-02 evaluation-context designs
+
+Decision: Freeze concrete static-routing designs and future
+split-group bindings for G01-G04 before implementing a TOP-02
+laboratory.
+
+The frozen identifiers are:
+
+- G01: TOP_01 with CTX_G01_TOP01_LINEAR_2R;
+- G02: TOP_02_CHAIN with CTX_G02_TOP02_CHAIN_3R;
+- G03: TOP_02_BRANCH with CTX_G03_TOP02_BRANCH_MID; and
+- G04: TOP_02_DUAL_TRANSIT with
+  CTX_G04_TOP02_DUAL_TRANSIT.
+
+G02 uses a three-router forwarding chain and observes r1 through
+transit r2 while destination reachability from r2 depends on r3.
+
+G03 uses an interior route observer at a real two-arm branch. The
+source gateway and route observer are different, and C1/C2 are
+injected at the interior branch router.
+
+G04 uses two live transit arms. Its selected path uses one transit,
+while C2 points the destination route to an unreachable address on
+the other active transit segment and egress interface.
+
+Every current class inside one context must use the same frozen
+split_group_id. Static routing and the existing Observation Profile
+v1, Evidence v2, and Dataset Row v2 contracts remain in force.
+Historical artifacts are not rewritten.
+
+The semantic design descriptors are normative under
+docs/TOP02_CONTEXT_DESIGN.md. Cryptographic SHA-256 fingerprints are
+recorded only after real topology, validator, and scenario files
+exist.
+
+Implementation order: P2-R4 implements G02 only. G03 and G04 remain
+design-frozen until the first real TOP-02 pipeline succeeds. OSPF
+remains proposed under D-034 and is not introduced by this decision.
+
+Status: Design reviewed and approved. No TOP-02 laboratory, scenario,
+experiment, evidence artifact, dataset row, or split has been
+implemented or verified.
+
+Limitation:
+
+Distinct designs establish a controlled implementation plan. They do
+not count as experimental contexts, dataset samples, or evidence of
+ML readiness until each laboratory and complete class set has been
+executed and audited.

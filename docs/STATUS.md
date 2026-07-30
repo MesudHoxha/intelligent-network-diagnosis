@@ -189,19 +189,37 @@ Final post-experiment baseline:
 - Interpretation: grouping semantics and readiness gate are verified;
   the five planned contexts are not yet implemented
 
+## Latest P2-R3 design review
+
+- Decision: D-059
+- Design document: docs/TOP02_CONTEXT_DESIGN.md
+- Future G01 group: CTX_G01_TOP01_LINEAR_2R
+- G02: TOP_02_CHAIN / CTX_G02_TOP02_CHAIN_3R
+- G03: TOP_02_BRANCH / CTX_G03_TOP02_BRANCH_MID
+- G04: TOP_02_DUAL_TRANSIT /
+  CTX_G04_TOP02_DUAL_TRANSIT
+- Static routing and current N0/C1/C2 semantics retained
+- Observation Profile v1, Evidence v2, and Dataset Row v2 unchanged
+- Cross-context distinction audit: PASS at design level
+- Real TOP-02 topology files: not implemented
+- Real TOP-02 laboratory execution: not executed
+- New dataset rows or split: none
+- Next implementation target: G02 TOP_02_CHAIN
+- Interpretation: G02-G04 are concrete design commitments, not
+  verified experimental contexts
+
 ## Active
 
-- Translate the planned G02, G03, and G04 TOP-02 slots into concrete
-  reviewed graphs, forwarding configurations, observation roles, and
-  fault-injection locations
-- Define one shared multi-class split_group_id binding for future G01
-  TOP-01 campaign rows without rewriting historical datasets
-- Design and implement the first real TOP-02 laboratory only after
-  its causal distinction is documented
-- Add the matching TOP-02 baseline validator and controlled N0, C1,
-  and C2 scenario bindings
-- Verify real TOP-02 Evidence v2 and Dataset Row v2 artifacts before
-  expanding the dataset campaign
+- Implement the design-frozen G02 TOP_02_CHAIN Containerlab topology
+- Add its complete baseline validator
+- Add controlled G02 N0, C1, and C2 scenario bindings sharing
+  CTX_G02_TOP02_CHAIN_3R
+- Add contract and helper tests before real laboratory execution
+- Run the complete automated regression suite
+- Execute and audit the first real G02 three-scenario smoke batch
+- Verify G02 Evidence v2 and Dataset Row v2 artifacts
+- Verify rule results and complete restoration separately
+- Record the real G02 artifact SHA-256 fingerprint
 - Preserve complete evaluation contexts and whole-group partitioning
   while increasing dataset diversity
 - Keep rule-based evaluation reporting separate from dataset features
@@ -210,7 +228,8 @@ Final post-experiment baseline:
 ## Open issues
 
 - Reusable batch-level evaluation summary or validation report
-- Real TOP-02 topology, scenarios, validator, and laboratory execution
+- Real G02 topology, scenarios, validator, and laboratory execution
+- Real G03 and G04 implementations after G02
 - Final FRRouting container image for later routing extensions
 - Final set of pilot fault classes beyond C1 and C2
 - Missing-evidence experiments
@@ -227,11 +246,14 @@ Final post-experiment baseline:
 
 ## Next milestone
 
-Complete the concrete design review for the three planned TOP-02
-evaluation contexts. For each context, freeze its graph/configuration
-fingerprint, directed path, route-observer/transit binding,
-fault-injection location, evidence producers, and shared
-split_group_id before implementing the first TOP-02 laboratory.
+P2-R4 — Implement and verify G02 TOP_02_CHAIN.
+
+Create the frozen three-router Containerlab graph, its baseline
+validator, and N0/C1/C2 scenario bindings with
+CTX_G02_TOP02_CHAIN_3R. Validate the contracts and complete automated
+suite before executing a real three-scenario smoke batch. Then verify
+Evidence v2, Dataset Row v2, rule-based exact matches, restoration,
+and the real artifact fingerprint.
 
 Do not begin ML training until all five reviewed contexts, the
 expanded complete-class campaign, and the generated split manifest
@@ -265,9 +287,11 @@ only and is not a training dataset.
 
 P2-R2 defines five complete evaluation contexts as the target for the
 first ML experiment and plans coverage across TOP-01, TOP-02, and
-TOP-03. Only TOP-01 is currently implemented. The planned TOP-02 and
-TOP-03 labels are design commitments, not verified laboratory
-artifacts. No successful D-058 train/validation/test split exists yet.
+TOP-03. P2-R3 freezes concrete G02-G04 TOP-02 designs and their future
+group identifiers, but only TOP-01 is currently implemented. Design
+review does not create experimental evidence or independent dataset
+groups. TOP-03 remains planned, and no successful D-058
+train/validation/test split exists yet.
 
 The project has not yet established general diagnostic accuracy or
 compared the rule-based, Machine Learning, and hybrid methods.

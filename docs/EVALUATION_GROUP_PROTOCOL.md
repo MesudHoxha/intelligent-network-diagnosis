@@ -97,19 +97,25 @@ implemented laboratories.
 
 | Group slot | Planned context | Material distinction | Status |
 | --- | --- | --- | --- |
-| G01 | TOP-01 linear two-router path | Existing two-router observer/transit chain | Laboratory verified; shared multi-class group binding pending |
-| G02 | TOP-02 three-router chain profile | Longer forwarding path and additional routing component | Planned |
-| G03 | TOP-02 branched profile | Branching forwarding graph and distinct destination-side evidence path | Planned |
-| G04 | TOP-02 dual-transit profile | Different transit role and next-hop failure context | Planned |
+| G01 | TOP-01 linear two-router path | Existing two-router observer/transit chain | Laboratory verified; CTX_G01_TOP01_LINEAR_2R frozen for future rows |
+| G02 | TOP_02_CHAIN | Three-router path with downstream forwarding after the observed transit | Design frozen as CTX_G02_TOP02_CHAIN_3R; laboratory pending |
+| G03 | TOP_02_BRANCH | Interior route observer at a two-arm destination branch | Design frozen as CTX_G03_TOP02_BRANCH_MID; laboratory pending |
+| G04 | TOP_02_DUAL_TRANSIT | Two live transit arms and a cross-segment wrong-next-hop context | Design frozen as CTX_G04_TOP02_DUAL_TRANSIT; laboratory pending |
 | G05 | TOP-03 asymmetric profile | Separate topology family for broader context coverage | Planned |
 
-Each planned profile must receive a distinct `topology_id` and a
-documented graph/configuration fingerprint. If two profiles collapse
-to the same causal context during design review, they collapse to one
-group and another context must be added before dataset generation.
+The P2-R3 review froze distinct topology_id and split_group_id values
+for G02-G04 and recorded their graph, forwarding intent, roles, fault
+location, evidence producers, addressing, and semantic design
+fingerprints in docs/TOP02_CONTEXT_DESIGN.md. Real SHA-256 artifact
+fingerprints remain pending because no TOP-02 laboratory files exist.
+
+If an implementation departs from a frozen design in a way that
+collapses two profiles to the same causal context, they collapse to
+one group and another reviewed context must be added before dataset
+generation.
 
 TOP-03 is therefore planned now rather than being discovered as a late
-requirement after TOP-02. TOP-02 remains the next implementation
+requirement after TOP-02. TOP_02_CHAIN remains the next implementation
 milestone because it is the first real test of the role-neutral
 pipeline outside TOP-01.
 
