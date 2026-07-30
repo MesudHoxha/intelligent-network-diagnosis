@@ -119,6 +119,21 @@ def _validate_fault_parameter_alignment(
             "Known routing faults require a parameters object."
         )
 
+    if fault.get("target_node") != profile.route_observer_node:
+        raise ObservationProfileContractError(
+            "fault.target_node must match "
+            "observation.route_observer_node."
+        )
+
+    if (
+        fault.get("target_container")
+        != profile.route_observer_container
+    ):
+        raise ObservationProfileContractError(
+            "fault.target_container must match "
+            "observation.route_observer_container."
+        )
+
     fault_destination_prefix = parameters.get(
         "destination_prefix"
     )

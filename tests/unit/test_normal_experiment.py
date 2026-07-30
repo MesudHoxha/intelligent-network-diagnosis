@@ -1,6 +1,9 @@
 import json
 from pathlib import Path
 
+from src.contracts.observation_profile import (
+    ObservationProfile,
+)
 from src.dataset.contract import build_dataset_row
 from src.orchestration import experiment_runner
 
@@ -56,7 +59,11 @@ scenario:
 
     def fake_collect(
         experiment_directory: Path,
+        profile: ObservationProfile,
     ) -> dict[str, object]:
+        assert profile.destination_address == "10.10.2.10"
+        assert profile.destination_prefix == "10.10.2.0/24"
+
         evidence = {
             "schema_version": 1,
             "topology_id": "TOP_01",

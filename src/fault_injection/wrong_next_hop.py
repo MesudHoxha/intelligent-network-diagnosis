@@ -8,6 +8,10 @@ from pathlib import Path
 
 import yaml
 
+from src.contracts.observation_profile import (
+    ObservationProfileContractError,
+    validate_observation_profile,
+)
 from src.fault_injection.common import (
     CommandResult,
     FaultInjectionError,
@@ -71,6 +75,14 @@ def inject_wrong_next_hop(
         scenario_path.read_text(encoding="utf-8")
     )
     scenario = document["scenario"]
+
+    try:
+        profile = validate_observation_profile(scenario)
+    except ObservationProfileContractError as error:
+        raise FaultInjectionError(
+            f"Invalid Observation Profile v1: {error}"
+        ) from error
+
     fault = scenario["fault"]
     parameters = fault["parameters"]
 
@@ -101,15 +113,15 @@ def inject_wrong_next_hop(
             )
         ),
         "baseline_end_to_end_connectivity": ping_succeeds(
-            "clab-top01-hosta",
-            "10.10.2.10",
+            profile.source_container,
+            profile.destination_address,
         ),
         "correct_next_hop_reachable": ping_succeeds(
-            container,
-            correct_next_hop,
+            profile.route_observer_container,
+            profile.expected_next_hop,
         ),
         "wrong_next_hop_unreachable": not ping_succeeds(
-            container,
+            profile.route_observer_container,
             wrong_next_hop,
         ),
     }
@@ -183,22 +195,22 @@ def inject_wrong_next_hop(
             )
         ),
         "end_to_end_connectivity_fails": not ping_succeeds(
-            "clab-top01-hosta",
-            "10.10.2.10",
+            profile.source_container,
+            profile.destination_address,
         ),
         "local_gateway_remains_reachable": ping_succeeds(
-            "clab-top01-hosta",
-            "10.10.1.1",
+            profile.source_container,
+            profile.source_gateway_address,
         ),
         "transit_neighbor_remains_reachable": (
             ping_succeeds(
-                container,
-                correct_next_hop,
+                profile.route_observer_container,
+                profile.expected_next_hop,
             )
         ),
         "wrong_next_hop_remains_unreachable": (
             not ping_succeeds(
-                container,
+                profile.route_observer_container,
                 wrong_next_hop,
             )
         ),

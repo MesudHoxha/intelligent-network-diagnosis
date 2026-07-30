@@ -8,6 +8,10 @@ from pathlib import Path
 
 import yaml
 
+from src.contracts.observation_profile import (
+    ObservationProfileContractError,
+    validate_observation_profile,
+)
 from src.fault_injection.common import (
     FaultInjectionError,
     docker_exec,
@@ -40,6 +44,14 @@ def inject_missing_route(
         scenario_path.read_text(encoding="utf-8")
     )
     scenario = scenario_document["scenario"]
+
+    try:
+        profile = validate_observation_profile(scenario)
+    except ObservationProfileContractError as error:
+        raise FaultInjectionError(
+            f"Invalid Observation Profile v1: {error}"
+        ) from error
+
     fault = scenario["fault"]
     parameters = fault["parameters"]
 
@@ -52,10 +64,13 @@ def inject_missing_route(
     preconditions = {
         "route_exists_before_injection": route_exists(container, prefix),
         "baseline_end_to_end_connectivity": ping_succeeds(
-            "clab-top01-hosta",
-            "10.10.2.10",
+            profile.source_container,
+            profile.destination_address,
         ),
-        "next_hop_reachable": ping_succeeds(container, next_hop),
+        "next_hop_reachable": ping_succeeds(
+            profile.route_observer_container,
+            profile.expected_next_hop,
+        ),
     }
 
     preconditions_passed = all(preconditions.values())
@@ -99,16 +114,16 @@ def inject_missing_route(
             prefix,
         ),
         "end_to_end_connectivity_fails": not ping_succeeds(
-            "clab-top01-hosta",
-            "10.10.2.10",
+            profile.source_container,
+            profile.destination_address,
         ),
         "local_gateway_remains_reachable": ping_succeeds(
-            "clab-top01-hosta",
-            "10.10.1.1",
+            profile.source_container,
+            profile.source_gateway_address,
         ),
         "transit_next_hop_remains_reachable": ping_succeeds(
-            container,
-            next_hop,
+            profile.route_observer_container,
+            profile.expected_next_hop,
         ),
     }
 

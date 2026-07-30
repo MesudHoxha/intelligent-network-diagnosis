@@ -15,6 +15,7 @@ from src.contracts.experiment_manifest import (
     validate_experiment_manifest,
 )
 from src.contracts.observation_profile import (
+    ObservationProfile,
     ObservationProfileContractError,
     validate_observation_profile,
 )
@@ -74,7 +75,7 @@ def run_command(command: Sequence[str]) -> dict[str, Any]:
 
 def load_scenario_definition(
     path: Path,
-) -> tuple[int, dict[str, Any]]:
+) -> tuple[int, dict[str, Any], ObservationProfile]:
     if not path.exists():
         raise ExperimentRunnerError(
             f"Scenario file does not exist: {path}"
@@ -109,17 +110,17 @@ def load_scenario_definition(
         )
 
     try:
-        validate_observation_profile(scenario)
+        profile = validate_observation_profile(scenario)
     except ObservationProfileContractError as error:
         raise ExperimentRunnerError(
             f"Invalid Observation Profile v1: {error}"
         ) from error
 
-    return schema_version, scenario
+    return schema_version, scenario, profile
 
 
 def load_scenario(path: Path) -> dict[str, Any]:
-    _, scenario = load_scenario_definition(path)
+    _, scenario, _ = load_scenario_definition(path)
     return scenario
 
 def append_state(
@@ -183,6 +184,7 @@ def run_experiment(
     (
         scenario_schema_version,
         scenario,
+        observation_profile,
     ) = load_scenario_definition(scenario_path)
 
     scenario_id = scenario.get("id")
@@ -383,7 +385,10 @@ def run_experiment(
             manifest,
         )
 
-        collect_evidence(experiment_directory)
+        collect_evidence(
+            experiment_directory,
+            observation_profile,
+        )
 
         append_state(
             manifest,

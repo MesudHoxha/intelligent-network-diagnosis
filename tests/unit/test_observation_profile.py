@@ -29,6 +29,8 @@ def canonical_scenario() -> dict[str, object]:
         },
         "fault": {
             "type": "missing_static_route",
+            "target_node": "r1",
+            "target_container": "clab-top01-r1",
             "parameters": {
                 "destination_prefix": "10.10.2.0/24",
                 "next_hop": "10.10.12.2",
@@ -186,6 +188,33 @@ def test_rejects_fault_destination_mismatch() -> None:
     with pytest.raises(
         ObservationProfileContractError,
         match="destination_prefix must match",
+    ):
+        validate_observation_profile(scenario)
+
+
+def test_rejects_fault_target_node_mismatch() -> None:
+    scenario = canonical_scenario()
+    fault = scenario["fault"]
+    assert isinstance(fault, dict)
+    fault["target_node"] = "r2"
+
+    with pytest.raises(
+        ObservationProfileContractError,
+        match="fault.target_node must match",
+    ):
+        validate_observation_profile(scenario)
+
+
+def test_rejects_fault_target_container_mismatch(
+) -> None:
+    scenario = canonical_scenario()
+    fault = scenario["fault"]
+    assert isinstance(fault, dict)
+    fault["target_container"] = "clab-top01-r2"
+
+    with pytest.raises(
+        ObservationProfileContractError,
+        match="fault.target_container must match",
     ):
         validate_observation_profile(scenario)
 

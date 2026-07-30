@@ -7,6 +7,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Sequence
 
+import yaml
+
+from src.contracts.observation_profile import (
+    ObservationProfile,
+    validate_observation_profile,
+)
+
 
 def run_command(command: Sequence[str]) -> dict[str, object]:
     """Execute a command and return a structured result."""
@@ -92,29 +99,32 @@ def write_json(path: Path, data: object) -> None:
     )
 
 
-def collect_evidence(output_directory: Path) -> dict[str, object]:
+def collect_evidence(
+    output_directory: Path,
+    profile: ObservationProfile,
+) -> dict[str, object]:
     r1_route_to_hostb = route_result(
-        "clab-top01-r1",
-        "10.10.2.0/24",
+        profile.route_observer_container,
+        profile.destination_prefix,
     )
 
     raw_results = {
         "hosta_ping_gateway": ping_result(
-            "clab-top01-hosta",
-            "10.10.1.1",
+            profile.source_container,
+            profile.source_gateway_address,
         ),
         "hosta_ping_hostb": ping_result(
-            "clab-top01-hosta",
-            "10.10.2.10",
+            profile.source_container,
+            profile.destination_address,
         ),
         "r1_route_to_hostb": r1_route_to_hostb,
         "r1_ping_r2": ping_result(
-            "clab-top01-r1",
-            "10.10.12.2",
+            profile.route_observer_container,
+            profile.expected_next_hop,
         ),
         "r2_ping_hostb": ping_result(
-            "clab-top01-r2",
-            "10.10.2.10",
+            profile.transit_container,
+            profile.destination_address,
         ),
     }
 
@@ -126,7 +136,7 @@ def collect_evidence(output_directory: Path) -> dict[str, object]:
         raw_results[
             "r1_ping_configured_next_hop"
         ] = ping_result(
-            "clab-top01-r1",
+            profile.route_observer_container,
             configured_next_hop,
         )
 
@@ -192,6 +202,28 @@ def collect_evidence(output_directory: Path) -> dict[str, object]:
     return evidence
 
 
+def load_observation_profile(
+    scenario_path: Path,
+) -> ObservationProfile:
+    document = yaml.safe_load(
+        scenario_path.read_text(encoding="utf-8")
+    )
+
+    if not isinstance(document, dict):
+        raise ValueError(
+            "Scenario document must be a YAML object."
+        )
+
+    scenario = document.get("scenario")
+
+    if not isinstance(scenario, dict):
+        raise ValueError(
+            "Scenario document does not contain 'scenario'."
+        )
+
+    return validate_observation_profile(scenario)
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Collect diagnostic evidence from TOP-01."
@@ -204,13 +236,28 @@ def build_parser() -> argparse.ArgumentParser:
         help="Directory where evidence will be stored.",
     )
 
+    parser.add_argument(
+        "--scenario",
+        type=Path,
+        required=True,
+        help=(
+            "Scenario YAML that supplies Observation Profile v1."
+        ),
+    )
+
     return parser
 
 
 def main() -> int:
     arguments = build_parser().parse_args()
 
-    evidence = collect_evidence(arguments.output)
+    profile = load_observation_profile(
+        arguments.scenario
+    )
+    evidence = collect_evidence(
+        arguments.output,
+        profile,
+    )
 
     print(json.dumps(evidence, indent=2))
     return 0
