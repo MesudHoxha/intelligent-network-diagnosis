@@ -384,8 +384,9 @@ before and after execution.
 Limitation:
 
 Synthetic unit fixtures exercise TOP-02 role names, and Dataset Row
-v2 is now implemented under D-057. No real TOP-02 topology or
-independent multi-topology dataset campaign has yet been implemented.
+v2 is now implemented under D-057. P2-R4 later verified one real
+TOP_02_CHAIN context, but a multi-context campaign with materially
+different observer/transit bindings remains pending.
 
 ## D-057 — Role-neutral Dataset Row v2 contract
 
@@ -421,11 +422,10 @@ matches and valid TOP-01 13/13 baselines before and after execution.
 
 Limitation:
 
-The real regression used only the existing TOP-01 laboratory and
-created a three-row smoke dataset. It verifies the v2 contract and
-pipeline integration, not a real TOP-02 laboratory, sufficient
-complete evaluation contexts, ML readiness, or general diagnostic
-performance.
+The P2-R1 regression used only TOP-01. P2-R4 later verified Dataset
+Row v2 through one real TOP_02_CHAIN context, but sufficient complete
+evaluation contexts, ML readiness, and general diagnostic performance
+remain unestablished.
 
 ## D-058 — Evaluation-context grouping protocol
 
@@ -519,9 +519,9 @@ Implementation order: P2-R4 implements G02 only. G03 and G04 remain
 design-frozen until the first real TOP-02 pipeline succeeds. OSPF
 remains proposed under D-034 and is not introduced by this decision.
 
-Status: Design reviewed and approved. No TOP-02 laboratory, scenario,
-experiment, evidence artifact, dataset row, or split has been
-implemented or verified.
+Status: Design reviewed and approved. P2-R4 implemented and verified
+G02 without changing the frozen descriptor or group binding. G03 and
+G04 remain design-frozen and unimplemented.
 
 Limitation:
 
@@ -529,3 +529,49 @@ Distinct designs establish a controlled implementation plan. They do
 not count as experimental contexts, dataset samples, or evidence of
 ML readiness until each laboratory and complete class set has been
 executed and audited.
+
+## D-060 — First real TOP-02 context
+
+Decision: Accept G02 TOP_02_CHAIN as the first implemented and
+verified non-TOP-01 evaluation context.
+
+The implementation contains:
+
+- the five-node hosta-r1-r2-r3-hostb Containerlab chain;
+- 10.20.1.0/24, 10.20.12.0/29, 10.20.23.0/29, and
+  10.20.3.0/24 addressing;
+- a 28-check baseline validator;
+- N0, C1, and C2 scenario bindings that all use
+  CTX_G02_TOP02_CHAIN_3R;
+- a three-entry fail-stop smoke plan; and
+- static contract and topology tests.
+
+The HostB baseline includes the explicit return route
+10.20.23.0/29 via 10.20.3.1. This route is required so the r2 transit
+probe can receive its reply through r3. It does not change the frozen
+forwarding graph, observation roles, fault target, or evidence
+producers.
+
+The normalized topology, validator, and N0/C1/C2 scenario bundle has
+SHA-256:
+
+fa411079e19fa7047a467ae46ff1ba7edd54657daee254f74f6c57cd58e4adc3
+
+The accepted real batch run is
+p2_g02_smoke-20260730T133227173375Z-
+c74243e48485444fa795cb0f852f58d7.
+
+Status: Implemented and verified on 2026-07-30. Six targeted tests and
+the complete 134-test suite passed. The initial and final G02
+baselines each passed 28/28 checks. All three planned experiments
+completed, all Evidence v2 and Dataset Row v2 artifacts passed
+contract audits, all three rule-based evaluations had exact_match
+true, and C1/C2 restoration returned the full baseline to VALID.
+
+Limitation:
+
+This accepted smoke batch contains one execution of each current
+class in one context. It verifies the first real non-TOP-01 pipeline
+and one complete G02 class set; it does not satisfy the two-repetition
+campaign target, the five-context ML-readiness gate, a valid
+train/validation/test split, or general diagnostic performance.

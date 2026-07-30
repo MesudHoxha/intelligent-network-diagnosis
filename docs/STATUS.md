@@ -47,7 +47,7 @@
 - Dataset Row v2 as the default Batch Runner output
 - Mixed-version dataset rejection at the batch boundary
 - Collision-resistant experiment and batch-run identifiers
-- Full automated test suite with 128 passing tests
+- Full automated test suite with 134 passing tests
 - First real B0_SMOKE_CANONICAL batch completed with three validated
   Dataset Row v1 records and a final TOP-01 9/9 baseline
 - Canonical and alternate HostB-subnet variants for N0, C1, and C2
@@ -76,6 +76,17 @@
 - Five-context 3/1/1 ML-readiness target
 - Planned context matrix covering TOP-01, TOP-02, and TOP-03
 - Verified real P1 rejection under the complete-context protocol
+- G02 TOP_02_CHAIN five-node Containerlab topology
+- G02 baseline validator with 28 route, forwarding, and reachability
+  checks
+- G02 N0, C1, and C2 scenario bindings sharing
+  CTX_G02_TOP02_CHAIN_3R
+- Real P2_G02_SMOKE batch with three completed experiments
+- Three validated G02 Evidence v2 artifacts
+- Three validated G02 Dataset Row v2 records
+- G02 rule-based exact matches: 3/3
+- G02 fault restoration and final 28/28 baseline verification
+- Real G02 artifact-bundle SHA-256 fingerprint
 
 ## Representative verified experiments
 
@@ -208,18 +219,41 @@ Final post-experiment baseline:
 - Interpretation: G02-G04 are concrete design commitments, not
   verified experimental contexts
 
+## Latest P2-R4 verification
+
+- Decision: D-060
+- Batch ID: P2_G02_SMOKE
+- Batch run ID:
+  p2_g02_smoke-20260730T133227173375Z-
+  c74243e48485444fa795cb0f852f58d7
+- Status: COMPLETED
+- Planned/completed experiments: 3/3
+- Classes: no_fault, missing_static_route, wrong_next_hop
+- Shared evaluation context: CTX_G02_TOP02_CHAIN_3R
+- Observation binding: TOP_02_CHAIN, hosta_to_hostb, r1/r2
+- Evidence contract: Evidence v2
+- Dataset row schema version: 2
+- Validated Dataset Row v2 records: 3
+- Rule-based exact matches: 3/3
+- Restoration audit: PASS
+- Semantic artifact audit: PASS
+- Initial and final G02 baseline: 28/28 VALID
+- Targeted G02 tests: 6/6 passed
+- Full automated suite: 134/134 passed
+- Artifact-bundle SHA-256:
+  fa411079e19fa7047a467ae46ff1ba7edd54657daee254f74f6c57cd58e4adc3
+- Interpretation: first real non-TOP-01 complete-class smoke context,
+  not the final campaign or a train/validation/test split
+
 ## Active
 
-- Implement the design-frozen G02 TOP_02_CHAIN Containerlab topology
-- Add its complete baseline validator
-- Add controlled G02 N0, C1, and C2 scenario bindings sharing
-  CTX_G02_TOP02_CHAIN_3R
-- Add contract and helper tests before real laboratory execution
-- Run the complete automated regression suite
-- Execute and audit the first real G02 three-scenario smoke batch
-- Verify G02 Evidence v2 and Dataset Row v2 artifacts
-- Verify rule results and complete restoration separately
-- Record the real G02 artifact SHA-256 fingerprint
+- Implement the design-frozen G03 TOP_02_BRANCH context
+- Preserve its interior r2 observer and r4 transit binding
+- Validate both destination arms without adding unreviewed Dataset
+  Row v2 features
+- Add G03 N0, C1, and C2 bindings sharing
+  CTX_G03_TOP02_BRANCH_MID
+- Preserve the verified G02 and TOP-01 regressions
 - Preserve complete evaluation contexts and whole-group partitioning
   while increasing dataset diversity
 - Keep rule-based evaluation reporting separate from dataset features
@@ -228,8 +262,7 @@ Final post-experiment baseline:
 ## Open issues
 
 - Reusable batch-level evaluation summary or validation report
-- Real G02 topology, scenarios, validator, and laboratory execution
-- Real G03 and G04 implementations after G02
+- Real G03 and G04 implementations
 - Final FRRouting container image for later routing extensions
 - Final set of pilot fault classes beyond C1 and C2
 - Missing-evidence experiments
@@ -246,14 +279,16 @@ Final post-experiment baseline:
 
 ## Next milestone
 
-P2-R4 — Implement and verify G02 TOP_02_CHAIN.
+P2-R5 — Implement and verify G03 TOP_02_BRANCH.
 
-Create the frozen three-router Containerlab graph, its baseline
-validator, and N0/C1/C2 scenario bindings with
-CTX_G02_TOP02_CHAIN_3R. Validate the contracts and complete automated
-suite before executing a real three-scenario smoke batch. Then verify
-Evidence v2, Dataset Row v2, rule-based exact matches, restoration,
-and the real artifact fingerprint.
+Create the frozen branched Containerlab graph, validate both
+destination arms, and add N0/C1/C2 scenario bindings with
+CTX_G03_TOP02_BRANCH_MID. Preserve the interior r2 observer and r4
+transit roles, execute a real three-scenario smoke batch, and verify
+Evidence v2, Dataset Row v2, exact-match, restoration, and the real
+artifact fingerprint separately.
+
+Do not implement G04, G05, ML, or hybrid diagnosis in P2-R5.
 
 Do not begin ML training until all five reviewed contexts, the
 expanded complete-class campaign, and the generated split manifest
@@ -273,11 +308,11 @@ other required fault types. This refusal is a dataset-feasibility
 result, not a failure of the accepted P1 pipeline artifact.
 
 P2-R0 made the observation, evidence, and rule layers role-neutral.
-P2-R1 now makes Dataset Row v2 the role-neutral canonical dataset
-contract. Both real regressions still used TOP-01. Synthetic tests
-with alternate topology and node identifiers validate contract
-behavior but do not prove that a real TOP-02 laboratory or
-multi-topology dataset pipeline exists.
+P2-R1 made Dataset Row v2 the role-neutral canonical dataset
+contract. P2-R4 now proves one real non-TOP-01 laboratory and dataset
+pipeline through G02. Its observer/transit names remain r1/r2, so the
+planned G03 interior r2/r4 binding remains the next real role-binding
+test.
 
 The explicit Dataset Row v1 to v2 migration is limited to the
 historical TOP_01, hosta_to_hostb, r1/r2 context. Migrating historical
@@ -287,11 +322,11 @@ only and is not a training dataset.
 
 P2-R2 defines five complete evaluation contexts as the target for the
 first ML experiment and plans coverage across TOP-01, TOP-02, and
-TOP-03. P2-R3 freezes concrete G02-G04 TOP-02 designs and their future
-group identifiers, but only TOP-01 is currently implemented. Design
-review does not create experimental evidence or independent dataset
-groups. TOP-03 remains planned, and no successful D-058
-train/validation/test split exists yet.
+TOP-03. P2-R3 froze concrete G02-G04 designs, and P2-R4 implemented
+G02 with one execution per current class. G01 future campaign
+bindings, G03, G04, and G05 remain pending. The G02 smoke batch does
+not satisfy the planned two repetitions per class, and no successful
+D-058 train/validation/test split exists yet.
 
 The project has not yet established general diagnostic accuracy or
 compared the rule-based, Machine Learning, and hybrid methods.

@@ -113,9 +113,10 @@ validates it when reading a collected artifact.
 The Rule Engine adapts legacy Evidence v1 for historical
 compatibility. For Evidence v2, diagnosis locations, explanations,
 and recommendations are derived from the actual observation roles
-rather than fixed r1/r2 names. Synthetic TOP-02 unit fixtures verify
-this role-neutral behavior, but no real TOP-02 laboratory has yet
-been implemented or executed.
+rather than fixed r1/r2 names. Synthetic fixtures verify alternate
+role identifiers, and the real G02 TOP_02_CHAIN execution now verifies
+the contract outside TOP-01 while retaining the frozen r1 observer and
+r2 transit binding.
 
 The experiment runner supports both fault and normal scenarios.
 Normal experiments do not call fault injection or restoration.
@@ -231,8 +232,9 @@ which produces a 3/1/1 group allocation under the default
 0.6/0.2/0.2 ratios. With the three current classes and two repetitions
 per class and context, the minimum planned campaign contains 30 rows.
 The reviewed plan reserves one TOP-01 context, three materially
-different TOP-02 contexts, and one TOP-03 asymmetric context. TOP-02
-and TOP-03 remain planned and have not been implemented.
+different TOP-02 contexts, and one TOP-03 asymmetric context. G02
+TOP_02_CHAIN is implemented and smoke-verified. G03, G04, and the
+TOP-03 context remain planned.
 
 The accepted P1 dataset retains its historical class-specific
 split_group_id values. It is correctly rejected because each old
@@ -294,14 +296,31 @@ to an unreachable next hop on the other transit segment.
 The designs retain static routing, Observation Profile v1, Evidence
 v2, Dataset Row v2, and the approved N0/C1/C2 semantics. Their
 semantic descriptors are recorded in docs/TOP02_CONTEXT_DESIGN.md.
-Real SHA-256 artifact fingerprints remain pending until the topology,
-validator, and scenario files exist.
+The real G02 artifact bundle is now bound to SHA-256
+fa411079e19fa7047a467ae46ff1ba7edd54657daee254f74f6c57cd58e4adc3.
+Real G03 and G04 artifact fingerprints remain pending until their
+files exist.
 
 The current scenario files and historical datasets have not been
-relabelled to manufacture new groups. No TOP-02 laboratory, evidence,
-dataset row, or split artifact was created by the design review.
-P2-R4 will implement only G02 TOP_02_CHAIN before G03 and G04.
-TOP-03 remains planned.
+relabelled to manufacture new groups. P2-R4 implemented only G02
+TOP_02_CHAIN; G03, G04, and TOP-03 remain unimplemented.
+
+The real P2-R4 batch
+p2_g02_smoke-20260730T133227173375Z-
+c74243e48485444fa795cb0f852f58d7 completed N0, C1, and C2 in listed
+order. It produced three validated Evidence v2 artifacts and three
+validated Dataset Row v2 records sharing
+CTX_G02_TOP02_CHAIN_3R. All three rule-based evaluations produced
+exact_match true, and the complete 28-check G02 baseline was valid
+before and after the batch.
+
+The first deployment exposed a missing HostB return route for probes
+sourced from the r2-r3 transit network. Adding
+10.20.23.0/29 via 10.20.3.1 preserved the frozen causal design and
+made the transit-to-destination assertion valid. The complete
+automated suite then passed 134 tests. The three-row smoke dataset
+verifies one complete G02 class set, but it does not satisfy the
+two-repetition campaign target or create a valid three-way split.
 
 The Machine Learning and hybrid diagnostic approaches have not yet
 been implemented or evaluated.

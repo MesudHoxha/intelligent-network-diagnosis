@@ -1,0 +1,54 @@
+schema_version: 1
+
+scenario:
+  id: N0_NORMAL_OPERATION_TOP02_CHAIN
+  name: Normal TOP-02 chain operation
+  kind: normal
+  variant_id: canonical
+  split_group_id: CTX_G02_TOP02_CHAIN_3R
+  category: baseline
+  description: >
+    Observe the healthy TOP_02_CHAIN routing state without injecting
+    or restoring a fault.
+
+  topology:
+    id: TOP_02_CHAIN
+    file: labs/topologies/top02_chain/topology.clab.yml
+
+  observation:
+    schema_version: 1
+    direction: hosta_to_hostb
+    source_container: clab-top02chain-hosta
+    source_gateway_address: 10.20.1.1
+    destination_address: 10.20.3.10
+    destination_prefix: 10.20.3.0/24
+    route_observer_node: r1
+    route_observer_container: clab-top02chain-r1
+    expected_next_hop: 10.20.12.2
+    transit_node: r2
+    transit_container: clab-top02chain-r2
+
+  preconditions:
+    - id: baseline_end_to_end_connectivity
+      description: HostA reaches HostB through R1, R2, and R3
+    - id: expected_route_present
+      description: R1 contains the valid route toward HostB
+    - id: expected_next_hop_reachable
+      description: R1 reaches the configured R2 next-hop
+    - id: transit_reaches_destination
+      description: R2 reaches HostB through downstream router R3
+
+  expected_effects:
+    - id: no_fault_injected
+      description: No configuration change is performed
+    - id: end_to_end_connectivity_remains_available
+      description: HostA continues to reach HostB
+    - id: baseline_remains_valid
+      description: TOP_02_CHAIN remains valid after collection
+
+  ground_truth:
+    fault_category: null
+    fault_type: no_fault
+    fault_location: null
+    affected_prefix: null
+    root_cause: null

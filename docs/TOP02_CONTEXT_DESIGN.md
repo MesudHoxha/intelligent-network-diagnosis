@@ -2,7 +2,7 @@
 
 Version: 1
 Date: 2026-07-30
-Status: DESIGN FROZEN; LABORATORIES NOT IMPLEMENTED
+Status: G02 IMPLEMENTED AND VERIFIED; G03/G04 DESIGN FROZEN
 
 ## 1. Purpose
 
@@ -12,12 +12,12 @@ laboratory designs.
 
 It freezes the causal distinctions, logical graphs, baseline
 forwarding intent, observation roles, fault locations, evidence
-producers, and future split-group bindings before any laboratory
-file is created.
+producers, and split-group bindings before implementation.
 
-This is a design artifact. It does not claim that a TOP-02 topology,
-validator, scenario, experiment, Evidence v2 artifact, or Dataset Row
-v2 artifact exists.
+P2-R4 now records the verified G02 implementation against this frozen
+design. G03 and G04 remain design artifacts and do not yet claim a
+topology, validator, scenario, experiment, Evidence v2 artifact, or
+Dataset Row v2 artifact.
 
 ## 2. Design constraints
 
@@ -48,7 +48,7 @@ variation.
 | Slot | topology_id | split_group_id | State |
 | --- | --- | --- | --- |
 | G01 | TOP_01 | CTX_G01_TOP01_LINEAR_2R | Binding frozen for future campaign rows; historical rows unchanged |
-| G02 | TOP_02_CHAIN | CTX_G02_TOP02_CHAIN_3R | Design frozen; laboratory pending |
+| G02 | TOP_02_CHAIN | CTX_G02_TOP02_CHAIN_3R | Implemented and smoke-verified |
 | G03 | TOP_02_BRANCH | CTX_G03_TOP02_BRANCH_MID | Design frozen; laboratory pending |
 | G04 | TOP_02_DUAL_TRANSIT | CTX_G04_TOP02_DUAL_TRANSIT | Design frozen; laboratory pending |
 | G05 | Pending TOP-03 design | Pending | Planned |
@@ -70,12 +70,12 @@ ordered fields:
 7. logical C1/C2 target; and
 8. evidence-producing components.
 
-The descriptor is the design fingerprint. A cryptographic artifact
-fingerprint is not available yet because the topology, validator, and
-scenario files do not exist. During implementation, a normalized
-bundle of those files must receive a SHA-256 value recorded alongside
-the descriptor. No placeholder hash is treated as a real artifact
-fingerprint.
+The descriptor is the design fingerprint. During implementation, a
+normalized bundle of the topology, validator, and scenario files
+receives a SHA-256 value recorded alongside the descriptor. G02 now
+has that real artifact fingerprint. G03 and G04 do not, because their
+files do not yet exist. No placeholder hash is treated as a real
+artifact fingerprint.
 
 ## 5. G02 — Three-router chain
 
@@ -83,7 +83,7 @@ fingerprint.
 
 - topology_id: TOP_02_CHAIN
 - split_group_id: CTX_G02_TOP02_CHAIN_3R
-- proposed laboratory name: top02chain
+- laboratory name: top02chain
 - diagnostic direction: hosta_to_hostb
 
 Graph:
@@ -112,7 +112,9 @@ Forward path:
 - r3 delivers the connected destination network.
 
 The reverse path uses hostb -> r3 -> r2 -> r1 -> hosta with explicit
-static routes toward 10.20.1.0/24.
+static routes toward 10.20.1.0/24. HostB also uses
+10.20.23.0/29 via 10.20.3.1 so replies to the r2 transit probe return
+through r3.
 
 ### 5.3 Observation and fault binding
 
@@ -161,6 +163,30 @@ than on a directly connected destination network.
 G02 is the first implementation target because it tests real
 role-neutral execution with the smallest controlled increase in
 laboratory complexity.
+
+### 5.7 Real artifact and verification
+
+The normalized bundle contains:
+
+- labs/topologies/top02_chain/topology.clab.yml;
+- labs/topologies/top02_chain/scripts/validate_baseline.sh;
+- scenarios/routing/N0_NORMAL_OPERATION_TOP02_CHAIN.yml;
+- scenarios/routing/C1_MISSING_STATIC_ROUTE_TOP02_CHAIN.yml; and
+- scenarios/routing/C2_WRONG_NEXT_HOP_TOP02_CHAIN.yml.
+
+Its SHA-256 fingerprint is:
+
+fa411079e19fa7047a467ae46ff1ba7edd54657daee254f74f6c57cd58e4adc3
+
+The real P2_G02_SMOKE batch completed one N0, one C1, and one C2
+experiment. Evidence v2, Dataset Row v2, exact-match, restoration, and
+the initial and final 28/28 baselines passed their separate audits.
+The complete automated suite passed 134 tests.
+
+The first baseline attempt exposed the need for the explicit HostB
+return route for 10.20.23.0/29. The correction enables the frozen r2
+transit-to-destination evidence probe and does not change the G02
+semantic fingerprint.
 
 ## 6. G03 — Interior branched observer
 
@@ -399,7 +425,7 @@ For each of G02, G03, and G04:
 
 ## 11. Implementation order and readiness gate
 
-P2-R4 implements G02 only:
+P2-R4 implemented and verified G02 only:
 
 1. create the TOP_02_CHAIN Containerlab topology;
 2. create its baseline validator;
@@ -411,8 +437,10 @@ P2-R4 implements G02 only:
    restoration; and
 8. record the real artifact SHA-256 fingerprint and HANDOFF.
 
-G03 and G04 remain design-frozen until G02 proves the first real
-TOP-02 pipeline. G05 remains a separate TOP-03 design task.
+G02 has now proved the first real TOP-02 pipeline. G03 is the next
+implementation target; G04 remains design-frozen behind it. G05
+remains a separate TOP-03 design task.
 
-ML training remains blocked. Completing this design review creates no
-dataset rows and no valid train/validation/test split.
+ML training remains blocked. P2-R4 created three G02 smoke rows, but
+it did not create the two-repetition campaign or a valid
+train/validation/test split.
