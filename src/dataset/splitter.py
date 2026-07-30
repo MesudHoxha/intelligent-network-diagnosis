@@ -152,6 +152,7 @@ def plan_group_aware_split(
         )
 
     seen_sample_ids: set[str] = set()
+    dataset_schema_version: int | None = None
     group_labels: dict[str, str] = {}
     groups_by_label: dict[
         str,
@@ -170,9 +171,26 @@ def plan_group_aware_split(
             validate_dataset_row(row)
         except DatasetContractError as error:
             raise DatasetSplitError(
-                "Invalid Dataset Row v1 at row "
+                "Invalid Dataset Row at row "
                 f"{row_number}: {error}"
             ) from error
+
+        row_schema_version = row[
+            "schema_version"
+        ]
+
+        if dataset_schema_version is None:
+            dataset_schema_version = (
+                row_schema_version
+            )
+        elif (
+            dataset_schema_version
+            != row_schema_version
+        ):
+            raise DatasetSplitError(
+                "A source dataset cannot mix "
+                "Dataset Row schema versions."
+            )
 
         sample_id = row.get("sample_id")
         metadata = row.get("metadata")
@@ -363,6 +381,9 @@ def plan_group_aware_split(
             "schema_version": 1,
             "algorithm": (
                 "stratified_group_hash_v1"
+            ),
+            "source_dataset_schema_version": (
+                dataset_schema_version
             ),
             "seed": seed,
             "ratios": ratios,

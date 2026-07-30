@@ -95,7 +95,8 @@ Current rule-based coverage:
 The evidence collector currently records seven diagnostic
 features covering source reachability, destination reachability,
 route presence, configured next-hop presence and reachability,
-transit reachability, and destination reachability from R2.
+transit reachability, and destination reachability from the transit
+node.
 
 The observation and evidence layer is now role-neutral. Observation
 Profile v1 derives topology_id from topology.id and validates generic
@@ -121,17 +122,25 @@ Normal experiments do not call fault injection or restoration.
 Every new run produces Experiment Manifest v2 with scenario
 metadata, split-group metadata, timestamps, and state history.
 
-Dataset Row v1 defines one row per completed experiment. Its
-target is fault_type, its diagnostic features use the tri-state
-values true, false, and unavailable, and split_group_id is
-preserved for group-aware dataset splitting. Scenario identity,
-concrete IP addresses, ground truth, rule outputs, and evaluation
-results are not model features.
+Dataset Row v2 is the canonical contract for newly generated dataset
+rows. It defines one row per completed experiment with fault_type as
+the supervised-learning target. Its seven diagnostic features use the
+tri-state values true, false, and unavailable and are named through
+source, destination, route-observer, and transit roles rather than
+fixed r1/r2 identifiers.
 
-Dataset Row v1 can adapt Evidence v2 into its historical P1 feature
-names only for the legacy TOP-01 r1/r2 binding. It intentionally
-rejects other topologies or observer/transit bindings. Dataset Row v2
-must be defined before TOP-02 evidence is exported for ML use.
+Dataset Row v2 metadata preserves topology_id, direction,
+route_observer_node, transit_node, variant_id, and split_group_id.
+Scenario identity, concrete IP addresses, ground truth, rule outputs,
+and evaluation results remain excluded from model features.
+
+Dataset Row v1 remains an immutable historical P1 contract. Dedicated
+v1 builders and validators remain available, while the generic
+validator accepts either supported version. Migration from v1 to v2
+is explicit, maps only the seven approved feature names, preserves
+sample, split-group, label, and quality data, and is limited to the
+historical TOP_01, hosta_to_hostb, r1/r2 context. There is no silent
+or inferred migration for other observation contexts.
 
 C1 and C2 have completed end-to-end with exact-match evaluation
 and successful restoration of the TOP-01 9/9 baseline. Their
@@ -154,12 +163,16 @@ repetition counts into a deterministic experiment sequence, and
 rejects invalid plan structure or scenario references before
 execution.
 
-Batch Runner v1 now consumes the validated plan, invokes the existing
-experiment runner in planned order, validates every completed Dataset
-Row v1, rejects duplicate experiment outputs, and applies
-failure_policy=stop. Batch metadata is persisted during execution,
-while the aggregated JSONL dataset is written atomically only after
-every planned experiment succeeds.
+Batch Runner v1 consumes the validated plan, invokes the existing
+experiment runner in planned order, validates every completed dataset
+row, rejects duplicate experiment outputs, and applies
+failure_policy=stop. Its canonical builder now produces Dataset Row
+v2. The version-aware batch boundary still supports explicitly
+provided v1 builders for compatibility, records
+dataset_row_schema_version, and rejects datasets that mix v1 and v2.
+Batch metadata is persisted during execution, while the aggregated
+JSONL dataset is written atomically only after every planned
+experiment succeeds.
 
 New experiment identifiers and default batch-run identifiers use UTC
 timestamps with microsecond precision plus UUID values to prevent
@@ -203,6 +216,9 @@ For three-way class coverage, every fault_type must have at least
 three independent split_group_id values. The splitter validates this
 feasibility before creating its output directory and writes a
 manifest with source and output hashes when splitting succeeds.
+It accepts a homogeneous Dataset Row v1 or Dataset Row v2 source,
+records source_dataset_schema_version in the split manifest, and
+rejects mixed-version input.
 
 The accepted P1 dataset passed its split-group integrity audit, but it
 contains only three independent groups: one for each of no_fault,
@@ -212,7 +228,7 @@ an accepted pipeline-validation artifact, not an ML-training dataset.
 
 P2-R0 removed the fixed topology and node-name coupling from the
 observation, collection, and rule-diagnosis layers while preserving
-the P1 Dataset Row v1 boundary. The full automated suite has 114
+the P1 Dataset Row v1 boundary. Its completed automated suite had 114
 passing tests.
 
 The real B0 regression batch
@@ -222,6 +238,22 @@ experiments. All three artifacts used Evidence v2 with the TOP-01
 r1/r2 binding, all three rule evaluations produced exact_match true,
 and TOP-01 remained valid with 13/13 checks before and after the
 batch.
+
+P2-R1 completed the role-neutral dataset boundary. Dataset Row v2,
+its runtime validator, and its JSON Schema are implemented; the
+canonical builder and Batch Runner produce v2, while explicit v1
+compatibility remains available without mixing versions inside one
+dataset.
+
+The real P2-R1 B0 regression batch
+b0_smoke_canonical-20260730T115517979203Z-
+24c80549d03d4e84ad7e066f19409ecb completed all three N0, C1, and C2
+experiments and produced three validated Dataset Row v2 records. Each
+record contained the seven role-neutral features with the TOP-01
+hosta_to_hostb, r1/r2 observation context in metadata. All three rule
+evaluations produced exact_match true, and TOP-01 remained valid with
+13/13 checks before and after the batch. The complete automated suite
+has 126 passing tests.
 
 The Machine Learning and hybrid diagnostic approaches have not yet
 been implemented or evaluated.

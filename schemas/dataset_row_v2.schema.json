@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Role-Neutral Dataset Row v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "sample_id",
+    "metadata",
+    "features",
+    "labels",
+    "quality"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 2
+    },
+    "sample_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "experiment_id",
+        "scenario_id",
+        "variant_id",
+        "split_group_id",
+        "topology_id",
+        "direction",
+        "route_observer_node",
+        "transit_node",
+        "collected_at_utc"
+      ],
+      "properties": {
+        "experiment_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scenario_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "variant_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "split_group_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "topology_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "direction": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_]*_to_[a-z0-9][a-z0-9_]*$"
+        },
+        "route_observer_node": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "transit_node": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "collected_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "features": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_gateway_reachable",
+        "destination_reachable",
+        "route_to_destination_exists_on_observer",
+        "route_next_hop_present_on_observer",
+        "route_next_hop_reachable_from_observer",
+        "expected_next_hop_reachable_from_observer",
+        "destination_reachable_from_transit"
+      ],
+      "properties": {
+        "source_gateway_reachable": {
+          "type": "string",
+          "enum": [
+            "true",
+            "false",
+            "unavailable"
+          ]
+        },
+        "destination_reachable": {
+          "type": "string",
+          "enum": [
+            "true",
+            "false",
+            "unavailable"
+          ]
+        },
+        "route_to_destination_exists_on_observer": {
+          "type": "string",
+          "enum": [
+            "true",
+            "false",
+            "unavailable"
+          ]
+        },
+        "route_next_hop_present_on_observer": {
+          "type": "string",
+          "enum": [
+            "true",
+            "false",
+            "unavailable"
+          ]
+        },
+        "route_next_hop_reachable_from_observer": {
+          "type": "string",
+          "enum": [
+            "true",
+            "false",
+            "unavailable"
+          ]
+        },
+        "expected_next_hop_reachable_from_observer": {
+          "type": "string",
+          "enum": [
+            "true",
+            "false",
+            "unavailable"
+          ]
+        },
+        "destination_reachable_from_transit": {
+          "type": "string",
+          "enum": [
+            "true",
+            "false",
+            "unavailable"
+          ]
+        }
+      }
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fault_category",
+        "fault_type",
+        "fault_location",
+        "affected_prefix"
+      ],
+      "properties": {
+        "fault_category": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "fault_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fault_location": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "affected_prefix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      }
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "experiment_completed",
+        "collector_completed",
+        "baseline_before_valid",
+        "baseline_after_valid",
+        "unavailable_feature_count"
+      ],
+      "properties": {
+        "experiment_completed": {
+          "type": "boolean"
+        },
+        "collector_completed": {
+          "type": "boolean"
+        },
+        "baseline_before_valid": {
+          "type": "boolean"
+        },
+        "baseline_after_valid": {
+          "type": "boolean"
+        },
+        "unavailable_feature_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 7
+        }
+      }
+    }
+  }
+}

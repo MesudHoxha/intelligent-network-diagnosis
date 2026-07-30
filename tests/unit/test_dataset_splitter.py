@@ -3,7 +3,10 @@ from pathlib import Path
 
 import pytest
 
-from src.dataset.contract import FEATURE_NAMES
+from src.dataset.contract import (
+    FEATURE_NAMES,
+    FEATURE_NAMES_V1,
+)
 from src.dataset.splitter import (
     DatasetSplitError,
     PARTITION_NAMES,
@@ -29,12 +32,23 @@ def make_row(
     )
 
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "sample_id": sample_id,
         "metadata": {
             "experiment_id": sample_id,
+            "scenario_id": label,
+            "variant_id": (
+                f"independent-{group_number}"
+            ),
             "split_group_id": (
                 f"{label}-group-{group_number}"
+            ),
+            "topology_id": "TOP_02",
+            "direction": "client_to_server",
+            "route_observer_node": "edge1",
+            "transit_node": "core1",
+            "collected_at_utc": (
+                "2026-07-30T12:00:00+00:00"
             ),
         },
         "features": {
@@ -42,9 +56,30 @@ def make_row(
             for name in FEATURE_NAMES
         },
         "labels": {
+            "fault_category": (
+                None
+                if label == "no_fault"
+                else "routing"
+            ),
             "fault_type": label,
+            "fault_location": (
+                None
+                if label == "no_fault"
+                else "edge1"
+            ),
+            "affected_prefix": (
+                None
+                if label == "no_fault"
+                else "10.20.2.0/24"
+            ),
         },
-        "quality": {},
+        "quality": {
+            "experiment_completed": True,
+            "collector_completed": True,
+            "baseline_before_valid": True,
+            "baseline_after_valid": True,
+            "unavailable_feature_count": 0,
+        },
     }
 
 
@@ -88,6 +123,13 @@ def test_groups_do_not_cross_partitions_and_all_classes_are_covered(
         valid_rows()
     )
     observed_groups: dict[str, str] = {}
+
+    assert (
+        result.manifest[
+            "source_dataset_schema_version"
+        ]
+        == 2
+    )
 
     for partition_name, rows in (
         result.partitions.items()
@@ -239,6 +281,40 @@ def test_rejects_missing_split_group_id(
         match=(
             "metadata.split_group_id"
         ),
+    ):
+        plan_group_aware_split(rows)
+
+
+def test_rejects_mixed_dataset_row_versions(
+) -> None:
+    rows = valid_rows()
+    canonical = rows[0]
+
+    rows[0] = {
+        "schema_version": 1,
+        "sample_id": canonical["sample_id"],
+        "metadata": {
+            name: canonical["metadata"][name]
+            for name in (
+                "experiment_id",
+                "scenario_id",
+                "variant_id",
+                "split_group_id",
+                "topology_id",
+                "collected_at_utc",
+            )
+        },
+        "features": {
+            name: "true"
+            for name in FEATURE_NAMES_V1
+        },
+        "labels": canonical["labels"],
+        "quality": canonical["quality"],
+    }
+
+    with pytest.raises(
+        DatasetSplitError,
+        match="cannot mix",
     ):
         plan_group_aware_split(rows)
 

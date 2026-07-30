@@ -31,15 +31,23 @@
 - Ground-truth isolation from Collector and Rule Engine
 - Experiment Manifest v2 runtime contract and JSON Schema
 - Dataset Row v1 builder and JSON Schema
+- Dataset Row v2 runtime contract and JSON Schema
+- Seven role-neutral Dataset Row v2 diagnostic feature names
+- Dataset Row v2 observation-context metadata
+- Canonical Dataset Row v2 builder for new experiments
+- Explicit historical Dataset Row v1 to v2 migration
+- Version-aware validation for Dataset Row v1 and v2
 - Historical Dataset Row v1 exports for C1 and C2
 - Real Dataset Row v1 export for N0
 - Batch Plan v1 runtime validator and JSON Schema
 - Canonical B0 smoke plan with the listed order N0, C1, and C2
 - Batch Runner v1 orchestration over the existing experiment runner
 - Fail-stop batch metadata persistence and atomic JSONL aggregation
-- Per-row Dataset Row v1 revalidation and duplicate-output protection
+- Per-row version-aware revalidation and duplicate-output protection
+- Dataset Row v2 as the default Batch Runner output
+- Mixed-version dataset rejection at the batch boundary
 - Collision-resistant experiment and batch-run identifiers
-- Full automated test suite with 114 passing tests
+- Full automated test suite with 126 passing tests
 - First real B0_SMOKE_CANONICAL batch completed with three validated
   Dataset Row v1 records and a final TOP-01 9/9 baseline
 - Canonical and alternate HostB-subnet variants for N0, C1, and C2
@@ -48,14 +56,16 @@
   records, 12/12 exact matches, and a final TOP-01 13/13 baseline
 - Deterministic, class-stratified, group-aware dataset splitter
 - Split manifest with source/output hashes and partition statistics
-- Eleven targeted splitter tests, including leakage and feasibility
-  checks
+- Homogeneous Dataset Row v1/v2 support in the splitter
+- Mixed-version source rejection and source-version manifest metadata
 - Verified rejection of P1 before output creation because every class
   has only one independent split group
 - Real B0 regression completed for N0, C1, and C2 using Evidence v2
 - Three regression diagnoses with exact_match true
 - TOP-01 remained valid with 13/13 checks before and after the
   Evidence v2 regression
+- Real B0 regression produced three validated Dataset Row v2 records
+- Dataset Row v2 role-neutral feature and metadata audit passed
 
 ## Representative verified experiments
 
@@ -130,24 +140,45 @@ Final post-experiment baseline:
 - Interpretation: real backward-compatibility regression for P2-R0,
   not a new training dataset
 
+## Latest P2-R1 regression
+
+- Batch ID: B0_SMOKE_CANONICAL
+- Batch run ID:
+  b0_smoke_canonical-20260730T115517979203Z-
+  24c80549d03d4e84ad7e066f19409ecb
+- Status: COMPLETED
+- Planned/completed experiments: 3/3
+- Validated Dataset Row v2 records: 3
+- Dataset row schema version: 2
+- Labels: no_fault, missing_static_route, wrong_next_hop
+- Features per row: 7 role-neutral tri-state features
+- Observation binding: TOP-01, hosta_to_hostb, r1/r2
+- Rule-based exact matches: 3/3
+- Role-neutral dataset audit: PASS
+- Semantic verification: PASS
+- Baseline before and after: TOP-01 13/13 VALID
+- Interpretation: real Dataset Row v2 pipeline regression, not a
+  training dataset or multi-topology evaluation
+
 ## Active
 
-- Define a role-neutral Dataset Row v2 while preserving historical
-  Dataset Row v1 compatibility
-- Design TOP-02 only after the Dataset Row v2 contract is tested
+- Design and implement a real TOP-02 laboratory with a distinct
+  topology and observation context
+- Add a TOP-02 baseline validator and controlled scenario bindings
+- Verify real TOP-02 Evidence v2 and Dataset Row v2 artifacts before
+  expanding the dataset campaign
 - Define the controlled dataset expansion beyond the 12-row routing
   pilot using genuinely independent topology and observation groups
 - Provide at least three independent split_group_id values for every
   fault_type before producing the first three-way split
 - Preserve controlled variation and group independence while
   increasing dataset diversity
-- Keep rule-based evaluation reporting separate from Dataset Row v1
-  features and Batch Runner completion semantics
+- Keep rule-based evaluation reporting separate from dataset features
+  and Batch Runner completion semantics
 
 ## Open issues
 
 - Reusable batch-level evaluation summary or validation report
-- Role-neutral Dataset Row v2 contract and schema
 - Real TOP-02 topology, scenarios, validator, and laboratory execution
 - Final FRRouting container image for later routing extensions
 - Final set of pilot fault classes beyond C1 and C2
@@ -162,14 +193,14 @@ Final post-experiment baseline:
 
 ## Next milestone
 
-Implement and test Dataset Row v2 with role-neutral feature names,
-explicit migration behavior from Dataset Row v1, and unchanged
-ground-truth isolation. Then design and validate TOP-02 before using
-it in the next controlled dataset campaign.
+Design, implement, and test TOP-02 as the first real laboratory with a
+distinct topology and observation context. Add its baseline validator
+and controlled scenario bindings, then verify Evidence v2 and Dataset
+Row v2 artifacts before including TOP-02 in the next dataset campaign.
 
-Do not begin ML training until Dataset Row v2, TOP-02, the expanded
-dataset, group independence, class coverage, and the generated split
-manifest are verified.
+Do not begin ML training until TOP-02, the expanded dataset, group
+independence, class coverage, and the generated split manifest are
+verified.
 
 ## Important limitation
 
@@ -185,12 +216,18 @@ groups required for train/validation/test coverage. This refusal is
 a dataset-feasibility result, not a failure of the accepted P1
 pipeline artifact.
 
-P2-R0 makes the observation, evidence, and rule layers role-neutral.
-Its real laboratory regression still used TOP-01. Synthetic tests
-with TOP-02 identifiers validate contract behavior but do not prove
-that a real TOP-02 laboratory or dataset pipeline exists. Dataset Row
-v1 intentionally blocks non-legacy role bindings until Dataset Row
-v2 is defined.
+P2-R0 made the observation, evidence, and rule layers role-neutral.
+P2-R1 now makes Dataset Row v2 the role-neutral canonical dataset
+contract. Both real regressions still used TOP-01. Synthetic tests
+with alternate topology and node identifiers validate contract
+behavior but do not prove that a real TOP-02 laboratory or
+multi-topology dataset pipeline exists.
+
+The explicit Dataset Row v1 to v2 migration is limited to the
+historical TOP_01, hosta_to_hostb, r1/r2 context. Migrating historical
+rows does not create new experimental evidence or independent split
+groups. The three-row P2-R1 regression validates pipeline integration
+only and is not a training dataset.
 
 The project has not yet established general diagnostic accuracy or
 compared the rule-based, Machine Learning, and hybrid methods.

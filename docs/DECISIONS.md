@@ -196,10 +196,10 @@ the first real N0 no-fault row, the three-row B0 smoke batch, and
 the accepted 12-row P1 routing-variants pilot. Parameterized
 generation has started at pilot scale. Group-aware splitting is
 implemented and tested, but P1 has insufficient independent groups
-for a valid three-way split. Dataset Row v1 now adapts Evidence v2
-only for the legacy TOP-01 r1/r2 binding and rejects other role
-bindings until Dataset Row v2 is defined. ML training has not
-started.
+for a valid three-way split. Dataset Row v1 remains the immutable
+historical P1 contract and adapts Evidence v2 only for the legacy
+TOP-01 r1/r2 binding. Dataset Row v2 supersedes it as the canonical
+contract for new rows under D-057. ML training has not started.
 
 ## D-050 — Dataset-batch planning contract
 
@@ -216,8 +216,8 @@ Schema document.
 
 Status: Implemented and covered by automated tests. The canonical
 B0_SMOKE_CANONICAL plan validates as three planned experiments in
-the order N0, C1, and C2. The current full test suite has 91 passing
-tests.
+the order N0, C1, and C2. The complete automated suite has 126
+passing tests.
 
 Limitation:
 Validation and deterministic expansion of a batch plan do not by
@@ -228,13 +228,15 @@ Dataset Row v1 records, and the final laboratory baseline.
 ## D-051 — Batch execution and aggregation contract
 
 Decision: Use Batch Runner v1 as the canonical orchestration layer
-between Batch Plan v1, the existing experiment runner, and Dataset
-Row v1 aggregation.
+between Batch Plan v1, the existing experiment runner, and versioned
+Dataset Row aggregation. This decision was initially implemented with
+Dataset Row v1; D-057 makes v2 the canonical output for new runs.
 
 The runner must preserve listed order, use failure_policy=stop,
 require a COMPLETED experiment result, validate every generated
-Dataset Row v1, require sample_id to match experiment_id, and reject
-duplicate sample identifiers or experiment directories.
+Dataset Row, require sample_id to match experiment_id, and reject
+duplicate sample identifiers, experiment directories, or mixed row
+versions.
 
 Batch-level metadata is persisted throughout execution. The final
 JSONL dataset is written atomically only after every planned
@@ -245,9 +247,12 @@ Default experiment and batch-run identifiers use UTC timestamps with
 microsecond precision plus UUID values to avoid collisions during
 repeated execution.
 
-Status: Implemented, covered within the full automated suite of
-80 passing tests, and verified through the real B0 smoke batch and
-the 12-experiment P1 routing-variants pilot.
+Status: Implemented and verified through the real B0 smoke batch and
+the 12-experiment P1 routing-variants pilot. Under D-057, the default
+row builder now produces Dataset Row v2. The batch boundary validates
+either supported row version, records the batch dataset version, and
+rejects mixed-version aggregation. The complete automated suite has
+126 passing tests.
 
 Limitation:
 The contract establishes technical execution and valid aggregation.
@@ -338,15 +343,17 @@ at least one group of every class in every partition. Consequently, each
 fault_type requires at least three independent split_group_id values for
 three-way class coverage.
 
-Feasibility and Dataset Row v1 validation must complete before the output
-directory is created. A successful split writes train, validation, and
-test JSONL files plus a manifest containing group and class counts and
-SHA-256 hashes for the source and outputs.
+Feasibility and validation of a homogeneous supported Dataset Row
+version must complete before the output directory is created. A
+successful split writes train, validation, and test JSONL files plus a
+manifest containing the source dataset schema version, group and class
+counts, and SHA-256 hashes for the source and outputs.
 
-Status: Implemented in src/dataset/splitter.py and covered by 11 targeted
-tests. The complete automated suite has 91 passing tests. The accepted
-P1 dataset was verified to be correctly rejected without output because
-each class has only one independent split group.
+Status: Implemented in src/dataset/splitter.py. Under D-057, the
+splitter accepts homogeneous Dataset Row v1 or v2 sources and rejects
+mixed versions. The complete automated suite has 126 passing tests.
+The accepted P1 dataset was verified to be correctly rejected without
+output because each class has only one independent split group.
 
 Limitation:
 
@@ -387,6 +394,46 @@ before and after execution.
 
 Limitation:
 
-Synthetic unit fixtures exercise TOP-02 role names, but no real
-TOP-02 topology, Dataset Row v2, or independent multi-topology
-dataset campaign has yet been implemented.
+Synthetic unit fixtures exercise TOP-02 role names, and Dataset Row
+v2 is now implemented under D-057. No real TOP-02 topology or
+independent multi-topology dataset campaign has yet been implemented.
+
+## D-057 — Role-neutral Dataset Row v2 contract
+
+Decision: Use Dataset Row v2 as the canonical contract for newly
+generated dataset rows.
+
+Dataset Row v2 keeps fault_type as the supervised-learning target and
+uses seven tri-state diagnostic features named through source,
+destination, route-observer, and transit roles. Its metadata records
+the explicit topology, direction, route-observer, transit, variant,
+and split-group context. Concrete IP addresses, ground truth, rule
+outputs, and evaluation results remain excluded from model features.
+
+Dataset Row v1 remains an immutable historical contract with explicit
+builders and validators. Migration from v1 to v2 must be an explicit
+operation and is defined only for the historical TOP_01,
+hosta_to_hostb, r1/r2 context. Migration maps only the approved
+feature names and preserves sample identity, split_group_id, labels,
+and quality fields.
+
+Batch Runner uses the v2 builder by default, persists
+dataset_row_schema_version, and must reject mixed row versions in one
+dataset. The group-aware splitter accepts either a homogeneous v1 or
+homogeneous v2 source, records source_dataset_schema_version, and
+must also reject mixed-version input.
+
+Status: Implemented and covered by the complete automated suite of
+126 passing tests. The real B0 regression
+b0_smoke_canonical-20260730T115517979203Z-
+24c80549d03d4e84ad7e066f19409ecb produced three validated Dataset
+Row v2 records for N0, C1, and C2, with three exact rule-based
+matches and valid TOP-01 13/13 baselines before and after execution.
+
+Limitation:
+
+The real regression used only the existing TOP-01 laboratory and
+created a three-row smoke dataset. It verifies the v2 contract and
+pipeline integration, not a real TOP-02 laboratory, sufficient
+independent split groups, ML readiness, or general diagnostic
+performance.

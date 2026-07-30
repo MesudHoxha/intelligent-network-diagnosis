@@ -65,20 +65,31 @@ scenario:
         assert profile.destination_prefix == "10.10.2.0/24"
 
         evidence = {
-            "schema_version": 1,
+            "schema_version": 2,
             "topology_id": "TOP_01",
             "collected_at_utc": (
                 "2026-07-28T12:00:10+00:00"
             ),
+            "direction": "hosta_to_hostb",
+            "route_observer_node": "r1",
+            "transit_node": "r2",
             "destination_address": "10.10.2.10",
             "destination_prefix": "10.10.2.0/24",
             "source_gateway_reachable": True,
             "destination_reachable": True,
-            "route_to_destination_exists_on_r1": True,
-            "route_next_hop_on_r1": "10.10.12.2",
-            "route_next_hop_reachable_from_r1": True,
-            "transit_next_hop_reachable": True,
-            "destination_reachable_from_r2": True,
+            (
+                "route_to_destination_exists_on_observer"
+            ): True,
+            "route_next_hop_on_observer": "10.10.12.2",
+            (
+                "route_next_hop_reachable_from_observer"
+            ): True,
+            (
+                "expected_next_hop_reachable_from_observer"
+            ): True,
+            (
+                "destination_reachable_from_transit"
+            ): True,
         }
 
         experiment_runner.write_json(
@@ -168,6 +179,7 @@ scenario:
 
     row = build_dataset_row(experiment_directory)
 
+    assert row["schema_version"] == 2
     assert row["labels"]["fault_type"] == "no_fault"
     assert set(row["features"].values()) == {"true"}
     assert (

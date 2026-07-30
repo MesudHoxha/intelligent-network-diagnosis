@@ -308,6 +308,7 @@ def run_batch(
         ),
         "completed_experiment_count": 0,
         "dataset_row_count": 0,
+        "dataset_row_schema_version": None,
         "planned_dataset_path": str(
             dataset_path
         ),
@@ -375,11 +376,32 @@ def run_batch(
                 resolved_experiment_directory
             )
 
-            # Use the canonical Dataset Row v1
-            # validator at the batch boundary.
+            # Accept the supported versioned dataset contracts at
+            # the batch boundary. New real executions use the
+            # canonical Dataset Row v2 builder by default.
             validate_dataset_row(row)
 
             sample_id = row.get("sample_id")
+            row_schema_version = row.get(
+                "schema_version"
+            )
+
+            batch_schema_version = result[
+                "dataset_row_schema_version"
+            ]
+
+            if batch_schema_version is None:
+                result[
+                    "dataset_row_schema_version"
+                ] = row_schema_version
+            elif (
+                batch_schema_version
+                != row_schema_version
+            ):
+                raise BatchRunnerError(
+                    "A batch dataset cannot mix "
+                    "Dataset Row schema versions."
+                )
 
             if sample_id != experiment_id:
                 raise BatchRunnerError(
@@ -483,7 +505,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=(
             "Execute a validated Batch Plan v1 "
-            "and aggregate Dataset Row v1 records."
+            "and aggregate Dataset Row v2 records."
         )
     )
 

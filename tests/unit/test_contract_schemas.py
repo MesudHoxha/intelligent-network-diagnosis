@@ -3,7 +3,10 @@ from pathlib import Path
 
 import pytest
 
-from src.dataset.contract import FEATURE_NAMES
+from src.dataset.contract import (
+    FEATURE_NAMES_V1,
+    FEATURE_NAMES_V2,
+)
 
 
 @pytest.mark.parametrize(
@@ -22,6 +25,13 @@ from src.dataset.contract import FEATURE_NAMES
                 "dataset_row_v1.schema.json"
             ),
             1,
+        ),
+        (
+            Path(
+                "schemas/"
+                "dataset_row_v2.schema.json"
+            ),
+            2,
         ),
         (
             Path(
@@ -50,14 +60,19 @@ def test_formal_contract_schema(
         == expected_version
     )
 
-    if expected_version == 1:
+    if "dataset_row" in path.name:
         feature_contract = schema[
             "properties"
         ]["features"]
+        expected_features = (
+            FEATURE_NAMES_V1
+            if expected_version == 1
+            else FEATURE_NAMES_V2
+        )
 
         assert set(feature_contract["required"]) == set(
-            FEATURE_NAMES
+            expected_features
         )
         assert set(
             feature_contract["properties"]
-        ) == set(FEATURE_NAMES)
+        ) == set(expected_features)

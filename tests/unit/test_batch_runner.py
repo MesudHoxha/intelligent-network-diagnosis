@@ -7,7 +7,10 @@ from src.batch.runner import (
     BatchRunnerError,
     run_batch,
 )
-from src.dataset.contract import FEATURE_NAMES
+from src.dataset.contract import (
+    FEATURE_NAMES,
+    FEATURE_NAMES_V1,
+)
 from src.orchestration.experiment_runner import (
     build_experiment_id,
 )
@@ -75,19 +78,58 @@ batch:
 
 def valid_row(
     sample_id: str,
+    *,
+    schema_version: int = 2,
 ) -> dict[str, object]:
-    return {
-        "schema_version": 1,
-        "sample_id": sample_id,
-        "metadata": {
+    if schema_version == 1:
+        feature_names = FEATURE_NAMES_V1
+        metadata = {
             "experiment_id": sample_id,
-        },
+            "scenario_id": "C1",
+            "variant_id": "canonical",
+            "split_group_id": "TOP_01:C1:canonical",
+            "topology_id": "TOP_01",
+            "collected_at_utc": (
+                "2026-07-30T12:00:00+00:00"
+            ),
+        }
+    else:
+        feature_names = FEATURE_NAMES
+        metadata = {
+            "experiment_id": sample_id,
+            "scenario_id": "C1",
+            "variant_id": "canonical",
+            "split_group_id": "TOP_02:C1:canonical",
+            "topology_id": "TOP_02",
+            "direction": "client_to_server",
+            "route_observer_node": "edge1",
+            "transit_node": "core1",
+            "collected_at_utc": (
+                "2026-07-30T12:00:00+00:00"
+            ),
+        }
+
+    return {
+        "schema_version": schema_version,
+        "sample_id": sample_id,
+        "metadata": metadata,
         "features": {
             name: "true"
-            for name in FEATURE_NAMES
+            for name in feature_names
         },
-        "labels": {},
-        "quality": {},
+        "labels": {
+            "fault_category": "routing",
+            "fault_type": "missing_static_route",
+            "fault_location": "edge1",
+            "affected_prefix": "10.20.2.0/24",
+        },
+        "quality": {
+            "experiment_completed": True,
+            "collector_completed": True,
+            "baseline_before_valid": True,
+            "baseline_after_valid": True,
+            "unavailable_feature_count": 0,
+        },
     }
 
 
@@ -177,6 +219,10 @@ def test_runs_in_listed_order_and_aggregates_jsonl(
         == 3
     )
     assert result["dataset_row_count"] == 3
+    assert (
+        result["dataset_row_schema_version"]
+        == 2
+    )
     assert [
         record["sequence_number"]
         for record in result["experiments"]
@@ -476,6 +522,81 @@ def test_revalidates_rows_from_builder(
     assert (
         stored_result["error"]["type"]
         == "DatasetContractError"
+    )
+
+
+def test_rejects_mixed_dataset_row_versions(
+    tmp_path: Path,
+) -> None:
+    plan_path = prepare_repository(tmp_path)
+    call_count = 0
+
+    def executor(
+        *,
+        scenario_path: Path,
+        output_root: Path,
+        baseline_validator: Path,
+    ) -> dict[str, object]:
+        nonlocal call_count
+        del scenario_path
+        del baseline_validator
+
+        call_count += 1
+        experiment_id = (
+            f"experiment-{call_count}"
+        )
+        experiment_directory = (
+            output_root / experiment_id
+        )
+        experiment_directory.mkdir(
+            parents=True
+        )
+
+        return {
+            "status": "COMPLETED",
+            "experiment_id": experiment_id,
+            "experiment_directory": str(
+                experiment_directory
+            ),
+        }
+
+    def builder(
+        path: Path,
+    ) -> dict[str, object]:
+        return valid_row(
+            path.name,
+            schema_version=(
+                2 if call_count == 1 else 1
+            ),
+        )
+
+    with pytest.raises(BatchRunnerError):
+        run_batch(
+            **run_arguments(
+                tmp_path,
+                plan_path,
+                batch_run_id=(
+                    "batch-run-mixed-rows"
+                ),
+            ),
+            experiment_executor=executor,
+            dataset_row_builder=builder,
+        )
+
+    assert call_count == 2
+
+    stored_result = json.loads(
+        (
+            tmp_path
+            / "data"
+            / "metadata"
+            / "batch-run-mixed-rows.json"
+        ).read_text(encoding="utf-8")
+    )
+
+    assert (
+        "cannot mix"
+        in stored_result["error"]["message"]
     )
 
 
