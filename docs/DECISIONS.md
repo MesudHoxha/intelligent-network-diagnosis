@@ -196,7 +196,10 @@ the first real N0 no-fault row, the three-row B0 smoke batch, and
 the accepted 12-row P1 routing-variants pilot. Parameterized
 generation has started at pilot scale. Group-aware splitting is
 implemented and tested, but P1 has insufficient independent groups
-for a valid three-way split. ML training has not started.
+for a valid three-way split. Dataset Row v1 now adapts Evidence v2
+only for the legacy TOP-01 r1/r2 binding and rejects other role
+bindings until Dataset Row v2 is defined. ML training has not
+started.
 
 ## D-050 — Dataset-batch planning contract
 
@@ -352,3 +355,38 @@ Repetitions and related variants sharing one split_group_id do not count
 as independent groups. A controlled dataset expansion must provide at
 least three independent groups per fault_type before a three-way split
 can succeed.
+
+## D-056 — Role-neutral observation and evidence contract
+
+Decision: Represent diagnostic context through topology and node
+roles rather than fixed TOP-01, hosta_to_hostb, r1, and r2
+identifiers.
+
+Observation Profile v1 derives topology_id from topology.id and
+accepts validated generic direction, route-observer, and transit
+roles. Evidence v2 is the canonical contract for newly collected
+evidence and records these roles with role-neutral observation names.
+It is enforced by both a runtime validator and a JSON Schema.
+
+The collector must validate Evidence v2 before writing it. The Rule
+Engine must validate collected Evidence v2 when reading it, while a
+compatibility adapter preserves diagnosis of historical Evidence v1.
+Diagnosis location, supporting evidence, and recommendations must use
+the actual observer and transit roles.
+
+Dataset Row v1 remains a historical P1 contract. It may adapt
+Evidence v2 only for the legacy TOP-01 r1/r2 binding and must reject
+other topology or observer/transit bindings. A role-neutral Dataset
+Row v2 must be defined before TOP-02 evidence is exported for Machine
+Learning.
+
+Status: Implemented and covered by the full suite of 114 passing
+tests. A real B0 regression completed N0, C1, and C2 with Evidence v2,
+three exact rule-based matches, and valid TOP-01 13/13 baselines
+before and after execution.
+
+Limitation:
+
+Synthetic unit fixtures exercise TOP-02 role names, but no real
+TOP-02 topology, Dataset Row v2, or independent multi-topology
+dataset campaign has yet been implemented.

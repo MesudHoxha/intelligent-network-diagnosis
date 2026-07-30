@@ -1,14 +1,18 @@
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from ipaddress import IPv4Address, IPv4Network
 from typing import Any
 
 
 OBSERVATION_PROFILE_SCHEMA_VERSION = 1
-SUPPORTED_DIRECTION = "hosta_to_hostb"
-P1_ROUTE_OBSERVER_NODE = "r1"
-P1_TRANSIT_NODE = "r2"
+IDENTIFIER_PATTERN = re.compile(
+    r"^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+)
+DIRECTION_PATTERN = re.compile(
+    r"^[a-z0-9][a-z0-9_]*_to_[a-z0-9][a-z0-9_]*$"
+)
 
 REQUIRED_FIELDS = {
     "schema_version",
@@ -37,6 +41,14 @@ STRING_FIELDS = (
     "transit_container",
 )
 
+IDENTIFIER_FIELDS = (
+    "source_container",
+    "route_observer_node",
+    "route_observer_container",
+    "transit_node",
+    "transit_container",
+)
+
 FAULT_NEXT_HOP_FIELDS = {
     "missing_static_route": "next_hop",
     "wrong_next_hop": "correct_next_hop",
@@ -50,6 +62,7 @@ class ObservationProfileContractError(ValueError):
 @dataclass(frozen=True)
 class ObservationProfile:
     schema_version: int
+    topology_id: str
     direction: str
     source_container: str
     source_gateway_address: str
@@ -187,6 +200,23 @@ def validate_observation_profile(
             "Scenario must be an object."
         )
 
+    topology = scenario.get("topology")
+
+    if not isinstance(topology, dict):
+        raise ObservationProfileContractError(
+            "Scenario requires a topology object."
+        )
+
+    topology_id = topology.get("id")
+
+    if (
+        not isinstance(topology_id, str)
+        or not IDENTIFIER_PATTERN.fullmatch(topology_id)
+    ):
+        raise ObservationProfileContractError(
+            "topology.id must be a non-empty identifier."
+        )
+
     observation = scenario.get("observation")
 
     if not isinstance(observation, dict):
@@ -230,30 +260,33 @@ def validate_observation_profile(
                 "a non-empty string."
             )
 
+    for field_name in IDENTIFIER_FIELDS:
+        if not IDENTIFIER_PATTERN.fullmatch(
+            observation[field_name]
+        ):
+            raise ObservationProfileContractError(
+                f"observation.{field_name} must be "
+                "a valid identifier."
+            )
+
     direction = observation["direction"]
 
-    if direction != SUPPORTED_DIRECTION:
+    if not DIRECTION_PATTERN.fullmatch(direction):
         raise ObservationProfileContractError(
-            "Observation Profile v1 supports only "
-            "HostA to HostB direction."
+            "observation.direction must use the "
+            "'source_to_destination' identifier format."
         )
 
     route_observer_node = observation[
         "route_observer_node"
     ]
 
-    if route_observer_node != P1_ROUTE_OBSERVER_NODE:
-        raise ObservationProfileContractError(
-            "Observation Profile v1 requires "
-            "route_observer_node 'r1'."
-        )
-
     transit_node = observation["transit_node"]
 
-    if transit_node != P1_TRANSIT_NODE:
+    if route_observer_node == transit_node:
         raise ObservationProfileContractError(
-            "Observation Profile v1 requires "
-            "transit_node 'r2'."
+            "observation.route_observer_node and "
+            "observation.transit_node must be different."
         )
 
     source_gateway_address = _validate_ipv4_address(
@@ -281,6 +314,7 @@ def validate_observation_profile(
 
     profile = ObservationProfile(
         schema_version=schema_version,
+        topology_id=topology_id,
         direction=direction,
         source_container=observation[
             "source_container"

@@ -54,6 +54,10 @@ def write_secondary_scenario(path: Path) -> None:
         "scenario": {
             "id": "C1_MISSING_STATIC_ROUTE",
             "kind": "fault",
+            "topology": {
+                "id": "TOP_01",
+                "file": "topology.yml",
+            },
             "observation": {
                 "schema_version": 1,
                 "direction": "hosta_to_hostb",

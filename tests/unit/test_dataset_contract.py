@@ -83,6 +83,30 @@ def create_experiment(
     return experiment
 
 
+def role_neutral_evidence(
+    **overrides: object,
+) -> dict[str, object]:
+    evidence: dict[str, object] = {
+        "schema_version": 2,
+        "topology_id": "TOP_01",
+        "collected_at_utc": (
+            "2026-07-30T12:00:00+00:00"
+        ),
+        "direction": "hosta_to_hostb",
+        "route_observer_node": "r1",
+        "transit_node": "r2",
+        "source_gateway_reachable": True,
+        "destination_reachable": False,
+        "route_to_destination_exists_on_observer": False,
+        "route_next_hop_on_observer": None,
+        "route_next_hop_reachable_from_observer": None,
+        "expected_next_hop_reachable_from_observer": True,
+        "destination_reachable_from_transit": True,
+    }
+    evidence.update(overrides)
+    return evidence
+
+
 @pytest.mark.parametrize(
     ("value", "expected"),
     [
@@ -232,4 +256,62 @@ def test_rejects_invalid_evidence(
     )
 
     with pytest.raises(DatasetContractError):
+        build_dataset_row(experiment)
+
+
+def test_dataset_v1_adapts_role_neutral_top01_evidence(
+    tmp_path: Path,
+) -> None:
+    experiment = create_experiment(tmp_path)
+    write_json(
+        experiment / "parsed" / "evidence.json",
+        role_neutral_evidence(),
+    )
+
+    row = build_dataset_row(experiment)
+
+    assert row["schema_version"] == 1
+    assert row["metadata"]["topology_id"] == "TOP_01"
+    assert row["features"] == {
+        "source_gateway_reachable": "true",
+        "destination_reachable": "false",
+        "route_to_destination_exists_on_r1": "false",
+        "route_next_hop_present_on_r1": "false",
+        "route_next_hop_reachable_from_r1": (
+            "unavailable"
+        ),
+        "transit_next_hop_reachable": "true",
+        "destination_reachable_from_r2": "true",
+    }
+
+
+@pytest.mark.parametrize(
+    "overrides",
+    [
+        {
+            "topology_id": "TOP_02",
+            "route_observer_node": "edge1",
+            "transit_node": "core1",
+        },
+        {
+            "direction": "hostb_to_hosta",
+            "route_observer_node": "r2",
+            "transit_node": "r1",
+        },
+    ],
+)
+def test_dataset_v1_rejects_nonlegacy_role_binding(
+    tmp_path: Path,
+    overrides: dict[str, object],
+) -> None:
+    experiment = create_experiment(tmp_path)
+    write_json(
+        experiment / "parsed" / "evidence.json",
+        role_neutral_evidence(**overrides),
+    )
+
+    with pytest.raises(
+        DatasetContractError,
+        match="Define Dataset Row v2",
+    ):
         build_dataset_row(experiment)

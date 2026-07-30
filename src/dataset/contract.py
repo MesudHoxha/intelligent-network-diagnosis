@@ -24,6 +24,24 @@ FEATURE_NAMES = (
     "destination_reachable_from_r2",
 )
 
+ROLE_NEUTRAL_EVIDENCE_KEYS = {
+    "route_to_destination_exists_on_r1": (
+        "route_to_destination_exists_on_observer"
+    ),
+    "route_next_hop_on_r1": (
+        "route_next_hop_on_observer"
+    ),
+    "route_next_hop_reachable_from_r1": (
+        "route_next_hop_reachable_from_observer"
+    ),
+    "transit_next_hop_reachable": (
+        "expected_next_hop_reachable_from_observer"
+    ),
+    "destination_reachable_from_r2": (
+        "destination_reachable_from_transit"
+    ),
+}
+
 
 class DatasetContractError(ValueError):
     """Raised when an experiment cannot produce a valid row."""
@@ -66,7 +84,31 @@ def to_tristate(value: object) -> str:
 def extract_features(
     evidence: dict[str, Any],
 ) -> dict[str, str]:
-    route_exists = evidence.get(
+    evidence_schema_version = evidence.get(
+        "schema_version",
+        1,
+    )
+
+    if (
+        isinstance(evidence_schema_version, bool)
+        or evidence_schema_version not in {1, 2}
+    ):
+        raise DatasetContractError(
+            "Unsupported evidence schema version."
+        )
+
+    def evidence_value(legacy_name: str) -> object:
+        if evidence_schema_version == 1:
+            source_name = legacy_name
+        else:
+            source_name = ROLE_NEUTRAL_EVIDENCE_KEYS.get(
+                legacy_name,
+                legacy_name,
+            )
+
+        return evidence.get(source_name)
+
+    route_exists = evidence_value(
         "route_to_destination_exists_on_r1"
     )
 
@@ -75,7 +117,7 @@ def extract_features(
     elif route_exists is False:
         next_hop_present = "false"
     elif route_exists is True:
-        next_hop = evidence.get(
+        next_hop = evidence_value(
             "route_next_hop_on_r1"
         )
 
@@ -102,12 +144,12 @@ def extract_features(
 
     return {
         "source_gateway_reachable": to_tristate(
-            evidence.get(
+            evidence_value(
                 "source_gateway_reachable"
             )
         ),
         "destination_reachable": to_tristate(
-            evidence.get(
+            evidence_value(
                 "destination_reachable"
             )
         ),
@@ -119,19 +161,19 @@ def extract_features(
         ),
         "route_next_hop_reachable_from_r1": (
             to_tristate(
-                evidence.get(
+                evidence_value(
                     "route_next_hop_reachable_from_r1"
                 )
             )
         ),
         "transit_next_hop_reachable": to_tristate(
-            evidence.get(
+            evidence_value(
                 "transit_next_hop_reachable"
             )
         ),
         "destination_reachable_from_r2": (
             to_tristate(
-                evidence.get(
+                evidence_value(
                     "destination_reachable_from_r2"
                 )
             )
@@ -268,6 +310,29 @@ def build_dataset_row(
         if not isinstance(value, str) or not value:
             raise DatasetContractError(
                 f"{name} must be a non-empty string."
+            )
+
+    evidence_schema_version = evidence.get(
+        "schema_version",
+        1,
+    )
+
+    if evidence_schema_version == 2:
+        route_observer_node = evidence.get(
+            "route_observer_node"
+        )
+        transit_node = evidence.get("transit_node")
+
+        if (
+            topology_id != "TOP_01"
+            or route_observer_node != "r1"
+            or transit_node != "r2"
+        ):
+            raise DatasetContractError(
+                "Dataset Row v1 supports role-neutral evidence "
+                "only for the legacy TOP_01 r1/r2 binding. "
+                "Define Dataset Row v2 before exporting other "
+                "topologies or observation directions."
             )
 
     variant_id = manifest.get(

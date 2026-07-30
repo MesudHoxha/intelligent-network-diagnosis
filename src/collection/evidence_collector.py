@@ -9,6 +9,7 @@ from typing import Sequence
 
 import yaml
 
+from src.contracts.evidence import validate_evidence_v2
 from src.contracts.observation_profile import (
     ObservationProfile,
     validate_observation_profile,
@@ -103,38 +104,40 @@ def collect_evidence(
     output_directory: Path,
     profile: ObservationProfile,
 ) -> dict[str, object]:
-    r1_route_to_hostb = route_result(
+    observer_route_to_destination = route_result(
         profile.route_observer_container,
         profile.destination_prefix,
     )
 
     raw_results = {
-        "hosta_ping_gateway": ping_result(
+        "source_ping_gateway": ping_result(
             profile.source_container,
             profile.source_gateway_address,
         ),
-        "hosta_ping_hostb": ping_result(
+        "source_ping_destination": ping_result(
             profile.source_container,
             profile.destination_address,
         ),
-        "r1_route_to_hostb": r1_route_to_hostb,
-        "r1_ping_r2": ping_result(
+        "route_observer_route_to_destination": (
+            observer_route_to_destination
+        ),
+        "route_observer_ping_expected_next_hop": ping_result(
             profile.route_observer_container,
             profile.expected_next_hop,
         ),
-        "r2_ping_hostb": ping_result(
+        "transit_ping_destination": ping_result(
             profile.transit_container,
             profile.destination_address,
         ),
     }
 
     configured_next_hop = route_next_hop(
-        r1_route_to_hostb
+        observer_route_to_destination
     )
 
     if configured_next_hop is not None:
         raw_results[
-            "r1_ping_configured_next_hop"
+            "route_observer_ping_configured_next_hop"
         ] = ping_result(
             profile.route_observer_container,
             configured_next_hop,
@@ -149,40 +152,51 @@ def collect_evidence(
         )
 
     evidence = {
-        "schema_version": 1,
-        "topology_id": "TOP_01",
+        "schema_version": 2,
+        "topology_id": profile.topology_id,
         "collected_at_utc": datetime.now(
             timezone.utc
         ).isoformat(),
+        "direction": profile.direction,
+        "route_observer_node": profile.route_observer_node,
+        "transit_node": profile.transit_node,
         "destination_address": profile.destination_address,
         "destination_prefix": profile.destination_prefix,
         "source_gateway_reachable": ping_succeeded(
-            raw_results["hosta_ping_gateway"]
+            raw_results["source_ping_gateway"]
         ),
         "destination_reachable": ping_succeeded(
-            raw_results["hosta_ping_hostb"]
+            raw_results["source_ping_destination"]
         ),
-        "route_to_destination_exists_on_r1": route_exists(
-            raw_results["r1_route_to_hostb"]
+        "route_to_destination_exists_on_observer": route_exists(
+            raw_results[
+                "route_observer_route_to_destination"
+            ]
         ),
-        "route_next_hop_on_r1": configured_next_hop,
-        "route_next_hop_reachable_from_r1": (
+        "route_next_hop_on_observer": configured_next_hop,
+        "route_next_hop_reachable_from_observer": (
             ping_succeeded(
                 raw_results[
-                    "r1_ping_configured_next_hop"
+                    "route_observer_ping_configured_next_hop"
                 ]
             )
-            if "r1_ping_configured_next_hop"
+            if "route_observer_ping_configured_next_hop"
             in raw_results
             else None
         ),
-        "transit_next_hop_reachable": ping_succeeded(
-            raw_results["r1_ping_r2"]
+        "expected_next_hop_reachable_from_observer": (
+            ping_succeeded(
+                raw_results[
+                    "route_observer_ping_expected_next_hop"
+                ]
+            )
         ),
-        "destination_reachable_from_r2": ping_succeeded(
-            raw_results["r2_ping_hostb"]
+        "destination_reachable_from_transit": ping_succeeded(
+            raw_results["transit_ping_destination"]
         ),
     }
+
+    validate_evidence_v2(evidence)
 
     write_json(
         output_directory / "parsed" / "evidence.json",
@@ -190,9 +204,11 @@ def collect_evidence(
     )
 
     collector_status = {
-        "collector": "TOP01EvidenceCollector",
+        "collector": "RoleNeutralEvidenceCollector",
         "status": "COLLECTION_COMPLETED",
         "probe_count": len(raw_results),
+        "topology_id": profile.topology_id,
+        "direction": profile.direction,
         "output_directory": str(output_directory),
     }
 
@@ -228,7 +244,10 @@ def load_observation_profile(
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Collect diagnostic evidence from TOP-01."
+        description=(
+            "Collect role-neutral diagnostic evidence "
+            "from a scenario observation profile."
+        )
     )
 
     parser.add_argument(

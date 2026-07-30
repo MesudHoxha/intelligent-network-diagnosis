@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Role-Neutral Evidence v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "topology_id",
+    "collected_at_utc",
+    "direction",
+    "route_observer_node",
+    "transit_node",
+    "destination_address",
+    "destination_prefix",
+    "source_gateway_reachable",
+    "destination_reachable",
+    "route_to_destination_exists_on_observer",
+    "route_next_hop_on_observer",
+    "route_next_hop_reachable_from_observer",
+    "expected_next_hop_reachable_from_observer",
+    "destination_reachable_from_transit"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 2
+    },
+    "topology_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "collected_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "direction": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_]*_to_[a-z0-9][a-z0-9_]*$"
+    },
+    "route_observer_node": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "transit_node": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "destination_address": {
+      "type": "string",
+      "minLength": 1
+    },
+    "destination_prefix": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_gateway_reachable": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "destination_reachable": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "route_to_destination_exists_on_observer": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "route_next_hop_on_observer": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "route_next_hop_reachable_from_observer": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "expected_next_hop_reachable_from_observer": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "destination_reachable_from_transit": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    }
+  }
+}

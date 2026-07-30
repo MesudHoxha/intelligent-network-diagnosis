@@ -14,6 +14,10 @@ def canonical_scenario() -> dict[str, object]:
     return {
         "id": "C1_MISSING_STATIC_ROUTE",
         "kind": "fault",
+        "topology": {
+            "id": "TOP_01",
+            "file": "topology.yml",
+        },
         "observation": {
             "schema_version": 1,
             "direction": "hosta_to_hostb",
@@ -63,6 +67,7 @@ def test_accepts_canonical_profile() -> None:
     )
 
     assert profile.schema_version == 1
+    assert profile.topology_id == "TOP_01"
     assert profile.direction == "hosta_to_hostb"
     assert profile.destination_address == "10.10.2.10"
     assert profile.destination_prefix == "10.10.2.0/24"
@@ -120,35 +125,73 @@ def test_rejects_unexpected_observation_field() -> None:
         validate_observation_profile(scenario)
 
 
-def test_rejects_reverse_direction() -> None:
+def test_accepts_reverse_direction_and_role_bindings() -> None:
     scenario = canonical_scenario()
+    topology = scenario["topology"]
+    assert isinstance(topology, dict)
+    topology["id"] = "TOP_02"
     observation(scenario)["direction"] = "hostb_to_hosta"
+    observation(scenario)["route_observer_node"] = "edge2"
+    observation(scenario)["route_observer_container"] = (
+        "clab-top02-edge2"
+    )
+    observation(scenario)["transit_node"] = "core1"
+    observation(scenario)["transit_container"] = (
+        "clab-top02-core1"
+    )
+    fault = scenario["fault"]
+    assert isinstance(fault, dict)
+    fault["target_node"] = "edge2"
+    fault["target_container"] = "clab-top02-edge2"
 
-    with pytest.raises(
-        ObservationProfileContractError,
-        match="only HostA to HostB",
-    ):
-        validate_observation_profile(scenario)
+    profile = validate_observation_profile(scenario)
+
+    assert profile.topology_id == "TOP_02"
+    assert profile.direction == "hostb_to_hosta"
+    assert profile.route_observer_node == "edge2"
+    assert profile.transit_node == "core1"
 
 
-def test_rejects_other_route_observer() -> None:
+def test_rejects_invalid_direction_identifier() -> None:
     scenario = canonical_scenario()
-    observation(scenario)["route_observer_node"] = "r2"
+    observation(scenario)["direction"] = "HostB -> HostA"
 
     with pytest.raises(
         ObservationProfileContractError,
-        match="route_observer_node 'r1'",
+        match="source_to_destination",
     ):
         validate_observation_profile(scenario)
 
 
-def test_rejects_other_transit_node() -> None:
+def test_rejects_missing_topology() -> None:
+    scenario = canonical_scenario()
+    del scenario["topology"]
+
+    with pytest.raises(
+        ObservationProfileContractError,
+        match="requires a topology object",
+    ):
+        validate_observation_profile(scenario)
+
+
+def test_rejects_same_observer_and_transit_node() -> None:
     scenario = canonical_scenario()
     observation(scenario)["transit_node"] = "r1"
 
     with pytest.raises(
         ObservationProfileContractError,
-        match="transit_node 'r2'",
+        match="must be different",
+    ):
+        validate_observation_profile(scenario)
+
+
+def test_rejects_invalid_role_identifier() -> None:
+    scenario = canonical_scenario()
+    observation(scenario)["route_observer_node"] = "edge 1"
+
+    with pytest.raises(
+        ObservationProfileContractError,
+        match="valid identifier",
     ):
         validate_observation_profile(scenario)
 

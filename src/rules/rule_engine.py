@@ -6,20 +6,56 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from src.contracts.evidence import validate_evidence_v2
 
-REQUIRED_EVIDENCE = [
+
+REQUIRED_SEMANTIC_EVIDENCE = [
     "destination_prefix",
     "source_gateway_reachable",
     "destination_reachable",
-    "route_to_destination_exists_on_r1",
-    "transit_next_hop_reachable",
-    "destination_reachable_from_r2",
+    "route_to_destination_exists_on_observer",
+    "expected_next_hop_reachable_from_observer",
+    "destination_reachable_from_transit",
 ]
 
-NEXT_HOP_EVIDENCE = [
-    "route_next_hop_on_r1",
-    "route_next_hop_reachable_from_r1",
+NEXT_HOP_SEMANTIC_EVIDENCE = [
+    "route_next_hop_on_observer",
+    "route_next_hop_reachable_from_observer",
 ]
+
+LEGACY_EVIDENCE_KEYS = {
+    "destination_prefix": "destination_prefix",
+    "source_gateway_reachable": "source_gateway_reachable",
+    "destination_reachable": "destination_reachable",
+    "route_to_destination_exists_on_observer": (
+        "route_to_destination_exists_on_r1"
+    ),
+    "route_next_hop_on_observer": "route_next_hop_on_r1",
+    "route_next_hop_reachable_from_observer": (
+        "route_next_hop_reachable_from_r1"
+    ),
+    "expected_next_hop_reachable_from_observer": (
+        "transit_next_hop_reachable"
+    ),
+    "destination_reachable_from_transit": (
+        "destination_reachable_from_r2"
+    ),
+}
+
+ROLE_NEUTRAL_EVIDENCE_KEYS = {
+    name: name
+    for name in (
+        *REQUIRED_SEMANTIC_EVIDENCE,
+        *NEXT_HOP_SEMANTIC_EVIDENCE,
+    )
+}
+
+ROLE_CONTEXT_FIELDS = (
+    "topology_id",
+    "direction",
+    "route_observer_node",
+    "transit_node",
+)
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -44,12 +80,80 @@ def write_json(path: Path, data: object) -> None:
     )
 
 
+def adapt_evidence(
+    evidence: dict[str, Any],
+) -> tuple[
+    dict[str, Any],
+    dict[str, str],
+    list[str],
+]:
+    schema_version = evidence.get("schema_version", 1)
+
+    if (
+        isinstance(schema_version, bool)
+        or schema_version not in {1, 2}
+    ):
+        raise ValueError(
+            "Unsupported evidence schema_version."
+        )
+
+    if schema_version == 1:
+        field_names = LEGACY_EVIDENCE_KEYS
+        context_missing: list[str] = []
+        route_observer_node = evidence.get(
+            "route_observer_node",
+            "r1",
+        )
+        transit_node = evidence.get(
+            "transit_node",
+            "r2",
+        )
+    else:
+        field_names = ROLE_NEUTRAL_EVIDENCE_KEYS
+        context_missing = [
+            field
+            for field in ROLE_CONTEXT_FIELDS
+            if not isinstance(evidence.get(field), str)
+            or not str(evidence[field]).strip()
+        ]
+        route_observer_node = evidence.get(
+            "route_observer_node"
+        )
+        transit_node = evidence.get("transit_node")
+
+    adapted = {
+        semantic_name: evidence.get(source_name)
+        for semantic_name, source_name
+        in field_names.items()
+    }
+    adapted.update(
+        {
+            "schema_version": schema_version,
+            "topology_id": evidence.get("topology_id"),
+            "direction": evidence.get("direction"),
+            "route_observer_node": route_observer_node,
+            "transit_node": transit_node,
+        }
+    )
+
+    return adapted, field_names, context_missing
+
+
 def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
+    (
+        semantic_evidence,
+        field_names,
+        context_missing,
+    ) = adapt_evidence(evidence)
+
     missing_evidence = [
-        key
-        for key in REQUIRED_EVIDENCE
-        if key not in evidence or evidence[key] is None
+        field_names[key]
+        for key in REQUIRED_SEMANTIC_EVIDENCE
+        if semantic_evidence[key] is None
     ]
+    missing_evidence = (
+        context_missing + missing_evidence
+    )
 
     base_result: dict[str, Any] = {
         "schema_version": 1,
@@ -57,7 +161,9 @@ def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
         "generated_at_utc": datetime.now(
             timezone.utc
         ).isoformat(),
-        "topology_id": evidence.get("topology_id"),
+        "topology_id": semantic_evidence.get(
+            "topology_id"
+        ),
     }
 
     if missing_evidence:
@@ -76,15 +182,30 @@ def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
         }
 
     destination_prefix = str(
-        evidence["destination_prefix"]
+        semantic_evidence["destination_prefix"]
+    )
+    route_observer_node = str(
+        semantic_evidence["route_observer_node"]
+    )
+    transit_node = str(
+        semantic_evidence["transit_node"]
     )
 
     normal_operation = (
-        evidence["source_gateway_reachable"] is True
-        and evidence["destination_reachable"] is True
-        and evidence["route_to_destination_exists_on_r1"] is True
-        and evidence["transit_next_hop_reachable"] is True
-        and evidence["destination_reachable_from_r2"] is True
+        semantic_evidence["source_gateway_reachable"] is True
+        and semantic_evidence["destination_reachable"] is True
+        and semantic_evidence[
+            "route_to_destination_exists_on_observer"
+        ]
+        is True
+        and semantic_evidence[
+            "expected_next_hop_reachable_from_observer"
+        ]
+        is True
+        and semantic_evidence[
+            "destination_reachable_from_transit"
+        ]
+        is True
     )
 
     if normal_operation:
@@ -99,11 +220,20 @@ def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
                 "probability."
             ),
             "supporting_evidence": [
-                "HostA reaches its local gateway.",
-                "HostA reaches HostB end-to-end.",
-                "R1 contains a route toward the HostB network.",
-                "R1 reaches the transit next-hop R2.",
-                "R2 reaches HostB.",
+                "The source reaches its local gateway.",
+                "The source reaches the destination end-to-end.",
+                (
+                    f"The route observer {route_observer_node} "
+                    "contains a route toward the destination."
+                ),
+                (
+                    f"The route observer {route_observer_node} "
+                    "reaches the expected transit next-hop."
+                ),
+                (
+                    f"The transit node {transit_node} reaches "
+                    "the destination."
+                ),
             ],
             "contradicting_evidence": [],
             "recommendation": (
@@ -112,22 +242,31 @@ def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
             ),
         }
 
-    missing_route_on_r1 = (
-        evidence["source_gateway_reachable"] is True
-        and evidence["destination_reachable"] is False
-        and evidence["route_to_destination_exists_on_r1"] is False
-        and evidence["transit_next_hop_reachable"] is True
-        and evidence["destination_reachable_from_r2"] is True
+    missing_route_on_observer = (
+        semantic_evidence["source_gateway_reachable"] is True
+        and semantic_evidence["destination_reachable"] is False
+        and semantic_evidence[
+            "route_to_destination_exists_on_observer"
+        ]
+        is False
+        and semantic_evidence[
+            "expected_next_hop_reachable_from_observer"
+        ]
+        is True
+        and semantic_evidence[
+            "destination_reachable_from_transit"
+        ]
+        is True
     )
 
-    if missing_route_on_r1:
+    if missing_route_on_observer:
         return {
             **base_result,
             "status": "DIAGNOSIS_PRODUCED",
             "diagnosis": {
                 "category": "routing",
                 "fault_type": "missing_static_route",
-                "location": "r1",
+                "location": route_observer_node,
                 "affected_prefix": destination_prefix,
             },
             "matched_rules": ["R_ROUTING_001"],
@@ -137,18 +276,27 @@ def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
                 "probability."
             ),
             "supporting_evidence": [
-                "HostA reaches its local gateway R1.",
-                "HostA does not reach HostB end-to-end.",
+                "The source reaches its local gateway.",
+                "The source does not reach the destination.",
                 (
-                    "R1 does not contain a route toward "
+                    f"The route observer {route_observer_node} "
+                    "does not contain a route toward "
                     f"{destination_prefix}."
                 ),
-                "R1 still reaches the transit next-hop R2.",
-                "R2 still reaches HostB.",
+                (
+                    f"The route observer {route_observer_node} "
+                    "still reaches the expected transit "
+                    "next-hop."
+                ),
+                (
+                    f"The transit node {transit_node} still "
+                    "reaches the destination."
+                ),
             ],
             "contradicting_evidence": [],
             "recommendation": (
-                "Inspect the routing table on R1 and configure a "
+                "Inspect the routing table on "
+                f"{route_observer_node} and configure a "
                 "valid route toward "
                 f"{destination_prefix} through the "
                 "appropriate next-hop."
@@ -156,22 +304,25 @@ def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
         }
 
     wrong_next_hop_candidate = (
-        evidence["source_gateway_reachable"] is True
-        and evidence["destination_reachable"] is False
-        and evidence[
-            "route_to_destination_exists_on_r1"
+        semantic_evidence["source_gateway_reachable"] is True
+        and semantic_evidence["destination_reachable"] is False
+        and semantic_evidence[
+            "route_to_destination_exists_on_observer"
         ] is True
-        and evidence["transit_next_hop_reachable"] is True
-        and evidence[
-            "destination_reachable_from_r2"
+        and semantic_evidence[
+            "expected_next_hop_reachable_from_observer"
+        ]
+        is True
+        and semantic_evidence[
+            "destination_reachable_from_transit"
         ] is True
     )
 
     if wrong_next_hop_candidate:
         missing_next_hop_evidence = [
-            key
-            for key in NEXT_HOP_EVIDENCE
-            if key not in evidence or evidence[key] is None
+            field_names[key]
+            for key in NEXT_HOP_SEMANTIC_EVIDENCE
+            if semantic_evidence[key] is None
         ]
 
         if missing_next_hop_evidence:
@@ -193,13 +344,15 @@ def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
             }
 
         if (
-            evidence[
-                "route_next_hop_reachable_from_r1"
+            semantic_evidence[
+                "route_next_hop_reachable_from_observer"
             ]
             is False
         ):
             observed_next_hop = str(
-                evidence["route_next_hop_on_r1"]
+                semantic_evidence[
+                    "route_next_hop_on_observer"
+                ]
             )
 
             return {
@@ -208,7 +361,7 @@ def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
                 "diagnosis": {
                     "category": "routing",
                     "fault_type": "wrong_next_hop",
-                    "location": "r1",
+                    "location": route_observer_node,
                     "affected_prefix": destination_prefix,
                     "observed_next_hop": (
                         observed_next_hop
@@ -221,23 +374,33 @@ def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
                     "calibrated probability."
                 ),
                 "supporting_evidence": [
-                    "HostA reaches its local gateway R1.",
-                    "HostA does not reach HostB end-to-end.",
+                    "The source reaches its local gateway.",
+                    "The source does not reach the destination.",
                     (
-                        "R1 contains a route toward "
+                        f"The route observer "
+                        f"{route_observer_node} contains a "
+                        "route toward "
                         f"{destination_prefix}."
                     ),
                     (
                         "The route-configured next-hop "
                         f"{observed_next_hop} is unreachable "
-                        "from R1."
+                        f"from {route_observer_node}."
                     ),
-                    "R1 still reaches the transit neighbor R2.",
-                    "R2 still reaches HostB.",
+                    (
+                        f"The route observer "
+                        f"{route_observer_node} still reaches "
+                        "the expected transit next-hop."
+                    ),
+                    (
+                        f"The transit node {transit_node} still "
+                        "reaches the destination."
+                    ),
                 ],
                 "contradicting_evidence": [],
                 "recommendation": (
-                    "Inspect the static route on R1 and replace "
+                    "Inspect the static route on "
+                    f"{route_observer_node} and replace "
                     f"the unreachable next-hop "
                     f"{observed_next_hop} with the verified "
                     "transit next-hop."
@@ -270,6 +433,10 @@ def run_rule_engine(experiment_directory: Path) -> dict[str, Any]:
     )
 
     evidence = read_json(evidence_path)
+
+    if evidence.get("schema_version") == 2:
+        validate_evidence_v2(evidence)
+
     result = diagnose(evidence)
 
     write_json(output_path, result)

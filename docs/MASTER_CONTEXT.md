@@ -97,6 +97,25 @@ features covering source reachability, destination reachability,
 route presence, configured next-hop presence and reachability,
 transit reachability, and destination reachability from R2.
 
+The observation and evidence layer is now role-neutral. Observation
+Profile v1 derives topology_id from topology.id and validates generic
+direction, route-observer, and transit roles instead of requiring the
+TOP-01, hosta_to_hostb, r1, and r2 identifiers.
+
+Evidence v2 is the canonical contract for newly collected evidence.
+It records topology_id, direction, route_observer_node, transit_node,
+destination addressing, and role-neutral diagnostic observations.
+The contract has both a runtime validator and a JSON Schema. The
+collector validates Evidence v2 before writing it, and the Rule Engine
+validates it when reading a collected artifact.
+
+The Rule Engine adapts legacy Evidence v1 for historical
+compatibility. For Evidence v2, diagnosis locations, explanations,
+and recommendations are derived from the actual observation roles
+rather than fixed r1/r2 names. Synthetic TOP-02 unit fixtures verify
+this role-neutral behavior, but no real TOP-02 laboratory has yet
+been implemented or executed.
+
 The experiment runner supports both fault and normal scenarios.
 Normal experiments do not call fault injection or restoration.
 Every new run produces Experiment Manifest v2 with scenario
@@ -108,6 +127,11 @@ values true, false, and unavailable, and split_group_id is
 preserved for group-aware dataset splitting. Scenario identity,
 concrete IP addresses, ground truth, rule outputs, and evaluation
 results are not model features.
+
+Dataset Row v1 can adapt Evidence v2 into its historical P1 feature
+names only for the legacy TOP-01 r1/r2 binding. It intentionally
+rejects other topologies or observer/transit bindings. Dataset Row v2
+must be defined before TOP-02 evidence is exported for ML use.
 
 C1 and C2 have completed end-to-end with exact-match evaluation
 and successful restoration of the TOP-01 9/9 baseline. Their
@@ -185,6 +209,19 @@ contains only three independent groups: one for each of no_fault,
 missing_static_route, and wrong_next_hop. It is therefore correctly
 rejected for three-way splitting without creating output. P1 remains
 an accepted pipeline-validation artifact, not an ML-training dataset.
+
+P2-R0 removed the fixed topology and node-name coupling from the
+observation, collection, and rule-diagnosis layers while preserving
+the P1 Dataset Row v1 boundary. The full automated suite has 114
+passing tests.
+
+The real B0 regression batch
+b0_smoke_canonical-20260730T112109248368Z-
+e589527badc546feb1426f41b78fdb1a completed all three N0, C1, and C2
+experiments. All three artifacts used Evidence v2 with the TOP-01
+r1/r2 binding, all three rule evaluations produced exact_match true,
+and TOP-01 remained valid with 13/13 checks before and after the
+batch.
 
 The Machine Learning and hybrid diagnostic approaches have not yet
 been implemented or evaluated.

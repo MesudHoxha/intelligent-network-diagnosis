@@ -23,6 +23,12 @@ from src.dataset.contract import FEATURE_NAMES
             ),
             1,
         ),
+        (
+            Path(
+                "schemas/evidence_v2.schema.json"
+            ),
+            2,
+        ),
     ],
 )
 def test_formal_contract_schema(
