@@ -1,0 +1,90 @@
+schema_version: 1
+
+scenario:
+  id: C2_WRONG_NEXT_HOP
+  name: Wrong next-hop on R1 for alternate HostB subnet
+  kind: fault
+  variant_id: alternate_hostb_subnet
+  split_group_id: TOP_01:C2_WRONG_NEXT_HOP:canonical
+  category: routing
+  description: >
+    Replace the valid route toward the alternate HostB network
+    with a route that points to an unreachable next-hop while
+    preserving interfaces and transit-neighbor reachability.
+
+  topology:
+    id: TOP_01
+    file: labs/topologies/top01_routed/topology.clab.yml
+
+  observation:
+    schema_version: 1
+    direction: hosta_to_hostb
+    source_container: clab-top01-hosta
+    source_gateway_address: 10.10.1.1
+    destination_address: 10.10.22.10
+    destination_prefix: 10.10.22.0/24
+    route_observer_node: r1
+    route_observer_container: clab-top01-r1
+    expected_next_hop: 10.10.12.2
+    transit_node: r2
+    transit_container: clab-top01-r2
+
+  fault:
+    type: wrong_next_hop
+    injector: replace_route_next_hop
+    target_node: r1
+    target_container: clab-top01-r1
+    parameters:
+      destination_prefix: 10.10.22.0/24
+      correct_next_hop: 10.10.12.2
+      wrong_next_hop: 10.10.12.254
+      egress_interface: eth2
+
+  preconditions:
+    - id: route_exists_before_injection
+      description: R1 contains the target route
+    - id: correct_next_hop_present_before_injection
+      description: The target route uses the valid R2 next-hop
+    - id: baseline_end_to_end_connectivity
+      description: HostA reaches the alternate HostB address
+    - id: correct_next_hop_reachable
+      description: R1 reaches R2 before injection
+    - id: wrong_next_hop_unreachable
+      description: The selected incorrect next-hop is unreachable
+
+  expected_effects:
+    - id: route_present_after_injection
+      description: The target route remains installed on R1
+    - id: wrong_next_hop_present_after_injection
+      description: The route points to the incorrect next-hop
+    - id: correct_next_hop_absent_after_injection
+      description: The route no longer points to the valid next-hop
+    - id: end_to_end_connectivity_fails
+      description: HostA cannot reach the alternate HostB address
+    - id: local_gateway_remains_reachable
+      description: HostA can still reach R1
+    - id: transit_neighbor_remains_reachable
+      description: R1 can still reach R2
+
+  ground_truth:
+    fault_category: routing
+    fault_type: wrong_next_hop
+    fault_location: r1
+    affected_prefix: 10.10.22.0/24
+    correct_next_hop: 10.10.12.2
+    wrong_next_hop: 10.10.12.254
+    root_cause: >
+      R1 contains the route toward the alternate HostB network,
+      but the configured next-hop is incorrect and unreachable
+
+  restoration:
+    method: replace_route
+    command:
+      - ip
+      - route
+      - replace
+      - 10.10.22.0/24
+      - via
+      - 10.10.12.2
+      - dev
+      - eth2

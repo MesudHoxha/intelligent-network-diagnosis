@@ -1,0 +1,39 @@
+schema_version: 1
+
+batch:
+  id: P1_ROUTING_VARIANTS
+  description: >-
+    Execute canonical and alternate HostB-subnet variants for N0,
+    C1, and C2 with two repetitions per variant.
+
+  execution:
+    order: listed
+    failure_policy: stop
+
+  entries:
+    - entry_id: n0_canonical
+      scenario_path: scenarios/routing/N0_NORMAL_OPERATION.yml
+      repetitions: 2
+
+    - entry_id: n0_alternate_hostb_subnet
+      scenario_path: >-
+        scenarios/routing/N0_NORMAL_OPERATION_ALT_SUBNET.yml
+      repetitions: 2
+
+    - entry_id: c1_canonical
+      scenario_path: scenarios/routing/C1_MISSING_STATIC_ROUTE.yml
+      repetitions: 2
+
+    - entry_id: c1_alternate_hostb_subnet
+      scenario_path: >-
+        scenarios/routing/C1_MISSING_STATIC_ROUTE_ALT_SUBNET.yml
+      repetitions: 2
+
+    - entry_id: c2_canonical
+      scenario_path: scenarios/routing/C2_WRONG_NEXT_HOP.yml
+      repetitions: 2
+
+    - entry_id: c2_alternate_hostb_subnet
+      scenario_path: >-
+        scenarios/routing/C2_WRONG_NEXT_HOP_ALT_SUBNET.yml
+      repetitions: 2

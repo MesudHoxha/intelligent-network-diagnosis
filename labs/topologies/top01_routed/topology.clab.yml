@@ -13,6 +13,7 @@ topology:
         - ip addr add 10.10.1.10/24 dev eth1
         - ip link set eth1 up
         - ip route replace 10.10.2.0/24 via 10.10.1.1
+        - ip route replace 10.10.22.0/24 via 10.10.1.1
 
     r1:
       sysctls:
@@ -25,6 +26,7 @@ topology:
         - ip addr add 10.10.12.1/30 dev eth2
         - ip link set eth2 up
         - ip route replace 10.10.2.0/24 via 10.10.12.2
+        - ip route replace 10.10.22.0/24 via 10.10.12.2
 
     r2:
       sysctls:
@@ -35,6 +37,7 @@ topology:
         - ip link set eth1 up
         - ip addr flush dev eth2
         - ip addr add 10.10.2.1/24 dev eth2
+        - ip addr add 10.10.22.1/24 dev eth2
         - ip link set eth2 up
         - ip route replace 10.10.1.0/24 via 10.10.12.1
 
@@ -42,6 +45,7 @@ topology:
       exec:
         - ip addr flush dev eth1
         - ip addr add 10.10.2.10/24 dev eth1
+        - ip addr add 10.10.22.10/24 dev eth1
         - ip link set eth1 up
         - ip route replace 10.10.1.0/24 via 10.10.2.1
 
