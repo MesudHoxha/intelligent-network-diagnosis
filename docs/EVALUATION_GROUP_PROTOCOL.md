@@ -91,9 +91,9 @@ execution coverage but do not increase the independent-group count.
 
 ## 6. Planned context matrix
 
-The following matrix fixes the required coverage before topology
-implementation. Names after TOP-01 are design labels, not claims of
-implemented laboratories.
+The following matrix fixes the required coverage and records the
+current implementation state. A frozen design is not a claim of an
+implemented laboratory.
 
 | Group slot | Planned context | Material distinction | Status |
 | --- | --- | --- | --- |
@@ -101,7 +101,7 @@ implemented laboratories.
 | G02 | TOP_02_CHAIN | Three-router path with downstream forwarding after the observed transit | Laboratory and one complete three-class smoke set verified as CTX_G02_TOP02_CHAIN_3R |
 | G03 | TOP_02_BRANCH | Interior route observer at a two-arm destination branch | Laboratory and one complete three-class smoke set verified as CTX_G03_TOP02_BRANCH_MID |
 | G04 | TOP_02_DUAL_TRANSIT | Two live transit arms and a cross-segment wrong-next-hop context | Laboratory and one complete three-class smoke set verified as CTX_G04_TOP02_DUAL_TRANSIT |
-| G05 | TOP-03 asymmetric profile | Separate topology family for broader context coverage | Planned |
+| G05 | TOP_03_ASYMMETRIC_RETURN | Forward path through r2 and return path through r4 in one routed cycle | Design frozen as CTX_G05_TOP03_ASYMMETRIC_RETURN; laboratory pending |
 
 The P2-R3 review froze distinct topology_id and split_group_id values
 for G02-G04 and recorded their graph, forwarding intent, roles, fault
@@ -115,6 +115,10 @@ SHA-256
 P2-R6 implemented G04 and bound its normalized artifact bundle to
 SHA-256
 1e9aa7d2ea8ea1f1691821f8639c60820bbdcd9c0d0bd182e4b72b810b948d54.
+P2-R7 froze the G05 graph, identifiers, static forward/return
+divergence, r2/r3 observation binding, fault target, addressing, and
+semantic design fingerprint in docs/TOP03_CONTEXT_DESIGN.md. It has
+no real artifact SHA-256 because implementation is pending.
 
 If an implementation departs from a frozen design in a way that
 collapses two profiles to the same causal context, they collapse to
@@ -126,7 +130,8 @@ requirement after TOP-02. TOP_02_CHAIN has passed the first real
 role-neutral pipeline test outside TOP-01. TOP_02_BRANCH has passed
 the first real interior observer and branched-context test.
 TOP_02_DUAL_TRANSIT has passed the first cross-segment dual-transit
-wrong-next-hop test. The TOP-03 asymmetric context remains pending.
+wrong-next-hop test. TOP_03_ASYMMETRIC_RETURN is design-frozen but
+remains unimplemented.
 
 ## 7. Historical data
 
@@ -155,4 +160,4 @@ each supply one execution of every current class in their own
 reviewed context. They verify complete class coverage for three
 TOP-02 smoke contexts, but they do not satisfy the planned two
 repetitions per class, the future G01 campaign binding, the fifth
-TOP-03 context, or the split gate.
+implemented TOP-03 context, or the split gate.

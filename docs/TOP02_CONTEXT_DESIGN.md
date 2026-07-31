@@ -50,7 +50,7 @@ variation.
 | G02 | TOP_02_CHAIN | CTX_G02_TOP02_CHAIN_3R | Implemented and smoke-verified |
 | G03 | TOP_02_BRANCH | CTX_G03_TOP02_BRANCH_MID | Implemented and smoke-verified |
 | G04 | TOP_02_DUAL_TRANSIT | CTX_G04_TOP02_DUAL_TRANSIT | Implemented and smoke-verified |
-| G05 | Pending TOP-03 design | Pending | Planned |
+| G05 | TOP_03_ASYMMETRIC_RETURN | CTX_G05_TOP03_ASYMMETRIC_RETURN | Design frozen in docs/TOP03_CONTEXT_DESIGN.md; implementation pending |
 
 The identifiers are fixed before deterministic splitting. They must
 not be renamed to influence partition allocation.
@@ -496,7 +496,9 @@ controlled sequence:
 G02 has proved the first real TOP-02 pipeline, G03 has proved the
 first interior observer and live branched context, and G04 has proved
 the first source-gateway dual-transit context with a cross-segment
-wrong next hop. G05 remains a separate TOP-03 design task.
+wrong next hop. P2-R7 froze G05 separately under
+docs/TOP03_CONTEXT_DESIGN.md; this document remains normative only
+for G02-G04.
 
 ML training remains blocked. P2-R4, P2-R5, and P2-R6 created three
 smoke rows each, but they did not create the two-repetition campaign,

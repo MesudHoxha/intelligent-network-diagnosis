@@ -39,7 +39,8 @@ Status: In progress
 - G02 TOP_02_CHAIN: implemented and smoke-verified
 - G03 TOP_02_BRANCH: implemented and smoke-verified
 - G04 TOP_02_DUAL_TRANSIT: implemented and smoke-verified
-- G05 TOP-03 asymmetric context: next design-review target
+- G05 TOP_03_ASYMMETRIC_RETURN: design frozen; implementation is the
+  next target
 - Wrong gateway: not started
 - Interface down: not started
 - ACL block: not started

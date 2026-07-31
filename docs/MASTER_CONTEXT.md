@@ -234,7 +234,10 @@ per class and context, the minimum planned campaign contains 30 rows.
 The reviewed plan reserves one TOP-01 context, three materially
 different TOP-02 contexts, and one TOP-03 asymmetric context. G02
 TOP_02_CHAIN, G03 TOP_02_BRANCH, and G04 TOP_02_DUAL_TRANSIT are
-implemented and smoke-verified. The TOP-03 context remains planned.
+implemented and smoke-verified. G05 is design-frozen as
+TOP_03_ASYMMETRIC_RETURN with
+CTX_G05_TOP03_ASYMMETRIC_RETURN, but its laboratory remains
+unimplemented.
 
 The accepted P1 dataset retains its historical class-specific
 split_group_id values. It is correctly rejected because each old
@@ -306,7 +309,8 @@ The real G04 artifact bundle is bound to SHA-256
 The current scenario files and historical datasets have not been
 relabelled to manufacture new groups. P2-R4 implemented G02
 TOP_02_CHAIN, P2-R5 implemented G03 TOP_02_BRANCH, and P2-R6
-implemented G04 TOP_02_DUAL_TRANSIT. TOP-03 remains unimplemented.
+implemented G04 TOP_02_DUAL_TRANSIT. P2-R7 froze the TOP-03 design
+without implementing it.
 
 The real P2-R4 batch
 p2_g02_smoke-20260730T133227173375Z-
@@ -364,11 +368,36 @@ renamed branch variant. Fault restoration, the initial and final
 33-check baselines, and laboratory cleanup all passed. The complete
 automated suite passed 148 tests.
 
+P2-R7 completed the G05 TOP-03 design review without changing source
+contracts, laboratory files, scenarios, schemas, or historical
+artifacts. The frozen G05 identifiers are
+TOP_03_ASYMMETRIC_RETURN and
+CTX_G05_TOP03_ASYMMETRIC_RETURN.
+
+Its physical router graph is the cycle r1-r2-r3-r4-r1, with HostA
+attached to r1 and HostB attached to r3. The selected forward path is
+hosta-r1-r2-r3-hostb, while the return path is
+hostb-r3-r4-r1-hosta. R2 is the forward-only route observer and r3
+is the selected transit. C1 and C2 target the r2 route toward
+10.50.3.0/24; C2 replaces correct 10.50.23.2 with unreachable
+10.50.23.6.
+
+The design retains static routing, Observation Profile v1, Evidence
+v2, Dataset Row v2, and the approved class semantics. Its material
+distinction is the forward/return divergence, including a return-only
+r4 corridor and required reverse-path-filter controls. The normative
+descriptor, addressing, baseline, and runtime distinction rules are
+recorded in docs/TOP03_CONTEXT_DESIGN.md.
+
+No real G05 topology, validator, scenario, experiment, evidence,
+dataset row, artifact SHA-256, or split exists yet. The frozen design
+does not count as the fifth implemented context.
+
 The G02, G03, and G04 smoke artifacts provide one complete
 current-class execution set in each of three reviewed TOP-02
 contexts. They do not supply the planned two repetitions per class
-and context, the future G01 campaign rows, the fifth TOP-03 context,
-or a valid train/validation/test split.
+and context, the future G01 campaign rows, the fifth implemented
+TOP-03 context, or a valid train/validation/test split.
 
 The Machine Learning and hybrid diagnostic approaches have not yet
 been implemented or evaluated.

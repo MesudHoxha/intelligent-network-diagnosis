@@ -627,9 +627,9 @@ This accepted smoke batch contains one execution of each current
 class in one context. At P2-R5 closeout, G02 and G03 provided two
 verified complete-class smoke contexts. P2-R6 later verified G04.
 None has the planned two repetitions, and future G01 campaign
-bindings plus G05 remain pending, so the five-context ML-readiness
-gate, valid train/validation/test split, and general diagnostic
-performance are not established.
+bindings plus G05 implementation remain pending, so the five-context
+ML-readiness gate, valid train/validation/test split, and general
+diagnostic performance are not established.
 
 ## D-062 — First real dual-transit cross-segment context
 
@@ -686,6 +686,59 @@ This accepted smoke batch contains one execution of each current
 class in one context. Together, G02, G03, and G04 provide three
 verified complete-class TOP-02 smoke contexts, but none has the
 planned two repetitions. Future G01 campaign bindings and the G05
-TOP-03 asymmetric context remain pending, so the five-context
+TOP-03 asymmetric implementation remain pending, so the five-context
 ML-readiness gate, valid train/validation/test split, and general
 diagnostic performance are not established.
+
+## D-063 — Frozen TOP-03 asymmetric-return context design
+
+Decision: Freeze G05 as TOP_03_ASYMMETRIC_RETURN with
+split_group_id CTX_G05_TOP03_ASYMMETRIC_RETURN before creating its
+laboratory.
+
+The physical router graph is the cycle r1-r2-r3-r4-r1, with HostA
+attached to r1 and HostB attached to r3. The selected forward path is
+hosta-r1-r2-r3-hostb. The selected return path is
+hostb-r3-r4-r1-hosta.
+
+The diagnostic direction is hosta_to_hostb. R2 is the forward-only
+route observer and r3 is the selected transit. C1 removes the r2
+route toward 10.50.3.0/24. C2 retains that route but replaces correct
+next hop 10.50.23.2 with unassigned 10.50.23.6 on the r2-r3 segment.
+
+The material distinction is the forwarding asymmetry: r2 is present
+only on the selected forward path, while r4 is present only on the
+selected return path. IP-address variation, node renaming, or a
+nominal reverse direction is not the basis for a separate group.
+
+The implementation must disable and verify reverse-path filtering on
+the asymmetric routed path. Its baseline and runtime audits must
+prove the frozen forward route lookups, return route lookups,
+adjacent-hop health, selected fault isolation, and restoration.
+Fault-state return-corridor health is established through route
+lookups and adjacent-hop reachability rather than a reverse
+end-to-end ping whose reply would traverse the intentionally faulty
+forward direction.
+
+Observation Profile v1, Evidence v2, Dataset Row v2, the seven
+approved features, static routing, and the current no_fault,
+missing_static_route, and wrong_next_hop class set remain unchanged.
+The return-only r4 corridor is distinction evidence outside Dataset
+Row v2, not a new model feature.
+
+The normative graph, addressing, route intent, bindings, acceptance
+rules, and semantic descriptor are recorded in
+docs/TOP03_CONTEXT_DESIGN.md. A real artifact SHA-256 is recorded
+only after the topology, validator, and scenario files exist and
+pass runtime verification.
+
+Status: Design reviewed and approved. No G05 topology, validator,
+scenario, experiment, Evidence v2 artifact, Dataset Row v2 record,
+artifact SHA-256, or split has been implemented or verified.
+
+Limitation:
+
+The frozen design does not count as the fifth implemented context or
+satisfy ML readiness. G05 implementation, future G01 campaign
+bindings, the two-repetition 30-row campaign, and a valid D-058
+grouped split remain required before ML training.
