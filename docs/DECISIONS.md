@@ -515,13 +515,15 @@ docs/TOP02_CONTEXT_DESIGN.md. Cryptographic SHA-256 fingerprints are
 recorded only after real topology, validator, and scenario files
 exist.
 
-Implementation order: P2-R4 implements G02 only. G03 and G04 remain
-design-frozen until the first real TOP-02 pipeline succeeds. OSPF
-remains proposed under D-034 and is not introduced by this decision.
+Implementation order: P2-R4 implements G02 first, P2-R5 implements
+G03 only after the real G02 pipeline succeeds, and G04 remains behind
+the successful G03 gate. OSPF remains proposed under D-034 and is not
+introduced by this decision.
 
 Status: Design reviewed and approved. P2-R4 implemented and verified
-G02 without changing the frozen descriptor or group binding. G03 and
-G04 remain design-frozen and unimplemented.
+G02, and P2-R5 implemented and verified G03, without changing either
+frozen descriptor or group binding. G04 remains design-frozen and
+unimplemented.
 
 Limitation:
 
@@ -575,3 +577,55 @@ class in one context. It verifies the first real non-TOP-01 pipeline
 and one complete G02 class set; it does not satisfy the two-repetition
 campaign target, the five-context ML-readiness gate, a valid
 train/validation/test split, or general diagnostic performance.
+
+## D-061 — First real interior branched observation context
+
+Decision: Accept G03 TOP_02_BRANCH as the implemented and verified
+interior branched evaluation context.
+
+The implementation contains:
+
+- the seven-node hosta-r1-r2-{r3-hostb,r4-hostc} Containerlab graph;
+- the two live destination arms rooted at the interior r2 branch;
+- a 40-check baseline validator covering addressing, forwarding,
+  routes, both destination arms, and wrong-next-hop preconditions;
+- N0, C1, and C2 scenario bindings that all use
+  CTX_G03_TOP02_BRANCH_MID;
+- the hosta_to_hostc direction with observer r2 and transit r4;
+- C1/C2 injection only on the r2 route toward 10.30.4.0/24;
+- a three-entry fail-stop smoke plan; and
+- static contract, topology, and cross-context distinction tests.
+
+Separate C1 and C2 runtime audits are required evidence for the
+material branch. In each fault state, HostA cannot reach HostC, while
+HostA can still reach HostB through r3. R2 can still reach the correct
+r4 next hop, and r4 can still reach HostC. The selected fault
+therefore affects only the observed HostC arm and does not collapse
+G03 into a renamed linear context.
+
+The normalized topology, validator, and N0/C1/C2 scenario bundle has
+SHA-256:
+
+2092d0702a8e107a7757ff1754872f518f0be25c89883edb2c5638371a18f0fc
+
+The accepted real batch run is
+p2_g03_smoke-20260731T065808868462Z-
+a2b3766efaa449aeaf9007d4d1b664ea.
+
+Status: Implemented and verified on 2026-07-31. Seven targeted tests
+and the complete 141-test suite passed. The initial and final G03
+baselines each passed 40/40 checks. Both branch-isolation audits
+passed. All three planned experiments completed, all Evidence v2 and
+Dataset Row v2 artifacts passed contract and semantic audits, the
+r2/r4 role binding was verified, all three rule-based evaluations had
+exact_match true, and C1/C2 restoration returned the complete
+baseline to VALID.
+
+Limitation:
+
+This accepted smoke batch contains one execution of each current
+class in one context. Together, G02 and G03 provide two verified
+complete-class smoke contexts, but neither has the planned two
+repetitions. G01 campaign bindings, G04, and G05 remain pending, so
+the five-context ML-readiness gate, valid train/validation/test split,
+and general diagnostic performance are not established.

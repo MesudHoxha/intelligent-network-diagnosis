@@ -1,7 +1,7 @@
 # Evaluation Group Protocol
 
 Version: 1
-Date: 2026-07-30
+Date: 2026-07-31
 
 ## 1. Purpose
 
@@ -99,7 +99,7 @@ implemented laboratories.
 | --- | --- | --- | --- |
 | G01 | TOP-01 linear two-router path | Existing two-router observer/transit chain | Laboratory verified; CTX_G01_TOP01_LINEAR_2R frozen for future rows |
 | G02 | TOP_02_CHAIN | Three-router path with downstream forwarding after the observed transit | Laboratory and one complete three-class smoke set verified as CTX_G02_TOP02_CHAIN_3R |
-| G03 | TOP_02_BRANCH | Interior route observer at a two-arm destination branch | Design frozen as CTX_G03_TOP02_BRANCH_MID; laboratory pending |
+| G03 | TOP_02_BRANCH | Interior route observer at a two-arm destination branch | Laboratory and one complete three-class smoke set verified as CTX_G03_TOP02_BRANCH_MID |
 | G04 | TOP_02_DUAL_TRANSIT | Two live transit arms and a cross-segment wrong-next-hop context | Design frozen as CTX_G04_TOP02_DUAL_TRANSIT; laboratory pending |
 | G05 | TOP-03 asymmetric profile | Separate topology family for broader context coverage | Planned |
 
@@ -109,7 +109,10 @@ location, evidence producers, addressing, and semantic design
 fingerprints in docs/TOP02_CONTEXT_DESIGN.md. P2-R4 implemented G02
 and bound its normalized artifact bundle to SHA-256
 fa411079e19fa7047a467ae46ff1ba7edd54657daee254f74f6c57cd58e4adc3.
-G03 and G04 artifact fingerprints remain pending.
+P2-R5 implemented G03 and bound its normalized artifact bundle to
+SHA-256
+2092d0702a8e107a7757ff1754872f518f0be25c89883edb2c5638371a18f0fc.
+The G04 artifact fingerprint remains pending.
 
 If an implementation departs from a frozen design in a way that
 collapses two profiles to the same causal context, they collapse to
@@ -118,8 +121,9 @@ generation.
 
 TOP-03 is therefore planned now rather than being discovered as a late
 requirement after TOP-02. TOP_02_CHAIN has passed the first real
-role-neutral pipeline test outside TOP-01. TOP_02_BRANCH is the next
-implementation target.
+role-neutral pipeline test outside TOP-01. TOP_02_BRANCH has passed
+the first real interior observer and branched-context test.
+TOP_02_DUAL_TRANSIT is the next implementation target.
 
 ## 7. Historical data
 
@@ -143,7 +147,8 @@ ML training remains blocked until:
   classes; and
 - an explicit audit confirms that no group crosses partitions.
 
-The three-row P2_G02_SMOKE artifact supplies one execution of each
-current class in G02. It verifies complete class coverage for that
-smoke run, but it does not satisfy the planned two repetitions per
-class, the five-context target, or the split gate.
+The three-row P2_G02_SMOKE and three-row P2_G03_SMOKE artifacts each
+supply one execution of every current class in their own reviewed
+context. They verify complete class coverage for two smoke contexts,
+but they do not satisfy the planned two repetitions per class, the
+five-context target, or the split gate.

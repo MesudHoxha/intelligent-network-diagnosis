@@ -22,11 +22,11 @@ Status: Completed
 Status: In progress
 
 - Dataset artifact contracts: completed and tested
-- Normal: canonical, alternate-subnet, and G02 smoke executions
+- Normal: canonical, alternate-subnet, G02, and G03 smoke executions
   completed
-- Missing route: canonical, alternate-subnet, and G02 smoke
+- Missing route: canonical, alternate-subnet, G02, and G03 smoke
   executions completed
-- Wrong next-hop: canonical, alternate-subnet, and G02 smoke
+- Wrong next-hop: canonical, alternate-subnet, G02, and G03 smoke
   executions completed
 - Batch Plan v1 contract and canonical smoke plan: completed
   and tested
@@ -37,8 +37,8 @@ Status: In progress
 - Complete evaluation-context-aware splitting: implemented and tested;
   first valid five-context split pending
 - G02 TOP_02_CHAIN: implemented and smoke-verified
-- G03 TOP_02_BRANCH: next implementation target
-- G04 TOP_02_DUAL_TRANSIT: design frozen, implementation pending
+- G03 TOP_02_BRANCH: implemented and smoke-verified
+- G04 TOP_02_DUAL_TRANSIT: next implementation target
 - G05 TOP-03 asymmetric context: planned
 - Wrong gateway: not started
 - Interface down: not started

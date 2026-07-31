@@ -114,9 +114,9 @@ The Rule Engine adapts legacy Evidence v1 for historical
 compatibility. For Evidence v2, diagnosis locations, explanations,
 and recommendations are derived from the actual observation roles
 rather than fixed r1/r2 names. Synthetic fixtures verify alternate
-role identifiers, and the real G02 TOP_02_CHAIN execution now verifies
-the contract outside TOP-01 while retaining the frozen r1 observer and
-r2 transit binding.
+role identifiers. The real G02 TOP_02_CHAIN execution verifies the
+contract outside TOP-01, and the real G03 TOP_02_BRANCH execution
+verifies the distinct r2 observer and r4 transit binding.
 
 The experiment runner supports both fault and normal scenarios.
 Normal experiments do not call fault injection or restoration.
@@ -233,8 +233,8 @@ which produces a 3/1/1 group allocation under the default
 per class and context, the minimum planned campaign contains 30 rows.
 The reviewed plan reserves one TOP-01 context, three materially
 different TOP-02 contexts, and one TOP-03 asymmetric context. G02
-TOP_02_CHAIN is implemented and smoke-verified. G03, G04, and the
-TOP-03 context remain planned.
+TOP_02_CHAIN and G03 TOP_02_BRANCH are implemented and
+smoke-verified. G04 and the TOP-03 context remain planned.
 
 The accepted P1 dataset retains its historical class-specific
 split_group_id values. It is correctly rejected because each old
@@ -296,14 +296,17 @@ to an unreachable next hop on the other transit segment.
 The designs retain static routing, Observation Profile v1, Evidence
 v2, Dataset Row v2, and the approved N0/C1/C2 semantics. Their
 semantic descriptors are recorded in docs/TOP02_CONTEXT_DESIGN.md.
-The real G02 artifact bundle is now bound to SHA-256
+The real G02 artifact bundle is bound to SHA-256
 fa411079e19fa7047a467ae46ff1ba7edd54657daee254f74f6c57cd58e4adc3.
-Real G03 and G04 artifact fingerprints remain pending until their
-files exist.
+The real G03 artifact bundle is bound to SHA-256
+2092d0702a8e107a7757ff1754872f518f0be25c89883edb2c5638371a18f0fc.
+The real G04 artifact fingerprint remains pending until its files
+exist.
 
 The current scenario files and historical datasets have not been
-relabelled to manufacture new groups. P2-R4 implemented only G02
-TOP_02_CHAIN; G03, G04, and TOP-03 remain unimplemented.
+relabelled to manufacture new groups. P2-R4 implemented G02
+TOP_02_CHAIN and P2-R5 implemented G03 TOP_02_BRANCH. G04 and TOP-03
+remain unimplemented.
 
 The real P2-R4 batch
 p2_g02_smoke-20260730T133227173375Z-
@@ -321,6 +324,30 @@ made the transit-to-destination assertion valid. The complete
 automated suite then passed 134 tests. The three-row smoke dataset
 verifies one complete G02 class set, but it does not satisfy the
 two-repetition campaign target or create a valid three-way split.
+
+The real P2-R5 batch
+p2_g03_smoke-20260731T065808868462Z-
+a2b3766efaa449aeaf9007d4d1b664ea completed N0, C1, and C2 in listed
+order. It produced three validated Evidence v2 artifacts and three
+validated Dataset Row v2 records sharing
+CTX_G03_TOP02_BRANCH_MID. The artifacts bind TOP_02_BRANCH,
+hosta_to_hostc, observer r2, and transit r4. Their feature values
+matched the expected N0, C1, and C2 semantics, and all three
+rule-based evaluations produced exact_match true.
+
+Separate C1 and C2 runtime audits proved that each injected r2 route
+fault made the selected HostC arm unreachable while the independent
+r3-HostB arm remained reachable. The expected r4 next hop and the
+r4-to-HostC segment also remained healthy. This establishes the
+frozen branched causal context rather than a renamed linear graph.
+Fault restoration, the initial and final 40-check baselines, and
+laboratory cleanup all passed. The complete automated suite passed
+141 tests.
+
+The G02 and G03 smoke artifacts provide one complete current-class
+execution set in each of two reviewed contexts. They do not supply
+the planned two repetitions per class and context, all five contexts,
+or a valid train/validation/test split.
 
 The Machine Learning and hybrid diagnostic approaches have not yet
 been implemented or evaluated.
