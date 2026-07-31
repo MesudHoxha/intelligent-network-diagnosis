@@ -516,14 +516,14 @@ recorded only after real topology, validator, and scenario files
 exist.
 
 Implementation order: P2-R4 implements G02 first, P2-R5 implements
-G03 only after the real G02 pipeline succeeds, and G04 remains behind
-the successful G03 gate. OSPF remains proposed under D-034 and is not
-introduced by this decision.
+G03 only after the real G02 pipeline succeeds, and P2-R6 implements
+G04 only after the successful G03 gate. OSPF remains proposed under
+D-034 and is not introduced by this decision.
 
 Status: Design reviewed and approved. P2-R4 implemented and verified
-G02, and P2-R5 implemented and verified G03, without changing either
-frozen descriptor or group binding. G04 remains design-frozen and
-unimplemented.
+G02, P2-R5 implemented and verified G03, and P2-R6 implemented and
+verified G04 without changing their frozen descriptors or group
+bindings.
 
 Limitation:
 
@@ -624,8 +624,68 @@ baseline to VALID.
 Limitation:
 
 This accepted smoke batch contains one execution of each current
-class in one context. Together, G02 and G03 provide two verified
-complete-class smoke contexts, but neither has the planned two
-repetitions. G01 campaign bindings, G04, and G05 remain pending, so
-the five-context ML-readiness gate, valid train/validation/test split,
-and general diagnostic performance are not established.
+class in one context. At P2-R5 closeout, G02 and G03 provided two
+verified complete-class smoke contexts. P2-R6 later verified G04.
+None has the planned two repetitions, and future G01 campaign
+bindings plus G05 remain pending, so the five-context ML-readiness
+gate, valid train/validation/test split, and general diagnostic
+performance are not established.
+
+## D-062 — First real dual-transit cross-segment context
+
+Decision: Accept G04 TOP_02_DUAL_TRANSIT as the implemented and
+verified source-gateway dual-transit evaluation context.
+
+The implementation contains:
+
+- the six-node hosta-r1-{r2-hostb,r3-hostc} Containerlab graph;
+- two live transit arms rooted at the r1 route observer;
+- a 33-check baseline validator covering addressing, forwarding,
+  routes, both transit arms, and wrong-next-hop preconditions;
+- N0, C1, and C2 scenario bindings that all use
+  CTX_G04_TOP02_DUAL_TRANSIT;
+- the hosta_to_hostc direction with observer r1 and transit r3;
+- C1 injection only on the r1 route toward 10.40.3.0/24;
+- C2 replacement of the selected route from correct
+  10.40.13.2/eth3 to unreachable 10.40.12.6/eth2 on the other live
+  transit segment;
+- a three-entry fail-stop smoke plan; and
+- static contract, topology, and cross-context distinction tests.
+
+Separate C1 and C2 runtime audits are required evidence for the
+material dual-transit context. The selected HostC path must fail while
+the r2-HostB alternate arm remains reachable. For C2, the real r2
+neighbor and correct r3 neighbor must remain reachable, the
+r3-HostC segment must remain healthy, and the configured destination
+route must use 10.40.12.6 through eth2. These checks establish a
+cross-segment wrong-next-hop fault rather than a same-link or renamed
+branch variant.
+
+The normalized topology, validator, and N0/C1/C2 scenario bundle has
+SHA-256:
+
+1e9aa7d2ea8ea1f1691821f8639c60820bbdcd9c0d0bd182e4b72b810b948d54
+
+The accepted real batch run is
+p2_g04_smoke-20260731T074745682481Z-
+5c865fccfdf244858aa04003187730a4.
+
+Status: Implemented and verified on 2026-07-31. Seven targeted tests
+and the complete 148-test suite passed. The initial and final G04
+baselines each passed 33/33 checks. The C1 isolation audit, C2
+cross-segment next-hop audit, and runtime distinction audit passed.
+All three planned experiments completed, all Evidence v2 and Dataset
+Row v2 artifacts passed contract and semantic audits, the r1/r3 role
+binding was verified, all three rule-based evaluations had
+exact_match true, and C1/C2 restoration returned the complete
+baseline to VALID. Laboratory cleanup also passed.
+
+Limitation:
+
+This accepted smoke batch contains one execution of each current
+class in one context. Together, G02, G03, and G04 provide three
+verified complete-class TOP-02 smoke contexts, but none has the
+planned two repetitions. Future G01 campaign bindings and the G05
+TOP-03 asymmetric context remain pending, so the five-context
+ML-readiness gate, valid train/validation/test split, and general
+diagnostic performance are not established.

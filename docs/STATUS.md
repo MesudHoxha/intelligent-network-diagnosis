@@ -47,7 +47,7 @@
 - Dataset Row v2 as the default Batch Runner output
 - Mixed-version dataset rejection at the batch boundary
 - Collision-resistant experiment and batch-run identifiers
-- Full automated test suite with 141 passing tests
+- Full automated test suite with 148 passing tests
 - First real B0_SMOKE_CANONICAL batch completed with three validated
   Dataset Row v1 records and a final TOP-01 9/9 baseline
 - Canonical and alternate HostB-subnet variants for N0, C1, and C2
@@ -100,6 +100,21 @@
 - G03 feature semantics and rule-based exact matches: 3/3
 - G03 fault restoration and final 40/40 baseline verification
 - Real G03 artifact-bundle SHA-256 fingerprint
+- G04 TOP_02_DUAL_TRANSIT six-node Containerlab topology
+- G04 baseline validator with 33 checks covering both live transit
+  arms
+- G04 N0, C1, and C2 scenario bindings sharing
+  CTX_G04_TOP02_DUAL_TRANSIT
+- Real C1 isolation and C2 cross-segment next-hop audits proving that
+  the r2-HostB alternate arm remains reachable while the selected
+  HostC path fails
+- Real P2_G04_SMOKE batch with three completed experiments
+- Three validated G04 Evidence v2 artifacts
+- Three validated G04 Dataset Row v2 records
+- Verified G04 hosta_to_hostc, observer r1, transit r3 binding
+- G04 feature semantics and rule-based exact matches: 3/3
+- G04 fault restoration and final 33/33 baseline verification
+- Real G04 artifact-bundle SHA-256 fingerprint
 
 ## Representative verified experiments
 
@@ -289,17 +304,49 @@ Final post-experiment baseline:
 - Interpretation: first real interior r2/r4 role-binding and branched
   complete-class smoke context, not the final campaign or a split
 
+## Latest P2-R6 verification
+
+- Decision: D-062
+- Batch ID: P2_G04_SMOKE
+- Batch run ID:
+  p2_g04_smoke-20260731T074745682481Z-
+  5c865fccfdf244858aa04003187730a4
+- Status: COMPLETED
+- Planned/completed experiments: 3/3
+- Classes: no_fault, missing_static_route, wrong_next_hop
+- Shared evaluation context: CTX_G04_TOP02_DUAL_TRANSIT
+- Observation binding: TOP_02_DUAL_TRANSIT, hosta_to_hostc, r1/r3
+- Evidence contract: Evidence v2
+- Dataset row schema version: 2
+- Validated Dataset Row v2 records: 3
+- Role-binding audit: PASS
+- Feature-semantics audit: PASS
+- Rule-based exact matches: 3/3
+- C1 dual-transit isolation audit: PASS
+- C2 cross-segment next-hop audit: PASS
+- Runtime dual-transit distinction audit: PASS
+- Restoration audit: PASS
+- Semantic artifact audit: PASS
+- Initial and final G04 baseline: 33/33 VALID
+- Targeted G04 tests: 7/7 passed
+- Full automated suite: 148/148 passed
+- Artifact-bundle SHA-256:
+  1e9aa7d2ea8ea1f1691821f8639c60820bbdcd9c0d0bd182e4b72b810b948d54
+- Laboratory cleanup: PASS
+- Interpretation: first real r1/r3 dual-transit and cross-segment
+  wrong-next-hop complete-class smoke context, not the final campaign
+  or a split
+
 ## Active
 
-- Implement the design-frozen G04 TOP_02_DUAL_TRANSIT context
-- Preserve its r1 observer and r3 selected-transit binding
-- Keep the r2-HostB alternate transit arm healthy during C1/C2
-- Inject G04 C2 through the frozen cross-segment wrong next hop
-  10.40.12.6 without adding unreviewed Dataset Row v2 features
-- Add G04 N0, C1, and C2 bindings sharing
-  CTX_G04_TOP02_DUAL_TRANSIT
-- Preserve the verified G02 and TOP-01 regressions
-- Preserve the verified G03 branch and role-binding regressions
+- Review and freeze the G05 TOP-03 asymmetric evaluation context
+- Define its materially distinct graph, direction, observation roles,
+  fault location, evidence producers, addressing, and
+  split_group_id before implementation
+- Preserve the verified TOP-01, G02, G03, and G04 regressions
+- Preserve Dataset Row v2 without adding unreviewed features
+- Keep the G05 design and implementation behind separate,
+  verifiable gates
 - Preserve complete evaluation contexts and whole-group partitioning
   while increasing dataset diversity
 - Keep rule-based evaluation reporting separate from dataset features
@@ -308,7 +355,6 @@ Final post-experiment baseline:
 ## Open issues
 
 - Reusable batch-level evaluation summary or validation report
-- Real G04 implementation
 - Final FRRouting container image for later routing extensions
 - Final set of pilot fault classes beyond C1 and C2
 - Missing-evidence experiments
@@ -317,7 +363,7 @@ Final post-experiment baseline:
 - Larger and more varied dataset beyond the 12-row P1 pilot
 - Five implemented and reviewed complete evaluation contexts
 - Shared multi-class group bindings for future campaign rows
-- Real TOP-03 asymmetric context
+- Frozen and then implemented G05 TOP-03 asymmetric context
 - First valid train/validation/test split under D-058
 - Machine Learning method implementation
 - Hybrid method implementation
@@ -325,19 +371,19 @@ Final post-experiment baseline:
 
 ## Next milestone
 
-P2-R6 — Implement and verify G04 TOP_02_DUAL_TRANSIT.
+P2-R7 — Review and freeze the G05 TOP-03 asymmetric context.
 
-Create the frozen dual-transit Containerlab graph, validate both live
-arms, and add N0/C1/C2 scenario bindings with
-CTX_G04_TOP02_DUAL_TRANSIT. Preserve the r1 observer and selected r3
-transit roles. For C2, move the selected HostC route to the
-unreachable 10.40.12.6 address on the separate live r2 segment and
-verify that the alternate arm remains healthy. Execute a real
-three-scenario smoke batch and verify Evidence v2, Dataset Row v2,
-exact-match, restoration, and the real artifact fingerprint
-separately.
+Define one materially distinct TOP-03 graph and causal diagnostic
+profile. Record its topology_id, split_group_id, directed path,
+observer/transit binding, fault location, evidence producers,
+addressing plan, complete N0/C1/C2 semantics, baseline requirements,
+and semantic fingerprint before creating laboratory files.
 
-Do not implement G05, ML, or hybrid diagnosis in P2-R6.
+Audit the proposed G05 design against G01-G04 so it does not become a
+renamed or parameter-only context. Keep the design review separate
+from implementation and do not create experimental rows in P2-R7.
+
+Do not implement G05, ML, or hybrid diagnosis in P2-R7.
 
 Do not begin ML training until all five reviewed contexts, the
 expanded complete-class campaign, and the generated split manifest
@@ -360,7 +406,9 @@ P2-R0 made the observation, evidence, and rule layers role-neutral.
 P2-R1 made Dataset Row v2 the role-neutral canonical dataset
 contract. P2-R4 proved the first non-TOP-01 laboratory through G02.
 P2-R5 then verified the real interior r2 observer and r4 transit
-binding in G03 without changing Evidence v2 or Dataset Row v2.
+binding in G03, and P2-R6 verified the r1/r3 dual-transit binding and
+cross-segment wrong-next-hop context in G04, without changing
+Evidence v2 or Dataset Row v2.
 
 The explicit Dataset Row v1 to v2 migration is limited to the
 historical TOP_01, hosta_to_hostb, r1/r2 context. Migrating historical
@@ -371,10 +419,11 @@ only and is not a training dataset.
 P2-R2 defines five complete evaluation contexts as the target for the
 first ML experiment and plans coverage across TOP-01, TOP-02, and
 TOP-03. P2-R3 froze concrete G02-G04 designs. P2-R4 and P2-R5
-implemented G02 and G03, each with one execution per current class.
-G01 future campaign bindings, G04, and G05 remain pending. The two
-smoke batches do not satisfy the planned two repetitions per class,
-and no successful D-058 train/validation/test split exists yet.
+implemented G02 and G03, and P2-R6 implemented G04, each with one
+execution per current class. G01 future campaign bindings and G05
+remain pending. The three TOP-02 smoke batches do not satisfy the
+planned two repetitions per class, and no successful D-058
+train/validation/test split exists yet.
 
 The project has not yet established general diagnostic accuracy or
 compared the rule-based, Machine Learning, and hybrid methods.

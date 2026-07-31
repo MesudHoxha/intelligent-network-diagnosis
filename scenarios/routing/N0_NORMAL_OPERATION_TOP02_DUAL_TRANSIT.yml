@@ -1,0 +1,60 @@
+schema_version: 1
+
+scenario:
+  id: N0_NORMAL_OPERATION_TOP02_DUAL_TRANSIT
+  name: Normal TOP-02 dual-transit operation
+  kind: normal
+  variant_id: canonical
+  split_group_id: CTX_G04_TOP02_DUAL_TRANSIT
+  category: baseline
+  description: >
+    Observe the healthy TOP_02_DUAL_TRANSIT path through R3 toward
+    HostC while the separate R2-HostB transit arm remains active.
+
+  topology:
+    id: TOP_02_DUAL_TRANSIT
+    file: labs/topologies/top02_dual_transit/topology.clab.yml
+
+  observation:
+    schema_version: 1
+    direction: hosta_to_hostc
+    source_container: clab-top02dual-hosta
+    source_gateway_address: 10.40.1.1
+    destination_address: 10.40.3.10
+    destination_prefix: 10.40.3.0/24
+    route_observer_node: r1
+    route_observer_container: clab-top02dual-r1
+    expected_next_hop: 10.40.13.2
+    transit_node: r3
+    transit_container: clab-top02dual-r3
+
+  preconditions:
+    - id: baseline_observed_arm_connectivity
+      description: HostA reaches HostC through R1 and R3
+    - id: baseline_alternate_arm_connectivity
+      description: HostA reaches HostB through R1 and R2
+    - id: expected_route_present
+      description: R1 contains the valid route toward HostC
+    - id: expected_next_hop_reachable
+      description: R1 reaches the configured R3 next-hop
+    - id: alternate_transit_reachable
+      description: R1 reaches the live R2 neighbor
+    - id: transit_reaches_destination
+      description: R3 reaches HostC
+
+  expected_effects:
+    - id: no_fault_injected
+      description: No configuration change is performed
+    - id: observed_arm_remains_available
+      description: HostA continues to reach HostC
+    - id: alternate_arm_remains_available
+      description: HostA continues to reach HostB
+    - id: baseline_remains_valid
+      description: TOP_02_DUAL_TRANSIT remains valid after collection
+
+  ground_truth:
+    fault_category: null
+    fault_type: no_fault
+    fault_location: null
+    affected_prefix: null
+    root_cause: null

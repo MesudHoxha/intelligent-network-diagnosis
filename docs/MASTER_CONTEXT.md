@@ -233,8 +233,8 @@ which produces a 3/1/1 group allocation under the default
 per class and context, the minimum planned campaign contains 30 rows.
 The reviewed plan reserves one TOP-01 context, three materially
 different TOP-02 contexts, and one TOP-03 asymmetric context. G02
-TOP_02_CHAIN and G03 TOP_02_BRANCH are implemented and
-smoke-verified. G04 and the TOP-03 context remain planned.
+TOP_02_CHAIN, G03 TOP_02_BRANCH, and G04 TOP_02_DUAL_TRANSIT are
+implemented and smoke-verified. The TOP-03 context remains planned.
 
 The accepted P1 dataset retains its historical class-specific
 split_group_id values. It is correctly rejected because each old
@@ -300,13 +300,13 @@ The real G02 artifact bundle is bound to SHA-256
 fa411079e19fa7047a467ae46ff1ba7edd54657daee254f74f6c57cd58e4adc3.
 The real G03 artifact bundle is bound to SHA-256
 2092d0702a8e107a7757ff1754872f518f0be25c89883edb2c5638371a18f0fc.
-The real G04 artifact fingerprint remains pending until its files
-exist.
+The real G04 artifact bundle is bound to SHA-256
+1e9aa7d2ea8ea1f1691821f8639c60820bbdcd9c0d0bd182e4b72b810b948d54.
 
 The current scenario files and historical datasets have not been
 relabelled to manufacture new groups. P2-R4 implemented G02
-TOP_02_CHAIN and P2-R5 implemented G03 TOP_02_BRANCH. G04 and TOP-03
-remain unimplemented.
+TOP_02_CHAIN, P2-R5 implemented G03 TOP_02_BRANCH, and P2-R6
+implemented G04 TOP_02_DUAL_TRANSIT. TOP-03 remains unimplemented.
 
 The real P2-R4 batch
 p2_g02_smoke-20260730T133227173375Z-
@@ -344,9 +344,30 @@ Fault restoration, the initial and final 40-check baselines, and
 laboratory cleanup all passed. The complete automated suite passed
 141 tests.
 
-The G02 and G03 smoke artifacts provide one complete current-class
-execution set in each of two reviewed contexts. They do not supply
-the planned two repetitions per class and context, all five contexts,
+The real P2-R6 batch
+p2_g04_smoke-20260731T074745682481Z-
+5c865fccfdf244858aa04003187730a4 completed N0, C1, and C2 in listed
+order. It produced three validated Evidence v2 artifacts and three
+validated Dataset Row v2 records sharing
+CTX_G04_TOP02_DUAL_TRANSIT. The artifacts bind
+TOP_02_DUAL_TRANSIT, hosta_to_hostc, observer r1, and transit r3.
+Their feature values matched the expected N0, C1, and C2 semantics,
+and all three rule-based evaluations produced exact_match true.
+
+Separate runtime audits proved that C1 removed only the selected
+HostC route and that C2 moved it from the correct
+10.40.13.2/eth3 transit to unreachable 10.40.12.6/eth2 on the other
+live transit segment. In both fault states, the r2-HostB alternate
+arm and the correct r3 path remained healthy. This establishes the
+frozen cross-segment dual-transit context rather than a same-link or
+renamed branch variant. Fault restoration, the initial and final
+33-check baselines, and laboratory cleanup all passed. The complete
+automated suite passed 148 tests.
+
+The G02, G03, and G04 smoke artifacts provide one complete
+current-class execution set in each of three reviewed TOP-02
+contexts. They do not supply the planned two repetitions per class
+and context, the future G01 campaign rows, the fifth TOP-03 context,
 or a valid train/validation/test split.
 
 The Machine Learning and hybrid diagnostic approaches have not yet
