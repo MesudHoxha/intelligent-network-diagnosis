@@ -1,0 +1,24 @@
+schema_version: 1
+
+batch:
+  id: P2_G05_SMOKE
+  description: >-
+    Execute one N0, C1, and C2 smoke experiment for the frozen G05
+    TOP_03_ASYMMETRIC_RETURN evaluation context.
+
+  execution:
+    order: listed
+    failure_policy: stop
+
+  entries:
+    - entry_id: n0_g05_asymmetric_return
+      scenario_path: scenarios/routing/N0_NORMAL_OPERATION_TOP03_ASYMMETRIC_RETURN.yml
+      repetitions: 1
+
+    - entry_id: c1_g05_asymmetric_return
+      scenario_path: scenarios/routing/C1_MISSING_STATIC_ROUTE_TOP03_ASYMMETRIC_RETURN.yml
+      repetitions: 1
+
+    - entry_id: c2_g05_asymmetric_return
+      scenario_path: scenarios/routing/C2_WRONG_NEXT_HOP_TOP03_ASYMMETRIC_RETURN.yml
+      repetitions: 1

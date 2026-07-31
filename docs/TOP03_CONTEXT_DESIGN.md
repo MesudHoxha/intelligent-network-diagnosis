@@ -2,7 +2,7 @@
 
 Version: 1
 Date: 2026-07-31
-Status: G05 DESIGN FROZEN; IMPLEMENTATION PENDING
+Status: G05 IMPLEMENTED AND RUNTIME VERIFIED
 
 ## 1. Purpose and scope
 
@@ -10,14 +10,16 @@ This document converts the G05 coverage slot from Evaluation Group
 Protocol v1 into one concrete TOP-03 asymmetric static-routing
 context.
 
-P2-R7 freezes the graph, forwarding asymmetry, addressing,
+P2-R7 froze the graph, forwarding asymmetry, addressing,
 observation roles, logical C1/C2 fault target, evidence producers,
 split-group binding, baseline requirements, runtime distinction
 proof, and semantic design fingerprint before implementation.
 
-This review does not create a Containerlab topology, validator,
-scenario, experiment, Evidence v2 artifact, Dataset Row v2 record,
-artifact SHA-256, or ML result.
+P2-R8 implemented and runtime-verified that frozen design. It created
+the Containerlab topology, validator, N0/C1/C2 scenarios, smoke plan,
+tests, Evidence v2 artifacts, Dataset Row v2 records, and a real
+artifact SHA-256. It did not create an expanded campaign, grouped
+split, ML result, or hybrid result.
 
 ## 2. Design constraints
 
@@ -257,9 +259,10 @@ The normative descriptor is:
 The six physical lines above form one logical descriptor.
 
 This is a semantic design fingerprint, not a cryptographic artifact
-hash. A normalized topology, validator, and N0/C1/C2 scenario bundle
-receives a real SHA-256 only after P2-R8 creates and verifies those
-files.
+hash. P2-R8 created and verified the normalized topology, validator,
+and N0/C1/C2 scenario bundle. Its real SHA-256 is:
+
+`6bd4de9818ba0c3b589e5a17cf47553f523fc743d6feb12334bd525ea79ca870`
 
 ## 11. Distinction audit
 
@@ -283,9 +286,9 @@ Removing r4, routing r3 back through r2, or placing both directions
 on the same router sequence collapses G05 toward a G02/G03-style
 context and is not compliant with this design.
 
-## 12. Implementation gate
+## 12. Implementation and verification record
 
-P2-R8 may implement G05 only through this sequence:
+P2-R8 completed the required implementation sequence:
 
 1. create the frozen Containerlab graph and static forwarding;
 2. add a baseline validator covering asymmetry and reverse-path
@@ -299,7 +302,16 @@ P2-R8 may implement G05 only through this sequence:
    semantics, exact match, restoration, and final baseline; and
 9. record the real normalized artifact SHA-256 and HANDOFF.
 
-The design review does not satisfy the fifth-context gate by itself.
-G05 must be implemented and audited, G01 future campaign bindings
-must be created, and the full two-repetition campaign and grouped
-split must still succeed before ML training begins.
+The accepted batch is P2_G05_SMOKE with batch run ID
+p2_g05_smoke-20260731T083408705159Z-
+4badf5fdf6da4141af74af11d4b5f1a2. All three experiments completed.
+Evidence v2, Dataset Row v2, role binding, feature semantics,
+rule-based exact match, restoration, and semantic artifact audits
+passed. The initial and final baselines passed 52/52 checks, the
+targeted suite passed 7/7 tests, the complete suite passed 155/155
+tests, and laboratory cleanup passed.
+
+G05 now satisfies the implementation portion of the fifth-context
+gate. G01 future campaign bindings must still be created, and the full
+two-repetition campaign and grouped split must still succeed before
+ML training begins.

@@ -1,0 +1,95 @@
+schema_version: 1
+
+scenario:
+  id: C1_MISSING_STATIC_ROUTE_TOP03_ASYMMETRIC_RETURN
+  name: Missing observer route in TOP-03 asymmetric return
+  kind: fault
+  variant_id: canonical
+  split_group_id: CTX_G05_TOP03_ASYMMETRIC_RETURN
+  category: routing
+  description: >
+    Remove only the R2 route toward HostB while preserving the
+    correct R3 next-hop, the R3-HostB segment, and the separate
+    R3-R4-R1 return corridor.
+
+  topology:
+    id: TOP_03_ASYMMETRIC_RETURN
+    file: labs/topologies/top03_asymmetric_return/topology.clab.yml
+
+  observation:
+    schema_version: 1
+    direction: hosta_to_hostb
+    source_container: clab-top03asym-hosta
+    source_gateway_address: 10.50.1.1
+    destination_address: 10.50.3.10
+    destination_prefix: 10.50.3.0/24
+    route_observer_node: r2
+    route_observer_container: clab-top03asym-r2
+    expected_next_hop: 10.50.23.2
+    transit_node: r3
+    transit_container: clab-top03asym-r3
+
+  fault:
+    type: missing_static_route
+    injector: remove_route
+    target_node: r2
+    target_container: clab-top03asym-r2
+    parameters:
+      destination_prefix: 10.50.3.0/24
+      next_hop: 10.50.23.2
+
+  preconditions:
+    - id: route_exists_before_injection
+      description: R2 contains the expected HostB route
+    - id: forward_path_connectivity
+      description: HostA reaches HostB before injection
+    - id: return_path_connectivity
+      description: HostB reaches HostA before injection
+    - id: next_hop_reachable
+      description: R2 reaches R3 before injection
+    - id: transit_reaches_destination
+      description: R3 reaches HostB before injection
+    - id: return_corridor_configured
+      description: R3 uses R4 and R4 uses R1 toward HostA
+    - id: reverse_path_filtering_disabled
+      description: Routed interfaces permit the frozen asymmetry
+
+  expected_effects:
+    - id: route_absent_after_injection
+      description: R2 no longer contains the HostB route
+    - id: forward_connectivity_fails
+      description: HostA can no longer reach HostB
+    - id: local_gateway_remains_reachable
+      description: HostA can still reach R1
+    - id: expected_next_hop_remains_reachable
+      description: R2 can still reach R3
+    - id: transit_destination_segment_remains_reachable
+      description: R3 can still reach HostB
+    - id: return_corridor_routes_remain_intact
+      description: R3 still uses R4 and R4 still uses R1 toward HostA
+    - id: return_corridor_adjacencies_remain_healthy
+      description: R3-R4 and R4-R1 remain reachable
+    - id: reverse_path_filtering_remains_disabled
+      description: The asymmetric-path sysctl state remains valid
+
+  ground_truth:
+    fault_category: routing
+    fault_type: missing_static_route
+    fault_location: r2
+    affected_prefix: 10.50.3.0/24
+    root_cause: >
+      Forward-only observer R2 lacks the static route toward HostB
+      while R3, HostB, and the separate R3-R4-R1 return corridor
+      remain healthy
+
+  restoration:
+    method: add_route
+    command:
+      - ip
+      - route
+      - replace
+      - 10.50.3.0/24
+      - via
+      - 10.50.23.2
+      - dev
+      - eth2

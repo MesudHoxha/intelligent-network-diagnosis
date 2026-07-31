@@ -22,11 +22,11 @@ Status: Completed
 Status: In progress
 
 - Dataset artifact contracts: completed and tested
-- Normal: canonical, alternate-subnet, G02, G03, and G04 smoke
+- Normal: canonical, alternate-subnet, G02, G03, G04, and G05 smoke
   executions completed
-- Missing route: canonical, alternate-subnet, G02, G03, and G04
+- Missing route: canonical, alternate-subnet, G02, G03, G04, and G05
   smoke executions completed
-- Wrong next-hop: canonical, alternate-subnet, G02, G03, and G04
+- Wrong next-hop: canonical, alternate-subnet, G02, G03, G04, and G05
   smoke executions completed
 - Batch Plan v1 contract and canonical smoke plan: completed
   and tested
@@ -39,8 +39,10 @@ Status: In progress
 - G02 TOP_02_CHAIN: implemented and smoke-verified
 - G03 TOP_02_BRANCH: implemented and smoke-verified
 - G04 TOP_02_DUAL_TRANSIT: implemented and smoke-verified
-- G05 TOP_03_ASYMMETRIC_RETURN: design frozen; implementation is the
-  next target
+- G05 TOP_03_ASYMMETRIC_RETURN: implemented and smoke-verified
+- Five-context two-repetition campaign: binding and execution-plan
+  review is the next target
+- First valid five-context split: pending the expanded campaign
 - Wrong gateway: not started
 - Interface down: not started
 - ACL block: not started

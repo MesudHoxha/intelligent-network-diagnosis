@@ -234,10 +234,12 @@ per class and context, the minimum planned campaign contains 30 rows.
 The reviewed plan reserves one TOP-01 context, three materially
 different TOP-02 contexts, and one TOP-03 asymmetric context. G02
 TOP_02_CHAIN, G03 TOP_02_BRANCH, and G04 TOP_02_DUAL_TRANSIT are
-implemented and smoke-verified. G05 is design-frozen as
-TOP_03_ASYMMETRIC_RETURN with
-CTX_G05_TOP03_ASYMMETRIC_RETURN, but its laboratory remains
-unimplemented.
+implemented and smoke-verified. G05
+TOP_03_ASYMMETRIC_RETURN is also implemented and smoke-verified as
+CTX_G05_TOP03_ASYMMETRIC_RETURN. The five planned laboratory
+contexts now exist, but future G01 campaign rows still require their
+frozen complete-context binding and none of the five contexts yet has
+the planned two campaign repetitions per class.
 
 The accepted P1 dataset retains its historical class-specific
 split_group_id values. It is correctly rejected because each old
@@ -305,12 +307,14 @@ The real G03 artifact bundle is bound to SHA-256
 2092d0702a8e107a7757ff1754872f518f0be25c89883edb2c5638371a18f0fc.
 The real G04 artifact bundle is bound to SHA-256
 1e9aa7d2ea8ea1f1691821f8639c60820bbdcd9c0d0bd182e4b72b810b948d54.
+The real G05 artifact bundle is bound to SHA-256
+6bd4de9818ba0c3b589e5a17cf47553f523fc743d6feb12334bd525ea79ca870.
 
 The current scenario files and historical datasets have not been
 relabelled to manufacture new groups. P2-R4 implemented G02
-TOP_02_CHAIN, P2-R5 implemented G03 TOP_02_BRANCH, and P2-R6
-implemented G04 TOP_02_DUAL_TRANSIT. P2-R7 froze the TOP-03 design
-without implementing it.
+TOP_02_CHAIN, P2-R5 implemented G03 TOP_02_BRANCH, P2-R6 implemented
+G04 TOP_02_DUAL_TRANSIT, P2-R7 froze the TOP-03 design, and P2-R8
+implemented G05 TOP_03_ASYMMETRIC_RETURN.
 
 The real P2-R4 batch
 p2_g02_smoke-20260730T133227173375Z-
@@ -389,15 +393,35 @@ r4 corridor and required reverse-path-filter controls. The normative
 descriptor, addressing, baseline, and runtime distinction rules are
 recorded in docs/TOP03_CONTEXT_DESIGN.md.
 
-No real G05 topology, validator, scenario, experiment, evidence,
-dataset row, artifact SHA-256, or split exists yet. The frozen design
-does not count as the fifth implemented context.
+P2-R8 implemented that frozen design without changing Observation
+Profile v1, Evidence v2, Dataset Row v2, or the approved feature set.
+The real P2_G05_SMOKE batch
+p2_g05_smoke-20260731T083408705159Z-
+4badf5fdf6da4141af74af11d4b5f1a2 completed N0, C1, and C2 in listed
+order. It produced three validated Evidence v2 artifacts and three
+validated Dataset Row v2 records sharing
+CTX_G05_TOP03_ASYMMETRIC_RETURN. The artifacts bind
+TOP_03_ASYMMETRIC_RETURN, hosta_to_hostb, observer r2, and transit
+r3. Their feature values matched the approved class semantics, and
+all three rule-based evaluations produced exact_match true.
 
-The G02, G03, and G04 smoke artifacts provide one complete
-current-class execution set in each of three reviewed TOP-02
-contexts. They do not supply the planned two repetitions per class
-and context, the future G01 campaign rows, the fifth implemented
-TOP-03 context, or a valid train/validation/test split.
+The initial and final 52-check baselines verified the frozen forward
+path through r2, return path through r4, reverse-path-filter controls,
+route lookups, adjacent-hop health, and wrong-next-hop
+preconditions. Separate C1 and C2 audits verified that the selected
+forward fault isolated HostB reachability while the r3-r4-r1 return
+corridor remained configured and healthy through route and adjacency
+checks. Fault restoration, runtime distinction, artifact semantics,
+and laboratory cleanup all passed. The complete automated suite
+passed 155 tests.
+
+G02, G03, G04, and G05 now provide one complete current-class smoke
+set in four reviewed non-G01 contexts. TOP-01 is an implemented and
+verified laboratory, but its future campaign rows still require the
+frozen CTX_G01_TOP01_LINEAR_2R binding without rewriting historical
+artifacts. No context has the planned two campaign repetitions per
+class, no consolidated 30-row campaign has executed, and no valid
+train/validation/test split exists.
 
 The Machine Learning and hybrid diagnostic approaches have not yet
 been implemented or evaluated.

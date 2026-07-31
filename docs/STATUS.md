@@ -47,7 +47,7 @@
 - Dataset Row v2 as the default Batch Runner output
 - Mixed-version dataset rejection at the batch boundary
 - Collision-resistant experiment and batch-run identifiers
-- Full automated test suite with 148 passing tests
+- Full automated test suite with 155 passing tests
 - First real B0_SMOKE_CANONICAL batch completed with three validated
   Dataset Row v1 records and a final TOP-01 9/9 baseline
 - Canonical and alternate HostB-subnet variants for N0, C1, and C2
@@ -115,6 +115,20 @@
 - G04 feature semantics and rule-based exact matches: 3/3
 - G04 fault restoration and final 33/33 baseline verification
 - Real G04 artifact-bundle SHA-256 fingerprint
+- G05 TOP_03_ASYMMETRIC_RETURN six-node Containerlab topology
+- G05 baseline validator with 52 checks covering both directed paths,
+  reverse-path filtering, route lookups, and adjacency health
+- G05 N0, C1, and C2 scenario bindings sharing
+  CTX_G05_TOP03_ASYMMETRIC_RETURN
+- Real baseline and runtime forward/return distinction audits
+- Real C1 asymmetric-isolation and C2 same-segment next-hop audits
+- Real P2_G05_SMOKE batch with three completed experiments
+- Three validated G05 Evidence v2 artifacts
+- Three validated G05 Dataset Row v2 records
+- Verified G05 hosta_to_hostb, observer r2, transit r3 binding
+- G05 feature semantics and rule-based exact matches: 3/3
+- G05 fault restoration and final 52/52 baseline verification
+- Real G05 artifact-bundle SHA-256 fingerprint
 
 ## Representative verified experiments
 
@@ -358,17 +372,52 @@ Final post-experiment baseline:
 - Interpretation: G05 is a concrete design commitment, not a verified
   fifth experimental context
 
+## Latest P2-R8 verification
+
+- Decision: D-064
+- Batch ID: P2_G05_SMOKE
+- Batch run ID:
+  p2_g05_smoke-20260731T083408705159Z-
+  4badf5fdf6da4141af74af11d4b5f1a2
+- Status: COMPLETED
+- Planned/completed experiments: 3/3
+- Classes: no_fault, missing_static_route, wrong_next_hop
+- Shared evaluation context: CTX_G05_TOP03_ASYMMETRIC_RETURN
+- Observation binding:
+  TOP_03_ASYMMETRIC_RETURN, hosta_to_hostb, r2/r3
+- Evidence contract: Evidence v2
+- Dataset row schema version: 2
+- Validated Dataset Row v2 records: 3
+- Role-binding audit: PASS
+- Feature-semantics audit: PASS
+- Rule-based exact matches: 3/3
+- Baseline forward/return distinction audit: PASS
+- C1 asymmetric-isolation audit: PASS
+- C2 same-segment next-hop audit: PASS
+- Runtime asymmetric-distinction audit: PASS
+- Reverse-path-filter checks: PASS
+- Restoration audit: PASS
+- Semantic artifact audit: PASS
+- Initial and final G05 baseline: 52/52 VALID
+- Targeted G05 tests: 7/7 passed
+- Full automated suite: 155/155 passed
+- Artifact-bundle SHA-256:
+  6bd4de9818ba0c3b589e5a17cf47553f523fc743d6feb12334bd525ea79ca870
+- Laboratory cleanup: PASS
+- Interpretation: first real r2/r3 asymmetric-return complete-class
+  smoke context, not the expanded campaign or a split
+
 ## Active
 
-- Implement the frozen G05 TOP_03_ASYMMETRIC_RETURN context
-- Preserve its forward path through r2 and return path through r4
-- Configure and verify reverse-path filtering for asymmetric routing
-- Add the complete G05 N0/C1/C2 smoke set under one frozen group
-- Preserve the verified TOP-01, G02, G03, and G04 regressions
+- Review future G01 N0/C1/C2 bindings using
+  CTX_G01_TOP01_LINEAR_2R without rewriting historical artifacts
+- Define the exact five-context, three-class, two-repetition campaign
+- Preserve the verified TOP-01 and G02-G05 regressions
 - Preserve Observation Profile v1, Evidence v2, and Dataset Row v2
   without adding unreviewed features
 - Preserve complete evaluation contexts and whole-group partitioning
   while increasing dataset diversity
+- Define the required post-campaign D-058 grouped-split audit
 - Keep rule-based evaluation reporting separate from dataset features
   and Batch Runner completion semantics
 
@@ -381,9 +430,9 @@ Final post-experiment baseline:
 - Unseen scenario or topology variants
 - Controlled multiple-fault subset
 - Larger and more varied dataset beyond the 12-row P1 pilot
-- Five implemented and reviewed complete evaluation contexts
-- Shared multi-class group bindings for future campaign rows
-- Implemented and runtime-verified G05 TOP-03 asymmetric context
+- Future G01 complete-context scenario bindings
+- Validated five-context 30-experiment campaign plan
+- Executed 30-row Dataset Row v2 campaign
 - First valid train/validation/test split under D-058
 - Machine Learning method implementation
 - Hybrid method implementation
@@ -391,24 +440,22 @@ Final post-experiment baseline:
 
 ## Next milestone
 
-P2-R8 — Implement and verify G05 TOP_03_ASYMMETRIC_RETURN.
+P2-R9 — Expanded Campaign Binding and Plan Review.
 
-Create the frozen Containerlab graph, complete static forward and
-return routing, reverse-path-filter configuration, baseline
-validator, N0/C1/C2 scenarios, smoke plan, and contract/distinction
-tests.
+Create explicit future G01 N0/C1/C2 bindings using
+CTX_G01_TOP01_LINEAR_2R without modifying historical scenarios or
+rows. Define and validate one fail-stop campaign plan covering G01
+through G05, the three approved classes, and two repetitions per
+class and context for exactly 30 planned experiments.
 
-Prove the material forward/return divergence in the real laboratory,
-then audit Evidence v2, Dataset Row v2, role binding, feature
-semantics, exact match, restoration, final baseline, cleanup, and the
-real artifact SHA-256.
+Record the expected complete-class coverage per group and the
+post-run D-058 3/1/1 grouped-split audit. Do not execute the real
+campaign, train ML, or implement hybrid diagnosis inside the P2-R9
+plan-review commit.
 
-Do not start the expanded campaign, ML training, or hybrid diagnosis
-inside the G05 implementation commit.
-
-Do not begin ML training until all five reviewed contexts, the
-expanded complete-class campaign, and the generated split manifest
-are verified.
+Do not begin ML training until the expanded complete-class campaign,
+its Dataset Row v2 artifact, and the generated split manifest are
+verified.
 
 ## Important limitation
 
@@ -442,11 +489,11 @@ first ML experiment and plans coverage across TOP-01, TOP-02, and
 TOP-03. P2-R3 froze concrete G02-G04 designs. P2-R4 and P2-R5
 implemented G02 and G03, and P2-R6 implemented G04, each with one
 execution per current class. P2-R7 froze G05 as
-TOP_03_ASYMMETRIC_RETURN but did not implement it. G01 future
-campaign bindings and real G05 execution remain pending. The three
-TOP-02 smoke batches do not satisfy the planned two repetitions per
-class, and no successful D-058 train/validation/test split exists
-yet.
+TOP_03_ASYMMETRIC_RETURN, and P2-R8 implemented and verified it with
+one execution per current class. G01 future campaign bindings remain
+pending. The four G02-G05 smoke batches do not satisfy the planned
+two repetitions per class, and no successful D-058
+train/validation/test split exists yet.
 
 The project has not yet established general diagnostic accuracy or
 compared the rule-based, Machine Learning, and hybrid methods.

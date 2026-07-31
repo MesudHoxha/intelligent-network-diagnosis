@@ -742,3 +742,68 @@ The frozen design does not count as the fifth implemented context or
 satisfy ML readiness. G05 implementation, future G01 campaign
 bindings, the two-repetition 30-row campaign, and a valid D-058
 grouped split remain required before ML training.
+
+## D-064 — First real asymmetric-return context
+
+Decision: Accept G05 TOP_03_ASYMMETRIC_RETURN as the implemented and
+verified asymmetric-return evaluation context.
+
+The implementation contains:
+
+- the six-node hosta-r1-r2-r3-r4 routed cycle with HostB attached to
+  r3;
+- a selected forward path
+  hosta-r1-r2-r3-hostb and a distinct return path
+  hostb-r3-r4-r1-hosta;
+- a 52-check baseline validator covering addressing, forwarding,
+  reverse-path filtering, routes, both directed paths, adjacency
+  health, and wrong-next-hop preconditions;
+- N0, C1, and C2 scenario bindings that all use
+  CTX_G05_TOP03_ASYMMETRIC_RETURN;
+- the hosta_to_hostb direction with observer r2 and transit r3;
+- C1 injection only on the r2 route toward 10.50.3.0/24;
+- C2 replacement of correct 10.50.23.2 with unreachable
+  10.50.23.6 on the r2-r3 segment;
+- a three-entry fail-stop smoke plan; and
+- static contract, topology, reverse-path-filter, and cross-context
+  distinction tests.
+
+Separate C1 and C2 runtime audits are required evidence for the
+material asymmetric context. The selected forward path must fail
+while r2 can still reach r3, r3 can still reach HostB, r3 continues
+to resolve HostA through r4, r4 continues through r1, and the
+r3-r4-r1 adjacencies remain healthy. These fault-state route and
+adjacency checks isolate the return corridor without relying on a
+reverse end-to-end echo reply that would traverse the intentionally
+faulty forward direction. Reverse-path filtering must remain
+disabled as frozen by D-063.
+
+The normalized topology, validator, and N0/C1/C2 scenario bundle has
+SHA-256:
+
+6bd4de9818ba0c3b589e5a17cf47553f523fc743d6feb12334bd525ea79ca870
+
+The accepted real batch run is
+p2_g05_smoke-20260731T083408705159Z-
+4badf5fdf6da4141af74af11d4b5f1a2.
+
+Status: Implemented and verified on 2026-07-31. Seven targeted tests
+and the complete 155-test suite passed. The initial and final G05
+baselines each passed 52/52 checks. The baseline and runtime
+forward/return distinction audits, C1 asymmetric-isolation audit, C2
+same-segment next-hop audit, and reverse-path-filter checks passed.
+All three planned experiments completed, all Evidence v2 and Dataset
+Row v2 artifacts passed contract and semantic audits, the r2/r3 role
+binding was verified, all three rule-based evaluations had
+exact_match true, and C1/C2 restoration returned the complete
+baseline to VALID. Laboratory cleanup also passed.
+
+Limitation:
+
+This accepted smoke batch contains one execution of each current
+class in one context. All five planned laboratory contexts now exist,
+but future G01 rows still require their frozen complete-context
+binding and none of the five contexts has the planned two campaign
+repetitions per class. The consolidated 30-row campaign, valid
+D-058 train/validation/test split, ML baseline, hybrid diagnosis, and
+general diagnostic performance remain unestablished.
