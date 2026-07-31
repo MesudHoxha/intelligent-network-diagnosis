@@ -807,3 +807,81 @@ binding and none of the five contexts has the planned two campaign
 repetitions per class. The consolidated 30-row campaign, valid
 D-058 train/validation/test split, ML baseline, hybrid diagnosis, and
 general diagnostic performance remain unestablished.
+
+## D-065 — First five-context dataset campaign contract
+
+Decision: Freeze Dataset Campaign Plan v1 and
+P2_ROUTING_5CTX_V1 as the first ML-readiness campaign input.
+
+The campaign retains the approved class set:
+
+- no_fault;
+- missing_static_route; and
+- wrong_next_hop.
+
+It contains the five frozen evaluation contexts G01-G05, one Batch
+Plan v1 job per context, and two repetitions per class and context.
+Each context batch therefore expands to six experiments, and the
+complete campaign expands to exactly 30 experiments and 30 expected
+Dataset Row v2 records.
+
+The campaign is one logical fail-stop unit, but it is not one
+Batch Runner invocation. Batch Runner v1 accepts one baseline
+validator and runs against one deployed laboratory. The campaign
+therefore lists five ordered context jobs, each with its own topology,
+validator, and six-experiment Batch Plan v1. Cross-topology execution,
+merge, campaign audit, and split are separate coordinator stages.
+
+New G01 campaign scenarios bind N0, C1, and C2 to
+CTX_G01_TOP01_LINEAR_2R. They preserve the TOP_01,
+hosta_to_hostb, r1/r2 observation context and the existing canonical
+fault semantics. Historical TOP-01 scenario files, experiment
+artifacts, rows, and class-specific split groups remain unchanged.
+G02-G05 reuse their verified scenario bindings without modification.
+
+Dataset Campaign Plan v1 validates:
+
+- exact plan structure and fail-stop listed execution;
+- Dataset Row v2 as the only campaign row contract;
+- unique group slots, split groups, and context batch plans;
+- existing topology, validator, batch-plan, and scenario paths;
+- executable baseline validators;
+- topology, direction, observer, transit, and split-group bindings;
+- exact ordered class coverage in every context;
+- two repetitions for every class and context;
+- six experiments per context and 30 in total; and
+- the deterministic expected group allocation produced by
+  complete_context_group_hash_v2.
+
+The split seed remains 20260730 and the ratios remain 0.6/0.2/0.2.
+With the frozen group identifiers, the deterministic allocation is:
+
+- train: CTX_G03_TOP02_BRANCH_MID,
+  CTX_G04_TOP02_DUAL_TRANSIT, and
+  CTX_G05_TOP03_ASYMMETRIC_RETURN;
+- validation: CTX_G01_TOP01_LINEAR_2R; and
+- test: CTX_G02_TOP02_CHAIN_3R.
+
+This produces 18 train rows, six validation rows, and six test rows
+when every context supplies the required six rows. The allocation is
+a pre-run consequence of the approved seed and frozen group
+identifiers. Group identifiers and the seed must not be changed after
+observing results to influence partition membership.
+
+The normative plan, execution boundary, merge gates, quality gates,
+rule-based reference audit, and split acceptance criteria are
+recorded in docs/DATASET_CAMPAIGN_DESIGN.md.
+
+Status: Approved and implemented as a validated planning contract on
+2026-07-31. Nine targeted P2-R9 tests and the complete 164-test suite
+passed. No real campaign experiment, merged 30-row dataset, campaign
+result, or split artifact was created by this decision.
+
+Limitation:
+
+The campaign contract establishes executable inputs and precommits
+the leakage-safe split. It does not establish that all 30 experiments
+completed, that the rows passed merge and semantic audits, that the
+split manifest passed the no-cross-partition audit, or that the
+project is ML-ready. ML and hybrid work remain blocked until the real
+campaign and split closeout succeed.

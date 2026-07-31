@@ -415,13 +415,45 @@ checks. Fault restoration, runtime distinction, artifact semantics,
 and laboratory cleanup all passed. The complete automated suite
 passed 155 tests.
 
-G02, G03, G04, and G05 now provide one complete current-class smoke
-set in four reviewed non-G01 contexts. TOP-01 is an implemented and
-verified laboratory, but its future campaign rows still require the
-frozen CTX_G01_TOP01_LINEAR_2R binding without rewriting historical
-artifacts. No context has the planned two campaign repetitions per
-class, no consolidated 30-row campaign has executed, and no valid
-train/validation/test split exists.
+At P2-R8 closeout, G02, G03, G04, and G05 provided one complete
+current-class smoke set in four reviewed non-G01 contexts. TOP-01 was
+an implemented and verified laboratory, but its future campaign rows
+still required the frozen CTX_G01_TOP01_LINEAR_2R binding without
+rewriting historical artifacts. No context had the planned two
+campaign repetitions per class, no consolidated 30-row campaign had
+executed, and no valid train/validation/test split existed.
+
+P2-R9 implemented and verified the first complete campaign input
+contract without executing the campaign. Dataset Campaign Plan v1
+binds the five contexts to five ordered per-laboratory Batch Plan v1
+jobs because Batch Runner v1 accepts one deployed laboratory and one
+baseline validator per invocation.
+
+The canonical plan is
+plans/campaigns/P2_ROUTING_5CTX_V1.yml. It requires Dataset Row v2,
+the no_fault, missing_static_route, and wrong_next_hop classes, two
+repetitions per class and context, six rows per group, and exactly 30
+rows overall. Three new G01 scenario files use
+CTX_G01_TOP01_LINEAR_2R while leaving historical TOP-01 scenarios and
+rows unchanged. G02-G05 reuse their verified bindings.
+
+Dataset Campaign Plan v1 validates paths, executable validators,
+topology and role bindings, split groups, exact class order,
+repetitions, context and campaign counts, and the expected
+deterministic split. With complete_context_group_hash_v2, seed
+20260730, and ratios 0.6/0.2/0.2, the precommitted allocation is:
+
+- train: G03, G04, and G05;
+- validation: G01; and
+- test: G02.
+
+The nine targeted P2-R9 tests and complete 164-test suite passed.
+The normative execution, merge, quality, rule-audit, and split gates
+are recorded in docs/DATASET_CAMPAIGN_DESIGN.md.
+
+P2-R9 did not implement the cross-topology coordinator, execute a
+real campaign, merge a 30-row dataset, or create a split. The
+validated campaign plan is therefore not an ML-readiness result.
 
 The Machine Learning and hybrid diagnostic approaches have not yet
 been implemented or evaluated.

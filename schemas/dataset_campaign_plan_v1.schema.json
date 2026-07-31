@@ -1,0 +1,224 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:intelligent-network-diagnosis:schema:dataset-campaign-plan:v1",
+  "title": "Dataset Campaign Plan v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "campaign"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "campaign": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "description",
+        "execution",
+        "dataset",
+        "split",
+        "contexts"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "execution": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "order",
+            "failure_policy"
+          ],
+          "properties": {
+            "order": {
+              "const": "listed"
+            },
+            "failure_policy": {
+              "const": "stop"
+            }
+          }
+        },
+        "dataset": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "row_schema_version",
+            "expected_fault_types",
+            "repetitions_per_class_context",
+            "expected_row_count"
+          ],
+          "properties": {
+            "row_schema_version": {
+              "const": 2
+            },
+            "expected_fault_types": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+              }
+            },
+            "repetitions_per_class_context": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "expected_row_count": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "split": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "algorithm",
+            "seed",
+            "ratios",
+            "expected_group_allocation"
+          ],
+          "properties": {
+            "algorithm": {
+              "const": "complete_context_group_hash_v2"
+            },
+            "seed": {
+              "type": "integer"
+            },
+            "ratios": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "train",
+                "validation",
+                "test"
+              ],
+              "properties": {
+                "train": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "validation": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "test": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                }
+              }
+            },
+            "expected_group_allocation": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "train",
+                "validation",
+                "test"
+              ],
+              "properties": {
+                "train": {
+                  "$ref": "#/$defs/groupList"
+                },
+                "validation": {
+                  "$ref": "#/$defs/groupList"
+                },
+                "test": {
+                  "$ref": "#/$defs/groupList"
+                }
+              }
+            }
+          }
+        },
+        "contexts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "group_slot",
+              "topology_id",
+              "split_group_id",
+              "topology_file",
+              "baseline_validator",
+              "batch_plan",
+              "observation"
+            ],
+            "properties": {
+              "group_slot": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+              },
+              "topology_id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+              },
+              "split_group_id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+              },
+              "topology_file": {
+                "type": "string",
+                "pattern": "^labs/[A-Za-z0-9_./-]+\\.ya?ml$"
+              },
+              "baseline_validator": {
+                "type": "string",
+                "pattern": "^labs/[A-Za-z0-9_./-]+\\.sh$"
+              },
+              "batch_plan": {
+                "type": "string",
+                "pattern": "^plans/[A-Za-z0-9_./-]+\\.ya?ml$"
+              },
+              "observation": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "direction",
+                  "route_observer_node",
+                  "transit_node"
+                ],
+                "properties": {
+                  "direction": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9_]*_to_[a-z0-9][a-z0-9_]*$"
+                  },
+                  "route_observer_node": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                  },
+                  "transit_node": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "groupList": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+      }
+    }
+  }
+}

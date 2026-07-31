@@ -1,0 +1,27 @@
+schema_version: 1
+
+batch:
+  id: P2_G01_CAMPAIGN
+  description: >-
+    Execute two repetitions of N0, C1, and C2 for the frozen G01
+    TOP_01 linear two-router evaluation context.
+
+  execution:
+    order: listed
+    failure_policy: stop
+
+  entries:
+    - entry_id: n0_g01_top01_linear_2r
+      scenario_path: >-
+        scenarios/routing/N0_NORMAL_OPERATION_G01_TOP01_LINEAR_2R.yml
+      repetitions: 2
+
+    - entry_id: c1_g01_top01_linear_2r
+      scenario_path: >-
+        scenarios/routing/C1_MISSING_STATIC_ROUTE_G01_TOP01_LINEAR_2R.yml
+      repetitions: 2
+
+    - entry_id: c2_g01_top01_linear_2r
+      scenario_path: >-
+        scenarios/routing/C2_WRONG_NEXT_HOP_G01_TOP01_LINEAR_2R.yml
+      repetitions: 2

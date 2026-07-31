@@ -160,5 +160,45 @@ The three-row P2_G02_SMOKE, P2_G03_SMOKE, P2_G04_SMOKE, and
 P2_G05_SMOKE artifacts each supply one execution of every current
 class in their own reviewed context. They verify complete class
 coverage for four non-G01 smoke contexts. They do not satisfy the
-planned two repetitions per class, the future G01 campaign binding,
-the consolidated 30-row campaign, or the split gate.
+planned two repetitions per class, the consolidated 30-row campaign,
+or the split gate.
+
+## 9. Frozen first campaign
+
+P2-R9 adds explicit future-facing G01 N0/C1/C2 scenarios using
+CTX_G01_TOP01_LINEAR_2R. Historical TOP-01 scenarios and rows are not
+modified or relabelled.
+
+The canonical first campaign is
+plans/campaigns/P2_ROUTING_5CTX_V1.yml. It uses Dataset Campaign Plan
+v1 to bind:
+
+- five ordered context jobs G01-G05;
+- one Batch Plan v1 per deployed context;
+- the approved no_fault, missing_static_route, and wrong_next_hop
+  class order;
+- two repetitions per class and context;
+- exactly six expected rows per group and 30 in total;
+- Dataset Row v2;
+- fail-stop execution;
+- split seed 20260730; and
+- complete_context_group_hash_v2 with 0.6/0.2/0.2 ratios.
+
+The deterministic pre-run group allocation is:
+
+- train: CTX_G03_TOP02_BRANCH_MID,
+  CTX_G04_TOP02_DUAL_TRANSIT, and
+  CTX_G05_TOP03_ASYMMETRIC_RETURN;
+- validation: CTX_G01_TOP01_LINEAR_2R; and
+- test: CTX_G02_TOP02_CHAIN_3R.
+
+This is an anti-leakage precommitment, not a result-dependent
+selection. Group identifiers, seed, ratios, and partition membership
+must not be altered after campaign or model results are observed.
+
+Dataset Campaign Plan v1 validates the static plan, all context
+bindings, class coverage, repetition counts, total expansion, and
+expected deterministic allocation. The separate campaign
+coordinator, merge audit, real split creation, and no-cross-partition
+audit remain pending. Therefore the validated plan does not yet pass
+the ML readiness gate.

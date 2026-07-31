@@ -1,0 +1,27 @@
+schema_version: 1
+
+batch:
+  id: P2_G04_CAMPAIGN
+  description: >-
+    Execute two repetitions of N0, C1, and C2 for the frozen G04
+    TOP_02_DUAL_TRANSIT evaluation context.
+
+  execution:
+    order: listed
+    failure_policy: stop
+
+  entries:
+    - entry_id: n0_g04_dual_transit
+      scenario_path: >-
+        scenarios/routing/N0_NORMAL_OPERATION_TOP02_DUAL_TRANSIT.yml
+      repetitions: 2
+
+    - entry_id: c1_g04_dual_transit
+      scenario_path: >-
+        scenarios/routing/C1_MISSING_STATIC_ROUTE_TOP02_DUAL_TRANSIT.yml
+      repetitions: 2
+
+    - entry_id: c2_g04_dual_transit
+      scenario_path: >-
+        scenarios/routing/C2_WRONG_NEXT_HOP_TOP02_DUAL_TRANSIT.yml
+      repetitions: 2

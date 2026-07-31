@@ -407,17 +407,50 @@ Final post-experiment baseline:
 - Interpretation: first real r2/r3 asymmetric-return complete-class
   smoke context, not the expanded campaign or a split
 
+## Latest P2-R9 verification
+
+- Decision: D-065
+- Campaign plan: P2_ROUTING_5CTX_V1
+- Campaign plan schema: Dataset Campaign Plan v1
+- Dataset row schema version: 2
+- Context jobs: 5
+- Per-context Batch Plan v1 jobs: 5
+- Classes per context: 3
+- Repetitions per class and context: 2
+- Planned experiments/rows: 30
+- Explicit G01 complete-context scenario bindings: 3
+- G01 split group: CTX_G01_TOP01_LINEAR_2R
+- Historical scenario and dataset relabelling: none
+- Execution order: G01, G02, G03, G04, G05
+- Failure policy: stop
+- Split algorithm: complete_context_group_hash_v2
+- Split seed: 20260730
+- Split ratios and group counts: 0.6/0.2/0.2 and 3/1/1
+- Expected train groups: G03, G04, G05
+- Expected validation group: G01
+- Expected test group: G02
+- Expected train/validation/test rows: 18/6/6
+- Targeted P2-R9 tests: 9/9 passed
+- Full automated suite: 164/164 passed
+- Real campaign execution: not executed
+- Merged 30-row dataset: not created
+- Real split manifest or partitions: not created
+- Interpretation: campaign inputs and leakage-safe split
+  precommitment are implemented and verified; ML readiness has not
+  yet been established
+
 ## Active
 
-- Review future G01 N0/C1/C2 bindings using
-  CTX_G01_TOP01_LINEAR_2R without rewriting historical artifacts
-- Define the exact five-context, three-class, two-repetition campaign
+- Implement the cross-topology coordinator for the frozen
+  P2_ROUTING_5CTX_V1 plan
+- Preserve exact G01-G05 scenario, role, and split-group bindings
 - Preserve the verified TOP-01 and G02-G05 regressions
 - Preserve Observation Profile v1, Evidence v2, and Dataset Row v2
   without adding unreviewed features
-- Preserve complete evaluation contexts and whole-group partitioning
-  while increasing dataset diversity
-- Define the required post-campaign D-058 grouped-split audit
+- Implement atomic merge and campaign-level quality validation
+- Execute the real five-context, 30-experiment campaign
+- Generate and audit the D-058 grouped split without changing the
+  frozen seed, group identifiers, ratios, or expected allocation
 - Keep rule-based evaluation reporting separate from dataset features
   and Batch Runner completion semantics
 
@@ -430,8 +463,8 @@ Final post-experiment baseline:
 - Unseen scenario or topology variants
 - Controlled multiple-fault subset
 - Larger and more varied dataset beyond the 12-row P1 pilot
-- Future G01 complete-context scenario bindings
-- Validated five-context 30-experiment campaign plan
+- Cross-topology campaign coordinator
+- Atomic five-dataset merge and campaign result contract
 - Executed 30-row Dataset Row v2 campaign
 - First valid train/validation/test split under D-058
 - Machine Learning method implementation
@@ -440,22 +473,23 @@ Final post-experiment baseline:
 
 ## Next milestone
 
-P2-R9 — Expanded Campaign Binding and Plan Review.
+P2-R10 — Campaign Coordinator, Real Execution, Merge, and Split.
 
-Create explicit future G01 N0/C1/C2 bindings using
-CTX_G01_TOP01_LINEAR_2R without modifying historical scenarios or
-rows. Define and validate one fail-stop campaign plan covering G01
-through G05, the three approved classes, and two repetitions per
-class and context for exactly 30 planned experiments.
+Implement the coordinator for the frozen P2_ROUTING_5CTX_V1 plan.
+It must deploy and validate one laboratory at a time, execute the
+five six-experiment Batch Plan v1 jobs in listed order, stop on the
+first failure, preserve per-context artifacts, and clean up every
+deployed laboratory.
 
-Record the expected complete-class coverage per group and the
-post-run D-058 3/1/1 grouped-split audit. Do not execute the real
-campaign, train ML, or implement hybrid diagnosis inside the P2-R9
-plan-review commit.
+After 30/30 successful experiments, merge only the five batch datasets
+bound to the same campaign run, apply every quality and semantic gate
+in docs/DATASET_CAMPAIGN_DESIGN.md, produce the separate rule-based
+reference audit, and invoke the existing splitter. Verify the exact
+18/6/6 rows, 3/1/1 groups, complete class coverage, hashes, and
+no-cross-partition group rule.
 
-Do not begin ML training until the expanded complete-class campaign,
-its Dataset Row v2 artifact, and the generated split manifest are
-verified.
+Do not train ML or implement hybrid diagnosis inside P2-R10. Those
+stages remain blocked until the real campaign and split closeout pass.
 
 ## Important limitation
 
@@ -490,10 +524,15 @@ TOP-03. P2-R3 froze concrete G02-G04 designs. P2-R4 and P2-R5
 implemented G02 and G03, and P2-R6 implemented G04, each with one
 execution per current class. P2-R7 froze G05 as
 TOP_03_ASYMMETRIC_RETURN, and P2-R8 implemented and verified it with
-one execution per current class. G01 future campaign bindings remain
-pending. The four G02-G05 smoke batches do not satisfy the planned
-two repetitions per class, and no successful D-058
-train/validation/test split exists yet.
+one execution per current class.
+
+P2-R9 added explicit G01 campaign bindings without modifying
+historical files, created five two-repetition context plans, and
+implemented Dataset Campaign Plan v1. The validated plan expands to
+30 experiments and precommits the deterministic 3/1/1 split. It has
+not been executed. The four G02-G05 smoke batches and historical
+TOP-01 runs do not substitute for the accepted campaign, and no
+successful D-058 train/validation/test split exists yet.
 
 The project has not yet established general diagnostic accuracy or
 compared the rule-based, Machine Learning, and hybrid methods.

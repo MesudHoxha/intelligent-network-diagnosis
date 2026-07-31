@@ -40,8 +40,11 @@ Status: In progress
 - G03 TOP_02_BRANCH: implemented and smoke-verified
 - G04 TOP_02_DUAL_TRANSIT: implemented and smoke-verified
 - G05 TOP_03_ASYMMETRIC_RETURN: implemented and smoke-verified
-- Five-context two-repetition campaign: binding and execution-plan
-  review is the next target
+- Five-context two-repetition campaign: G01 bindings, five context
+  batches, Dataset Campaign Plan v1, and deterministic split
+  precommitment completed and tested
+- Cross-topology campaign coordinator and real 30-experiment
+  execution: next target
 - First valid five-context split: pending the expanded campaign
 - Wrong gateway: not started
 - Interface down: not started

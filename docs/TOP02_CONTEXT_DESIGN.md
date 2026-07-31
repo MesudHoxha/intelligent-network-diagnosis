@@ -46,11 +46,11 @@ variation.
 
 | Slot | topology_id | split_group_id | State |
 | --- | --- | --- | --- |
-| G01 | TOP_01 | CTX_G01_TOP01_LINEAR_2R | Binding frozen for future campaign rows; historical rows unchanged |
+| G01 | TOP_01 | CTX_G01_TOP01_LINEAR_2R | Campaign scenarios implemented in P2-R9; historical rows unchanged |
 | G02 | TOP_02_CHAIN | CTX_G02_TOP02_CHAIN_3R | Implemented and smoke-verified |
 | G03 | TOP_02_BRANCH | CTX_G03_TOP02_BRANCH_MID | Implemented and smoke-verified |
 | G04 | TOP_02_DUAL_TRANSIT | CTX_G04_TOP02_DUAL_TRANSIT | Implemented and smoke-verified |
-| G05 | TOP_03_ASYMMETRIC_RETURN | CTX_G05_TOP03_ASYMMETRIC_RETURN | Design frozen in docs/TOP03_CONTEXT_DESIGN.md; implementation pending |
+| G05 | TOP_03_ASYMMETRIC_RETURN | CTX_G05_TOP03_ASYMMETRIC_RETURN | Implemented and smoke-verified under docs/TOP03_CONTEXT_DESIGN.md |
 
 The identifiers are fixed before deterministic splitting. They must
 not be renamed to influence partition allocation.
@@ -72,8 +72,9 @@ ordered fields:
 The descriptor is the design fingerprint. During implementation, a
 normalized bundle of the topology, validator, and scenario files
 receives a SHA-256 value recorded alongside the descriptor. G02, G03,
-and G04 now have real artifact fingerprints. No placeholder hash is
-treated as a real artifact fingerprint.
+G04, and the separately specified G05 now have real artifact
+fingerprints. No placeholder hash is treated as a real artifact
+fingerprint.
 
 ## 5. G02 — Three-router chain
 
@@ -496,10 +497,10 @@ controlled sequence:
 G02 has proved the first real TOP-02 pipeline, G03 has proved the
 first interior observer and live branched context, and G04 has proved
 the first source-gateway dual-transit context with a cross-segment
-wrong next hop. P2-R7 froze G05 separately under
-docs/TOP03_CONTEXT_DESIGN.md; this document remains normative only
-for G02-G04.
+wrong next hop. P2-R7 froze G05 separately and P2-R8 implemented it
+under docs/TOP03_CONTEXT_DESIGN.md. This document remains normative
+only for G02-G04.
 
-ML training remains blocked. P2-R4, P2-R5, and P2-R6 created three
-smoke rows each, but they did not create the two-repetition campaign,
-all five contexts, or a valid train/validation/test split.
+ML training remains blocked. P2-R9 implemented the five-context
+two-repetition campaign input contract, but the real 30-row campaign
+and valid train/validation/test split have not been created.

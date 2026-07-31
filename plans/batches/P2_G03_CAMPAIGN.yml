@@ -1,0 +1,24 @@
+schema_version: 1
+
+batch:
+  id: P2_G03_CAMPAIGN
+  description: >-
+    Execute two repetitions of N0, C1, and C2 for the frozen G03
+    TOP_02_BRANCH evaluation context.
+
+  execution:
+    order: listed
+    failure_policy: stop
+
+  entries:
+    - entry_id: n0_g03_branch
+      scenario_path: scenarios/routing/N0_NORMAL_OPERATION_TOP02_BRANCH.yml
+      repetitions: 2
+
+    - entry_id: c1_g03_branch
+      scenario_path: scenarios/routing/C1_MISSING_STATIC_ROUTE_TOP02_BRANCH.yml
+      repetitions: 2
+
+    - entry_id: c2_g03_branch
+      scenario_path: scenarios/routing/C2_WRONG_NEXT_HOP_TOP02_BRANCH.yml
+      repetitions: 2

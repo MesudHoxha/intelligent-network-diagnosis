@@ -1,0 +1,74 @@
+schema_version: 1
+
+scenario:
+  id: C1_MISSING_STATIC_ROUTE_G01_TOP01_LINEAR_2R
+  name: Missing static route in G01 TOP-01 linear context
+  kind: fault
+  variant_id: canonical
+  split_group_id: CTX_G01_TOP01_LINEAR_2R
+  category: routing
+  description: >
+    Remove the static route from R1 toward the HostB network in the
+    G01 campaign binding while preserving interface and next-hop
+    reachability. Historical TOP-01 scenarios remain unchanged.
+
+  topology:
+    id: TOP_01
+    file: labs/topologies/top01_routed/topology.clab.yml
+
+  observation:
+    schema_version: 1
+    direction: hosta_to_hostb
+    source_container: clab-top01-hosta
+    source_gateway_address: 10.10.1.1
+    destination_address: 10.10.2.10
+    destination_prefix: 10.10.2.0/24
+    route_observer_node: r1
+    route_observer_container: clab-top01-r1
+    expected_next_hop: 10.10.12.2
+    transit_node: r2
+    transit_container: clab-top01-r2
+
+  fault:
+    type: missing_static_route
+    injector: remove_route
+    target_node: r1
+    target_container: clab-top01-r1
+    parameters:
+      destination_prefix: 10.10.2.0/24
+      next_hop: 10.10.12.2
+
+  preconditions:
+    - id: route_exists_before_injection
+      description: R1 contains the expected route before injection
+    - id: baseline_end_to_end_connectivity
+      description: HostA reaches HostB before injection
+    - id: next_hop_reachable
+      description: R1 reaches R2 before injection
+
+  expected_effects:
+    - id: route_absent_after_injection
+      description: R1 no longer contains the target route
+    - id: end_to_end_connectivity_fails
+      description: HostA can no longer reach HostB
+    - id: local_gateway_remains_reachable
+      description: HostA can still reach R1
+    - id: transit_next_hop_remains_reachable
+      description: R1 can still reach R2
+
+  ground_truth:
+    fault_category: routing
+    fault_type: missing_static_route
+    fault_location: r1
+    affected_prefix: 10.10.2.0/24
+    root_cause: R1 does not contain a route toward the HostB network
+
+  restoration:
+    method: add_route
+    command:
+      - ip
+      - route
+      - replace
+      - 10.10.2.0/24
+      - via
+      - 10.10.12.2
