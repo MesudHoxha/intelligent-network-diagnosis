@@ -97,11 +97,11 @@ implemented laboratory.
 
 | Group slot | Planned context | Material distinction | Status |
 | --- | --- | --- | --- |
-| G01 | TOP-01 linear two-router path | Existing two-router observer/transit chain | Laboratory verified; CTX_G01_TOP01_LINEAR_2R frozen for future rows |
-| G02 | TOP_02_CHAIN | Three-router path with downstream forwarding after the observed transit | Laboratory and one complete three-class smoke set verified as CTX_G02_TOP02_CHAIN_3R |
-| G03 | TOP_02_BRANCH | Interior route observer at a two-arm destination branch | Laboratory and one complete three-class smoke set verified as CTX_G03_TOP02_BRANCH_MID |
-| G04 | TOP_02_DUAL_TRANSIT | Two live transit arms and a cross-segment wrong-next-hop context | Laboratory and one complete three-class smoke set verified as CTX_G04_TOP02_DUAL_TRANSIT |
-| G05 | TOP_03_ASYMMETRIC_RETURN | Forward path through r2 and return path through r4 in one routed cycle | Laboratory and one complete three-class smoke set verified as CTX_G05_TOP03_ASYMMETRIC_RETURN |
+| G01 | TOP-01 linear two-router path | Existing two-router observer/transit chain | Campaign-verified as CTX_G01_TOP01_LINEAR_2R with two rows per class |
+| G02 | TOP_02_CHAIN | Three-router path with downstream forwarding after the observed transit | Campaign-verified as CTX_G02_TOP02_CHAIN_3R with two rows per class |
+| G03 | TOP_02_BRANCH | Interior route observer at a two-arm destination branch | Campaign-verified as CTX_G03_TOP02_BRANCH_MID with two rows per class |
+| G04 | TOP_02_DUAL_TRANSIT | Two live transit arms and a cross-segment wrong-next-hop context | Campaign-verified as CTX_G04_TOP02_DUAL_TRANSIT with two rows per class |
+| G05 | TOP_03_ASYMMETRIC_RETURN | Forward path through r2 and return path through r4 in one routed cycle | Campaign-verified as CTX_G05_TOP03_ASYMMETRIC_RETURN with two rows per class |
 
 The P2-R3 review froze distinct topology_id and split_group_id values
 for G02-G04 and recorded their graph, forwarding intent, roles, fault
@@ -146,7 +146,7 @@ must reject them as ML split sources.
 
 ## 8. ML readiness gate
 
-ML training remains blocked until:
+ML training was blocked until:
 
 - all five planned contexts are implemented or replaced by reviewed
   contexts satisfying this protocol;
@@ -156,12 +156,15 @@ ML training remains blocked until:
   classes; and
 - an explicit audit confirms that no group crosses partitions.
 
-The three-row P2_G02_SMOKE, P2_G03_SMOKE, P2_G04_SMOKE, and
-P2_G05_SMOKE artifacts each supply one execution of every current
-class in their own reviewed context. They verify complete class
-coverage for four non-G01 smoke contexts. They do not satisfy the
-planned two repetitions per class, the consolidated 30-row campaign,
-or the split gate.
+The accepted P2-R10 campaign satisfied all five conditions on
+2026-08-04. It completed 30/30 experiments, produced six rows in each
+complete context, created the frozen 3/1/1 split, and verified that no
+group crosses partitions. The gate is therefore open for the reviewed
+baseline stages.
+
+This readiness result does not make the 30 deterministic laboratory
+rows statistically independent, establish generalization, or permit
+the test group to be used for model or feature selection.
 
 ## 9. Frozen first campaign
 
@@ -198,7 +201,10 @@ must not be altered after campaign or model results are observed.
 
 Dataset Campaign Plan v1 validates the static plan, all context
 bindings, class coverage, repetition counts, total expansion, and
-expected deterministic allocation. The separate campaign
-coordinator, merge audit, real split creation, and no-cross-partition
-audit remain pending. Therefore the validated plan does not yet pass
-the ML readiness gate.
+expected deterministic allocation. P2-R10 executed the plan through
+the cross-topology coordinator, accepted the atomic 30-row merge, and
+created the declared split. The source dataset SHA-256 is
+be92cef4e78764e772909e15f43ab5cba98ef9610f4a446fc95e8afb5e830c80.
+The split manifest reports 18/6/6 rows, 3/1/1 groups, complete class
+coverage, and no cross-partition group, so the protocol gate is now
+satisfied.

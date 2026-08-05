@@ -885,3 +885,107 @@ completed, that the rows passed merge and semantic audits, that the
 split manifest passed the no-cross-partition audit, or that the
 project is ML-ready. ML and hybrid work remain blocked until the real
 campaign and split closeout succeed.
+
+## D-066 — Class-conditional structural unavailability in P2
+
+Decision: Correct the first campaign quality gate so that it matches
+the already approved Dataset Row v2 tri-state semantics.
+
+For P2_ROUTING_5CTX_V1, the exact unavailable-feature policy is:
+
+- no_fault: zero unavailable features;
+- missing_static_route: exactly one unavailable feature,
+  route_next_hop_reachable_from_observer; and
+- wrong_next_hop: zero unavailable features.
+
+No other unavailable feature is accepted. All four execution-quality
+booleans must remain true. The coordinator enforces both the exact
+feature-name set and quality.unavailable_feature_count during each
+context audit and again after the atomic merge.
+
+Reason: C1 removes the observer route. With no configured route,
+there is no configured next-hop address whose reachability can be
+probed. Evidence v2 and the existing Dataset Row tests intentionally
+represent that dependent observation as null/unavailable while the
+independent expected-next-hop probe remains available. Requiring zero
+unavailable features for C1 contradicted that contract and made the
+frozen three-class campaign impossible to accept.
+
+The correction does not change Evidence v2, Dataset Row v2, the seven
+approved feature names, any label, the five contexts, repetitions,
+split groups, seed, or expected 3/1/1 allocation. It does not impute a
+value and does not weaken the missing-evidence gate: an unavailable
+feature outside the exact class-conditional set still stops the
+campaign.
+
+Status: Approved as a corrective P2-R10 decision after the real
+campaign attempt
+p2_routing_5ctx_v1-20260804T070959526851Z-
+9f1062d3dbdd44258657c144ec3755fc stopped safely at the G01 artifact
+audit. The G01 batch completed 6/6, the final baseline and cleanup
+completed, and no partial dataset was accepted. The corrected gate is
+implemented with realistic C1 test fixtures and a negative test for
+unexpected unavailable features. A complete new campaign attempt is
+still required; selective reuse of rows from the failed attempt is
+not permitted.
+
+## D-067 — First accepted five-context campaign and grouped split
+
+Decision: Accept the complete P2_ROUTING_5CTX_V1 campaign run
+p2_routing_5ctx_v1-20260804T073429388394Z-
+617194fea9954ed98ec120bdefea23d9 as the canonical first P2 dataset
+campaign and accept its deterministic D-058 split as the input to the
+reviewed baseline stages.
+
+The accepted run is bound to:
+
+- campaign-plan SHA-256
+  b0d054001136358b51eb08620de2d5e500c32b755183ee812a4ad3cd8d09a0e4;
+- context-fingerprint-manifest SHA-256
+  f1e69b0d048785a45967593a12071b536027c65e2daddebafbaec296746c88b3;
+- merged Dataset Row v2 JSONL SHA-256
+  be92cef4e78764e772909e15f43ab5cba98ef9610f4a446fc95e8afb5e830c80;
+- 30 unique experiments, samples, Evidence v2 artifacts, and Dataset
+  Row v2 records;
+- six rows per frozen context and ten rows per approved class;
+- exactly one structurally unavailable
+  route_next_hop_reachable_from_observer feature in each of the ten
+  missing_static_route rows, and no unexpected unavailable feature;
+- 30/30 rule-based exact matches and 30/30 correct affected-prefix
+  results in the separate reference audit; and
+- five valid initial baselines, five valid final baselines, and 5/5
+  verified laboratory cleanup.
+
+The split retains complete_context_group_hash_v2, seed 20260730, and
+ratios 0.6/0.2/0.2. It contains:
+
+- train: 18 rows in G03, G04, and G05, SHA-256
+  cc196711cd2170bbd3393b3097b8b86d8bb12f8f8324f39f15b4a302c74859e8;
+- validation: six rows in G01, SHA-256
+  52c2215ebf97b7e9fb66720b3631431dddd2ede7462cf10163df3362a99bf5c4;
+  and
+- test: six rows in G02, SHA-256
+  03383705cdab2368446cbf4a967e3c7bb71ae63379ab63dcad8a8ab678cc8a08.
+
+No split_group_id crosses partitions. The failed earlier run remains
+an incomplete diagnostic artifact and contributes no row to the
+accepted merge or split. Generated datasets, experiment metadata, and
+reports remain local runtime artifacts under the repository's
+existing ignore policy; the accepted run identifier and cryptographic
+bindings are recorded in the central documents.
+
+Status: Implemented and verified on 2026-08-04. The corrected P2-R10
+targeted suite passed 11/11 tests and the complete suite passed
+175/175. The coordinator result passed its JSON Schema, all 30
+artifacts were independently revalidated, the merged dataset and
+partition hashes matched the written files, and cleanup passed.
+
+Limitation:
+
+This decision establishes reproducible execution, dataset integrity,
+complete-context leakage control, and readiness for the reviewed
+baseline stages. The 30 rows come from controlled deterministic
+laboratories and only three classes. They do not establish real-world
+generalization, statistical independence, ML performance, hybrid
+performance, or superiority over the rule-based method. The frozen
+test group must not be used for later model or feature selection.

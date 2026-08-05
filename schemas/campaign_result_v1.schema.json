@@ -1,0 +1,445 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Dataset Campaign Result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "campaign_run_id",
+    "campaign_id",
+    "plan_path",
+    "campaign_plan_sha256",
+    "fingerprint_manifest_path",
+    "fingerprint_manifest_sha256",
+    "failure_policy",
+    "status",
+    "planned_context_count",
+    "completed_context_count",
+    "planned_experiment_count",
+    "completed_experiment_count",
+    "dataset_row_schema_version",
+    "dataset_row_count",
+    "planned_merged_dataset_path",
+    "merged_dataset",
+    "rule_audit",
+    "split",
+    "started_at_utc",
+    "completed_at_utc",
+    "failed_context",
+    "error",
+    "contexts"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "campaign_run_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "campaign_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "plan_path": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "campaign_plan_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "fingerprint_manifest_path": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "fingerprint_manifest_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "failure_policy": {
+      "const": "stop"
+    },
+    "status": {
+      "enum": [
+        "RUNNING",
+        "FAILED",
+        "COMPLETED"
+      ]
+    },
+    "planned_context_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "completed_context_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "planned_experiment_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "completed_experiment_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "dataset_row_schema_version": {
+      "const": 2
+    },
+    "dataset_row_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "planned_merged_dataset_path": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "merged_dataset": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/merged_dataset"
+        }
+      ]
+    },
+    "rule_audit": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/rule_audit"
+        }
+      ]
+    },
+    "split": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/split"
+        }
+      ]
+    },
+    "started_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "failed_context": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "error": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/error"
+        }
+      ]
+    },
+    "contexts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/context_result"
+      }
+    }
+  },
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "nullable_integer": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "nullable_string": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "message"
+      ],
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "message": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      }
+    },
+    "context_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "group_slot",
+        "topology_id",
+        "split_group_id",
+        "artifact_bundle_sha256",
+        "status",
+        "deploy_return_code",
+        "initial_baseline_return_code",
+        "batch_run_id",
+        "batch_result_path",
+        "dataset_path",
+        "dataset_sha256",
+        "completed_experiment_count",
+        "dataset_row_count",
+        "artifact_revalidation_count",
+        "rule_exact_match_count",
+        "affected_prefix_correct_count",
+        "class_row_counts",
+        "final_baseline_return_code",
+        "destroy_return_code",
+        "cleanup_verified",
+        "error"
+      ],
+      "properties": {
+        "group_slot": {
+          "$ref": "#/$defs/identifier"
+        },
+        "topology_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "split_group_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "artifact_bundle_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "status": {
+          "enum": [
+            "RUNNING",
+            "FAILED",
+            "COMPLETED"
+          ]
+        },
+        "deploy_return_code": {
+          "$ref": "#/$defs/nullable_integer"
+        },
+        "initial_baseline_return_code": {
+          "$ref": "#/$defs/nullable_integer"
+        },
+        "batch_run_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "batch_result_path": {
+          "$ref": "#/$defs/nullable_string"
+        },
+        "dataset_path": {
+          "$ref": "#/$defs/nullable_string"
+        },
+        "dataset_sha256": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/sha256"
+            }
+          ]
+        },
+        "completed_experiment_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dataset_row_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "artifact_revalidation_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rule_exact_match_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "affected_prefix_correct_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "class_row_counts": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "final_baseline_return_code": {
+          "$ref": "#/$defs/nullable_integer"
+        },
+        "destroy_return_code": {
+          "$ref": "#/$defs/nullable_integer"
+        },
+        "cleanup_verified": {
+          "type": "boolean"
+        },
+        "error": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/error"
+            }
+          ]
+        }
+      }
+    },
+    "merged_dataset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "row_count",
+        "quality"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "row_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "quality": {
+          "type": "object"
+        }
+      }
+    },
+    "rule_audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "record_count",
+        "exact_match_count",
+        "affected_prefix_correct_count"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "record_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "exact_match_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "affected_prefix_correct_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "partition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "row_count",
+        "group_count",
+        "group_ids",
+        "sha256"
+      ],
+      "properties": {
+        "row_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "group_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "group_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "split": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "manifest_path",
+        "source_dataset_sha256",
+        "no_cross_partition_group",
+        "partitions",
+        "directory"
+      ],
+      "properties": {
+        "manifest_path": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_dataset_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "no_cross_partition_group": {
+          "const": true
+        },
+        "directory": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "partitions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "train",
+            "validation",
+            "test"
+          ],
+          "properties": {
+            "train": {
+              "$ref": "#/$defs/partition"
+            },
+            "validation": {
+              "$ref": "#/$defs/partition"
+            },
+            "test": {
+              "$ref": "#/$defs/partition"
+            }
+          }
+        }
+      }
+    }
+  }
+}

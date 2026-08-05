@@ -196,15 +196,26 @@ the following gates:
 - collector_completed true;
 - baseline_before_valid true;
 - baseline_after_valid true;
-- unavailable_feature_count zero for this first controlled campaign;
+- no_fault and wrong_next_hop rows with
+  unavailable_feature_count zero;
+- missing_static_route rows with unavailable_feature_count one and
+  route_next_hop_reachable_from_observer as the only unavailable
+  feature;
+- no other unavailable feature in any campaign row;
 - no mixed schemas;
 - no historical smoke row or incomplete-attempt row; and
 - a recorded SHA-256 for every source context dataset and the merged
   JSONL payload.
 
-The zero-unavailable gate is campaign-specific. It does not remove
-tri-state support from Dataset Row v2 or cancel the later
-missing-evidence scope.
+The class-conditional unavailable-feature gate is campaign-specific.
+For missing_static_route, the configured route and therefore its
+configured next-hop do not exist. The reachability of that absent
+configured next-hop is structurally undefined; it is not a failed
+probe and must remain unavailable. The separate
+expected_next_hop_reachable_from_observer feature must still be
+available and true in the controlled C1 state. This policy preserves
+the Dataset Row v2 tri-state contract without treating structural
+non-applicability as missing evidence or imputing a false value.
 
 ## 9. Rule-based reference audit
 
@@ -280,32 +291,49 @@ The real campaign closeout must record:
 Only after that closeout may the project claim that the first dataset
 is ready for the reviewed ML baseline stage.
 
-## 12. Current implementation status
+## 12. Accepted implementation and runtime status
 
-Implemented and tested in P2-R9:
+P2-R9 implemented and tested the static campaign inputs. P2-R10 then
+implemented:
 
-- three explicit G01 campaign scenario bindings;
-- five six-experiment Batch Plan v1 files;
-- Dataset Campaign Plan v1;
-- the campaign-plan runtime validator;
-- the campaign-plan JSON Schema; and
-- nine targeted contract tests.
+- the cross-topology fail-stop coordinator;
+- the frozen five-context fingerprint manifest;
+- Campaign Result v1 and its JSON Schema;
+- per-context deploy, baseline, batch, destroy, and cleanup handling;
+- artifact revalidation and class-conditional D-066 quality gates;
+- atomic five-dataset merge;
+- the separate rule-based reference audit; and
+- invocation and verification of the existing deterministic splitter.
 
-Verified:
+The first runtime attempt
+p2_routing_5ctx_v1-20260804T070959526851Z-
+9f1062d3dbdd44258657c144ec3755fc stopped at the G01 artifact audit.
+It exposed the conflict between the original zero-unavailable gate
+and the approved C1 tri-state semantics. D-066 corrected the gate,
+and no row from that incomplete attempt was reused.
 
-- campaign expansion is exactly 30;
-- every group contains all three classes;
-- every class/context pair has two repetitions;
-- the complete 164-test regression suite passes; and
-- the deterministic split declaration matches the current splitter.
+The accepted fresh campaign is
+p2_routing_5ctx_v1-20260804T073429388394Z-
+617194fea9954ed98ec120bdefea23d9. It completed and verified:
 
-Not implemented or executed:
+- five of five context batches and 30/30 experiments;
+- 30/30 Evidence v2 and Dataset Row v2 artifact revalidations;
+- six rows per group and ten rows per class;
+- the exact N0:0/C1:1/C2:0 unavailable-feature policy;
+- zero unexpected unavailable features;
+- 30/30 rule exact matches and affected-prefix checks;
+- a 30-row merged JSONL with SHA-256
+  be92cef4e78764e772909e15f43ab5cba98ef9610f4a446fc95e8afb5e830c80;
+- the frozen 18/6/6-row, 3/1/1-group split;
+- no group crossing partitions;
+- Campaign Result v1 schema validation; and
+- five of five context cleanups.
 
-- cross-topology campaign coordinator;
-- real 30-experiment campaign;
-- campaign merge;
-- campaign result artifact;
-- merged 30-row JSONL;
-- real split output and manifest;
-- ML training; and
-- hybrid diagnosis.
+The corrected targeted suite passed 11/11 tests and the full suite
+passed 175/175. P2-R10 therefore satisfies every closeout item in
+Section 11 and makes the accepted split available to the reviewed
+baseline stages.
+
+ML training and hybrid diagnosis remain unimplemented. The campaign
+result is a dataset-readiness result, not a claim of general
+diagnostic performance.

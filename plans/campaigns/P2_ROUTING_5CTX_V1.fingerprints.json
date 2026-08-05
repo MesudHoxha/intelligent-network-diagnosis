@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "campaign_id": "P2_ROUTING_5CTX_V1",
+  "algorithm": "normalized_text_path_bundle_sha256_v1",
+  "contexts": [
+    {
+      "group_slot": "G01",
+      "files": [
+        "labs/topologies/top01_routed/topology.clab.yml",
+        "labs/topologies/top01_routed/scripts/validate_baseline.sh",
+        "scenarios/routing/N0_NORMAL_OPERATION_G01_TOP01_LINEAR_2R.yml",
+        "scenarios/routing/C1_MISSING_STATIC_ROUTE_G01_TOP01_LINEAR_2R.yml",
+        "scenarios/routing/C2_WRONG_NEXT_HOP_G01_TOP01_LINEAR_2R.yml"
+      ],
+      "sha256": "208d92f8d355462ff1a4631ebf4ca1e2c9cf8b61900d6084bff8b87d2c09c8ea"
+    },
+    {
+      "group_slot": "G02",
+      "files": [
+        "labs/topologies/top02_chain/topology.clab.yml",
+        "labs/topologies/top02_chain/scripts/validate_baseline.sh",
+        "scenarios/routing/N0_NORMAL_OPERATION_TOP02_CHAIN.yml",
+        "scenarios/routing/C1_MISSING_STATIC_ROUTE_TOP02_CHAIN.yml",
+        "scenarios/routing/C2_WRONG_NEXT_HOP_TOP02_CHAIN.yml"
+      ],
+      "sha256": "fa411079e19fa7047a467ae46ff1ba7edd54657daee254f74f6c57cd58e4adc3"
+    },
+    {
+      "group_slot": "G03",
+      "files": [
+        "labs/topologies/top02_branch/topology.clab.yml",
+        "labs/topologies/top02_branch/scripts/validate_baseline.sh",
+        "scenarios/routing/N0_NORMAL_OPERATION_TOP02_BRANCH.yml",
+        "scenarios/routing/C1_MISSING_STATIC_ROUTE_TOP02_BRANCH.yml",
+        "scenarios/routing/C2_WRONG_NEXT_HOP_TOP02_BRANCH.yml"
+      ],
+      "sha256": "2092d0702a8e107a7757ff1754872f518f0be25c89883edb2c5638371a18f0fc"
+    },
+    {
+      "group_slot": "G04",
+      "files": [
+        "labs/topologies/top02_dual_transit/topology.clab.yml",
+        "labs/topologies/top02_dual_transit/scripts/validate_baseline.sh",
+        "scenarios/routing/N0_NORMAL_OPERATION_TOP02_DUAL_TRANSIT.yml",
+        "scenarios/routing/C1_MISSING_STATIC_ROUTE_TOP02_DUAL_TRANSIT.yml",
+        "scenarios/routing/C2_WRONG_NEXT_HOP_TOP02_DUAL_TRANSIT.yml"
+      ],
+      "sha256": "1e9aa7d2ea8ea1f1691821f8639c60820bbdcd9c0d0bd182e4b72b810b948d54"
+    },
+    {
+      "group_slot": "G05",
+      "files": [
+        "labs/topologies/top03_asymmetric_return/topology.clab.yml",
+        "labs/topologies/top03_asymmetric_return/scripts/validate_baseline.sh",
+        "scenarios/routing/N0_NORMAL_OPERATION_TOP03_ASYMMETRIC_RETURN.yml",
+        "scenarios/routing/C1_MISSING_STATIC_ROUTE_TOP03_ASYMMETRIC_RETURN.yml",
+        "scenarios/routing/C2_WRONG_NEXT_HOP_TOP03_ASYMMETRIC_RETURN.yml"
+      ],
+      "sha256": "6bd4de9818ba0c3b589e5a17cf47553f523fc743d6feb12334bd525ea79ca870"
+    }
+  ]
+}

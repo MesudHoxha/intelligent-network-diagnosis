@@ -3,6 +3,13 @@
 Date: 2026-07-31
 Status: COMPLETED
 
+Supersession note: P2-R9 originally required zero unavailable
+features for every campaign class. Real P2-R10 evidence showed that
+this conflicts with the approved C1 tri-state semantics. D-066
+supersedes only that quality-gate detail with the exact
+N0:0/C1:1/C2:0 class-conditional policy; the campaign matrix,
+bindings, repetitions, and split precommitment remain unchanged.
+
 ## 1. What was completed
 
 - Added three explicit G01 TOP-01 campaign scenarios for N0, C1, and
@@ -47,9 +54,10 @@ Status: COMPLETED
   - test: G02.
 - The split is a pre-run hash consequence, not a result-dependent
   context selection.
-- The first campaign requires zero unavailable features as a
-  campaign-specific quality gate while preserving tri-state Dataset
-  Row v2 and the later missing-evidence scope.
+- P2-R9 initially required zero unavailable features as a
+  campaign-specific quality gate. D-066 later superseded this one
+  detail with the exact N0:0/C1:1/C2:0 policy while preserving
+  tri-state Dataset Row v2 and the later missing-evidence scope.
 - Rule-based exact match is audited separately and never becomes a
   model feature or a synonym for Batch Runner completion.
 - ML and hybrid diagnosis remain blocked.

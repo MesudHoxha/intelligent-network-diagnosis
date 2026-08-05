@@ -439,57 +439,90 @@ Final post-experiment baseline:
   precommitment are implemented and verified; ML readiness has not
   yet been established
 
+## Latest P2-R10 verification
+
+- Decisions: D-066 and D-067
+- Campaign ID: P2_ROUTING_5CTX_V1
+- Accepted campaign run ID:
+  p2_routing_5ctx_v1-20260804T073429388394Z-
+  617194fea9954ed98ec120bdefea23d9
+- Status: COMPLETED
+- Context batches: 5/5 COMPLETED
+- Planned/completed experiments: 30/30
+- Evidence v2 and Dataset Row v2 revalidation: 30/30 PASS
+- Rows per context: 6
+- Rows per class: 10
+- Quality policy: N0:0/C1:1 exact/C2:0
+- Expected structural unavailable features: 10
+- Unexpected unavailable features: 0
+- Rule-based exact matches: 30/30
+- Affected-prefix checks: 30/30
+- Merged Dataset Row v2 records: 30
+- Merged dataset SHA-256:
+  be92cef4e78764e772909e15f43ab5cba98ef9610f4a446fc95e8afb5e830c80
+- Split rows: 18/6/6
+- Split groups: 3/1/1
+- Train groups: G03, G04, G05
+- Validation group: G01
+- Test group: G02
+- No cross-partition group: PASS
+- Initial/final baselines: 5/5 PASS
+- Laboratory cleanup: 5/5 PASS
+- Campaign Result v1 schema: PASS
+- Targeted P2-R10 tests: 11/11 passed
+- Full automated suite: 175/175 passed
+- Interpretation: the first leakage-controlled five-context dataset
+  and split are accepted for reviewed baseline work; general
+  diagnostic performance is not established
+
+The earlier run
+p2_routing_5ctx_v1-20260804T070959526851Z-
+9f1062d3dbdd44258657c144ec3755fc remains a failed campaign artifact.
+It supplied the runtime evidence for D-066 but contributed no row to
+the accepted merge or split.
+
 ## Active
 
-- Implement the cross-topology coordinator for the frozen
-  P2_ROUTING_5CTX_V1 plan
-- Preserve exact G01-G05 scenario, role, and split-group bindings
-- Preserve the verified TOP-01 and G02-G05 regressions
-- Preserve Observation Profile v1, Evidence v2, and Dataset Row v2
-  without adding unreviewed features
-- Implement atomic merge and campaign-level quality validation
-- Execute the real five-context, 30-experiment campaign
-- Generate and audit the D-058 grouped split without changing the
-  frozen seed, group identifiers, ratios, or expected allocation
-- Keep rule-based evaluation reporting separate from dataset features
-  and Batch Runner completion semantics
+- Freeze one partition-aware evaluation protocol shared by the
+  rule-based, ML, and hybrid methods.
+- Preserve the accepted campaign run, dataset hash, split seed,
+  group identifiers, ratios, and partition allocation.
+- Map the separate P2-R10 rule audit to train, validation, and test
+  without using the test group for design or tuning.
+- Define per-class and macro metrics and a machine-readable result
+  contract before implementing ML.
+- Keep explanations and supporting evidence auditable.
 
 ## Open issues
 
-- Reusable batch-level evaluation summary or validation report
+- Reusable method-level evaluation result and comparison report
 - Final FRRouting container image for later routing extensions
 - Final set of pilot fault classes beyond C1 and C2
 - Missing-evidence experiments
 - Unseen scenario or topology variants
 - Controlled multiple-fault subset
-- Larger and more varied dataset beyond the 12-row P1 pilot
-- Cross-topology campaign coordinator
-- Atomic five-dataset merge and campaign result contract
-- Executed 30-row Dataset Row v2 campaign
-- First valid train/validation/test split under D-058
+- Larger and more varied dataset beyond the accepted 30-row P2
+  campaign
+- Reproducible backup or publication policy for generated runtime
+  datasets before final thesis archiving
 - Machine Learning method implementation
 - Hybrid method implementation
 - OSPF implementation; its current status remains proposed
 
 ## Next milestone
 
-P2-R10 — Campaign Coordinator, Real Execution, Merge, and Split.
+P3-R0 — Formal Rule-Based Baseline Evaluation Protocol.
 
-Implement the coordinator for the frozen P2_ROUTING_5CTX_V1 plan.
-It must deploy and validate one laboratory at a time, execute the
-five six-experiment Batch Plan v1 jobs in listed order, stop on the
-first failure, preserve per-context artifacts, and clean up every
-deployed laboratory.
+Define metrics and a machine-readable result contract that can be
+used without semantic drift for the traditional rule-based method,
+the future ML baseline, and the later hybrid method. Convert the
+accepted P2-R10 rule reference audit into partition-aware reporting,
+including per-class and macro metrics and explicit small-sample
+limitations.
 
-After 30/30 successful experiments, merge only the five batch datasets
-bound to the same campaign run, apply every quality and semantic gate
-in docs/DATASET_CAMPAIGN_DESIGN.md, produce the separate rule-based
-reference audit, and invoke the existing splitter. Verify the exact
-18/6/6 rows, 3/1/1 groups, complete class coverage, hashes, and
-no-cross-partition group rule.
-
-Do not train ML or implement hybrid diagnosis inside P2-R10. Those
-stages remain blocked until the real campaign and split closeout pass.
+Do not alter the accepted P2 campaign or split. Do not use the frozen
+G02 test group for feature, threshold, or model selection. Stop before
+ML implementation or tuning.
 
 ## Important limitation
 
@@ -528,13 +561,12 @@ one execution per current class.
 
 P2-R9 added explicit G01 campaign bindings without modifying
 historical files, created five two-repetition context plans, and
-implemented Dataset Campaign Plan v1. The validated plan expands to
-30 experiments and precommits the deterministic 3/1/1 split. It has
-not been executed. The four G02-G05 smoke batches and historical
-TOP-01 runs do not substitute for the accepted campaign, and no
-successful D-058 train/validation/test split exists yet.
+implemented Dataset Campaign Plan v1. P2-R10 then executed that exact
+plan in a fresh accepted run. The atomic merge contains 30 Dataset Row
+v2 records, and the D-058 split contains 18/6/6 rows in 3/1/1 whole
+context groups with no cross-partition leakage.
 
 The project has not yet established general diagnostic accuracy or
 compared the rule-based, Machine Learning, and hybrid methods.
-Additional controlled variation, the first successful grouped split,
-ML implementation, and hybrid evaluation remain required.
+Additional controlled variation, the formal comparable evaluation
+protocol, ML implementation, and hybrid evaluation remain required.

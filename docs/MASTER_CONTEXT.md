@@ -455,5 +455,48 @@ P2-R9 did not implement the cross-topology coordinator, execute a
 real campaign, merge a 30-row dataset, or create a split. The
 validated campaign plan is therefore not an ML-readiness result.
 
+The first real P2-R10 campaign attempt,
+p2_routing_5ctx_v1-20260804T070959526851Z-
+9f1062d3dbdd44258657c144ec3755fc, exercised the new coordinator and
+stopped safely at the G01 artifact audit. G01 completed its six
+experiments, final baseline, destroy, and cleanup, but campaign row 3
+was rejected by the original zero-unavailable gate. Because row 3 is
+the first missing_static_route repetition, its only unavailable
+feature is structurally required by the existing contract:
+route_next_hop_reachable_from_observer cannot be observed when the
+configured route and configured next-hop are absent.
+
+D-066 corrects the P2 campaign gate without changing Evidence v2,
+Dataset Row v2, the approved seven-feature set, labels, context
+bindings, repetitions, or split precommitment. Every no_fault and
+wrong_next_hop row must have zero unavailable features. Every
+missing_static_route row must have exactly one, specifically
+route_next_hop_reachable_from_observer. Any other unavailable feature
+still blocks the campaign. The failed attempt remains incomplete
+evidence and cannot contribute rows to a later accepted dataset.
+
+The complete fresh P2-R10 campaign
+p2_routing_5ctx_v1-20260804T073429388394Z-
+617194fea9954ed98ec120bdefea23d9 completed successfully on
+2026-08-04. All five context batches completed 6/6, producing 30
+validated Evidence v2 artifacts and 30 Dataset Row v2 records. The
+atomic merged dataset has SHA-256
+be92cef4e78764e772909e15f43ab5cba98ef9610f4a446fc95e8afb5e830c80.
+It contains six rows per context, ten rows per class, and exactly the
+ten structurally unavailable C1 next-hop observations required by
+D-066, with no unexpected unavailable feature.
+
+The separate rule-based reference audit reported 30/30 exact matches
+and 30/30 correct affected-prefix results. The deterministic D-058
+split completed with 18/6/6 rows and 3/1/1 complete context groups:
+G03/G04/G05 in train, G01 in validation, and G02 in test. No group
+crosses partitions, every context passed its initial and final
+baseline, and cleanup passed 5/5. The targeted P2-R10 suite passed
+11/11 tests and the complete regression suite passed 175/175.
+
+This closes the first five-context dataset-readiness milestone. It
+establishes a reproducible, leakage-controlled input for the reviewed
+baseline stages; it does not establish general diagnostic accuracy.
+
 The Machine Learning and hybrid diagnostic approaches have not yet
 been implemented or evaluated.

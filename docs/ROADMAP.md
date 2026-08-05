@@ -19,7 +19,7 @@ Status: Completed
 - Evaluate against ground truth
 
 ## Phase 2 — Pilot multiclass dataset
-Status: In progress
+Status: Completed
 
 - Dataset artifact contracts: completed and tested
 - Normal: canonical, alternate-subnet, G02, G03, G04, and G05 smoke
@@ -34,8 +34,8 @@ Status: In progress
   tested, and verified through the first real canonical smoke batch
 - Canonical B0 smoke batch: completed and semantically verified;
   three-row smoke dataset generated
-- Complete evaluation-context-aware splitting: implemented and tested;
-  first valid five-context split pending
+- Complete evaluation-context-aware splitting: implemented, tested,
+  and verified through the first valid five-context split
 - G02 TOP_02_CHAIN: implemented and smoke-verified
 - G03 TOP_02_BRANCH: implemented and smoke-verified
 - G04 TOP_02_DUAL_TRANSIT: implemented and smoke-verified
@@ -43,15 +43,26 @@ Status: In progress
 - Five-context two-repetition campaign: G01 bindings, five context
   batches, Dataset Campaign Plan v1, and deterministic split
   precommitment completed and tested
-- Cross-topology campaign coordinator and real 30-experiment
-  execution: next target
-- First valid five-context split: pending the expanded campaign
-- Wrong gateway: not started
-- Interface down: not started
-- ACL block: not started
+- Cross-topology campaign coordinator: implemented and tested
+- Real P2_ROUTING_5CTX_V1 campaign: 30/30 experiments completed and
+  independently audited
+- Atomic merged Dataset Row v2 dataset: 30 rows accepted
+- Rule-based campaign reference audit: 30/30 exact matches and
+  affected-prefix checks
+- First valid five-context split: completed with 18/6/6 rows,
+  3/1/1 groups, and no cross-partition group
+- Wrong gateway: deferred to Phase 6
+- Interface down: deferred to Phase 6
+- ACL block: deferred to Phase 6
 
 ## Phase 3 — Rule-based baseline
-Status: Not started
+Status: In progress
+
+- Existing deterministic rule engine retained as the traditional
+  baseline
+- Campaign reference audit completed separately from model features
+- Partition-aware metrics and comparable evaluation-report contract:
+  next target
 
 ## Phase 4 — Machine Learning baseline
 Status: Not started
