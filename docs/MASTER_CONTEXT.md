@@ -498,5 +498,42 @@ This closes the first five-context dataset-readiness milestone. It
 establishes a reproducible, leakage-controlled input for the reviewed
 baseline stages; it does not establish general diagnostic accuracy.
 
-The Machine Learning and hybrid diagnostic approaches have not yet
-been implemented or evaluated.
+P3-R0 has frozen Method Evaluation Result v1 as the comparable
+partition-aware reporting contract for the rule-based, Machine
+Learning, and hybrid methods. The primary target is fault_type and
+the primary comparison metric is unweighted macro F1. The contract
+also reports accuracy, per-class precision/recall/F1 and support, a
+fixed-order confusion matrix, full-diagnosis exact-match rate, and
+fault-only affected-prefix correctness.
+
+The accepted split roles are explicit: train is development,
+validation is selection, and test is report_only. Only train and
+validation may influence future feature processing, model choice,
+hyperparameters, thresholds, or hybrid policy. The overall result is
+descriptive_only.
+
+The first implementation maps the separate P2-R10 rule audit to the
+frozen partitions, verifies the accepted run and dataset hashes, and
+binds each sample to hashed Manifest, ground-truth, Evidence,
+prediction, and evaluation artifacts. It changes no rule, feature,
+label, campaign row, split group, or prediction. Ten targeted tests
+and the complete 185-test suite pass.
+
+The adapter was executed once against the accepted local runtime
+artifacts on 2026-08-05. The resulting
+p3_r0_rule_based_baseline_v1 report contains 30 records, preserves
+the 18/6/6-row and 3/1/1-group allocation, and verifies 150/150
+artifact references. Train, validation, and report-only test each
+have accuracy 1.0 and unweighted macro F1 1.0. Exact diagnosis match
+is 30/30 and fault-only affected-prefix correctness is 20/20.
+
+The accepted report remains a generated local artifact at
+reports/experiments/p3_r0_rule_based_baseline_v1.json. Its SHA-256 is
+7158f1de31a892779bbce2eaad8f5c5e5bb7c2fc08e0766b49a55047ddc56424.
+D-069 accepts this as the traditional baseline and closes P3-R0.
+
+These perfect controlled-campaign values mainly confirm that the
+existing deterministic rules cover the same known fault semantics.
+They do not establish real-world generalization or superiority. The
+Machine Learning and hybrid diagnostic approaches have not yet been
+implemented or evaluated.

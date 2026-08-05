@@ -989,3 +989,104 @@ laboratories and only three classes. They do not establish real-world
 generalization, statistical independence, ML performance, hybrid
 performance, or superiority over the rule-based method. The frozen
 test group must not be used for later model or feature selection.
+
+## D-068 — Comparable partition-aware evaluation protocol
+
+Decision: Use Method Evaluation Result v1 as the shared reporting
+contract for the rule-based, Machine Learning, and hybrid diagnostic
+methods.
+
+The primary supervised target is fault_type with the frozen class
+order no_fault, missing_static_route, and wrong_next_hop. Every method
+must report partition-specific accuracy, per-class precision, recall,
+F1 and support, unweighted macro precision, recall and F1, and the
+same actual-row/predicted-column confusion matrix. Macro F1 is the
+primary comparison metric. A zero metric denominator produces 0.0.
+
+The protocol separately reports exact diagnosis match over every row
+and affected-prefix correctness over fault rows only. Classification
+metrics and full-diagnosis checks must not be presented as the same
+measurement.
+
+The accepted D-067 split roles are immutable:
+
+- train: development;
+- validation: selection; and
+- test: report_only.
+
+Only train and validation may influence future feature processing,
+method selection, hyperparameters, thresholds, or hybrid policy. The
+G02 test group cannot be used for any of those decisions. An overall
+30-row summary is descriptive_only.
+
+Every sample-level result must retain path and SHA-256 references to
+its Experiment Manifest, ground truth, Evidence v2, method prediction,
+and per-experiment evaluation. These are report provenance and do not
+become Dataset Row v2 model features.
+
+The first adapter consumes the separate P2-R10 rule audit, verifies
+its one-to-one mapping to the frozen split, normalizes a
+NO_FAULT_DETECTED result to the comparable no_fault class, recalculates
+all metrics, validates the formal JSON Schema, and writes the report
+atomically without overwriting an existing result.
+
+Status: Approved, implemented, and runtime-verified on 2026-08-05.
+Ten targeted tests and the complete 185-test regression suite pass.
+The accepted real execution and report binding are recorded in
+D-069.
+
+Limitation:
+
+This protocol makes future method results structurally comparable; it
+does not itself establish their performance. The accepted dataset has
+only 30 controlled rows and validation/test contain one context each.
+The Machine Learning and hybrid methods remain unimplemented, and no
+metric comparison or superiority claim is yet possible.
+
+## D-069 — First accepted partition-aware rule-based baseline
+
+Decision: Accept p3_r0_rule_based_baseline_v1 as the traditional
+baseline result for the frozen D-067 campaign and D-068 evaluation
+protocol.
+
+The accepted local runtime report is bound to:
+
+- path:
+  reports/experiments/p3_r0_rule_based_baseline_v1.json;
+- SHA-256:
+  7158f1de31a892779bbce2eaad8f5c5e5bb7c2fc08e0766b49a55047ddc56424;
+- campaign run:
+  p2_routing_5ctx_v1-20260804T073429388394Z-
+  617194fea9954ed98ec120bdefea23d9;
+- merged Dataset Row v2 SHA-256:
+  be92cef4e78764e772909e15f43ab5cba98ef9610f4a446fc95e8afb5e830c80;
+- 30 unique records mapped one-to-one to the accepted split;
+- 18/6/6 rows in 3/1/1 whole context groups; and
+- 150/150 source-artifact references verified by SHA-256.
+
+The deterministic rule engine reported accuracy 1.0 and unweighted
+macro F1 1.0 independently for train, validation, and test. It also
+reported 30/30 exact diagnosis matches and 20/20 correct affected
+prefixes over fault rows. The G02 test group remained report_only,
+the overall view remained descriptive_only, and no training occurred.
+
+The report is a generated local runtime artifact and remains excluded
+from the implementation commit under the existing repository policy.
+Its stable identity is the result identifier, accepted path, and
+SHA-256 recorded here and in the P3-R0 handoff.
+
+Status: Implemented and verified on 2026-08-05. The Method Evaluation
+Result v1 validator and JSON Schema passed, all 30 split and rule-audit
+records mapped exactly once, all 150 artifact references matched their
+files, ten targeted tests passed, and the complete suite passed
+185/185.
+
+Limitation:
+
+The perfect metrics apply only to 30 controlled records from five
+known laboratory contexts and three known classes. Validation and
+test each contain one context, and the two rows per class within a
+context are execution repetitions rather than independent topology
+samples. D-069 does not establish real-world generalization,
+statistical significance, Machine Learning or hybrid performance, or
+superiority of one method over another.

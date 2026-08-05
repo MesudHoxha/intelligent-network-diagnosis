@@ -56,16 +56,35 @@ Status: Completed
 - ACL block: deferred to Phase 6
 
 ## Phase 3 — Rule-based baseline
-Status: In progress
+Status: Completed
 
 - Existing deterministic rule engine retained as the traditional
   baseline
 - Campaign reference audit completed separately from model features
-- Partition-aware metrics and comparable evaluation-report contract:
-  next target
+- Formal Method Evaluation Protocol v1: frozen
+- Method Evaluation Result v1 runtime contract and JSON Schema:
+  implemented and tested
+- Shared partition roles and comparable per-class/macro metrics:
+  implemented and tested
+- P2-R10 rule-audit adapter with hashed evidence and explanation
+  provenance: implemented and tested
+- Real 30-record partition-aware rule-based result: completed and
+  independently verified
+- Train/validation/test accuracy and macro F1: 1.0/1.0/1.0 under the
+  frozen controlled campaign
+- Report SHA-256 and 150/150 source-artifact bindings: recorded
+- P3-R0 closeout and HANDOFF: completed
 
 ## Phase 4 — Machine Learning baseline
-Status: Not started
+Status: In progress
+
+- Leakage-safe ML experiment protocol and feature-matrix contract:
+  next target
+- Interpretable supervised baseline trained only on the frozen train
+  partition: not started
+- Validation-only selection before a single report-only test
+  evaluation: not started
+- Method Evaluation Result v1 ML report: not started
 
 ## Phase 5 — Hybrid diagnosis
 Status: Not started

@@ -2,7 +2,7 @@
 
 ## Current phase
 
-05 — Parameterized pilot dataset generation
+Phase 4 — Machine Learning baseline
 
 ## Implemented and tested
 
@@ -129,6 +129,28 @@
 - G05 feature semantics and rule-based exact matches: 3/3
 - G05 fault restoration and final 52/52 baseline verification
 - Real G05 artifact-bundle SHA-256 fingerprint
+- Formal Method Evaluation Protocol v1
+- Method Evaluation Result v1 runtime validator and JSON Schema
+- Shared rule-based, Machine Learning, and hybrid method identifiers
+- Frozen fault_type class order and macro-F1 comparison metric
+- Partition-aware accuracy, per-class precision/recall/F1 and support
+- Fixed-order confusion matrix and explicit zero-division policy
+- Separate full-diagnosis and fault-only affected-prefix checks
+- Immutable train-development, validation-selection, and
+  test-report-only roles
+- P2-R10 rule-audit adapter with sample, label, group, and hash
+  verification
+- Per-sample audit bindings for Manifest, ground truth, Evidence,
+  prediction, and evaluation artifacts
+- Atomic report writing and existing-output protection
+- Real 30-record P3-R0 rule-based baseline report
+- P3-R0 partition rows 18/6/6 and groups 3/1/1 verified
+- Train, validation, and report-only test macro F1: 1.0/1.0/1.0
+- P3-R0 exact diagnosis match: 30/30
+- P3-R0 fault-only affected-prefix correctness: 20/20
+- P3-R0 artifact references: 150/150 SHA-256 verified
+- P3-R0 targeted tests: 10/10 passed
+- Full automated regression suite: 185/185 passed
 
 ## Representative verified experiments
 
@@ -481,21 +503,57 @@ p2_routing_5ctx_v1-20260804T070959526851Z-
 It supplied the runtime evidence for D-066 but contributed no row to
 the accepted merge or split.
 
+## Latest P3-R0 verification
+
+- Decisions: D-068 and D-069
+- Protocol: docs/METHOD_EVALUATION_PROTOCOL.md
+- Result contract: Method Evaluation Result v1
+- Result schema:
+  schemas/method_evaluation_result_v1.schema.json
+- Runtime implementation: src/evaluation/reporting.py
+- Primary target: fault_type
+- Primary metric: macro F1
+- Reported partitions: train, validation, and test
+- Selection partitions: train and validation only
+- Test use: report_only
+- Overall use: descriptive_only
+- Result ID: p3_r0_rule_based_baseline_v1
+- Result status: COMPLETED
+- Report path:
+  reports/experiments/p3_r0_rule_based_baseline_v1.json
+- Report SHA-256:
+  7158f1de31a892779bbce2eaad8f5c5e5bb7c2fc08e0766b49a55047ddc56424
+- Rows: 30
+- Partition rows: 18/6/6
+- Partition groups: 3/1/1
+- Train accuracy / macro F1: 1.0 / 1.0
+- Validation accuracy / macro F1: 1.0 / 1.0
+- Test accuracy / macro F1: 1.0 / 1.0
+- Exact diagnosis match: 30/30
+- Fault-only affected-prefix correctness: 20/20
+- Artifact references: 150/150 SHA-256 PASS
+- Rule Engine changes: none
+- Dataset or split changes: none
+- Targeted tests: 10/10 passed
+- Full automated suite: 185/185 passed
+- Interpretation: P3-R0 is closed for the frozen controlled campaign;
+  the perfect values do not establish generalization or method
+  superiority
+
 ## Active
 
-- Freeze one partition-aware evaluation protocol shared by the
-  rule-based, ML, and hybrid methods.
 - Preserve the accepted campaign run, dataset hash, split seed,
   group identifiers, ratios, and partition allocation.
-- Map the separate P2-R10 rule audit to train, validation, and test
-  without using the test group for design or tuning.
-- Define per-class and macro metrics and a machine-readable result
-  contract before implementing ML.
-- Keep explanations and supporting evidence auditable.
+- Freeze a leakage-safe ML baseline protocol before model fitting.
+- Define the seven-feature input matrix without admitting labels,
+  ground truth, evaluation outputs, or provenance as predictors.
+- Restrict fitting to train, selection to validation, and G02 test to
+  one report-only evaluation after the pipeline is frozen.
+- Reuse Method Evaluation Result v1 for the future ML report.
 
 ## Open issues
 
-- Reusable method-level evaluation result and comparison report
+- Future cross-method comparison report after ML and hybrid exist
 - Final FRRouting container image for later routing extensions
 - Final set of pilot fault classes beyond C1 and C2
 - Missing-evidence experiments
@@ -511,18 +569,16 @@ the accepted merge or split.
 
 ## Next milestone
 
-P3-R0 — Formal Rule-Based Baseline Evaluation Protocol.
+P4-R0 — Leakage-Safe ML Baseline Protocol and Feature Matrix.
 
-Define metrics and a machine-readable result contract that can be
-used without semantic drift for the traditional rule-based method,
-the future ML baseline, and the later hybrid method. Convert the
-accepted P2-R10 rule reference audit into partition-aware reporting,
-including per-class and macro metrics and explicit small-sample
-limitations.
-
-Do not alter the accepted P2 campaign or split. Do not use the frozen
-G02 test group for feature, threshold, or model selection. Stop before
-ML implementation or tuning.
+Freeze the supervised target, seven-feature transformation, missing-
+value handling, candidate model families, deterministic seeds,
+train-only fitting, validation-only selection, and the one-time
+report-only test policy before evaluating a fitted model. Preserve
+the D-067 campaign and split and the D-068 result contract. Exclude
+ground truth, rule predictions, evaluation results, identifiers,
+paths, hashes, and explanation text from model features. Stop before
+hybrid-policy design.
 
 ## Important limitation
 
@@ -566,7 +622,10 @@ plan in a fresh accepted run. The atomic merge contains 30 Dataset Row
 v2 records, and the D-058 split contains 18/6/6 rows in 3/1/1 whole
 context groups with no cross-partition leakage.
 
-The project has not yet established general diagnostic accuracy or
-compared the rule-based, Machine Learning, and hybrid methods.
-Additional controlled variation, the formal comparable evaluation
-protocol, ML implementation, and hybrid evaluation remain required.
+P3-R0 produced the first accepted traditional baseline through the
+formal comparable evaluation protocol. Its perfect values are
+descriptive results for the frozen known campaign, not general
+diagnostic accuracy. The project has not yet implemented or evaluated
+the Machine Learning and hybrid methods, so no cross-method comparison
+or superiority claim is possible. Additional controlled variation,
+ML implementation, and hybrid evaluation remain required.
