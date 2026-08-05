@@ -1365,3 +1365,64 @@ candidate, generate a hybrid prediction or metric, access G02, or
 establish hybrid performance. The current validation group contains
 only one controlled context, so later selection remains descriptive
 and cannot establish real-world generalization.
+
+## D-075 — P5-R1 Hybrid Engine and Validation-Only Freeze Gate
+
+Decision: Implement the two D-074 candidates through separate
+prediction, evaluation, and selection boundaries, and persist one
+selected-policy artifact before any new G02 access.
+
+The Hybrid Engine API accepts only sample identity, hashed Evidence v2
+provenance, the immutable rule prediction, the immutable ML
+prediction, Hybrid Policy v1, and the frozen ML model binding. It has
+no ground-truth, label, partition, correctness, evaluation, or metric
+parameter. All 48 candidate predictions for the 24 train/validation
+samples must exist before the Evaluator reads any development ground
+truth.
+
+The Evaluator implements the D-074 full-denominator semantics.
+Abstention is a false negative for the actual class, is not a false
+positive for a predicted class, and is incorrect for accuracy, exact
+diagnosis, and fault-only affected-prefix correctness. The
+three-by-three confusion matrix retains resolved predictions and the
+separate per-class abstention counts reconcile remaining support.
+
+The Selector receives candidate summaries only after evaluation. It
+uses G01 validation and the frozen lexicographic order: macro-F1,
+exact-diagnosis rate, coverage, complexity rank, and candidate ID.
+The atomic models/p5_r1_hybrid_policy_v1/selection.json artifact binds
+the unchanged policy, all five accepted baselines, both candidate
+manifests, the selected candidate, and a fail-stop leakage audit.
+
+Method Evaluation Result v1 is extended backwards-compatibly for the
+future P5-R2 hybrid report. Existing rule and ML reports retain their
+five-reference records unchanged. A hybrid record uses seven hashed
+references and adds abstention accounting; D-069 and D-073 artifacts
+are not rewritten.
+
+Status: Accepted and runtime-verified on 2026-08-05. The canonical
+hash-bound run preserved the D-074 policy SHA-256 and all five
+accepted baseline hashes. It generated 48 candidate predictions, 48
+candidate evaluations, two candidate manifests, and 99 runtime JSON
+files only for train and validation. Both candidates obtained 1.0
+full-denominator macro-F1, 1.0 exact-diagnosis rate, 1.0 coverage,
+and zero validation abstentions in both development partitions.
+
+The frozen tie-break therefore selected consensus_abstain_v1 by its
+lower complexity rank of 0. The selected-policy artifact SHA-256 is
+59abc80339658a30ab82019c847dbb7a1c9348bc4ca82ad7e1378f2f339a9507.
+Independent selection verification passed before any G02 access,
+14/14 targeted tests and the complete 229/229 regression suite
+passed, and no test prediction, test metric, raw hybrid diagnosis, or
+P5-R2 report was produced. This evidence closes P5-R1 and authorizes
+P5-R2 to verify the committed implementation and frozen selection
+before the single report-only G02 evaluation.
+
+Limitation:
+
+The two candidates tied on every reported train/validation selection
+metric. Selecting consensus_abstain_v1 records the precommitted
+complexity tie-break, not empirical superiority over the guarded
+fallback. Validation contains only one controlled context, G02 test
+remains unobserved by the hybrid method, and no cross-method or
+real-world generalization claim is authorized by D-075.

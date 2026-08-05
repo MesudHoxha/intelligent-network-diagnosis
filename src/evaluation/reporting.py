@@ -163,6 +163,172 @@ def safe_rate(
     return numerator / denominator
 
 
+def compute_abstention_aware_metrics(
+    records: Sequence[Mapping[str, Any]],
+    class_order: Sequence[str],
+) -> dict[str, Any]:
+    """Compute full-denominator hybrid metrics without a fourth class.
+
+    Abstentions remain outside the three-by-three confusion matrix. They
+    count as false negatives for their actual class, as incorrect for
+    supervised and diagnostic checks, and are reported separately.
+    """
+    labels = tuple(class_order)
+    if not labels or len(set(labels)) != len(labels):
+        raise EvaluationReportingError(
+            "class_order must contain unique labels."
+        )
+    label_set = set(labels)
+    label_indexes = {
+        label: index
+        for index, label in enumerate(labels)
+    }
+    matrix = [
+        [0 for _ in labels]
+        for _ in labels
+    ]
+    abstentions = {
+        label: 0
+        for label in labels
+    }
+    exact_values: list[bool] = []
+    prefix_values: list[bool] = []
+    correct_count = 0
+    resolved_count = 0
+
+    for index, record in enumerate(records, start=1):
+        expected = record.get("expected_fault_type")
+        predicted = record.get("predicted_fault_type")
+        abstained = require_boolean(
+            record.get("abstained"),
+            f"records[{index}].abstained",
+        )
+        if expected not in label_set:
+            raise EvaluationReportingError(
+                f"Record {index} has unsupported expected class: "
+                f"{expected!r}."
+            )
+        if abstained:
+            if predicted is not None:
+                raise EvaluationReportingError(
+                    "An abstained record cannot contain a predicted class."
+                )
+            assert isinstance(expected, str)
+            abstentions[expected] += 1
+        else:
+            if predicted not in label_set:
+                raise EvaluationReportingError(
+                    f"Record {index} has unsupported predicted class: "
+                    f"{predicted!r}."
+                )
+            assert isinstance(expected, str)
+            assert isinstance(predicted, str)
+            matrix[label_indexes[expected]][
+                label_indexes[predicted]
+            ] += 1
+            resolved_count += 1
+            if expected == predicted:
+                correct_count += 1
+
+        exact = require_boolean(
+            record.get("exact_match"),
+            f"records[{index}].exact_match",
+        )
+        if abstained and exact:
+            raise EvaluationReportingError(
+                "An abstention cannot be an exact diagnosis match."
+            )
+        exact_values.append(exact)
+        if expected != "no_fault":
+            prefix_correct = require_boolean(
+                record.get("affected_prefix_correct"),
+                f"records[{index}].affected_prefix_correct",
+            )
+            if abstained and prefix_correct:
+                raise EvaluationReportingError(
+                    "A fault abstention cannot have a correct prefix."
+                )
+            prefix_values.append(prefix_correct)
+
+    per_class: dict[str, Any] = {}
+    for index, label in enumerate(labels):
+        true_positive = matrix[index][index]
+        false_positive = sum(
+            matrix[row][index]
+            for row in range(len(labels))
+            if row != index
+        )
+        support = sum(matrix[index]) + abstentions[label]
+        false_negative = support - true_positive
+        precision = safe_rate(
+            true_positive,
+            true_positive + false_positive,
+        )
+        recall = safe_rate(
+            true_positive,
+            true_positive + false_negative,
+        )
+        f1 = safe_rate(
+            2 * precision * recall,
+            precision + recall,
+        )
+        per_class[label] = {
+            "support": support,
+            "true_positive": true_positive,
+            "false_positive": false_positive,
+            "false_negative": false_negative,
+            "precision": precision,
+            "recall": recall,
+            "f1": f1,
+        }
+
+    sample_count = len(records)
+    abstention_count = sample_count - resolved_count
+    macro = {
+        metric: sum(
+            per_class[label][metric]
+            for label in labels
+        ) / len(labels)
+        for metric in ("precision", "recall", "f1")
+    }
+    exact_correct = sum(exact_values)
+    prefix_correct = sum(prefix_values)
+    return {
+        "classification": {
+            "sample_count": sample_count,
+            "resolved_count": resolved_count,
+            "correct_count": correct_count,
+            "accuracy": safe_rate(correct_count, sample_count),
+            "macro": macro,
+            "per_class": per_class,
+            "confusion_matrix": {
+                "actual_labels": list(labels),
+                "predicted_labels": list(labels),
+                "values": matrix,
+            },
+            "zero_division_policy": 0.0,
+        },
+        "diagnostic_checks": {
+            "exact_diagnosis_match": {
+                "applicable_count": sample_count,
+                "correct_count": exact_correct,
+                "rate": safe_rate(exact_correct, sample_count),
+            },
+            "affected_prefix_fault_only": {
+                "applicable_count": len(prefix_values),
+                "correct_count": prefix_correct,
+                "rate": safe_rate(prefix_correct, len(prefix_values)),
+            },
+        },
+        "abstention": {
+            "coverage": safe_rate(resolved_count, sample_count),
+            "abstention_count": abstention_count,
+            "abstention_rate": safe_rate(abstention_count, sample_count),
+            "per_class_abstention_count": abstentions,
+        },
+    }
+
+
 def compute_classification_metrics(
     records: Sequence[Mapping[str, Any]],
     class_order: Sequence[str],
@@ -408,6 +574,22 @@ def validate_method_evaluation_result(
         raise EvaluationReportingError(
             "The test partition must be report_only."
         )
+    if method_id == "hybrid":
+        if policy.get("abstention_treatment") != (
+            "INCORRECT_ON_FULL_DENOMINATOR_AND_REPORTED_SEPARATELY"
+        ):
+            raise EvaluationReportingError(
+                "Hybrid abstention treatment changed."
+            )
+        if policy.get("reported_abstention_metrics") != [
+            "coverage",
+            "abstention_count",
+            "abstention_rate",
+            "per_class_abstention_count",
+        ]:
+            raise EvaluationReportingError(
+                "Hybrid abstention metric set changed."
+            )
 
     class_order_value = policy.get("class_order")
     if (
@@ -468,7 +650,23 @@ def validate_method_evaluation_result(
                 f"records[{index}].expected_fault_type "
                 "is invalid."
             )
-        if predicted_fault_type not in class_order_value:
+        if method_id == "hybrid":
+            abstained = require_boolean(
+                record.get("abstained"),
+                f"records[{index}].abstained",
+            )
+            if abstained:
+                if predicted_fault_type is not None:
+                    raise EvaluationReportingError(
+                        "An abstained hybrid record cannot contain "
+                        "a predicted class."
+                    )
+            elif predicted_fault_type not in class_order_value:
+                raise EvaluationReportingError(
+                    f"records[{index}].predicted_fault_type "
+                    "is invalid."
+                )
+        elif predicted_fault_type not in class_order_value:
             raise EvaluationReportingError(
                 f"records[{index}].predicted_fault_type "
                 "is invalid."
@@ -477,9 +675,11 @@ def validate_method_evaluation_result(
             record.get("classification_correct"),
             f"records[{index}].classification_correct",
         )
-        if classification_correct is not (
-            expected_fault_type == predicted_fault_type
-        ):
+        expected_classification_correct = (
+            predicted_fault_type is not None
+            and expected_fault_type == predicted_fault_type
+        )
+        if classification_correct is not expected_classification_correct:
             raise EvaluationReportingError(
                 f"records[{index}].classification_correct "
                 "does not match its classes."
@@ -492,6 +692,34 @@ def validate_method_evaluation_result(
             record.get("affected_prefix_correct"),
             f"records[{index}].affected_prefix_correct",
         )
+        artifacts = require_mapping(
+            record.get("artifacts"),
+            f"records[{index}].artifacts",
+        )
+        expected_artifact_names = (
+            {
+                "experiment_manifest",
+                "ground_truth",
+                "evidence",
+                "rule_prediction",
+                "ml_prediction",
+                "hybrid_prediction",
+                "evaluation",
+            }
+            if method_id == "hybrid"
+            else {
+                "experiment_manifest",
+                "ground_truth",
+                "evidence",
+                "prediction",
+                "evaluation",
+            }
+        )
+        if set(artifacts) != expected_artifact_names:
+            raise EvaluationReportingError(
+                f"records[{index}].artifacts do not match the "
+                "method-specific provenance contract."
+            )
         assert isinstance(partition, str)
         partition_records[partition].append(record)
 
@@ -543,10 +771,16 @@ def validate_method_evaluation_result(
                 "does not match records."
             )
 
-        expected_metrics = build_metrics_summary(
-            partition_records[partition_name],
-            class_order_value,
-        )
+        if method_id == "hybrid":
+            expected_metrics = compute_abstention_aware_metrics(
+                partition_records[partition_name],
+                class_order_value,
+            )
+        else:
+            expected_metrics = build_metrics_summary(
+                partition_records[partition_name],
+                class_order_value,
+            )
         if summary.get("metrics") != expected_metrics:
             raise EvaluationReportingError(
                 f"partitions.{partition_name}.metrics "
@@ -565,10 +799,17 @@ def validate_method_evaluation_result(
         raise EvaluationReportingError(
             "overall.row_count does not match records."
         )
-    if overall.get("metrics") != build_metrics_summary(
-        records_value,
-        class_order_value,
-    ):
+    if method_id == "hybrid":
+        expected_overall_metrics = compute_abstention_aware_metrics(
+            records_value,
+            class_order_value,
+        )
+    else:
+        expected_overall_metrics = build_metrics_summary(
+            records_value,
+            class_order_value,
+        )
+    if overall.get("metrics") != expected_overall_metrics:
         raise EvaluationReportingError(
             "overall.metrics do not match records."
         )
@@ -644,18 +885,33 @@ def validate_method_evaluation_result(
                 provenance.get(artifact_name),
                 f"provenance.{artifact_name}",
             )
+    elif method_id == "hybrid":
+        for artifact_name in (
+            "rule_baseline",
+            "feature_matrix",
+            "selection_result",
+            "model_artifact",
+            "ml_baseline",
+            "hybrid_policy",
+            "hybrid_selection",
+        ):
+            require_mapping(
+                provenance.get(artifact_name),
+                f"provenance.{artifact_name}",
+            )
     if provenance.get("input_record_count") != len(
         records_value
     ):
         raise EvaluationReportingError(
             "provenance.input_record_count does not match records."
         )
+    expected_references_per_record = 7 if method_id == "hybrid" else 5
     if provenance.get("artifact_reference_count") != (
-        len(records_value) * 5
+        len(records_value) * expected_references_per_record
     ):
         raise EvaluationReportingError(
-            "provenance.artifact_reference_count must be five "
-            "per record."
+            "provenance.artifact_reference_count does not match "
+            "the method-specific per-record contract."
         )
 
 
@@ -687,15 +943,18 @@ def build_partition_summary(
     records: Sequence[Mapping[str, Any]],
     group_ids: Sequence[str],
     class_order: Sequence[str],
+    *,
+    abstention_aware: bool = False,
 ) -> dict[str, Any]:
     return {
         "use": PARTITION_USES[partition_name],
         "row_count": len(records),
         "group_count": len(group_ids),
         "group_ids": sorted(group_ids),
-        "metrics": build_metrics_summary(
-            records,
-            class_order,
+        "metrics": (
+            compute_abstention_aware_metrics(records, class_order)
+            if abstention_aware
+            else build_metrics_summary(records, class_order)
         ),
     }
 
@@ -719,6 +978,7 @@ def build_method_evaluation_result(
         )
 
     copied_records = [dict(record) for record in records]
+    abstention_aware = method_id == "hybrid"
     partition_records = {
         name: [
             record
@@ -734,6 +994,7 @@ def build_method_evaluation_result(
             partition_records[name],
             partition_group_ids[name],
             class_order,
+            abstention_aware=abstention_aware,
         )
         for name in PARTITION_NAMES
     }
@@ -770,14 +1031,36 @@ def build_method_evaluation_result(
             "held_out_partition": "test",
             "test_use": "report_only",
             "overall_use": "descriptive_only",
+            **(
+                {
+                    "abstention_treatment": (
+                        "INCORRECT_ON_FULL_DENOMINATOR_AND_REPORTED_SEPARATELY"
+                    ),
+                    "reported_abstention_metrics": [
+                        "coverage",
+                        "abstention_count",
+                        "abstention_rate",
+                        "per_class_abstention_count",
+                    ],
+                }
+                if abstention_aware
+                else {}
+            ),
         },
         "partitions": partitions,
         "overall": {
             "use": "descriptive_only",
             "row_count": len(copied_records),
-            "metrics": build_metrics_summary(
-                copied_records,
-                class_order,
+            "metrics": (
+                compute_abstention_aware_metrics(
+                    copied_records,
+                    class_order,
+                )
+                if abstention_aware
+                else build_metrics_summary(
+                    copied_records,
+                    class_order,
+                )
             ),
         },
         "records": copied_records,

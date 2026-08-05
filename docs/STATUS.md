@@ -721,6 +721,42 @@ the accepted merge or split.
 - Full automated regression suite: 216/216 passed
 - P5-R0 closeout: completed
 
+## Latest P5-R1 verification
+
+- Decision: D-075, accepted and runtime-verified
+- Hybrid Engine: src/hybrid/engine.py
+- Hybrid Prediction schema:
+  schemas/hybrid_prediction_v1.schema.json
+- Hybrid Selection schema:
+  schemas/hybrid_selection_v1.schema.json
+- Runtime output: models/p5_r1_hybrid_policy_v1
+- Candidate predictions: 48/48 PASS
+- Candidate evaluations: 48/48 PASS
+- Candidate manifests: 2/2 PASS
+- Runtime JSON files: 99/99 PASS
+- Prediction partitions: train and validation only
+- Selection rows: six G01 validation rows only
+- Train/validation macro-F1: 1.0/1.0 for both candidates
+- Train/validation exact diagnosis: 1.0/1.0 for both candidates
+- Train/validation coverage: 1.0/1.0 for both candidates
+- Validation abstentions: 0 for both candidates
+- Selected candidate: consensus_abstain_v1
+- Selected complexity rank: 0
+- Selection SHA-256:
+  59abc80339658a30ab82019c847dbb7a1c9348bc4ca82ad7e1378f2f339a9507
+- Independent selected-policy verification: PASS
+- Policy and accepted baseline integrity: 6/6 SHA-256 PASS
+- Targeted tests: 14/14 passed
+- Full automated regression suite: 229/229 passed
+- Test/G02 hybrid predictions and metrics: absent
+- P5-R1 closeout: completed
+
+The identical development results do not establish that the selected
+candidate is empirically superior to rule_guarded_fallback_v1. The
+selection follows the frozen complexity tie-break. Hybrid test
+performance and the three-method comparison remain unknown until
+P5-R2.
+
 ## Open issues
 
 - Future cross-method comparison report after ML and hybrid exist
@@ -733,20 +769,19 @@ the accepted merge or split.
   campaign
 - Reproducible backup or publication policy for generated runtime
   datasets before final thesis archiving
-- Hybrid method implementation
-- Backwards-compatible hybrid evaluation/provenance implementation
+- P5-R2 hybrid report and cross-method comparison
 - OSPF implementation; its current status remains proposed
 
 ## Next milestone
 
-P5-R1 — Implement and select the frozen hybrid candidates.
+P5-R2 — Evaluate the frozen selected hybrid policy once on G02.
 
-Implement consensus_abstain_v1 and rule_guarded_fallback_v1 without
-changing D-074 or either accepted baseline. Generate candidate
-outputs only for train and validation, extend evaluation with the
-precommitted abstention semantics, select only on the G01 validation
-group by the frozen tie-break order, and persist and independently
-verify the selected-policy artifact before any G02 test access.
+Reverify the committed P5-R1 implementation, unchanged D-074 policy,
+five accepted baselines, and selected-policy SHA-256 before opening
+G02. Generate only consensus_abstain_v1 test predictions, produce the
+first complete hybrid Method Evaluation Result v1, and compare the
+three methods under the frozen protocol without refit, reselection,
+tuning, or policy changes.
 
 ## Important limitation
 
@@ -807,8 +842,10 @@ describe the same small controlled campaign: train has three contexts,
 while validation and test each have one. The classifier deliberately
 does not localize faults or affected prefixes, which yields 1/3 exact
 diagnosis and 0.0 affected-prefix correctness per partition. The
-hybrid policy is now precommitted but awaits local runtime
-verification. The Hybrid Engine has not been implemented and no
-hybrid candidate has been selected or evaluated, so no final cross-
-method or superiority claim is possible. Additional controlled
-variation and hybrid evaluation remain required.
+hybrid policy is precommitted and P5-R0 runtime-verified. P5-R1
+implemented both candidates and selected consensus_abstain_v1 only
+from G01 validation after an exact metric tie, using the frozen lower-
+complexity rule. G02 remains unobserved by the hybrid method, so no
+final cross-method, test-performance, or superiority claim is
+possible. Additional controlled variation and P5-R2 hybrid evaluation
+remain required.

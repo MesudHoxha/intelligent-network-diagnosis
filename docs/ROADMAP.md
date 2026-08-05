@@ -134,8 +134,17 @@ Status: In progress
 - Hybrid predictions, candidate selection, hybrid metrics, and G02
   access: absent in P5-R0
 - P5-R0 closeout and HANDOFF: completed
-- P5-R1 candidate implementation and validation-only selection:
-  pending
+- P5-R1 candidate implementation, Hybrid Prediction/Selection
+  schemas, abstention-aware evaluator, and independent verifier:
+  implemented and runtime-verified
+- P5-R1 validation-only run: 48 predictions, 48 evaluations, two
+  manifests, and 99 runtime JSON files; no test output
+- P5-R1 selected candidate: consensus_abstain_v1 by the frozen
+  complexity tie-break after equal train/validation metrics
+- P5-R1 selected-policy SHA-256 and independent freeze verification:
+  completed
+- P5-R1 tests: 14/14 targeted and 229/229 full regression passed
+- P5-R1 HANDOFF and closeout: completed
 - P5-R2 frozen-policy report-only evaluation: pending
 
 ## Phase 6 — Extended fault taxonomy

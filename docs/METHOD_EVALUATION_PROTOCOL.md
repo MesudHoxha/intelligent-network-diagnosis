@@ -357,3 +357,39 @@ change the current Method Evaluation Result v1 schema or runtime,
 generate a hybrid report, or access G02. A backwards-compatible
 schema/runtime extension must be implemented and tested before the
 first hybrid report. Existing D-069 and D-073 reports remain immutable.
+
+## 17. P5-R1 implemented hybrid evaluation boundary
+
+P5-R1 implements the previously frozen abstention semantics without
+producing the final three-partition hybrid report. The new
+compute_abstention_aware_metrics function keeps the complete
+supervised denominator, the existing three-class order, and a
+three-by-three matrix for resolved decisions. It additionally reports
+resolved_count, coverage, abstention count, abstention rate, and
+per-class abstention counts.
+
+Method Evaluation Result v1 now supports a method-specific hybrid
+branch. A future hybrid result must include:
+
+- hybrid_policy and hybrid_selection provenance;
+- the D-069 rule baseline;
+- the D-071 feature matrix;
+- the D-073 ML selection, estimator, and ML baseline;
+- seven hashed sample references; and
+- an explicit abstained boolean with a nullable predicted class.
+
+The rule-based and Machine Learning branches retain their original
+fields and five references. No accepted report is rewritten.
+
+P5-R1 used this evaluator only for train and validation candidate
+selection. The canonical run produced complete 24-row development
+evaluations for each candidate. Both candidates obtained 1.0
+full-denominator macro-F1, 1.0 exact diagnosis, 1.0 coverage, and zero
+validation abstentions; the precommitted complexity tie-break selected
+consensus_abstain_v1.
+
+The selection artifact was independently verified with SHA-256
+59abc80339658a30ab82019c847dbb7a1c9348bc4ca82ad7e1378f2f339a9507.
+No test prediction or metric was produced. G02 report-only evaluation
+remains reserved for P5-R2 and must use the frozen selected policy
+without reselection or tuning.

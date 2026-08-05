@@ -1,0 +1,328 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Hybrid Prediction v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "sample_id",
+    "method",
+    "implementation_id",
+    "candidate_id",
+    "status",
+    "diagnosis",
+    "decision",
+    "source_references",
+    "explanation",
+    "policy_binding",
+    "model_binding",
+    "limitations"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "sample_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "method": {
+      "const": "hybrid"
+    },
+    "implementation_id": {
+      "const": "deterministic_hybrid_engine_v1"
+    },
+    "candidate_id": {
+      "$ref": "#/$defs/candidate_id"
+    },
+    "status": {
+      "enum": [
+        "NO_FAULT_DETECTED",
+        "DIAGNOSIS_PRODUCED",
+        "ABSTAINED"
+      ]
+    },
+    "diagnosis": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/diagnosis"
+        }
+      ]
+    },
+    "decision": {
+      "$ref": "#/$defs/decision"
+    },
+    "source_references": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence",
+        "rule_prediction",
+        "ml_prediction"
+      ],
+      "properties": {
+        "evidence": {
+          "$ref": "#/$defs/artifact_reference"
+        },
+        "rule_prediction": {
+          "$ref": "#/$defs/artifact_reference"
+        },
+        "ml_prediction": {
+          "$ref": "#/$defs/artifact_reference"
+        }
+      }
+    },
+    "explanation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule",
+        "ml_model_explanation"
+      ],
+      "properties": {
+        "rule": {
+          "$ref": "#/$defs/rule_explanation"
+        },
+        "ml_model_explanation": {
+          "type": "object",
+          "minProperties": 3
+        }
+      }
+    },
+    "policy_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_id",
+        "policy_sha256",
+        "candidate_id",
+        "complexity_rank"
+      ],
+      "properties": {
+        "policy_id": {
+          "const": "p5_r0_hybrid_policy_v1"
+        },
+        "policy_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "candidate_id": {
+          "$ref": "#/$defs/candidate_id"
+        },
+        "complexity_rank": {
+          "enum": [0, 1]
+        }
+      }
+    },
+    "model_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pipeline_id",
+        "candidate_id",
+        "model_sha256"
+      ],
+      "properties": {
+        "pipeline_id": {
+          "const": "p4_r1_ml_pipeline_v1"
+        },
+        "candidate_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "model_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 2,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/non_empty_string"
+      }
+    }
+  },
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "artifact_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "candidate_id": {
+      "enum": [
+        "consensus_abstain_v1",
+        "rule_guarded_fallback_v1"
+      ]
+    },
+    "fault_type": {
+      "enum": [
+        "no_fault",
+        "missing_static_route",
+        "wrong_next_hop"
+      ]
+    },
+    "nullable_fault_type": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/fault_type"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "diagnosis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "category",
+        "fault_type",
+        "location",
+        "affected_prefix"
+      ],
+      "properties": {
+        "category": {
+          "const": "routing"
+        },
+        "fault_type": {
+          "enum": [
+            "missing_static_route",
+            "wrong_next_hop"
+          ]
+        },
+        "location": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "affected_prefix": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "observed_next_hop": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      }
+    },
+    "guard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "guard_id",
+        "passed"
+      ],
+      "properties": {
+        "guard_id": {
+          "enum": [
+            "rule_status_is_final",
+            "exactly_one_known_rule_matches_normalized_class",
+            "rule_support_score_equals_one_but_is_not_a_probability",
+            "contradicting_evidence_is_empty",
+            "fault_location_and_affected_prefix_are_non_empty_for_faults"
+          ]
+        },
+        "passed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reason",
+        "rule_class",
+        "ml_class",
+        "selected_class",
+        "guards"
+      ],
+      "properties": {
+        "reason": {
+          "enum": [
+            "CLASS_AGREEMENT",
+            "CLASS_DISAGREEMENT_ABSTAIN",
+            "RULE_GUARDED_FALLBACK",
+            "RULE_GUARDS_FAILED",
+            "NON_FINAL_INPUT"
+          ]
+        },
+        "rule_class": {
+          "$ref": "#/$defs/nullable_fault_type"
+        },
+        "ml_class": {
+          "$ref": "#/$defs/fault_type"
+        },
+        "selected_class": {
+          "$ref": "#/$defs/nullable_fault_type"
+        },
+        "guards": {
+          "type": "array",
+          "maxItems": 5,
+          "items": {
+            "$ref": "#/$defs/guard"
+          }
+        }
+      }
+    },
+    "rule_explanation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "matched_rules",
+        "rule_support_score",
+        "score_interpretation",
+        "supporting_evidence",
+        "contradicting_evidence"
+      ],
+      "properties": {
+        "matched_rules": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        "rule_support_score": {
+          "type": ["number", "null"]
+        },
+        "score_interpretation": {
+          "type": ["string", "null"]
+        },
+        "supporting_evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        "contradicting_evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        }
+      }
+    }
+  }
+}

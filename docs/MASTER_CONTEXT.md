@@ -673,3 +673,32 @@ created. D-074 and the P5-R0 policy-freeze milestone are therefore
 accepted. Phase 5 remains in progress; P5-R1 must implement both
 candidates and select only on validation without changing the frozen
 policy.
+
+P5-R1 implemented and runtime-verified the Hybrid Engine under D-075.
+Its prediction API contains no ground-truth, target, partition,
+correctness, evaluation, or metric input. The canonical run generated
+both frozen candidates for all 24 train/validation rows before the
+Evaluator read development ground truth, then computed
+full-denominator abstention metrics and selected only from G01
+validation summaries.
+
+The implementation adds strict Hybrid Prediction v1 and Hybrid
+Selection v1 schemas and a backwards-compatible hybrid extension to
+Method Evaluation Result v1. The future hybrid report will require
+seven hashed sample references, while the accepted D-069 and D-073
+five-reference reports remain valid and immutable.
+
+The canonical run produced 48 candidate predictions, 48 evaluations,
+two manifests, and 99 runtime JSON files, with no test output. Both
+candidates achieved 1.0 macro-F1, exact diagnosis, and coverage on
+train and validation with zero validation abstentions. The frozen
+complexity tie-break selected consensus_abstain_v1, complexity rank
+0. The selection SHA-256 is
+59abc80339658a30ab82019c847dbb7a1c9348bc4ca82ad7e1378f2f339a9507.
+
+The selected-policy freeze was independently verified, 14/14
+targeted and 229/229 regression tests passed, and the policy plus all
+five baselines remained unchanged. P5-R1 is closed. Phase 5 remains
+in progress because G02 is still unobserved by the hybrid method;
+P5-R2 alone may perform its one report-only evaluation after
+reverifying the committed implementation and selection artifact.

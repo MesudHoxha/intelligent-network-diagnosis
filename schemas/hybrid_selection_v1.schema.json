@@ -1,0 +1,365 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Hybrid Selection v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "selection_id",
+    "generated_at_utc",
+    "status",
+    "implementation_id",
+    "campaign_id",
+    "policy",
+    "baseline_bindings",
+    "partition_policy",
+    "candidate_order",
+    "metric_order",
+    "candidate_results",
+    "selected_candidate",
+    "leakage_audit",
+    "limitations"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "selection_id": {
+      "const": "p5_r1_hybrid_selection_v1"
+    },
+    "generated_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "const": "SELECTED_POLICY_FROZEN"
+    },
+    "implementation_id": {
+      "const": "deterministic_hybrid_engine_v1"
+    },
+    "campaign_id": {
+      "const": "P2_ROUTING_5CTX_V1"
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "policy_id"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "policy_id": {
+          "const": "p5_r0_hybrid_policy_v1"
+        }
+      }
+    },
+    "baseline_bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule_baseline",
+        "ml_feature_matrix",
+        "ml_selection",
+        "ml_model",
+        "ml_report"
+      ],
+      "properties": {
+        "rule_baseline": {
+          "$ref": "#/$defs/artifact_reference"
+        },
+        "ml_feature_matrix": {
+          "$ref": "#/$defs/artifact_reference"
+        },
+        "ml_selection": {
+          "$ref": "#/$defs/artifact_reference"
+        },
+        "ml_model": {
+          "$ref": "#/$defs/artifact_reference"
+        },
+        "ml_report": {
+          "$ref": "#/$defs/artifact_reference"
+        }
+      }
+    },
+    "partition_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "prediction_partitions",
+        "selection_partition",
+        "held_out_partition",
+        "test_use"
+      ],
+      "properties": {
+        "prediction_partitions": {
+          "const": ["train", "validation"]
+        },
+        "selection_partition": {
+          "const": "validation"
+        },
+        "held_out_partition": {
+          "const": "test"
+        },
+        "test_use": {
+          "const": "report_only_after_selected_policy_freeze"
+        }
+      }
+    },
+    "candidate_order": {
+      "const": [
+        "consensus_abstain_v1",
+        "rule_guarded_fallback_v1"
+      ]
+    },
+    "metric_order": {
+      "const": [
+        "macro_f1_full_denominator",
+        "exact_diagnosis_rate_full_denominator",
+        "coverage",
+        "complexity_rank",
+        "candidate_id"
+      ]
+    },
+    "candidate_results": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "$ref": "#/$defs/candidate_result"
+      }
+    },
+    "selected_candidate": {
+      "$ref": "#/$defs/selected_candidate"
+    },
+    "leakage_audit": {
+      "$ref": "#/$defs/leakage_audit"
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/non_empty_string"
+      }
+    }
+  },
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "rate": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "artifact_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "candidate_id": {
+      "enum": [
+        "consensus_abstain_v1",
+        "rule_guarded_fallback_v1"
+      ]
+    },
+    "per_class_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "no_fault",
+        "missing_static_route",
+        "wrong_next_hop"
+      ],
+      "properties": {
+        "no_fault": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "missing_static_route": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "wrong_next_hop": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "selection_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "row_count",
+        "macro_f1_full_denominator",
+        "accuracy_full_denominator",
+        "exact_diagnosis_rate_full_denominator",
+        "coverage",
+        "abstention_count",
+        "abstention_rate",
+        "per_class_abstention_count"
+      ],
+      "properties": {
+        "row_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "macro_f1_full_denominator": {
+          "$ref": "#/$defs/rate"
+        },
+        "accuracy_full_denominator": {
+          "$ref": "#/$defs/rate"
+        },
+        "exact_diagnosis_rate_full_denominator": {
+          "$ref": "#/$defs/rate"
+        },
+        "coverage": {
+          "$ref": "#/$defs/rate"
+        },
+        "abstention_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "abstention_rate": {
+          "$ref": "#/$defs/rate"
+        },
+        "per_class_abstention_count": {
+          "$ref": "#/$defs/per_class_counts"
+        }
+      }
+    },
+    "candidate_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_id",
+        "complexity_rank",
+        "train_metrics",
+        "validation_metrics",
+        "candidate_manifest"
+      ],
+      "properties": {
+        "candidate_id": {
+          "$ref": "#/$defs/candidate_id"
+        },
+        "complexity_rank": {
+          "enum": [0, 1]
+        },
+        "train_metrics": {
+          "$ref": "#/$defs/selection_metrics"
+        },
+        "validation_metrics": {
+          "$ref": "#/$defs/selection_metrics"
+        },
+        "candidate_manifest": {
+          "$ref": "#/$defs/artifact_reference"
+        }
+      }
+    },
+    "selected_candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_id",
+        "complexity_rank",
+        "selection_rank",
+        "selection_key"
+      ],
+      "properties": {
+        "candidate_id": {
+          "$ref": "#/$defs/candidate_id"
+        },
+        "complexity_rank": {
+          "enum": [0, 1]
+        },
+        "selection_rank": {
+          "const": 1
+        },
+        "selection_key": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "macro_f1_full_denominator",
+            "exact_diagnosis_rate_full_denominator",
+            "coverage"
+          ],
+          "properties": {
+            "macro_f1_full_denominator": {
+              "$ref": "#/$defs/rate"
+            },
+            "exact_diagnosis_rate_full_denominator": {
+              "$ref": "#/$defs/rate"
+            },
+            "coverage": {
+              "$ref": "#/$defs/rate"
+            }
+          }
+        }
+      }
+    },
+    "leakage_audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ground_truth_reader",
+        "ground_truth_read_after_all_candidate_predictions",
+        "test_prediction_artifacts_read",
+        "test_ground_truth_read",
+        "test_predictions_generated",
+        "test_metrics_generated",
+        "test_influenced_selection",
+        "rule_or_ml_output_overwritten",
+        "model_refit_performed"
+      ],
+      "properties": {
+        "ground_truth_reader": {
+          "const": "evaluator_only"
+        },
+        "ground_truth_read_after_all_candidate_predictions": {
+          "const": true
+        },
+        "test_prediction_artifacts_read": {
+          "const": false
+        },
+        "test_ground_truth_read": {
+          "const": false
+        },
+        "test_predictions_generated": {
+          "const": false
+        },
+        "test_metrics_generated": {
+          "const": false
+        },
+        "test_influenced_selection": {
+          "const": false
+        },
+        "rule_or_ml_output_overwritten": {
+          "const": false
+        },
+        "model_refit_performed": {
+          "const": false
+        }
+      }
+    }
+  }
+}

@@ -276,3 +276,41 @@ This evidence closes P5-R0 as a policy-freeze milestone. It does not
 implement either candidate or establish hybrid performance. P5-R1
 must preserve this policy byte-for-byte while implementing both
 candidates and selecting only on validation.
+
+## 14. P5-R1 implementation boundary
+
+The P5-R1 implementation preserves the policy bytes and canonical
+SHA-256. Hybrid prediction is separated from ground-truth evaluation:
+
+1. verify the policy and five accepted baseline hashes;
+2. bind only the 18 train and six validation source predictions;
+3. generate both candidates for all 24 samples;
+4. only then allow the Evaluator to read development ground truth;
+5. compute the frozen abstention-aware metrics;
+6. select only from G01 validation summaries; and
+7. atomically persist and independently verify selection.json.
+
+The runtime directory is models/p5_r1_hybrid_policy_v1. It contains
+two candidate manifests, 48 immutable candidate predictions, 48
+per-sample evaluations, and one selected-policy artifact. It must not
+contain a test partition or any G02 hybrid output.
+
+Hybrid Prediction v1 retains the three source references, the rule
+and ML explanation forms, the policy/candidate binding, the ML model
+binding, the decision reason, and all five guard outcomes when the
+guarded fallback is evaluated. Integrity drift fails before output;
+it never becomes abstention.
+
+The canonical P5-R1 execution and independent verification succeeded
+without changing this policy. Both candidates produced 1.0
+full-denominator macro-F1, 1.0 exact diagnosis, and 1.0 coverage on
+train and validation, with zero validation abstentions. The frozen
+tie-break selected consensus_abstain_v1 by complexity rank 0.
+
+The selected-policy SHA-256 is
+59abc80339658a30ab82019c847dbb7a1c9348bc4ca82ad7e1378f2f339a9507.
+All 48 predictions, 48 evaluations, two manifests, and 99 runtime JSON
+files are limited to train and validation. G02 remains closed until
+P5-R2 independently rebinds the committed implementation, this
+policy, the selected-policy artifact, and the five accepted
+baselines.

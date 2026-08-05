@@ -82,6 +82,129 @@
       }
     }
   },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "method": {
+            "type": "object",
+            "properties": {
+              "method_id": {
+                "const": "hybrid"
+              }
+            },
+            "required": ["method_id"]
+          }
+        },
+        "required": ["method"]
+      },
+      "then": {
+        "properties": {
+          "provenance": {
+            "type": "object",
+            "required": [
+              "campaign_result",
+              "split_manifest",
+              "rule_baseline",
+              "feature_matrix",
+              "selection_result",
+              "model_artifact",
+              "ml_baseline",
+              "hybrid_policy",
+              "hybrid_selection",
+              "input_record_count",
+              "artifact_reference_count"
+            ]
+          },
+          "evaluation_policy": {
+            "type": "object",
+            "required": [
+              "abstention_treatment",
+              "reported_abstention_metrics"
+            ]
+          },
+          "partitions": {
+            "type": "object",
+            "properties": {
+              "train": {
+                "type": "object",
+                "properties": {
+                  "metrics": {
+                    "type": "object",
+                    "required": ["abstention"]
+                  }
+                }
+              },
+              "validation": {
+                "type": "object",
+                "properties": {
+                  "metrics": {
+                    "type": "object",
+                    "required": ["abstention"]
+                  }
+                }
+              },
+              "test": {
+                "type": "object",
+                "properties": {
+                  "metrics": {
+                    "type": "object",
+                    "required": ["abstention"]
+                  }
+                }
+              }
+            }
+          },
+          "overall": {
+            "type": "object",
+            "properties": {
+              "metrics": {
+                "type": "object",
+                "required": ["abstention"]
+              }
+            }
+          },
+          "records": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["abstained"],
+              "properties": {
+                "artifacts": {
+                  "type": "object",
+                  "required": [
+                    "experiment_manifest",
+                    "ground_truth",
+                    "evidence",
+                    "rule_prediction",
+                    "ml_prediction",
+                    "hybrid_prediction",
+                    "evaluation"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "records": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "artifacts": {
+                  "type": "object",
+                  "required": ["prediction"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
   "$defs": {
     "non_empty_string": {
       "type": "string",
@@ -320,6 +443,17 @@
             "selection_result",
             "model_artifact"
           ]
+        },
+        {
+          "required": [
+            "rule_baseline",
+            "feature_matrix",
+            "selection_result",
+            "model_artifact",
+            "ml_baseline",
+            "hybrid_policy",
+            "hybrid_selection"
+          ]
         }
       ],
       "properties": {
@@ -336,6 +470,18 @@
           "$ref": "#/$defs/artifact_reference"
         },
         "model_artifact": {
+          "$ref": "#/$defs/artifact_reference"
+        },
+        "rule_baseline": {
+          "$ref": "#/$defs/artifact_reference"
+        },
+        "ml_baseline": {
+          "$ref": "#/$defs/artifact_reference"
+        },
+        "hybrid_policy": {
+          "$ref": "#/$defs/artifact_reference"
+        },
+        "hybrid_selection": {
           "$ref": "#/$defs/artifact_reference"
         },
         "split_manifest": {
@@ -408,6 +554,17 @@
         },
         "overall_use": {
           "const": "descriptive_only"
+        },
+        "abstention_treatment": {
+          "const": "INCORRECT_ON_FULL_DENOMINATOR_AND_REPORTED_SEPARATELY"
+        },
+        "reported_abstention_metrics": {
+          "const": [
+            "coverage",
+            "abstention_count",
+            "abstention_rate",
+            "per_class_abstention_count"
+          ]
         }
       }
     },
@@ -470,6 +627,10 @@
       ],
       "properties": {
         "sample_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "resolved_count": {
           "type": "integer",
           "minimum": 0
         },
@@ -612,6 +773,54 @@
               "$ref": "#/$defs/diagnostic_check"
             }
           }
+        },
+        "abstention": {
+          "$ref": "#/$defs/abstention_metrics"
+        }
+      }
+    },
+    "abstention_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "coverage",
+        "abstention_count",
+        "abstention_rate",
+        "per_class_abstention_count"
+      ],
+      "properties": {
+        "coverage": {
+          "$ref": "#/$defs/rate"
+        },
+        "abstention_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "abstention_rate": {
+          "$ref": "#/$defs/rate"
+        },
+        "per_class_abstention_count": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "no_fault",
+            "missing_static_route",
+            "wrong_next_hop"
+          ],
+          "properties": {
+            "no_fault": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "missing_static_route": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "wrong_next_hop": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
         }
       }
     },
@@ -707,7 +916,17 @@
           "$ref": "#/$defs/fault_type"
         },
         "predicted_fault_type": {
-          "$ref": "#/$defs/fault_type"
+          "oneOf": [
+            {
+              "$ref": "#/$defs/fault_type"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "abstained": {
+          "type": "boolean"
         },
         "classification_correct": {
           "type": "boolean"
@@ -725,7 +944,6 @@
             "experiment_manifest",
             "ground_truth",
             "evidence",
-            "prediction",
             "evaluation"
           ],
           "properties": {
@@ -739,6 +957,15 @@
               "$ref": "#/$defs/artifact_reference"
             },
             "prediction": {
+              "$ref": "#/$defs/artifact_reference"
+            },
+            "rule_prediction": {
+              "$ref": "#/$defs/artifact_reference"
+            },
+            "ml_prediction": {
+              "$ref": "#/$defs/artifact_reference"
+            },
+            "hybrid_prediction": {
               "$ref": "#/$defs/artifact_reference"
             },
             "evaluation": {

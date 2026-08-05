@@ -426,7 +426,6 @@ def test_generic_contract_accepts_future_method_ids(
     for method_id, family, trained in (
         ("rule_based", "traditional", False),
         ("machine_learning", "machine_learning", True),
-        ("hybrid", "hybrid", True),
     ):
         result = build_method_evaluation_result(
             result_id=f"result_{method_id}",
@@ -454,6 +453,56 @@ def test_generic_contract_accepts_future_method_ids(
         assert result["evaluation_policy"][
             "primary_metric"
         ] == "macro_f1"
+
+    hybrid_records = []
+    for record in baseline["records"]:
+        changed = deepcopy(record)
+        changed["abstained"] = False
+        prediction_reference = changed["artifacts"].pop(
+            "prediction"
+        )
+        changed["artifacts"].update({
+            "rule_prediction": prediction_reference,
+            "ml_prediction": prediction_reference,
+            "hybrid_prediction": prediction_reference,
+        })
+        hybrid_records.append(changed)
+    hybrid_provenance = deepcopy(baseline["provenance"])
+    shared_reference = hybrid_provenance["campaign_result"]
+    hybrid_provenance.update({
+        "rule_baseline": shared_reference,
+        "feature_matrix": shared_reference,
+        "selection_result": shared_reference,
+        "model_artifact": shared_reference,
+        "ml_baseline": shared_reference,
+        "hybrid_policy": shared_reference,
+        "hybrid_selection": shared_reference,
+        "artifact_reference_count": len(hybrid_records) * 7,
+    })
+    hybrid_result = build_method_evaluation_result(
+        result_id="result_hybrid",
+        method={
+            "method_id": "hybrid",
+            "family": "hybrid",
+            "implementation_id": "hybrid_v1",
+            "trained": True,
+            "selection_statement": "Synthetic hybrid contract test.",
+        },
+        dataset_binding=baseline["dataset_binding"],
+        provenance=hybrid_provenance,
+        records=hybrid_records,
+        partition_group_ids={
+            name: baseline["partitions"][name]["group_ids"]
+            for name in PARTITION_NAMES
+        },
+        generated_at_utc="2026-08-05T08:00:00+00:00",
+    )
+    assert hybrid_result["evaluation_policy"][
+        "abstention_treatment"
+    ] == "INCORRECT_ON_FULL_DENOMINATOR_AND_REPORTED_SEPARATELY"
+    assert hybrid_result["overall"]["metrics"]["abstention"][
+        "coverage"
+    ] == 1.0
 
 
 def test_rejects_test_partition_as_selection_input(
