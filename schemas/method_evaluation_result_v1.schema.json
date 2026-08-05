@@ -306,16 +306,36 @@
       "additionalProperties": false,
       "required": [
         "campaign_result",
-        "rule_audit",
         "split_manifest",
         "input_record_count",
         "artifact_reference_count"
+      ],
+      "anyOf": [
+        {
+          "required": ["rule_audit"]
+        },
+        {
+          "required": [
+            "feature_matrix",
+            "selection_result",
+            "model_artifact"
+          ]
+        }
       ],
       "properties": {
         "campaign_result": {
           "$ref": "#/$defs/artifact_reference"
         },
         "rule_audit": {
+          "$ref": "#/$defs/artifact_reference"
+        },
+        "feature_matrix": {
+          "$ref": "#/$defs/artifact_reference"
+        },
+        "selection_result": {
+          "$ref": "#/$defs/artifact_reference"
+        },
+        "model_artifact": {
           "$ref": "#/$defs/artifact_reference"
         },
         "split_manifest": {

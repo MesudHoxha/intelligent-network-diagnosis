@@ -1187,3 +1187,118 @@ not Machine Learning performance. The accepted matrix contains only
 30 controlled rows from five contexts and three classes. It does not
 establish model selection, test performance, generalization, hybrid
 behavior, or superiority over the D-069 rule-based baseline.
+
+## D-072 — Frozen ML pipeline and one-time report gate
+
+Decision: Implement P4-R1 as two ordered, fail-stop stages over the
+accepted D-071 feature matrix.
+
+The selection stage must instantiate exactly the six D-070
+candidates, fit each candidate once on the 18 train rows, calculate
+candidate metrics only for train and validation, apply the frozen
+validation macro-F1, validation accuracy, complexity-rank, and
+candidate-ID order, and serialize the selected train-only estimator.
+It must persist ML Pipeline Selection v1 with the selected candidate,
+all six train/validation summaries, feature and sample bindings,
+software versions, model SHA-256, and explicit evidence that no test
+prediction or metric was produced.
+
+The report stage is a separate command. It may access G02 test only
+after independently revalidating the accepted matrix, selection JSON
+Schema, selected-candidate order, reproduced train/validation
+predictions, fitted train-sample binding, selection SHA-256, and model
+SHA-256. It must not refit the estimator or change preprocessing,
+candidates, thresholds, or selection policy.
+
+The independent ML baseline predicts fault_type. Every prediction
+also records the seven decoded evidence states and a model-specific
+explanation: linear feature contributions for logistic regression or
+the decision path for a tree. It does not infer fault_location or
+affected_prefix. Those fields remain null for predicted faults, so
+the existing full-diagnosis and affected-prefix checks expose this
+limitation instead of granting correctness from ground truth or
+metadata.
+
+Method Evaluation Result v1 remains the shared result contract. Its
+provenance definition is extended backwards-compatibly because the
+original JSON Schema required a rule_audit artifact even for the
+future Machine Learning and hybrid method identifiers. Existing
+rule-based reports retain rule_audit. Machine Learning reports instead
+must bind the feature matrix, selection result, and model artifact;
+the common campaign, split, per-sample five-artifact, metric, and test
+policies remain unchanged.
+
+The implementation uses local open-source scikit-learn and joblib.
+The supported scikit-learn range is frozen to >=1.5,<1.8 for the
+precommitted LogisticRegression and DecisionTreeClassifier APIs.
+
+Status: Approved, implemented, and runtime-verified. Ten targeted
+tests and the complete 205-test regression suite passed. The real
+D-071 execution satisfied the freeze and report gates without refit;
+D-073 records the accepted candidate, metrics, and artifact hashes.
+
+Limitation:
+
+The two-stage gate prevents test-guided selection and fabricated
+localization, but it cannot make the 18-row train partition, one-
+context validation partition, or one-context test partition
+statistically representative. The successful P4-R1 execution is a
+controlled baseline, not evidence of real-world generalization or
+method superiority.
+
+## D-073 — First accepted independent Machine Learning baseline
+
+Decision: Accept the real P4-R1 train-only pipeline, validation-only
+selection, and one-time report-only G02 evaluation as the first
+independent Machine Learning baseline for the frozen D-067 campaign.
+
+The six D-070 candidates were fitted only on the 18 train rows. Three
+logistic-regression candidates and two of the three decision-tree
+candidates reached validation macro-F1 and accuracy of 1.0. The
+precommitted complexity and candidate-ID tie-breakers selected
+logreg_l2_c0_1, a multinomial logistic-regression estimator with
+L2 regularization and C=0.1. The fitted estimator was not refitted on
+validation or test.
+
+The accepted frozen artifacts are:
+
+- ML Pipeline Selection v1 SHA-256:
+  a02536d6f2478d9fdc40510275dd3b48a2824ee7b1f0fa08c1aed472611fb6fb;
+- selected estimator SHA-256:
+  90db38e625f4bcf6a234b6a0516371b76f98e01b4437f684ffea119cbc09cdb2;
+  and
+- Method Evaluation Result v1 SHA-256:
+  8fc6e77e5008cd7cc74e5ce130b901ed750afab9a35eb62652ff55f9205b0e92.
+
+The accepted report contains 30 records and preserves the 18/6/6-row
+and 3/1/1-group partition allocation. Train, validation, and test each
+report fault_type accuracy 1.0 and macro-F1 1.0. Every one of the 150
+source-artifact references passed SHA-256 verification, all 30 ML
+predictions contain evidence-bearing model explanations, and the G02
+partition remained report_only.
+
+The independent classifier does not infer fault_location or
+affected_prefix. Consequently, each partition reports full-diagnosis
+exact-match rate 1/3 and fault-only affected-prefix correctness 0.0.
+These values are accepted as an explicit scope boundary rather than
+repaired from labels, metadata, or rule output. They establish the
+technical motivation for the future hybrid method, which may combine
+independent ML fault classification with evidence-based rule
+localization only under a separately frozen policy.
+
+Status: Implemented, executed, and independently verified on
+2026-08-05. Ten targeted tests and the complete 205-test regression
+suite passed before the real run. The recovery step corrected only the
+experiments root from reports/experiments to the canonical data/raw;
+it reverified the already frozen pipeline and did not refit the model.
+
+Limitation:
+
+The perfect fault_type classification values describe 30 controlled
+rows from five complete contexts and three known classes. Validation
+and test each contain only one context. D-073 does not establish
+real-world generalization, statistical superiority over D-069, robust
+probability calibration, unseen-topology behavior, or hybrid
+performance. Cross-method claims remain blocked until the hybrid
+method is precommitted, implemented, and evaluated under the same
+frozen protocol.

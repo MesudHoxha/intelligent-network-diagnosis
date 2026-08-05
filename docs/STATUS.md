@@ -2,7 +2,7 @@
 
 ## Current phase
 
-Phase 4 — Machine Learning baseline
+Phase 5 — Hybrid diagnosis
 
 ## Implemented and tested
 
@@ -175,6 +175,22 @@ Phase 4 — Machine Learning baseline
 - P4-R0 predictor-leakage audit passed with G02 test report_only
 - P4-R0 targeted tests: 10/10 passed
 - Full automated regression suite: 195/195 passed
+- ML Pipeline Selection v1 runtime validator and JSON Schema
+- Exact six-candidate scikit-learn estimator factory
+- Train-only fitting and validation-only deterministic selection
+- Atomic selected-model and selection-result pipeline freeze
+- Fitted train-sample, feature-order, candidate-order, software, and
+  artifact-hash bindings
+- Independent freeze verification before any test prediction
+- ML prediction artifacts with seven decoded evidence states
+- Logistic feature-contribution and tree decision-path explanations
+- Explicit class-only boundary with no invented location or prefix
+- Backwards-compatible Method Evaluation Result v1 ML provenance
+- Atomic 30-record ML report builder with 150 artifact references
+- Negative gates for test access, matrix/model/selection drift,
+  existing outputs, and non-frozen report execution
+- P4-R1 targeted synthetic tests: 10/10 passed
+- Full automated regression suite: 205/205 passed
 
 ## Representative verified experiments
 
@@ -592,19 +608,72 @@ the accepted merge or split.
 - Targeted tests: 10/10 passed
 - Full automated suite: 195/195 passed
 - Interpretation: P4-R0 is closed as an input-integrity milestone;
-  no ML performance or generalization result exists yet
+  at that closeout point no ML performance result existed
 
 ## Active
 
 - Preserve the accepted campaign run, dataset hash, split seed,
   group identifiers, ratios, and partition allocation.
-- Implement the six frozen D-070 candidates against the accepted
-  D-071 matrix without changing preprocessing or partitions.
-- Fit every candidate only on train and select only from validation
-  macro F1, accuracy, complexity rank, and candidate ID.
-- Persist and verify the winning train-only pipeline before opening
-  G02 test for its single report-only evaluation.
-- Emit and validate Method Evaluation Result v1 for the ML method.
+- Preserve D-069 as the accepted independent rule-based baseline and
+  D-073 as the accepted independent ML baseline.
+- Define a bounded, interpretable hybrid input and decision contract
+  before implementing or evaluating the hybrid method.
+- Keep G02 test report_only and prohibit test-guided hybrid policy,
+  threshold, fallback, or explanation design.
+- Specify deterministic disagreement, abstention, localization, and
+  provenance behavior without changing either accepted baseline.
+
+## Latest P4-R1 verification
+
+- Decisions: D-072 and D-073
+- Runtime implementation: src/ml/baseline.py
+- Selection contract: ML Pipeline Selection v1
+- Selection schema: schemas/ml_pipeline_selection_v1.schema.json
+- Open-source dependencies: scikit-learn >=1.5,<1.8 and
+  joblib >=1.4,<2
+- Frozen candidate implementations: 6/6
+- Fit partition: train only
+- Selection partition: validation only
+- Pipeline refit on train plus validation: forbidden
+- Test predictions and metrics in selection artifact: forbidden
+- Report gate: accepted matrix plus selection/model hash verification
+- Prediction explanation: evidence states plus linear contributions
+  or tree path
+- Predicted fault localization/prefix: intentionally absent
+- Method Evaluation Result v1 provenance extension: backwards
+  compatible with D-069
+- Selected candidate: logreg_l2_c0_1
+- Selected family: multinomial_logistic_regression
+- Candidate fit partition: 18 train rows in 3 groups
+- Selection partition: 6 validation rows in 1 group
+- Selection validation accuracy / macro-F1: 1.0 / 1.0
+- Selection SHA-256:
+  a02536d6f2478d9fdc40510275dd3b48a2824ee7b1f0fa08c1aed472611fb6fb
+- Model SHA-256:
+  90db38e625f4bcf6a234b6a0516371b76f98e01b4437f684ffea119cbc09cdb2
+- Pipeline freeze before test: PASS
+- Report ID: p4_r1_ml_baseline_v1
+- Report path:
+  reports/experiments/p4_r1_ml_baseline_v1/
+  method_evaluation_result.json
+- Report SHA-256:
+  8fc6e77e5008cd7cc74e5ce130b901ed750afab9a35eb62652ff55f9205b0e92
+- Report rows: 30
+- Partition rows: 18/6/6
+- Partition groups: 3/1/1
+- Train/validation/test accuracy: 1.0/1.0/1.0
+- Train/validation/test macro-F1: 1.0/1.0/1.0
+- Exact-diagnosis rate: 1/3 in each partition
+- Fault-only affected-prefix rate: 0.0 in each partition
+- Evidence/model explanations: 30/30 PASS
+- Source-artifact references: 150/150 SHA-256 PASS
+- Test use: report_only PASS
+- Model refit during report/recovery: ABSENT
+- Targeted tests: 10/10 passed
+- Full automated regression suite: 205/205 passed
+- Interpretation: P4-R1 and Phase 4 are closed for the frozen
+  controlled campaign; perfect class metrics do not establish
+  real-world generalization or superiority
 
 ## Open issues
 
@@ -618,21 +687,21 @@ the accepted merge or split.
   campaign
 - Reproducible backup or publication policy for generated runtime
   datasets before final thesis archiving
-- Machine Learning method implementation
 - Hybrid method implementation
+- Hybrid policy and provenance contract
 - OSPF implementation; its current status remains proposed
 
 ## Next milestone
 
-P4-R1 — Train, Select, Freeze, and Report the ML Baseline.
+P5-R0 — Freeze the Hybrid Diagnosis Policy.
 
-Consume only the accepted D-071 matrix. Fit the six frozen candidates
-on train, calculate selection metrics only on validation, apply the
-precommitted deterministic tie-breakers, and persist the winning
-train-only pipeline. Only after its identity and artifact hash are
-frozen may G02 test be evaluated once as report_only. Emit the ML
-Method Evaluation Result v1 without changing the feature contract,
-candidate set, split, or test policy. Stop before hybrid-policy design.
+Define the hybrid input, decision, disagreement, abstention,
+localization, explanation, provenance, and evaluation contracts over
+the accepted D-069 and D-073 baselines. Precommit any bounded policy
+alternatives and validation-only selection order before hybrid
+implementation. Preserve the D-067 campaign, D-058 split, D-069 rule
+report, D-071 matrix, and D-073 frozen ML pipeline. Do not open G02,
+emit a hybrid metric, or change either independent baseline in P5-R0.
 
 ## Important limitation
 
@@ -679,13 +748,20 @@ context groups with no cross-partition leakage.
 P3-R0 produced the first accepted traditional baseline through the
 formal comparable evaluation protocol. Its perfect values are
 descriptive results for the frozen known campaign, not general
-diagnostic accuracy. The project has not yet implemented or evaluated
-the Machine Learning and hybrid methods, so no cross-method comparison
-or superiority claim is possible. Additional controlled variation,
-ML implementation, and hybrid evaluation remain required.
+diagnostic accuracy.
 
 P4-R0 produced the accepted deterministic feature matrix without
 fitting or evaluating a model. Its successful leakage and provenance
 audits establish only that the frozen D-067 inputs were transformed
 according to D-070. They do not establish ML accuracy, validation or
 test performance, generalization, or a comparison with D-069.
+
+P4-R1 produced the first accepted independent Machine Learning
+baseline. Its 1.0 fault_type accuracy and macro-F1 in every partition
+describe the same small controlled campaign: train has three contexts,
+while validation and test each have one. The classifier deliberately
+does not localize faults or affected prefixes, which yields 1/3 exact
+diagnosis and 0.0 affected-prefix correctness per partition. The
+hybrid method has not yet been designed or evaluated, so no final
+cross-method or superiority claim is possible. Additional controlled
+variation and hybrid evaluation remain required.

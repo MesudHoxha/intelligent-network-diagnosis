@@ -535,8 +535,8 @@ D-069 accepts this as the traditional baseline and closes P3-R0.
 These perfect controlled-campaign values mainly confirm that the
 existing deterministic rules cover the same known fault semantics.
 They do not establish real-world generalization or superiority. The
-Machine Learning and hybrid diagnostic approaches have not yet been
-implemented or evaluated.
+independent Machine Learning approach was implemented and accepted
+later in D-073; the hybrid approach remains unimplemented.
 
 P4-R0 freezes the leakage-safe pre-fit Machine Learning boundary.
 The target remains fault_type, and only the seven ordered Dataset Row
@@ -573,7 +573,60 @@ reports/experiments/p4_r0_ml_feature_matrix_v1.json. Its SHA-256 is
 D-071 accepts the deterministic pre-fit input and closes P4-R0. Ten
 targeted tests and the complete 195-test regression suite pass.
 
-No Machine Learning model has been fitted, selected, or evaluated.
-The accepted matrix proves input and partition integrity only; it is
-not evidence of ML performance, generalization, hybrid behavior, or
-superiority over the rule-based baseline.
+P4-R1 is implemented as a two-command freeze boundary. The first
+command consumes only train and validation records, fits the six
+precommitted candidates, selects by the D-070 order, and atomically
+persists the selected train-only estimator plus ML Pipeline Selection
+v1. That artifact contains no test prediction or metric. A separate
+report command refuses to open G02 until the matrix, selection order,
+reproduced train/validation behavior, fitted-sample binding, and both
+selection/model hashes pass verification.
+
+The ML implementation uses local open-source scikit-learn and joblib.
+Its model inputs remain exactly the 14 D-071 binary columns. It does
+not fit on validation, refit on train plus validation, or use test for
+selection.
+
+The independent ML prediction contract reports fault_type, all seven
+decoded evidence states, and either linear feature contributions or a
+tree decision path. It deliberately leaves fault_location and
+affected_prefix unset. Method Evaluation Result v1 therefore keeps
+classification metrics separate from full-diagnosis and prefix
+metrics and does not manufacture localization correctness.
+
+The shared result schema now accepts method-specific provenance
+without invalidating D-069: rule-based results retain rule_audit,
+whereas Machine Learning results must bind their feature matrix,
+selection result, and fitted-model artifact.
+
+The real P4-R1 run completed on 2026-08-05. All six candidates fitted
+only on the 18 train rows, selection used only the six validation
+rows, and the frozen tie-break order selected logreg_l2_c0_1. The
+selected estimator remained train-only. Its selection SHA-256 is
+a02536d6f2478d9fdc40510275dd3b48a2824ee7b1f0fa08c1aed472611fb6fb
+and its model SHA-256 is
+90db38e625f4bcf6a234b6a0516371b76f98e01b4437f684ffea119cbc09cdb2.
+
+Only after those hashes and all 90 canonical data/raw source artifacts
+were reverified did the report stage open G02 once. The resulting
+p4_r1_ml_baseline_v1 Method Evaluation Result contains 30 rows,
+preserves the 18/6/6-row and 3/1/1-group split, and verifies all 150
+source-artifact references. Train, validation, and report-only test
+each have fault_type accuracy 1.0 and macro F1 1.0. Every prediction
+has a local evidence/model explanation.
+
+Because the independent ML baseline does not infer fault_location or
+affected_prefix, each partition has exact-diagnosis match 1/3 and
+affected-prefix correctness 0.0. These lower structured-diagnosis
+metrics are retained rather than filled from ground truth or rules.
+The report SHA-256 is
+8fc6e77e5008cd7cc74e5ce130b901ed750afab9a35eb62652ff55f9205b0e92.
+D-073 accepts this controlled independent ML baseline and closes
+Phase 4.
+
+The perfect fault_type values do not establish real-world
+generalization or superiority over the D-069 rule-based method. The
+dataset has only 30 controlled rows, and validation and test each
+contain one context. The hybrid method remains unimplemented and must
+be precommitted before any hybrid result or cross-method conclusion is
+accepted.

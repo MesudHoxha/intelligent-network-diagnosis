@@ -4,10 +4,12 @@ version = "0.1.0"
 description = "Hybrid intelligent system for diagnosing computer network problems"
 requires-python = ">=3.12"
 dependencies = [
+    "joblib>=1.4,<2",
     "pydantic",
     "pyyaml",
     "rich",
     "jsonschema>=4.18,<5",
+    "scikit-learn>=1.5,<1.8",
 ]
 
 [tool.pytest.ini_options]

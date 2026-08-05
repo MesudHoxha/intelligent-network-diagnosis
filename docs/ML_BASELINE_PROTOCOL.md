@@ -1,7 +1,7 @@
 # Leakage-Safe Machine Learning Baseline Protocol v1
 
 Date: 2026-08-05
-Status: COMPLETED; REAL P4-R0 FEATURE MATRIX ACCEPTED
+Status: COMPLETED; REAL P4-R1 ML BASELINE ACCEPTED
 
 ## 1. Purpose
 
@@ -260,3 +260,138 @@ This result closes P4-R0 and accepts the deterministic input boundary
 for the first ML baseline. It is not an ML performance result and
 does not establish model quality, generalization, hybrid behavior, or
 superiority over the D-069 rule-based baseline.
+
+## 14. P4-R1 pipeline-freeze contract
+
+P4-R1 is split into two ordered runtime stages:
+
+1. train, select, and freeze; and
+2. verify the freeze, then produce the report-only evaluation.
+
+The first stage may materialize only train and validation predictor
+arrays. It fits each of the six frozen candidates on train, produces
+train and validation predictions, applies the selection order from
+Section 8, and serializes only the selected train-only estimator. It
+does not request test records for prediction or metrics.
+
+The atomic pipeline directory contains:
+
+- estimator.joblib; and
+- selection.json under ML Pipeline Selection v1.
+
+The selection artifact binds the accepted matrix path and SHA-256,
+all six candidate identities and train/validation summaries, selected
+candidate, train and validation group/sample hashes, 14 feature names,
+class order, software versions, model SHA-256, and the no-test/no-
+refit audit. Existing output is never overwritten.
+
+## 15. Test-opening gate
+
+The report stage must independently verify all of the following before
+requesting one test prediction:
+
+- accepted D-071 matrix identity and SHA-256;
+- ML Pipeline Selection v1 runtime and JSON Schema;
+- exact six-candidate order and parameters;
+- deterministic winning-candidate tie-break result;
+- reproduced selected-model train and validation predictions;
+- exact 18-row train sample-set binding;
+- 14-column feature and three-class order;
+- selection-result SHA-256;
+- estimator SHA-256; and
+- no validation fit, train-plus-validation refit, test prediction, or
+  test metric in the freeze artifact.
+
+Only after this gate passes may the selected already-fitted estimator
+predict G02 once for Method Evaluation Result v1. The report command
+does not call fit and cannot change a candidate, threshold, feature,
+or partition role.
+
+## 16. ML prediction and explanation boundary
+
+The independent ML baseline predicts fault_type only. It emits the
+seven decoded tri-state evidence values plus a model-specific local
+explanation:
+
+- predicted-class feature contributions for logistic regression; or
+- the traversed decision path for a decision tree.
+
+It does not use labels, metadata, ground truth, rule outputs, or
+evaluation results to create the prediction. Ground truth is opened
+only after the prediction document exists in memory, for evaluation.
+
+The baseline does not infer fault_location or affected_prefix. For a
+predicted fault, both values remain null. This means a correct class
+prediction can still fail full-diagnosis exact match and fault-only
+affected-prefix correctness. That separation is intentional: P4-R1
+must expose the independent classifier's scope rather than copy
+ground truth or rule localization. Hybrid policy design remains out
+of scope.
+
+## 17. Backwards-compatible evaluation provenance
+
+The original Method Evaluation Result v1 JSON Schema required
+rule_audit provenance even though the same contract already declared
+machine_learning and hybrid method identifiers. P4-R1 generalizes
+only this provenance branch:
+
+- the accepted D-069 rule report remains valid with rule_audit; and
+- an ML report must instead bind feature_matrix, selection_result,
+  and model_artifact.
+
+Campaign, split, partition, metric, record, five-artifact-per-sample,
+report-only test, and descriptive-only overall semantics are
+unchanged.
+
+## 18. Local open-source dependency boundary
+
+P4-R1 uses scikit-learn and joblib locally. The project dependency
+range is scikit-learn >=1.5,<1.8 and joblib >=1.4,<2. No paid API,
+cloud service, external dataset, or remote inference is required.
+Every accepted runtime selection records the exact Python,
+scikit-learn, NumPy, and joblib versions.
+
+## 19. P4-R1 implementation status
+
+The two-stage implementation, ML Pipeline Selection v1 JSON Schema,
+strict output and hash gates, ML explanation output, and comparable
+report adapter are implemented. Ten targeted synthetic tests pass.
+The complete regression suite passes 205/205.
+
+The implementation was executed against the real accepted D-071
+matrix on 2026-08-05. All six candidates fitted only on train, and
+selection used only validation. The precommitted ordering selected
+logreg_l2_c0_1. The serialized train-only estimator and selection
+artifact were frozen before any test prediction or metric existed.
+
+The accepted freeze identities are:
+
+- selection SHA-256:
+  a02536d6f2478d9fdc40510275dd3b48a2824ee7b1f0fa08c1aed472611fb6fb;
+  and
+- model SHA-256:
+  90db38e625f4bcf6a234b6a0516371b76f98e01b4437f684ffea119cbc09cdb2.
+
+The first report attempt stopped before producing a report because it
+looked for source experiments under reports/experiments. Recovery
+reverified the existing frozen artifacts and all 90 canonical source
+artifacts, corrected only the source root to data/raw, and resumed the
+report stage without calling fit.
+
+The accepted p4_r1_ml_baseline_v1 report contains 30 rows, preserves
+the 18/6/6-row and 3/1/1-group allocation, verifies 150/150 source-
+artifact references, and retains G02 as report_only. Train,
+validation, and test each report fault_type accuracy 1.0 and macro-F1
+1.0. All 30 predictions contain evidence-bearing model explanations.
+
+The independent classifier intentionally emits no predicted
+fault_location or affected_prefix. Therefore every partition reports
+exact-match rate 0.3333333333333333 and affected-prefix rate 0.0. The
+report SHA-256 is
+8fc6e77e5008cd7cc74e5ce130b901ed750afab9a35eb62652ff55f9205b0e92.
+D-073 accepts this result and closes P4-R1 and Phase 4.
+
+These are descriptive results for the frozen 30-row controlled
+campaign. They do not establish real-world generalization,
+statistical superiority, unseen-context robustness, or hybrid
+performance.

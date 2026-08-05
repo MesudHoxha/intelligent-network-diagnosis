@@ -76,7 +76,7 @@ Status: Completed
 - P3-R0 closeout and HANDOFF: completed
 
 ## Phase 4 — Machine Learning baseline
-Status: In progress
+Status: Completed
 
 - Leakage-safe ML experiment protocol and feature-matrix contract:
   implemented and verified against the real D-067 artifacts
@@ -91,11 +91,24 @@ Status: In progress
 - Matrix SHA-256, 30/30 source-row bindings, and ten structural
   unavailable values: recorded
 - P4-R0 closeout and HANDOFF: completed
-- Interpretable supervised baseline trained only on the frozen train
-  partition: not started
-- Validation-only selection before a single report-only test
-  evaluation: not started
-- Method Evaluation Result v1 ML report: not started
+- Train-only candidate fitting and validation-only selection
+  implementation: completed and covered by 10 targeted tests and
+  the 205-test regression suite
+- Atomic ML Pipeline Selection v1 and selected-estimator freeze:
+  executed and independently hash-verified
+- Independent model/selection hash gate before test access:
+  executed successfully before G02 access
+- Evidence-bearing ML predictions with model-specific explanation:
+  completed for 30/30 rows
+- Selected candidate: logreg_l2_c0_1
+- Single report-only G02 evaluation: completed without refit
+- Fault-type accuracy and macro-F1: 1.0/1.0/1.0 on
+  train/validation/test for the frozen controlled campaign
+- Exact-diagnosis rate: 1/3 per partition; affected-prefix rate: 0.0,
+  exposing the independent classifier's localization boundary
+- Method Evaluation Result v1 ML report, selection SHA-256, model
+  SHA-256, and 150/150 source-artifact bindings: recorded
+- P4-R1 closeout and HANDOFF: completed
 
 ## Phase 5 — Hybrid diagnosis
 Status: Not started

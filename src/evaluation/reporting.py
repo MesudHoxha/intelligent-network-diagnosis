@@ -626,6 +626,24 @@ def validate_method_evaluation_result(
         result.get("provenance"),
         "provenance",
     )
+    if method_id == "rule_based":
+        require_mapping(
+            provenance.get("rule_audit"),
+            "provenance.rule_audit",
+        )
+    elif (
+        method_id == "machine_learning"
+        and provenance.get("rule_audit") is None
+    ):
+        for artifact_name in (
+            "feature_matrix",
+            "selection_result",
+            "model_artifact",
+        ):
+            require_mapping(
+                provenance.get(artifact_name),
+                f"provenance.{artifact_name}",
+            )
     if provenance.get("input_record_count") != len(
         records_value
     ):

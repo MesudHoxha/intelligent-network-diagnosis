@@ -1,0 +1,243 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ML Pipeline Selection v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "selection_id",
+    "pipeline_id",
+    "generated_at_utc",
+    "status",
+    "protocol_id",
+    "matrix",
+    "partition_policy",
+    "selection_policy",
+    "candidate_results",
+    "selected_candidate",
+    "fit_summary",
+    "software",
+    "model_artifact",
+    "leakage_audit",
+    "limitations"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "selection_id": {"const": "p4_r1_ml_selection_v1"},
+    "pipeline_id": {"const": "p4_r1_ml_pipeline_v1"},
+    "generated_at_utc": {"type": "string", "format": "date-time"},
+    "status": {"const": "PIPELINE_FROZEN"},
+    "protocol_id": {"const": "leakage_safe_ml_baseline_v1"},
+    "matrix": {"$ref": "#/$defs/matrix_binding"},
+    "partition_policy": {"$ref": "#/$defs/partition_policy"},
+    "selection_policy": {"$ref": "#/$defs/selection_policy"},
+    "candidate_results": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {"$ref": "#/$defs/candidate_result"}
+    },
+    "selected_candidate": {"$ref": "#/$defs/selected_candidate"},
+    "fit_summary": {"$ref": "#/$defs/fit_summary"},
+    "software": {"$ref": "#/$defs/software"},
+    "model_artifact": {"$ref": "#/$defs/model_artifact"},
+    "leakage_audit": {"$ref": "#/$defs/leakage_audit"},
+    "limitations": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/non_empty_string"}
+    }
+  },
+  "$defs": {
+    "non_empty_string": {"type": "string", "minLength": 1},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "artifact_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"$ref": "#/$defs/non_empty_string"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "class_order": {
+      "const": ["no_fault", "missing_static_route", "wrong_next_hop"]
+    },
+    "candidate_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_id", "family", "complexity_rank", "parameters"],
+      "properties": {
+        "candidate_id": {"type": "string", "minLength": 1},
+        "family": {
+          "enum": ["multinomial_logistic_regression", "decision_tree"]
+        },
+        "complexity_rank": {"type": "integer", "minimum": 1, "maximum": 6},
+        "parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "type": ["string", "number", "integer", "null"]
+          }
+        }
+      }
+    },
+    "selection_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["row_count", "correct_count", "accuracy", "macro_f1"],
+      "properties": {
+        "row_count": {"type": "integer", "minimum": 1},
+        "correct_count": {"type": "integer", "minimum": 0},
+        "accuracy": {"type": "number", "minimum": 0, "maximum": 1},
+        "macro_f1": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "candidate_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate", "fit_partition", "selection_partition", "train_metrics", "validation_metrics"],
+      "properties": {
+        "candidate": {"$ref": "#/$defs/candidate_identity"},
+        "fit_partition": {"const": "train"},
+        "selection_partition": {"const": "validation"},
+        "train_metrics": {"$ref": "#/$defs/selection_metrics"},
+        "validation_metrics": {"$ref": "#/$defs/selection_metrics"}
+      }
+    },
+    "selected_candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate", "validation_macro_f1", "validation_accuracy", "selection_rank"],
+      "properties": {
+        "candidate": {"$ref": "#/$defs/candidate_identity"},
+        "validation_macro_f1": {"type": "number", "minimum": 0, "maximum": 1},
+        "validation_accuracy": {"type": "number", "minimum": 0, "maximum": 1},
+        "selection_rank": {"const": 1}
+      }
+    },
+    "matrix_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["matrix_id", "path", "sha256", "row_count", "encoded_feature_count"],
+      "properties": {
+        "matrix_id": {"const": "p4_r0_ml_feature_matrix_v1"},
+        "path": {"$ref": "#/$defs/non_empty_string"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "row_count": {"const": 30},
+        "encoded_feature_count": {"const": 14}
+      }
+    },
+    "partition_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fit_partition", "selection_partition", "held_out_partition", "test_use", "refit_on_train_plus_validation"],
+      "properties": {
+        "fit_partition": {"const": "train"},
+        "selection_partition": {"const": "validation"},
+        "held_out_partition": {"const": "test"},
+        "test_use": {"const": "report_only_after_pipeline_freeze"},
+        "refit_on_train_plus_validation": {"const": false}
+      }
+    },
+    "selection_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ordered_criteria", "decision_threshold", "candidate_count"],
+      "properties": {
+        "ordered_criteria": {
+          "const": [
+            "validation_macro_f1_desc",
+            "validation_accuracy_desc",
+            "complexity_rank_asc",
+            "candidate_id_asc"
+          ]
+        },
+        "decision_threshold": {"const": "argmax"},
+        "candidate_count": {"const": 6}
+      }
+    },
+    "partition_fit_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["partition", "row_count", "group_ids", "sample_ids_sha256"],
+      "properties": {
+        "partition": {"enum": ["train", "validation"]},
+        "row_count": {"type": "integer", "minimum": 1},
+        "group_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/non_empty_string"}
+        },
+        "sample_ids_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "fit_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["class_order", "encoded_feature_names", "train", "validation"],
+      "properties": {
+        "class_order": {"$ref": "#/$defs/class_order"},
+        "encoded_feature_names": {
+          "type": "array",
+          "minItems": 14,
+          "maxItems": 14,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/non_empty_string"}
+        },
+        "train": {"$ref": "#/$defs/partition_fit_binding"},
+        "validation": {"$ref": "#/$defs/partition_fit_binding"}
+      }
+    },
+    "software": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["python", "scikit_learn", "numpy", "joblib"],
+      "properties": {
+        "python": {"$ref": "#/$defs/non_empty_string"},
+        "scikit_learn": {"$ref": "#/$defs/non_empty_string"},
+        "numpy": {"$ref": "#/$defs/non_empty_string"},
+        "joblib": {"$ref": "#/$defs/non_empty_string"}
+      }
+    },
+    "model_artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "serialization", "fitted_partition", "refit_performed"],
+      "properties": {
+        "path": {"$ref": "#/$defs/non_empty_string"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "serialization": {"const": "joblib"},
+        "fitted_partition": {"const": "train"},
+        "refit_performed": {"const": false}
+      }
+    },
+    "leakage_audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "predictor_columns",
+        "fit_partitions",
+        "selection_partitions",
+        "test_features_accessed_for_selection",
+        "test_labels_accessed_for_selection",
+        "test_predictions_generated",
+        "test_metrics_generated",
+        "validation_used_for_parameter_fit",
+        "refit_on_train_plus_validation"
+      ],
+      "properties": {
+        "predictor_columns": {"const": 14},
+        "fit_partitions": {"const": ["train"]},
+        "selection_partitions": {"const": ["validation"]},
+        "test_features_accessed_for_selection": {"const": false},
+        "test_labels_accessed_for_selection": {"const": false},
+        "test_predictions_generated": {"const": false},
+        "test_metrics_generated": {"const": false},
+        "validation_used_for_parameter_fit": {"const": false},
+        "refit_on_train_plus_validation": {"const": false}
+      }
+    }
+  }
+}

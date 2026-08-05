@@ -1,7 +1,7 @@
 # Formal Method Evaluation Protocol v1
 
 Date: 2026-08-05
-Status: COMPLETED; REAL P3-R0 RULE-BASED REPORT ACCEPTED
+Status: COMPLETED; REAL RULE-BASED AND ML BASELINES ACCEPTED
 
 ## 1. Purpose
 
@@ -267,3 +267,56 @@ This result closes P3-R0. Its perfect values describe the frozen
 controlled campaign and confirm coverage of its known fault
 semantics. They are not evidence of real-world generalization,
 statistical superiority, or Machine Learning or hybrid performance.
+
+## 14. Backwards-compatible method provenance extension
+
+P4-R1 exposed one rule-specific constraint in the original shared
+JSON Schema: provenance.rule_audit was mandatory even when method_id
+was machine_learning or hybrid. The runtime and schema now preserve
+the existing rule-based branch and add an ML-specific branch.
+
+For rule_based, provenance.rule_audit remains mandatory. For
+machine_learning, provenance.feature_matrix,
+provenance.selection_result, and provenance.model_artifact are
+mandatory. Both branches continue to require the campaign result,
+split manifest, input-record count, and exactly five hashed artifact
+references per sample.
+
+No metric definition, class order, partition role, record field,
+test policy, overall interpretation, or accepted D-069 report is
+changed by this extension.
+
+## 15. Accepted P4-R1 Machine Learning result
+
+The P4-R1 freeze and report gates succeeded against D-071 on
+2026-08-05. The accepted result is:
+
+- result_id: p4_r1_ml_baseline_v1;
+- method: machine_learning / multinomial_logistic_regression;
+- selected candidate: logreg_l2_c0_1;
+- report path:
+  reports/experiments/p4_r1_ml_baseline_v1/
+  method_evaluation_result.json;
+- report SHA-256:
+  8fc6e77e5008cd7cc74e5ce130b901ed750afab9a35eb62652ff55f9205b0e92;
+- selection SHA-256:
+  a02536d6f2478d9fdc40510275dd3b48a2824ee7b1f0fa08c1aed472611fb6fb;
+- model SHA-256:
+  90db38e625f4bcf6a234b6a0516371b76f98e01b4437f684ffea119cbc09cdb2;
+- partition rows: 18/6/6;
+- partition groups: 3/1/1; and
+- verified artifact references: 150/150.
+
+Train, validation, and report-only test each reported fault_type
+accuracy 1.0 and macro-F1 1.0. Every one of the 30 predictions
+contains a decoded evidence view and a model-specific explanation.
+The independent classifier emits neither predicted fault_location nor
+predicted affected_prefix, so each partition reports exact-diagnosis
+match 1/3 and affected-prefix correctness 0.0.
+
+The report-stage recovery changed only the source root to the
+canonical data/raw location after verifying the existing selection
+and model hashes. It did not refit the estimator. This result closes
+P4-R1 and provides the independent ML baseline for later comparison;
+its controlled values do not establish real-world generalization,
+statistical superiority, or hybrid performance.
