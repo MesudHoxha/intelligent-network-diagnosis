@@ -1,0 +1,232 @@
+{
+  "schema_version": 1,
+  "policy_id": "p5_r0_hybrid_policy_v1",
+  "status": "CANDIDATES_FROZEN_BEFORE_IMPLEMENTATION",
+  "frozen_on": "2026-08-05",
+  "method_id": "hybrid",
+  "policy_family": "deterministic_consensus_and_rule_localization",
+  "class_order": [
+    "no_fault",
+    "missing_static_route",
+    "wrong_next_hop"
+  ],
+  "baseline_bindings": {
+    "campaign": {
+      "campaign_id": "P2_ROUTING_5CTX_V1",
+      "run_id": "p2_routing_5ctx_v1-20260804T073429388394Z-617194fea9954ed98ec120bdefea23d9",
+      "merged_dataset_sha256": "be92cef4e78764e772909e15f43ab5cba98ef9610f4a446fc95e8afb5e830c80"
+    },
+    "split": {
+      "algorithm": "complete_context_group_hash_v2",
+      "seed": 20260730,
+      "partition_rows": {
+        "train": 18,
+        "validation": 6,
+        "test": 6
+      },
+      "partition_groups": {
+        "train": 3,
+        "validation": 1,
+        "test": 1
+      },
+      "test_group_id": "CTX_G02_TOP02_CHAIN_3R"
+    },
+    "rule_baseline": {
+      "decision_id": "D-069",
+      "result_id": "p3_r0_rule_based_baseline_v1",
+      "implementation_id": "deterministic_rule_engine_v1",
+      "path": "reports/experiments/p3_r0_rule_based_baseline_v1.json",
+      "sha256": "7158f1de31a892779bbce2eaad8f5c5e5bb7c2fc08e0766b49a55047ddc56424"
+    },
+    "ml_feature_matrix": {
+      "decision_id": "D-071",
+      "matrix_id": "p4_r0_ml_feature_matrix_v1",
+      "path": "reports/experiments/p4_r0_ml_feature_matrix_v1.json",
+      "sha256": "9193b4b8c676bf94ef9af05562d9d0047faef61bc94c9d81b0485b88bf599730"
+    },
+    "ml_selection": {
+      "decision_id": "D-073",
+      "selection_id": "p4_r1_ml_selection_v1",
+      "selected_candidate": "logreg_l2_c0_1",
+      "path": "models/p4_r1_ml_pipeline_v1/selection.json",
+      "sha256": "a02536d6f2478d9fdc40510275dd3b48a2824ee7b1f0fa08c1aed472611fb6fb"
+    },
+    "ml_model": {
+      "pipeline_id": "p4_r1_ml_pipeline_v1",
+      "path": "models/p4_r1_ml_pipeline_v1/estimator.joblib",
+      "sha256": "90db38e625f4bcf6a234b6a0516371b76f98e01b4437f684ffea119cbc09cdb2"
+    },
+    "ml_report": {
+      "decision_id": "D-073",
+      "result_id": "p4_r1_ml_baseline_v1",
+      "path": "reports/experiments/p4_r1_ml_baseline_v1/method_evaluation_result.json",
+      "sha256": "8fc6e77e5008cd7cc74e5ce130b901ed750afab9a35eb62652ff55f9205b0e92"
+    }
+  },
+  "prediction_time_contract": {
+    "allowed_inputs": [
+      "sample_identity",
+      "evidence_v2_reference",
+      "original_rule_prediction",
+      "original_ml_prediction",
+      "frozen_policy",
+      "frozen_model_binding"
+    ],
+    "forbidden_inputs": [
+      "ground_truth",
+      "dataset_labels",
+      "partition_name",
+      "rule_correctness",
+      "ml_correctness",
+      "per_experiment_evaluation",
+      "method_evaluation_metrics",
+      "test_results"
+    ],
+    "raw_method_outputs_immutable": true,
+    "ground_truth_reader": "evaluator_only",
+    "integrity_failure_action": "FAIL_STOP_NO_PREDICTION",
+    "non_final_input_action": "ABSTAIN",
+    "rule_normalization": {
+      "NO_FAULT_DETECTED": "no_fault",
+      "DIAGNOSIS_PRODUCED": "diagnosis.fault_type",
+      "INSUFFICIENT_EVIDENCE": "NON_FINAL",
+      "UNDETERMINED": "NON_FINAL"
+    },
+    "ml_normalization": {
+      "NO_FAULT_DETECTED": "no_fault",
+      "DIAGNOSIS_PRODUCED": "diagnosis.fault_type"
+    }
+  },
+  "candidate_policies": [
+    {
+      "candidate_id": "consensus_abstain_v1",
+      "complexity_rank": 0,
+      "agreement_action": "ACCEPT_AGREED_CLASS",
+      "disagreement_action": "ABSTAIN",
+      "non_final_action": "ABSTAIN",
+      "fault_localization_source": "RULE_PREDICTION_ONLY_ON_CLASS_AGREEMENT",
+      "no_fault_location_and_prefix": "NULL",
+      "explanation_components": [
+        "decision_reason",
+        "original_rule_prediction_reference",
+        "original_ml_prediction_reference",
+        "rule_supporting_evidence",
+        "ml_model_explanation",
+        "policy_and_model_bindings"
+      ],
+      "rule_fallback_guards": []
+    },
+    {
+      "candidate_id": "rule_guarded_fallback_v1",
+      "complexity_rank": 1,
+      "agreement_action": "ACCEPT_AGREED_CLASS",
+      "disagreement_action": "ACCEPT_RULE_ONLY_IF_ALL_GUARDS_PASS_ELSE_ABSTAIN",
+      "non_final_action": "ABSTAIN",
+      "fault_localization_source": "RULE_PREDICTION_ONLY",
+      "no_fault_location_and_prefix": "NULL",
+      "explanation_components": [
+        "decision_reason",
+        "original_rule_prediction_reference",
+        "original_ml_prediction_reference",
+        "rule_supporting_evidence",
+        "ml_model_explanation",
+        "policy_and_model_bindings"
+      ],
+      "rule_fallback_guards": [
+        "rule_status_is_final",
+        "exactly_one_known_rule_matches_normalized_class",
+        "rule_support_score_equals_one_but_is_not_a_probability",
+        "contradicting_evidence_is_empty",
+        "fault_location_and_affected_prefix_are_non_empty_for_faults"
+      ]
+    }
+  ],
+  "selection_protocol": {
+    "selection_stage": "P5-R1",
+    "selection_partition": "validation",
+    "held_out_partition": "test",
+    "test_use": "report_only_after_candidate_freeze",
+    "test_access_before_selection_freeze": false,
+    "candidate_order": [
+      "consensus_abstain_v1",
+      "rule_guarded_fallback_v1"
+    ],
+    "metric_order": [
+      "macro_f1_full_denominator",
+      "exact_diagnosis_rate_full_denominator",
+      "coverage",
+      "complexity_rank",
+      "candidate_id"
+    ],
+    "metric_directions": {
+      "macro_f1_full_denominator": "MAXIMIZE",
+      "exact_diagnosis_rate_full_denominator": "MAXIMIZE",
+      "coverage": "MAXIMIZE",
+      "complexity_rank": "MINIMIZE",
+      "candidate_id": "LEXICOGRAPHIC_ASCENDING"
+    },
+    "abstention_treatment": "INCORRECT_ON_FULL_DENOMINATOR_AND_REPORTED_SEPARATELY",
+    "selected_candidate": null,
+    "selection_status": "NOT_RUN"
+  },
+  "output_contract": {
+    "method": "hybrid",
+    "decision_statuses": [
+      "NO_FAULT_DETECTED",
+      "DIAGNOSIS_PRODUCED",
+      "ABSTAINED"
+    ],
+    "abstained_diagnosis": null,
+    "accepted_fault_requires_rule_location_and_prefix": true,
+    "ml_location_or_prefix_copying": "FORBIDDEN",
+    "ground_truth_copying": "FORBIDDEN",
+    "required_provenance_references": [
+      "hybrid_policy",
+      "hybrid_selection",
+      "rule_baseline",
+      "ml_feature_matrix",
+      "ml_selection",
+      "ml_model",
+      "ml_report",
+      "campaign_result",
+      "split_manifest"
+    ],
+    "required_sample_artifact_references": [
+      "experiment_manifest",
+      "ground_truth",
+      "evidence",
+      "rule_prediction",
+      "ml_prediction",
+      "hybrid_prediction",
+      "evaluation"
+    ]
+  },
+  "evaluation_contract": {
+    "primary_metric": "macro_f1_full_denominator",
+    "abstention_metrics": [
+      "coverage",
+      "abstention_count",
+      "abstention_rate",
+      "per_class_abstention_count"
+    ],
+    "classification_treatment": "ABSTENTION_IS_FALSE_NEGATIVE_FOR_ACTUAL_CLASS_AND_NOT_FALSE_POSITIVE_FOR_ANY_PREDICTED_CLASS",
+    "confusion_matrix_treatment": "KEEP_THREE_BY_THREE_CLASS_MATRIX_AND_REPORT_PER_CLASS_ABSTENTIONS_SEPARATELY",
+    "exact_diagnosis_treatment": "ABSTENTION_IS_INCORRECT",
+    "affected_prefix_treatment": "ABSTENTION_ON_A_FAULT_SAMPLE_IS_INCORRECT",
+    "overall_use": "descriptive_only",
+    "test_use": "report_only"
+  },
+  "out_of_scope": [
+    "hybrid_prediction_generation_in_P5_R0",
+    "hybrid_metric_generation_in_P5_R0",
+    "test_access_in_P5_R0",
+    "changes_to_D_069_rule_baseline",
+    "changes_to_D_073_ml_baseline",
+    "probability_calibration",
+    "test_guided_threshold_or_policy_design",
+    "ml_only_localization",
+    "multiple_fault_resolution",
+    "new_fault_classes"
+  ],
+  "test_predictions_or_metrics": "ABSENT"
+}

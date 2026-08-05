@@ -1,0 +1,1 @@
+"""Hybrid diagnosis policy contracts."""

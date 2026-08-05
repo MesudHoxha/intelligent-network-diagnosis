@@ -191,6 +191,19 @@ Phase 5 — Hybrid diagnosis
   existing outputs, and non-frozen report execution
 - P4-R1 targeted synthetic tests: 10/10 passed
 - Full automated regression suite: 205/205 passed
+- Hybrid Diagnosis Policy v1 machine-readable artifact and JSON
+  Schema
+- Frozen consensus-abstain and guarded-rule-fallback candidates
+- Prediction-time ground-truth, label, partition, evaluation, and
+  test leakage gates
+- Validation-only hybrid candidate selection contract
+- Abstention-aware future evaluation and seven-reference provenance
+  contract
+- P5-R0 accepted baseline hash bindings: 5/5 SHA-256 PASS
+- P5-R0 targeted contract tests: 11/11 passed
+- Full automated regression suite: 216/216 passed
+- P5-R0 hybrid predictions, metrics, selection, and test access:
+  absent
 
 ## Representative verified experiments
 
@@ -616,12 +629,12 @@ the accepted merge or split.
   group identifiers, ratios, and partition allocation.
 - Preserve D-069 as the accepted independent rule-based baseline and
   D-073 as the accepted independent ML baseline.
-- Define a bounded, interpretable hybrid input and decision contract
-  before implementing or evaluating the hybrid method.
+- Preserve the accepted frozen Hybrid Diagnosis Policy v1 contract
+  while implementing both candidates in P5-R1.
 - Keep G02 test report_only and prohibit test-guided hybrid policy,
   threshold, fallback, or explanation design.
-- Specify deterministic disagreement, abstention, localization, and
-  provenance behavior without changing either accepted baseline.
+- Preserve the two precommitted candidates and validation-only
+  selection order without selecting either candidate in P5-R0.
 
 ## Latest P4-R1 verification
 
@@ -675,6 +688,39 @@ the accepted merge or split.
   controlled campaign; perfect class metrics do not establish
   real-world generalization or superiority
 
+## Latest P5-R0 verification
+
+- Decision: D-074, approved and runtime-verified
+- Protocol: docs/HYBRID_DIAGNOSIS_POLICY.md
+- Contract: Hybrid Policy v1
+- Policy artifact:
+  policies/hybrid/P5_HYBRID_POLICY_V1.json
+- JSON Schema: schemas/hybrid_policy_v1.schema.json
+- Semantic validator: src/hybrid/policy.py
+- Candidate count: 2 FROZEN
+- Candidates: consensus_abstain_v1 and
+  rule_guarded_fallback_v1
+- Agreement action: accept agreed fault_type
+- Fault localization/prefix source: rule prediction only
+- Disagreement: abstain or five-guard rule fallback, depending on
+  candidate
+- Non-final input action: abstain
+- Ground truth reader: evaluator only
+- Raw rule and ML outputs: immutable
+- Selection stage: P5-R1, validation only
+- Held-out G02 test: report_only after selected-policy freeze
+- Selected candidate: none
+- Hybrid predictions or metrics: absent
+- Hybrid Engine implementation: absent
+- Runtime artifact changes: none
+- Policy SHA-256:
+  a25467e9cfd8bb52cc67b0c3886eb439466ee51a27b22d292ee468d060bdecc7
+- Accepted baseline hashes: 5/5 SHA-256 PASS
+- Frozen candidates: 2/2 PASS
+- Targeted tests: 11/11 passed
+- Full automated regression suite: 216/216 passed
+- P5-R0 closeout: completed
+
 ## Open issues
 
 - Future cross-method comparison report after ML and hybrid exist
@@ -688,20 +734,19 @@ the accepted merge or split.
 - Reproducible backup or publication policy for generated runtime
   datasets before final thesis archiving
 - Hybrid method implementation
-- Hybrid policy and provenance contract
+- Backwards-compatible hybrid evaluation/provenance implementation
 - OSPF implementation; its current status remains proposed
 
 ## Next milestone
 
-P5-R0 — Freeze the Hybrid Diagnosis Policy.
+P5-R1 — Implement and select the frozen hybrid candidates.
 
-Define the hybrid input, decision, disagreement, abstention,
-localization, explanation, provenance, and evaluation contracts over
-the accepted D-069 and D-073 baselines. Precommit any bounded policy
-alternatives and validation-only selection order before hybrid
-implementation. Preserve the D-067 campaign, D-058 split, D-069 rule
-report, D-071 matrix, and D-073 frozen ML pipeline. Do not open G02,
-emit a hybrid metric, or change either independent baseline in P5-R0.
+Implement consensus_abstain_v1 and rule_guarded_fallback_v1 without
+changing D-074 or either accepted baseline. Generate candidate
+outputs only for train and validation, extend evaluation with the
+precommitted abstention semantics, select only on the G01 validation
+group by the frozen tie-break order, and persist and independently
+verify the selected-policy artifact before any G02 test access.
 
 ## Important limitation
 
@@ -762,6 +807,8 @@ describe the same small controlled campaign: train has three contexts,
 while validation and test each have one. The classifier deliberately
 does not localize faults or affected prefixes, which yields 1/3 exact
 diagnosis and 0.0 affected-prefix correctness per partition. The
-hybrid method has not yet been designed or evaluated, so no final
-cross-method or superiority claim is possible. Additional controlled
+hybrid policy is now precommitted but awaits local runtime
+verification. The Hybrid Engine has not been implemented and no
+hybrid candidate has been selected or evaluated, so no final cross-
+method or superiority claim is possible. Additional controlled
 variation and hybrid evaluation remain required.

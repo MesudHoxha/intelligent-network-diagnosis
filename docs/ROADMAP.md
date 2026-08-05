@@ -111,7 +111,32 @@ Status: Completed
 - P4-R1 closeout and HANDOFF: completed
 
 ## Phase 5 — Hybrid diagnosis
-Status: Not started
+Status: In progress
+
+- P5-R0 Hybrid Diagnosis Policy v1 design: frozen and locally
+  runtime-verified
+- Accepted D-069 and D-073 artifact/hash bindings: encoded without
+  changing either baseline
+- Prediction-time label, ground-truth, partition, evaluation, and
+  test leakage boundary: encoded
+- Candidate set: consensus_abstain_v1 and
+  rule_guarded_fallback_v1
+- Agreement, disagreement, non-final-input, localization, prefix,
+  explanation, and integrity-failure behavior: precommitted
+- Validation-only candidate selection and deterministic tie-break
+  order: precommitted for P5-R1
+- Abstention-aware future evaluation and seven-reference hybrid
+  provenance contract: precommitted
+- Hybrid Policy v1 JSON Schema and semantic validator: implemented
+  and verified with 11/11 targeted and 216/216 regression tests
+- Policy SHA-256 and five accepted baseline artifact bindings:
+  independently verified without baseline mutation
+- Hybrid predictions, candidate selection, hybrid metrics, and G02
+  access: absent in P5-R0
+- P5-R0 closeout and HANDOFF: completed
+- P5-R1 candidate implementation and validation-only selection:
+  pending
+- P5-R2 frozen-policy report-only evaluation: pending
 
 ## Phase 6 — Extended fault taxonomy
 Status: Not started

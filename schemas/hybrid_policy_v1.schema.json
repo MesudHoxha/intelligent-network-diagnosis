@@ -1,0 +1,367 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/hybrid_policy_v1.schema.json",
+  "title": "Hybrid Policy v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_id",
+    "status",
+    "frozen_on",
+    "method_id",
+    "policy_family",
+    "class_order",
+    "baseline_bindings",
+    "prediction_time_contract",
+    "candidate_policies",
+    "selection_protocol",
+    "output_contract",
+    "evaluation_contract",
+    "out_of_scope",
+    "test_predictions_or_metrics"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "policy_id": {"const": "p5_r0_hybrid_policy_v1"},
+    "status": {"const": "CANDIDATES_FROZEN_BEFORE_IMPLEMENTATION"},
+    "frozen_on": {"type": "string", "format": "date"},
+    "method_id": {"const": "hybrid"},
+    "policy_family": {"const": "deterministic_consensus_and_rule_localization"},
+    "class_order": {
+      "const": ["no_fault", "missing_static_route", "wrong_next_hop"]
+    },
+    "baseline_bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "campaign",
+        "split",
+        "rule_baseline",
+        "ml_feature_matrix",
+        "ml_selection",
+        "ml_model",
+        "ml_report"
+      ],
+      "properties": {
+        "campaign": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["campaign_id", "run_id", "merged_dataset_sha256"],
+          "properties": {
+            "campaign_id": {"const": "P2_ROUTING_5CTX_V1"},
+            "run_id": {"type": "string", "minLength": 1},
+            "merged_dataset_sha256": {"$ref": "#/$defs/sha256"}
+          }
+        },
+        "split": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "algorithm",
+            "seed",
+            "partition_rows",
+            "partition_groups",
+            "test_group_id"
+          ],
+          "properties": {
+            "algorithm": {"const": "complete_context_group_hash_v2"},
+            "seed": {"const": 20260730},
+            "partition_rows": {"$ref": "#/$defs/partition_counts_rows"},
+            "partition_groups": {"$ref": "#/$defs/partition_counts_groups"},
+            "test_group_id": {"const": "CTX_G02_TOP02_CHAIN_3R"}
+          }
+        },
+        "rule_baseline": {"$ref": "#/$defs/baseline_artifact"},
+        "ml_feature_matrix": {"$ref": "#/$defs/baseline_artifact"},
+        "ml_selection": {"$ref": "#/$defs/baseline_artifact"},
+        "ml_model": {"$ref": "#/$defs/baseline_artifact"},
+        "ml_report": {"$ref": "#/$defs/baseline_artifact"}
+      }
+    },
+    "prediction_time_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowed_inputs",
+        "forbidden_inputs",
+        "raw_method_outputs_immutable",
+        "ground_truth_reader",
+        "integrity_failure_action",
+        "non_final_input_action",
+        "rule_normalization",
+        "ml_normalization"
+      ],
+      "properties": {
+        "allowed_inputs": {"$ref": "#/$defs/unique_strings"},
+        "forbidden_inputs": {"$ref": "#/$defs/unique_strings"},
+        "raw_method_outputs_immutable": {"const": true},
+        "ground_truth_reader": {"const": "evaluator_only"},
+        "integrity_failure_action": {"const": "FAIL_STOP_NO_PREDICTION"},
+        "non_final_input_action": {"const": "ABSTAIN"},
+        "rule_normalization": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "NO_FAULT_DETECTED",
+            "DIAGNOSIS_PRODUCED",
+            "INSUFFICIENT_EVIDENCE",
+            "UNDETERMINED"
+          ],
+          "properties": {
+            "NO_FAULT_DETECTED": {"const": "no_fault"},
+            "DIAGNOSIS_PRODUCED": {"const": "diagnosis.fault_type"},
+            "INSUFFICIENT_EVIDENCE": {"const": "NON_FINAL"},
+            "UNDETERMINED": {"const": "NON_FINAL"}
+          }
+        },
+        "ml_normalization": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["NO_FAULT_DETECTED", "DIAGNOSIS_PRODUCED"],
+          "properties": {
+            "NO_FAULT_DETECTED": {"const": "no_fault"},
+            "DIAGNOSIS_PRODUCED": {"const": "diagnosis.fault_type"}
+          }
+        }
+      }
+    },
+    "candidate_policies": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "prefixItems": [
+        {"$ref": "#/$defs/consensus_candidate"},
+        {"$ref": "#/$defs/rule_guarded_candidate"}
+      ],
+      "items": false
+    },
+    "selection_protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "selection_stage",
+        "selection_partition",
+        "held_out_partition",
+        "test_use",
+        "test_access_before_selection_freeze",
+        "candidate_order",
+        "metric_order",
+        "metric_directions",
+        "abstention_treatment",
+        "selected_candidate",
+        "selection_status"
+      ],
+      "properties": {
+        "selection_stage": {"const": "P5-R1"},
+        "selection_partition": {"const": "validation"},
+        "held_out_partition": {"const": "test"},
+        "test_use": {"const": "report_only_after_candidate_freeze"},
+        "test_access_before_selection_freeze": {"const": false},
+        "candidate_order": {
+          "const": ["consensus_abstain_v1", "rule_guarded_fallback_v1"]
+        },
+        "metric_order": {
+          "const": [
+            "macro_f1_full_denominator",
+            "exact_diagnosis_rate_full_denominator",
+            "coverage",
+            "complexity_rank",
+            "candidate_id"
+          ]
+        },
+        "metric_directions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "macro_f1_full_denominator",
+            "exact_diagnosis_rate_full_denominator",
+            "coverage",
+            "complexity_rank",
+            "candidate_id"
+          ],
+          "properties": {
+            "macro_f1_full_denominator": {"const": "MAXIMIZE"},
+            "exact_diagnosis_rate_full_denominator": {"const": "MAXIMIZE"},
+            "coverage": {"const": "MAXIMIZE"},
+            "complexity_rank": {"const": "MINIMIZE"},
+            "candidate_id": {"const": "LEXICOGRAPHIC_ASCENDING"}
+          }
+        },
+        "abstention_treatment": {
+          "const": "INCORRECT_ON_FULL_DENOMINATOR_AND_REPORTED_SEPARATELY"
+        },
+        "selected_candidate": {"type": "null"},
+        "selection_status": {"const": "NOT_RUN"}
+      }
+    },
+    "output_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method",
+        "decision_statuses",
+        "abstained_diagnosis",
+        "accepted_fault_requires_rule_location_and_prefix",
+        "ml_location_or_prefix_copying",
+        "ground_truth_copying",
+        "required_provenance_references",
+        "required_sample_artifact_references"
+      ],
+      "properties": {
+        "method": {"const": "hybrid"},
+        "decision_statuses": {
+          "const": ["NO_FAULT_DETECTED", "DIAGNOSIS_PRODUCED", "ABSTAINED"]
+        },
+        "abstained_diagnosis": {"type": "null"},
+        "accepted_fault_requires_rule_location_and_prefix": {"const": true},
+        "ml_location_or_prefix_copying": {"const": "FORBIDDEN"},
+        "ground_truth_copying": {"const": "FORBIDDEN"},
+        "required_provenance_references": {"$ref": "#/$defs/unique_strings"},
+        "required_sample_artifact_references": {"$ref": "#/$defs/unique_strings"}
+      }
+    },
+    "evaluation_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "primary_metric",
+        "abstention_metrics",
+        "classification_treatment",
+        "confusion_matrix_treatment",
+        "exact_diagnosis_treatment",
+        "affected_prefix_treatment",
+        "overall_use",
+        "test_use"
+      ],
+      "properties": {
+        "primary_metric": {"const": "macro_f1_full_denominator"},
+        "abstention_metrics": {"$ref": "#/$defs/unique_strings"},
+        "classification_treatment": {
+          "const": "ABSTENTION_IS_FALSE_NEGATIVE_FOR_ACTUAL_CLASS_AND_NOT_FALSE_POSITIVE_FOR_ANY_PREDICTED_CLASS"
+        },
+        "confusion_matrix_treatment": {
+          "const": "KEEP_THREE_BY_THREE_CLASS_MATRIX_AND_REPORT_PER_CLASS_ABSTENTIONS_SEPARATELY"
+        },
+        "exact_diagnosis_treatment": {"const": "ABSTENTION_IS_INCORRECT"},
+        "affected_prefix_treatment": {
+          "const": "ABSTENTION_ON_A_FAULT_SAMPLE_IS_INCORRECT"
+        },
+        "overall_use": {"const": "descriptive_only"},
+        "test_use": {"const": "report_only"}
+      }
+    },
+    "out_of_scope": {"$ref": "#/$defs/unique_strings"},
+    "test_predictions_or_metrics": {"const": "ABSENT"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "unique_strings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "partition_counts_rows": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["train", "validation", "test"],
+      "properties": {
+        "train": {"const": 18},
+        "validation": {"const": 6},
+        "test": {"const": 6}
+      }
+    },
+    "partition_counts_groups": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["train", "validation", "test"],
+      "properties": {
+        "train": {"const": 3},
+        "validation": {"const": 1},
+        "test": {"const": 1}
+      }
+    },
+    "baseline_artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "decision_id": {"type": "string", "minLength": 1},
+        "result_id": {"type": "string", "minLength": 1},
+        "implementation_id": {"type": "string", "minLength": 1},
+        "matrix_id": {"type": "string", "minLength": 1},
+        "selection_id": {"type": "string", "minLength": 1},
+        "selected_candidate": {"type": "string", "minLength": 1},
+        "pipeline_id": {"type": "string", "minLength": 1},
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "candidate_common": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_id",
+        "complexity_rank",
+        "agreement_action",
+        "disagreement_action",
+        "non_final_action",
+        "fault_localization_source",
+        "no_fault_location_and_prefix",
+        "explanation_components",
+        "rule_fallback_guards"
+      ],
+      "properties": {
+        "candidate_id": {"type": "string"},
+        "complexity_rank": {"type": "integer", "minimum": 0},
+        "agreement_action": {"const": "ACCEPT_AGREED_CLASS"},
+        "disagreement_action": {"type": "string"},
+        "non_final_action": {"const": "ABSTAIN"},
+        "fault_localization_source": {"type": "string"},
+        "no_fault_location_and_prefix": {"const": "NULL"},
+        "explanation_components": {"$ref": "#/$defs/unique_strings"},
+        "rule_fallback_guards": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "consensus_candidate": {
+      "allOf": [
+        {"$ref": "#/$defs/candidate_common"},
+        {
+          "properties": {
+            "candidate_id": {"const": "consensus_abstain_v1"},
+            "complexity_rank": {"const": 0},
+            "disagreement_action": {"const": "ABSTAIN"},
+            "fault_localization_source": {
+              "const": "RULE_PREDICTION_ONLY_ON_CLASS_AGREEMENT"
+            },
+            "rule_fallback_guards": {"maxItems": 0}
+          }
+        }
+      ]
+    },
+    "rule_guarded_candidate": {
+      "allOf": [
+        {"$ref": "#/$defs/candidate_common"},
+        {
+          "properties": {
+            "candidate_id": {"const": "rule_guarded_fallback_v1"},
+            "complexity_rank": {"const": 1},
+            "disagreement_action": {
+              "const": "ACCEPT_RULE_ONLY_IF_ALL_GUARDS_PASS_ELSE_ABSTAIN"
+            },
+            "fault_localization_source": {"const": "RULE_PREDICTION_ONLY"},
+            "rule_fallback_guards": {"minItems": 5, "maxItems": 5}
+          }
+        }
+      ]
+    }
+  }
+}

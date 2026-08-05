@@ -320,3 +320,40 @@ and model hashes. It did not refit the estimator. This result closes
 P4-R1 and provides the independent ML baseline for later comparison;
 its controlled values do not establish real-world generalization,
 statistical superiority, or hybrid performance.
+
+## 16. Precommitted future hybrid extension
+
+D-074 freezes the Hybrid Diagnosis Policy v1 boundary before any
+hybrid prediction or metric. The future hybrid branch must bind the
+hybrid policy, selected-policy artifact, D-069 rule result, D-071
+feature matrix, D-073 selection, estimator and ML report, campaign
+result, and split manifest.
+
+Each hybrid sample record will retain seven path-and-SHA-256 artifact
+references:
+
+- Experiment Manifest;
+- ground truth;
+- Evidence v2;
+- original rule prediction;
+- original ML prediction;
+- hybrid prediction; and
+- per-experiment evaluation.
+
+Ground truth and evaluation remain report provenance only. They are
+forbidden Hybrid Engine inputs.
+
+The hybrid output may also be ABSTAINED. An abstention is counted as a
+false negative for the actual class, is not a false positive for any
+predicted class, and is incorrect for accuracy and exact diagnosis. On
+a fault row it is also incorrect for affected-prefix correctness.
+Coverage, abstention count, abstention rate, and per-class abstention
+counts are reported separately. The existing three-by-three class
+confusion matrix retains resolved predictions; class-specific
+abstention counts reconcile the remaining support.
+
+This section freezes the required semantics only. P5-R0 does not
+change the current Method Evaluation Result v1 schema or runtime,
+generate a hybrid report, or access G02. A backwards-compatible
+schema/runtime extension must be implemented and tested before the
+first hybrid report. Existing D-069 and D-073 reports remain immutable.

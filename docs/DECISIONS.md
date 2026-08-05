@@ -1302,3 +1302,66 @@ probability calibration, unseen-topology behavior, or hybrid
 performance. Cross-method claims remain blocked until the hybrid
 method is precommitted, implemented, and evaluated under the same
 frozen protocol.
+
+## D-074 — Precommitted Hybrid Diagnosis Policy v1
+
+Decision: Freeze a deterministic, evidence-preserving hybrid policy
+before implementing the Hybrid Engine or reading any hybrid test
+result.
+
+Hybrid Policy v1 is bound to the accepted D-067 campaign and D-058
+split, the D-069 rule-based report, and the D-071/D-073 feature
+matrix, selection, estimator, and ML report identities. A future
+hybrid prediction may consume only sample identity, a reference to
+Evidence v2, the immutable original rule and ML predictions, the
+frozen policy, and the ML model binding. Ground truth, labels,
+partition identity, correctness flags, evaluation artifacts, and
+method metrics are forbidden prediction-time inputs. Only the
+Evaluator may read ground truth.
+
+Exactly two candidates are precommitted:
+
+1. consensus_abstain_v1 accepts an agreed rule/ML class and abstains
+   on disagreement or a non-final input; and
+2. rule_guarded_fallback_v1 has the same agreement behavior but may
+   accept the rule class on disagreement only when five deterministic
+   rule-integrity guards all pass.
+
+For an accepted fault, location and affected_prefix come only from a
+complete rule diagnosis. ML-only localization and ground-truth
+copying are forbidden. The future hybrid output retains references to
+both original predictions, both explanation forms, the policy, and
+the model binding. The original method outputs are never overwritten.
+
+P5-R1 must implement both candidates and select only on the G01
+validation group by maximizing, in order, full-denominator macro-F1,
+full-denominator exact-diagnosis rate, and coverage; ties then minimize
+complexity rank and use ascending candidate ID. Abstention counts as
+incorrect on the supervised denominator and is reported separately.
+G02 test remains closed until the selected-policy artifact is frozen
+and independently verified.
+
+A future hybrid Method Evaluation Result must add backwards-
+compatible hybrid provenance and abstention accounting. Each sample
+will carry seven hashed artifact references: manifest, ground truth,
+Evidence v2, rule prediction, ML prediction, hybrid prediction, and
+evaluation. Ground-truth and evaluation references are report
+provenance and are not Hybrid Engine inputs.
+
+Status: Approved, implemented, and runtime-verified on 2026-08-05.
+The canonical policy SHA-256 is
+a25467e9cfd8bb52cc67b0c3886eb439466ee51a27b22d292ee468d060bdecc7.
+All five accepted baseline hash bindings remained unchanged, both
+candidate definitions passed the frozen semantic contract, 11/11
+targeted tests and the complete 216/216 regression suite passed, and
+no hybrid prediction, metric, selected candidate, prediction API, or
+test access was produced. This evidence closes P5-R0 and authorizes
+P5-R1 candidate implementation under the unchanged D-074 contract.
+
+Limitation:
+
+D-074 freezes behavior and leakage boundaries; it does not select a
+candidate, generate a hybrid prediction or metric, access G02, or
+establish hybrid performance. The current validation group contains
+only one controlled context, so later selection remains descriptive
+and cannot establish real-world generalization.

@@ -630,3 +630,46 @@ dataset has only 30 controlled rows, and validation and test each
 contain one context. The hybrid method remains unimplemented and must
 be precommitted before any hybrid result or cross-method conclusion is
 accepted.
+
+P5-R0 precommits Hybrid Diagnosis Policy v1 before Hybrid Engine
+implementation. It binds the accepted D-067 campaign, D-058 split,
+D-069 rule report, D-071 feature matrix, and D-073 ML selection,
+estimator, and report identities without modifying any of them.
+
+The hybrid prediction-time boundary permits only sample identity,
+Evidence v2 provenance, immutable rule and ML predictions, the frozen
+policy, and the frozen model binding. Ground truth, labels, partition
+identity, correctness flags, evaluation documents, and method metrics
+are forbidden. Only the Evaluator reads ground truth.
+
+Two policy candidates are frozen. consensus_abstain_v1 accepts only
+rule/ML class agreement and otherwise abstains.
+rule_guarded_fallback_v1 adds a disagreement fallback to the rule
+class only when all five deterministic rule guards pass. Both
+candidates abstain on non-final input. Any accepted fault takes
+location and affected_prefix only from a complete rule diagnosis; ML
+and ground truth cannot supply those fields.
+
+Candidate selection is reserved for P5-R1 and uses only G01
+validation. The fixed order is full-denominator macro F1, exact
+diagnosis, coverage, complexity rank, and candidate ID. Abstentions
+count as incorrect and are also reported explicitly. G02 remains
+closed until a selected-policy artifact is persisted and independently
+verified.
+
+P5-R0 implements only the versioned policy artifact, JSON Schema,
+semantic validator, documentation, and synthetic contract tests. It
+does not implement fusion behavior, select a policy, create hybrid
+predictions or metrics, or access test.
+
+The local P5-R0 verification completed on 2026-08-05 against commit
+753e075. The policy SHA-256 is
+a25467e9cfd8bb52cc67b0c3886eb439466ee51a27b22d292ee468d060bdecc7,
+all five accepted baseline hash bindings remained unchanged, and the
+two frozen candidates passed 11/11 targeted tests and the complete
+216/216 regression suite. No selected candidate, Hybrid Engine
+prediction API, hybrid prediction, hybrid metric, or test access was
+created. D-074 and the P5-R0 policy-freeze milestone are therefore
+accepted. Phase 5 remains in progress; P5-R1 must implement both
+candidates and select only on validation without changing the frozen
+policy.
