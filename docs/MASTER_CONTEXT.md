@@ -537,3 +537,43 @@ existing deterministic rules cover the same known fault semantics.
 They do not establish real-world generalization or superiority. The
 Machine Learning and hybrid diagnostic approaches have not yet been
 implemented or evaluated.
+
+P4-R0 freezes the leakage-safe pre-fit Machine Learning boundary.
+The target remains fault_type, and only the seven ordered Dataset Row
+v2 diagnostic features may supply predictors. Each tri-state feature
+uses a lossless available/true binary pair: true maps to [1, 1], false
+to [1, 0], and unavailable to [0, 0]. This produces 14 ordered binary
+columns without a learned imputer or partition-derived statistic.
+
+The candidate set is limited to three L2 multinomial logistic-
+regression configurations and three shallow decision-tree
+configurations, all declared before fitting. Candidates may fit only
+on train and may be selected only on validation by macro F1, accuracy,
+complexity rank, and candidate ID in that order. The selected model is
+not refitted on train plus validation. G02 test remains available only
+for a single report-only evaluation after the complete ML pipeline is
+frozen.
+
+ML Feature Matrix v1 separates target and audit identity fields from
+the predictor vector, verifies the D-067 campaign and partition
+hashes, rejects non-v2 rows or predictor leakage, and writes an atomic
+byte-deterministic artifact.
+
+The builder was executed against the accepted D-067 runtime artifacts
+on 2026-08-05. The resulting p4_r0_ml_feature_matrix_v1 artifact
+contains 30 rows, preserves the 18/6/6-row and 3/1/1-group allocation,
+encodes seven raw tri-state features as 14 ordered binary columns, and
+preserves exactly ten structural unavailable values. All 30 source-row
+references passed SHA-256 verification, the predictor-leakage audit
+passed, and G02 test remained report_only.
+
+The accepted matrix remains a generated local artifact at
+reports/experiments/p4_r0_ml_feature_matrix_v1.json. Its SHA-256 is
+9193b4b8c676bf94ef9af05562d9d0047faef61bc94c9d81b0485b88bf599730.
+D-071 accepts the deterministic pre-fit input and closes P4-R0. Ten
+targeted tests and the complete 195-test regression suite pass.
+
+No Machine Learning model has been fitted, selected, or evaluated.
+The accepted matrix proves input and partition integrity only; it is
+not evidence of ML performance, generalization, hybrid behavior, or
+superiority over the rule-based baseline.

@@ -1090,3 +1090,100 @@ context are execution repetitions rather than independent topology
 samples. D-069 does not establish real-world generalization,
 statistical significance, Machine Learning or hybrid performance, or
 superiority of one method over another.
+
+## D-070 — Leakage-safe Machine Learning baseline protocol
+
+Decision: Freeze Leakage-Safe Machine Learning Baseline Protocol v1
+and ML Feature Matrix v1 before fitting any estimator.
+
+The supervised target remains labels.fault_type with the D-068 class
+order no_fault, missing_static_route, and wrong_next_hop. Predictors
+come only from the seven ordered Dataset Row v2 feature values. Every
+tri-state feature is encoded as the binary pair available/true:
+
+- true becomes [1, 1];
+- false becomes [1, 0]; and
+- unavailable becomes [0, 0].
+
+The pair [0, 1] is invalid. The transformation produces 14 ordered
+binary columns, is lossless for the three states, and requires no
+fitted imputer or partition-derived statistic. It preserves the
+structural C1 unavailability accepted by D-066 without assigning an
+artificial ordinal value.
+
+labels, metadata, quality, ground truth, rule predictions, evaluation
+results, identifiers, paths, hashes, and explanation text are
+excluded from predictors. sample_id, split_group_id, target_class,
+and source-row SHA-256 remain audit fields outside feature_vector.
+
+The only candidate families are multinomial L2 logistic regression
+and a shallow decision tree. Six configurations are fixed in the
+protocol. The model seed is 20260730. Candidates fit only on train and
+are selected only on validation by macro F1, then accuracy, then the
+declared lower complexity rank, then candidate_id. The selected model
+is not refitted on train plus validation. Prediction uses argmax and
+no threshold tuning is permitted.
+
+G02 test remains held out from fitting and selection. It may be used
+once for report-only evaluation only after the entire winning ML
+pipeline is frozen and persisted. P4-R0 itself produces no model,
+prediction, or metric.
+
+The normative details are recorded in docs/ML_BASELINE_PROTOCOL.md.
+The machine-readable contract is defined by
+schemas/ml_feature_matrix_v1.schema.json and
+src/ml/feature_matrix.py.
+
+Status: Approved, implemented, and runtime-verified on 2026-08-05.
+The real D-067 feature matrix passed the frozen runtime, schema,
+partition, hash, tri-state, and predictor-leakage gates. Its accepted
+artifact binding is recorded in D-071.
+
+Limitation:
+
+This decision establishes deterministic preprocessing, predictor
+whitelisting, and partition discipline. It does not establish ML
+performance, model selection, test performance, generalization,
+hybrid behavior, or superiority over the D-069 rule-based baseline.
+
+## D-071 — First accepted leakage-safe ML feature matrix
+
+Decision: Accept p4_r0_ml_feature_matrix_v1 as the deterministic
+pre-fit input artifact for the first Machine Learning baseline.
+
+The accepted local runtime artifact is bound to:
+
+- path:
+  reports/experiments/p4_r0_ml_feature_matrix_v1.json;
+- SHA-256:
+  9193b4b8c676bf94ef9af05562d9d0047faef61bc94c9d81b0485b88bf599730;
+- campaign run:
+  p2_routing_5ctx_v1-20260804T073429388394Z-
+  617194fea9954ed98ec120bdefea23d9;
+- merged Dataset Row v2 SHA-256:
+  be92cef4e78764e772909e15f43ab5cba98ef9610f4a446fc95e8afb5e830c80;
+- 30 unique Dataset Row v2 samples;
+- 18/6/6 rows in 3/1/1 whole context groups;
+- seven raw tri-state predictors transformed losslessly to 14 ordered
+  binary columns;
+- ten expected structural unavailable values;
+- 30/30 source-row references verified by SHA-256; and
+- predictor-leakage audit passed with G02 test use report_only.
+
+The artifact is a generated local runtime result and remains excluded
+from the implementation commit under the existing repository policy.
+Its stable identity is the matrix identifier, accepted path, and
+SHA-256 recorded here and in the P4-R0 handoff.
+
+Status: Implemented and verified on 2026-08-05. ML Feature Matrix v1
+runtime and JSON Schema validation passed, ten targeted tests passed,
+and the complete suite passed 195/195. No estimator was fitted, no
+prediction was produced, and no metric was calculated.
+
+Limitation:
+
+D-071 establishes input integrity and leakage-safe partition roles,
+not Machine Learning performance. The accepted matrix contains only
+30 controlled rows from five contexts and three classes. It does not
+establish model selection, test performance, generalization, hybrid
+behavior, or superiority over the D-069 rule-based baseline.

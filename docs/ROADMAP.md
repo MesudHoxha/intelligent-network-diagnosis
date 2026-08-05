@@ -79,7 +79,18 @@ Status: Completed
 Status: In progress
 
 - Leakage-safe ML experiment protocol and feature-matrix contract:
-  next target
+  implemented and verified against the real D-067 artifacts
+- Lossless seven-tri-state to 14-binary-column transformation:
+  implemented and tested
+- Predictor leakage gates and immutable partition roles: implemented
+  and tested
+- Bounded logistic-regression and shallow-tree candidate set:
+  precommitted before fitting
+- Real 30-record ML Feature Matrix v1: completed and independently
+  verified
+- Matrix SHA-256, 30/30 source-row bindings, and ten structural
+  unavailable values: recorded
+- P4-R0 closeout and HANDOFF: completed
 - Interpretable supervised baseline trained only on the frozen train
   partition: not started
 - Validation-only selection before a single report-only test

@@ -151,6 +151,30 @@ Phase 4 — Machine Learning baseline
 - P3-R0 artifact references: 150/150 SHA-256 verified
 - P3-R0 targeted tests: 10/10 passed
 - Full automated regression suite: 185/185 passed
+- Leakage-Safe Machine Learning Baseline Protocol v1
+- ML Feature Matrix v1 runtime validator and JSON Schema
+- Exact seven-feature predictor whitelist and separate fault_type
+  target
+- Lossless tri-state available/true pair encoding with 14 binary
+  output columns
+- Explicit exclusion of labels, metadata, quality, ground truth,
+  rule output, evaluation output, identifiers, paths, hashes, and
+  explanation text from predictors
+- Frozen train-fit, validation-selection, and test-report-only roles
+- Six bounded logistic-regression and shallow-tree candidates
+- Deterministic model seed and validation-only tie-break policy
+- Atomic byte-deterministic feature-matrix writing and existing-output
+  protection
+- Negative leakage, split-drift, schema-version, hash, and encoding
+  gates
+- Real 30-record P4-R0 ML Feature Matrix v1
+- P4-R0 partition rows 18/6/6 and groups 3/1/1 verified
+- Seven raw tri-state features encoded as 14 binary columns
+- Ten expected structural unavailable values preserved
+- P4-R0 source-row references: 30/30 SHA-256 verified
+- P4-R0 predictor-leakage audit passed with G02 test report_only
+- P4-R0 targeted tests: 10/10 passed
+- Full automated regression suite: 195/195 passed
 
 ## Representative verified experiments
 
@@ -540,16 +564,47 @@ the accepted merge or split.
   the perfect values do not establish generalization or method
   superiority
 
+## Latest P4-R0 verification
+
+- Decisions: D-070 and D-071
+- Protocol: docs/ML_BASELINE_PROTOCOL.md
+- Matrix contract: ML Feature Matrix v1
+- Matrix schema: schemas/ml_feature_matrix_v1.schema.json
+- Runtime implementation: src/ml/feature_matrix.py
+- Matrix ID: p4_r0_ml_feature_matrix_v1
+- Matrix status: COMPLETED
+- Artifact path:
+  reports/experiments/p4_r0_ml_feature_matrix_v1.json
+- Artifact SHA-256:
+  9193b4b8c676bf94ef9af05562d9d0047faef61bc94c9d81b0485b88bf599730
+- Accepted campaign binding: PASS
+- Rows: 30
+- Partition rows: 18/6/6
+- Partition groups: 3/1/1
+- Raw predictor features: 7
+- Encoded binary columns: 14
+- Structural unavailable values: 10 EXPECTED
+- Source-row references: 30/30 SHA-256 PASS
+- Predictor-leakage audit: PASS
+- Test use: report_only
+- ML fitted estimators: none
+- Predictions or metrics: none
+- Targeted tests: 10/10 passed
+- Full automated suite: 195/195 passed
+- Interpretation: P4-R0 is closed as an input-integrity milestone;
+  no ML performance or generalization result exists yet
+
 ## Active
 
 - Preserve the accepted campaign run, dataset hash, split seed,
   group identifiers, ratios, and partition allocation.
-- Freeze a leakage-safe ML baseline protocol before model fitting.
-- Define the seven-feature input matrix without admitting labels,
-  ground truth, evaluation outputs, or provenance as predictors.
-- Restrict fitting to train, selection to validation, and G02 test to
-  one report-only evaluation after the pipeline is frozen.
-- Reuse Method Evaluation Result v1 for the future ML report.
+- Implement the six frozen D-070 candidates against the accepted
+  D-071 matrix without changing preprocessing or partitions.
+- Fit every candidate only on train and select only from validation
+  macro F1, accuracy, complexity rank, and candidate ID.
+- Persist and verify the winning train-only pipeline before opening
+  G02 test for its single report-only evaluation.
+- Emit and validate Method Evaluation Result v1 for the ML method.
 
 ## Open issues
 
@@ -569,16 +624,15 @@ the accepted merge or split.
 
 ## Next milestone
 
-P4-R0 — Leakage-Safe ML Baseline Protocol and Feature Matrix.
+P4-R1 — Train, Select, Freeze, and Report the ML Baseline.
 
-Freeze the supervised target, seven-feature transformation, missing-
-value handling, candidate model families, deterministic seeds,
-train-only fitting, validation-only selection, and the one-time
-report-only test policy before evaluating a fitted model. Preserve
-the D-067 campaign and split and the D-068 result contract. Exclude
-ground truth, rule predictions, evaluation results, identifiers,
-paths, hashes, and explanation text from model features. Stop before
-hybrid-policy design.
+Consume only the accepted D-071 matrix. Fit the six frozen candidates
+on train, calculate selection metrics only on validation, apply the
+precommitted deterministic tie-breakers, and persist the winning
+train-only pipeline. Only after its identity and artifact hash are
+frozen may G02 test be evaluated once as report_only. Emit the ML
+Method Evaluation Result v1 without changing the feature contract,
+candidate set, split, or test policy. Stop before hybrid-policy design.
 
 ## Important limitation
 
@@ -629,3 +683,9 @@ diagnostic accuracy. The project has not yet implemented or evaluated
 the Machine Learning and hybrid methods, so no cross-method comparison
 or superiority claim is possible. Additional controlled variation,
 ML implementation, and hybrid evaluation remain required.
+
+P4-R0 produced the accepted deterministic feature matrix without
+fitting or evaluating a model. Its successful leakage and provenance
+audits establish only that the frozen D-067 inputs were transformed
+according to D-070. They do not establish ML accuracy, validation or
+test performance, generalization, or a comparison with D-069.

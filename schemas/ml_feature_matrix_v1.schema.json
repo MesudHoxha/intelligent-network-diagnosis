@@ -1,0 +1,486 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ML Feature Matrix v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "matrix_id",
+    "status",
+    "row_count",
+    "raw_feature_count",
+    "encoded_feature_count",
+    "protocol",
+    "dataset_binding",
+    "partitions",
+    "leakage_audit",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "matrix_id": {"type": "string", "minLength": 1},
+    "status": {"const": "COMPLETED"},
+    "row_count": {"const": 30},
+    "raw_feature_count": {"const": 7},
+    "encoded_feature_count": {"const": 14},
+    "protocol": {"$ref": "#/$defs/protocol"},
+    "dataset_binding": {"$ref": "#/$defs/dataset_binding"},
+    "partitions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["train", "validation", "test"],
+      "properties": {
+        "train": {
+          "allOf": [
+            {"$ref": "#/$defs/partition"},
+            {
+              "properties": {
+                "use": {"const": "fit"},
+                "row_count": {"const": 18},
+                "group_count": {"const": 3},
+                "group_ids": {"minItems": 3, "maxItems": 3},
+                "records": {"minItems": 18, "maxItems": 18}
+              }
+            }
+          ]
+        },
+        "validation": {
+          "allOf": [
+            {"$ref": "#/$defs/partition"},
+            {
+              "properties": {
+                "use": {"const": "selection"},
+                "row_count": {"const": 6},
+                "group_count": {"const": 1},
+                "group_ids": {"minItems": 1, "maxItems": 1},
+                "records": {"minItems": 6, "maxItems": 6}
+              }
+            }
+          ]
+        },
+        "test": {
+          "allOf": [
+            {"$ref": "#/$defs/partition"},
+            {
+              "properties": {
+                "use": {"const": "report_only"},
+                "row_count": {"const": 6},
+                "group_count": {"const": 1},
+                "group_ids": {"minItems": 1, "maxItems": 1},
+                "records": {"minItems": 6, "maxItems": 6}
+              }
+            }
+          ]
+        }
+      }
+    },
+    "leakage_audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "predictor_source",
+        "transformation_fit_required",
+        "no_cross_partition_group",
+        "test_used_for_fit",
+        "test_used_for_selection",
+        "unexpected_predictor_fields",
+        "unavailable_value_count"
+      ],
+      "properties": {
+        "predictor_source": {"const": "features_only"},
+        "transformation_fit_required": {"const": false},
+        "no_cross_partition_group": {"const": true},
+        "test_used_for_fit": {"const": false},
+        "test_used_for_selection": {"const": false},
+        "unexpected_predictor_fields": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "unavailable_value_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 210
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "campaign_result",
+        "merged_dataset",
+        "split_manifest",
+        "partition_artifact_count",
+        "source_row_reference_count"
+      ],
+      "properties": {
+        "campaign_result": {"$ref": "#/$defs/artifact"},
+        "merged_dataset": {"$ref": "#/$defs/artifact"},
+        "split_manifest": {"$ref": "#/$defs/artifact"},
+        "partition_artifact_count": {"const": 3},
+        "source_row_reference_count": {"const": 30}
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "class_order": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "no_fault"},
+        {"const": "missing_static_route"},
+        {"const": "wrong_next_hop"}
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "raw_features": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "source_gateway_reachable"},
+        {"const": "destination_reachable"},
+        {"const": "route_to_destination_exists_on_observer"},
+        {"const": "route_next_hop_present_on_observer"},
+        {"const": "route_next_hop_reachable_from_observer"},
+        {"const": "expected_next_hop_reachable_from_observer"},
+        {"const": "destination_reachable_from_transit"}
+      ],
+      "items": false,
+      "minItems": 7,
+      "maxItems": 7
+    },
+    "encoded_features": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "source_gateway_reachable__available"},
+        {"const": "source_gateway_reachable__true"},
+        {"const": "destination_reachable__available"},
+        {"const": "destination_reachable__true"},
+        {"const": "route_to_destination_exists_on_observer__available"},
+        {"const": "route_to_destination_exists_on_observer__true"},
+        {"const": "route_next_hop_present_on_observer__available"},
+        {"const": "route_next_hop_present_on_observer__true"},
+        {"const": "route_next_hop_reachable_from_observer__available"},
+        {"const": "route_next_hop_reachable_from_observer__true"},
+        {"const": "expected_next_hop_reachable_from_observer__available"},
+        {"const": "expected_next_hop_reachable_from_observer__true"},
+        {"const": "destination_reachable_from_transit__available"},
+        {"const": "destination_reachable_from_transit__true"}
+      ],
+      "items": false,
+      "minItems": 14,
+      "maxItems": 14
+    },
+    "encoding_pair": {
+      "type": "array",
+      "items": {"type": "integer", "enum": [0, 1]},
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_id",
+        "family",
+        "complexity_rank",
+        "parameters"
+      ],
+      "properties": {
+        "candidate_id": {"type": "string", "minLength": 1},
+        "family": {
+          "type": "string",
+          "enum": ["multinomial_logistic_regression", "decision_tree"]
+        },
+        "complexity_rank": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 6
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "type": ["string", "number", "integer", "null"]
+          }
+        }
+      }
+    },
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocol_id",
+        "target_field",
+        "class_order",
+        "raw_feature_names",
+        "encoded_feature_names",
+        "encoding",
+        "excluded_predictor_sources",
+        "partition_policy",
+        "selection_policy",
+        "model_random_seed",
+        "candidate_models"
+      ],
+      "properties": {
+        "protocol_id": {"const": "leakage_safe_ml_baseline_v1"},
+        "target_field": {"const": "labels.fault_type"},
+        "class_order": {"$ref": "#/$defs/class_order"},
+        "raw_feature_names": {"$ref": "#/$defs/raw_features"},
+        "encoded_feature_names": {"$ref": "#/$defs/encoded_features"},
+        "encoding": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "encoding_id",
+            "fit_required",
+            "output_dtype",
+            "mapping",
+            "invalid_pair"
+          ],
+          "properties": {
+            "encoding_id": {"const": "tristate_available_true_pair_v1"},
+            "fit_required": {"const": false},
+            "output_dtype": {"const": "int8_binary"},
+            "mapping": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["true", "false", "unavailable"],
+              "properties": {
+                "true": {"const": [1, 1]},
+                "false": {"const": [1, 0]},
+                "unavailable": {"const": [0, 0]}
+              }
+            },
+            "invalid_pair": {"const": [0, 1]}
+          }
+        },
+        "excluded_predictor_sources": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 10,
+          "maxItems": 10,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "partition_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "fit_partition",
+            "selection_partition",
+            "held_out_partition",
+            "test_use",
+            "refit_on_train_plus_validation"
+          ],
+          "properties": {
+            "fit_partition": {"const": "train"},
+            "selection_partition": {"const": "validation"},
+            "held_out_partition": {"const": "test"},
+            "test_use": {
+              "const": "report_only_once_after_pipeline_freeze"
+            },
+            "refit_on_train_plus_validation": {"const": false}
+          }
+        },
+        "selection_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "primary_metric",
+            "tie_breakers",
+            "decision_threshold",
+            "test_metrics_allowed"
+          ],
+          "properties": {
+            "primary_metric": {"const": "validation_macro_f1"},
+            "tie_breakers": {
+              "const": [
+                "validation_accuracy_desc",
+                "complexity_rank_asc",
+                "candidate_id_asc"
+              ]
+            },
+            "decision_threshold": {"const": "argmax"},
+            "test_metrics_allowed": {"const": false}
+          }
+        },
+        "model_random_seed": {"const": 20260730},
+        "candidate_models": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/candidate"},
+          "minItems": 6,
+          "maxItems": 6
+        }
+      }
+    },
+    "class_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["no_fault", "missing_static_route", "wrong_next_hop"],
+      "properties": {
+        "no_fault": {"type": "integer", "minimum": 2},
+        "missing_static_route": {"type": "integer", "minimum": 2},
+        "wrong_next_hop": {"type": "integer", "minimum": 2}
+      }
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sample_id",
+        "split_group_id",
+        "target_class",
+        "feature_vector",
+        "source_row_sha256"
+      ],
+      "properties": {
+        "sample_id": {"type": "string", "minLength": 1},
+        "split_group_id": {"type": "string", "minLength": 1},
+        "target_class": {
+          "type": "string",
+          "enum": ["no_fault", "missing_static_route", "wrong_next_hop"]
+        },
+        "feature_vector": {
+          "type": "array",
+          "items": {"type": "integer", "enum": [0, 1]},
+          "minItems": 14,
+          "maxItems": 14
+        },
+        "source_row_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "partition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "use",
+        "row_count",
+        "group_count",
+        "group_ids",
+        "class_row_counts",
+        "unavailable_value_count",
+        "records"
+      ],
+      "properties": {
+        "use": {"type": "string"},
+        "row_count": {"type": "integer", "minimum": 1},
+        "group_count": {"type": "integer", "minimum": 1},
+        "group_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "class_row_counts": {"$ref": "#/$defs/class_counts"},
+        "unavailable_value_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 126
+        },
+        "records": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/record"}
+        }
+      }
+    },
+    "partition_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "row_count",
+        "group_count",
+        "group_ids"
+      ],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "row_count": {"type": "integer", "minimum": 1},
+        "group_count": {"type": "integer", "minimum": 1},
+        "group_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "dataset_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "campaign_id",
+        "campaign_run_id",
+        "dataset_row_schema_version",
+        "merged_dataset",
+        "split"
+      ],
+      "properties": {
+        "campaign_id": {"const": "P2_ROUTING_5CTX_V1"},
+        "campaign_run_id": {"type": "string", "minLength": 1},
+        "dataset_row_schema_version": {"const": 2},
+        "merged_dataset": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "sha256", "row_count"],
+          "properties": {
+            "path": {"type": "string", "minLength": 1},
+            "sha256": {"$ref": "#/$defs/sha256"},
+            "row_count": {"const": 30}
+          }
+        },
+        "split": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "algorithm",
+            "seed",
+            "ratios",
+            "manifest_path",
+            "manifest_sha256",
+            "partitions",
+            "no_cross_partition_group"
+          ],
+          "properties": {
+            "algorithm": {"const": "complete_context_group_hash_v2"},
+            "seed": {"const": 20260730},
+            "ratios": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["train", "validation", "test"],
+              "properties": {
+                "train": {"const": 0.6},
+                "validation": {"const": 0.2},
+                "test": {"const": 0.2}
+              }
+            },
+            "manifest_path": {"type": "string", "minLength": 1},
+            "manifest_sha256": {"$ref": "#/$defs/sha256"},
+            "partitions": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["train", "validation", "test"],
+              "properties": {
+                "train": {"$ref": "#/$defs/partition_binding"},
+                "validation": {"$ref": "#/$defs/partition_binding"},
+                "test": {"$ref": "#/$defs/partition_binding"}
+              }
+            },
+            "no_cross_partition_group": {"const": true}
+          }
+        }
+      }
+    }
+  }
+}
