@@ -314,3 +314,23 @@ files are limited to train and validation. G02 remains closed until
 P5-R2 independently rebinds the committed implementation, this
 policy, the selected-policy artifact, and the five accepted
 baselines.
+
+## 15. Accepted P5-R2 execution
+
+The P5-R2 coordinator executed without modifying this frozen policy.
+It independently verified policy SHA-256, the five baseline hashes,
+selected-policy SHA-256, consensus_abstain_v1, and all P5-R1
+development runtime artifacts before any G02 source collection.
+
+It generated only six selected-candidate G02 predictions, finished
+that batch before ground-truth evaluation, and atomically produced
+the complete hybrid report plus Cross-Method Comparison v1. The
+report reused 24 P5-R1 development outputs and carried 210
+sample-level artifact references across 30 records.
+
+The real G02 hybrid result has 1.0 macro-F1, exact diagnosis,
+affected-prefix correctness, and coverage, with zero abstentions. The
+report and comparison hashes are recorded in HANDOFF_P5_R2. All
+14/14 targeted and 243/243 regression tests passed, and independent
+verification confirmed that G02 remained report_only and introduced
+no test-derived policy or selection change.

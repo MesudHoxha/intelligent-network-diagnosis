@@ -393,3 +393,41 @@ The selection artifact was independently verified with SHA-256
 No test prediction or metric was produced. G02 report-only evaluation
 remains reserved for P5-R2 and must use the frozen selected policy
 without reselection or tuning.
+
+## 18. P5-R2 report-only implementation gate
+
+P5-R2 adds a separate reporting coordinator without changing the
+Hybrid Engine prediction API. Before any G02 source collection, the
+coordinator reruns the P5-R1 independent verifier against the policy,
+five accepted baselines, 99 development runtime JSON files, selected
+candidate, and selection SHA-256.
+
+Only after this gate may it bind the six test sample identities and
+the Evidence v2, rule-prediction, and ML-prediction inputs allowed by
+D-074. It generates all six selected-candidate predictions before the
+Evaluator reads ground truth. Test evaluation remains report_only.
+
+The complete hybrid Method Evaluation Result combines 24 immutable
+P5-R1 development records with six P5-R2 test records. It uses the
+existing full-denominator abstention metrics and requires 30 times
+seven, or 210, sample artifact references.
+
+Cross-Method Comparison v1 binds the three immutable method reports
+and presents the same classification, diagnostic, coverage, and
+abstention fields for train, validation, test, and overall. The
+comparison is descriptive_only and cannot convert these controlled
+values into a statistical superiority or real-world generalization
+claim.
+
+The canonical P5-R2 execution passed the freeze gate, generated all
+six G02 predictions before test ground-truth evaluation, and produced
+the complete 30-row hybrid report plus Cross-Method Comparison v1.
+The G02 hybrid result has 1.0 macro-F1, exact diagnosis,
+affected-prefix correctness, and coverage, with zero abstentions.
+
+Independent verification passed all 210 sample references, the exact
+14-file runtime set, 14/14 targeted tests, and 243/243 regression
+tests. Test use remained report_only and did not influence policy or
+selection. The comparison remains descriptive_only; these values do
+not authorize a statistical-superiority or real-world-generalization
+claim.

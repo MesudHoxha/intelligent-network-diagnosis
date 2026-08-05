@@ -702,3 +702,32 @@ five baselines remained unchanged. P5-R1 is closed. Phase 5 remains
 in progress because G02 is still unobserved by the hybrid method;
 P5-R2 alone may perform its one report-only evaluation after
 reverifying the committed implementation and selection artifact.
+
+P5-R2 completed the single authorized report-only G02 evaluation
+under D-076. The src/hybrid/reporting.py coordinator verified the
+unchanged policy, five accepted baselines, complete P5-R1 runtime,
+and selection SHA-256 before indexing G02. It then generated only six
+consensus_abstain_v1 predictions, completed that prediction batch
+before ground-truth evaluation, and atomically created the hybrid
+report plus a three-method comparison.
+
+The complete hybrid report reuses the 24 selected P5-R1 development
+outputs and adds six P5-R2 report-only test outputs. Its 30 records
+carry seven artifact references each, for 210 hash-bound references.
+Cross-Method Comparison v1 compares Rule-based, Machine Learning, and
+Hybrid results for the same frozen partitions and marks the result as
+descriptive only, with no statistical-superiority claim.
+
+The real hybrid result obtained 1.0 macro-F1, 1.0 exact-diagnosis
+rate, 1.0 affected-prefix correctness, 1.0 coverage, and zero
+abstentions on the six-row G02 test group. The hybrid report SHA-256
+is e990a29882f1b7cec4fe003ee5ee65b3fa3dfd25250092a0f9f2a908074a9c75,
+and the cross-method comparison SHA-256 is
+eebf97dfe340a05feba70874f54727e1a8ccf7ce4224301f162544537d8ecf80.
+
+Independent verification passed 210/210 sample references, the exact
+14-file runtime set, 14/14 targeted tests, and 243/243 regression
+tests. G02 remained report_only and did not influence policy or
+selection. D-076 and P5-R2 are accepted, and Phase 5 is complete for
+the frozen controlled campaign. The descriptive comparison does not
+establish statistical superiority or real-world generalization.

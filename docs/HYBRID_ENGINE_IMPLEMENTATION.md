@@ -155,3 +155,31 @@ regression suite passed, and no test prediction or metric exists.
 P5-R1 is closed. P5-R2 must reverify the committed implementation and
 frozen selection before it may create the single report-only G02
 hybrid evaluation.
+
+## 10. Accepted P5-R2 report coordinator
+
+src/hybrid/reporting.py keeps the Hybrid Engine API unchanged and
+adds the one authorized report-only coordinator. Its freeze gate
+reuses verify_hybrid_selection before G02 indexing. The coordinator
+then generates only six consensus_abstain_v1 predictions and proves
+the full prediction batch exists before allowing Evaluator access to
+ground truth.
+
+The atomic output contains 14 JSON files: six test predictions, six
+test evaluations, one complete hybrid Method Evaluation Result v1,
+and one Cross-Method Comparison v1. Development references remain in
+the immutable P5-R1 selected-candidate directory.
+
+The independent verifier rechecks 210 report references, exact path
+ownership, report-only test use, both output hashes, and the complete
+14-file set. The real execution passed 210/210 reference checks,
+14/14 targeted tests, and the complete 243/243 regression suite.
+
+The frozen policy produced 1.0 macro-F1, 1.0 exact diagnosis, 1.0
+affected-prefix correctness, 1.0 coverage, and zero abstentions on
+the six-row G02 test group. The hybrid report SHA-256 is
+e990a29882f1b7cec4fe003ee5ee65b3fa3dfd25250092a0f9f2a908074a9c75,
+and the comparison SHA-256 is
+eebf97dfe340a05feba70874f54727e1a8ccf7ce4224301f162544537d8ecf80.
+The output remained descriptive_only and contains no statistical
+superiority claim.

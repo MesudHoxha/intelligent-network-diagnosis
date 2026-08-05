@@ -111,7 +111,7 @@ Status: Completed
 - P4-R1 closeout and HANDOFF: completed
 
 ## Phase 5 — Hybrid diagnosis
-Status: In progress
+Status: Completed
 
 - P5-R0 Hybrid Diagnosis Policy v1 design: frozen and locally
   runtime-verified
@@ -145,10 +145,23 @@ Status: In progress
   completed
 - P5-R1 tests: 14/14 targeted and 229/229 full regression passed
 - P5-R1 HANDOFF and closeout: completed
-- P5-R2 frozen-policy report-only evaluation: pending
+- P5-R2 report coordinator, Cross-Method Comparison v1 schema, and
+  independent verifier: implemented and isolated-test verified
+- P5-R2 tests: 14/14 targeted and 243/243 full regression passed on
+  synthetic boundary fixtures
+- P5-R2 real frozen-policy G02 report-only evaluation: completed and
+  independently verified
+- Complete 30-row hybrid Method Evaluation Result v1 with 210/210
+  source-artifact bindings: completed
+- Descriptive Rule-based vs Machine Learning vs Hybrid comparison:
+  completed without a statistical-superiority claim
+- P5-R2 closeout and HANDOFF: completed
 
 ## Phase 6 — Extended fault taxonomy
 Status: Not started
+
+- First milestone: freeze the bounded Phase 6 fault taxonomy and
+  evaluation plan before implementing or collecting new scenarios
 
 ## Phase 7 — Dashboard and API
 Status: Not started

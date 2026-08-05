@@ -2,7 +2,7 @@
 
 ## Current phase
 
-Phase 5 — Hybrid diagnosis
+Phase 6 — Extended fault taxonomy planning
 
 ## Implemented and tested
 
@@ -757,9 +757,47 @@ selection follows the frozen complexity tie-break. Hybrid test
 performance and the three-method comparison remain unknown until
 P5-R2.
 
+## Latest P5-R2 verification
+
+- Decision: D-076, accepted and runtime-verified
+- Coordinator: src/hybrid/reporting.py
+- Comparison schema:
+  schemas/cross_method_comparison_v1.schema.json
+- Implementation document: docs/P5_R2_REPORT_IMPLEMENTATION.md
+- Freeze gate order: P5-R1 independent verification before G02
+  source collection
+- Required selection SHA-256:
+  59abc80339658a30ab82019c847dbb7a1c9348bc4ca82ad7e1378f2f339a9507
+- Frozen selected candidate: consensus_abstain_v1
+- New G02 predictions: 6 selected candidate only, PASS
+- Prediction batch before test ground-truth reads: enforced
+- Complete hybrid report: 30 rows and 210/210 sample references PASS
+- Atomic runtime output: 14/14 JSON files PASS
+- Comparison: Rule-based vs Machine Learning vs Hybrid under
+  the same 18/6/6 split
+- Comparison interpretation: descriptive_only
+- Statistical superiority test: forbidden/absent
+- G02 hybrid macro-F1: 1.0
+- G02 hybrid exact-diagnosis rate: 1.0
+- G02 hybrid affected-prefix correctness: 1.0
+- G02 hybrid coverage: 1.0
+- G02 hybrid abstentions: 0
+- Hybrid report SHA-256:
+  e990a29882f1b7cec4fe003ee5ee65b3fa3dfd25250092a0f9f2a908074a9c75
+- Cross-method comparison SHA-256:
+  eebf97dfe340a05feba70874f54727e1a8ccf7ce4224301f162544537d8ecf80
+- Test use: report_only PASS
+- Test influenced policy or selection: false
+- Targeted tests: 14/14 passed
+- Full regression suite: 243/243 passed
+- P5-R2 closeout: completed
+- Phase 5: Completed
+
+The accepted values describe the frozen controlled campaign. They do
+not establish statistical superiority or real-world generalization.
+
 ## Open issues
 
-- Future cross-method comparison report after ML and hybrid exist
 - Final FRRouting container image for later routing extensions
 - Final set of pilot fault classes beyond C1 and C2
 - Missing-evidence experiments
@@ -769,19 +807,18 @@ P5-R2.
   campaign
 - Reproducible backup or publication policy for generated runtime
   datasets before final thesis archiving
-- P5-R2 hybrid report and cross-method comparison
 - OSPF implementation; its current status remains proposed
 
 ## Next milestone
 
-P5-R2 — Evaluate the frozen selected hybrid policy once on G02.
+P6-R0 — Freeze the bounded Phase 6 fault taxonomy and evaluation plan.
 
-Reverify the committed P5-R1 implementation, unchanged D-074 policy,
-five accepted baselines, and selected-policy SHA-256 before opening
-G02. Generate only consensus_abstain_v1 test predictions, produce the
-first complete hybrid Method Evaluation Result v1, and compare the
-three methods under the frozen protocol without refit, reselection,
-tuning, or policy changes.
+Review wrong_gateway, interface_down, and acl_block as the deferred
+candidate classes; define their observable evidence, topology and
+fault-injection requirements, class balance, missing-evidence cases,
+split-group boundaries, and acceptance tests before implementing or
+collecting any new scenario. Preserve the accepted P2-P5 campaign and
+all three method baselines as immutable reference artifacts.
 
 ## Important limitation
 
@@ -845,7 +882,9 @@ diagnosis and 0.0 affected-prefix correctness per partition. The
 hybrid policy is precommitted and P5-R0 runtime-verified. P5-R1
 implemented both candidates and selected consensus_abstain_v1 only
 from G01 validation after an exact metric tie, using the frozen lower-
-complexity rule. G02 remains unobserved by the hybrid method, so no
-final cross-method, test-performance, or superiority claim is
-possible. Additional controlled variation and P5-R2 hybrid evaluation
-remain required.
+complexity rule. P5-R2 then evaluated that frozen policy once on G02,
+produced the complete three-method descriptive comparison, and closed
+Phase 5. The hybrid result is exact for the accepted six-row G02 test
+group, but the small one-context test still cannot establish
+statistical superiority or real-world generalization. Additional
+controlled variation remains required in Phase 6.

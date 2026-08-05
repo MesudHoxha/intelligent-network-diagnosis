@@ -1426,3 +1426,65 @@ complexity tie-break, not empirical superiority over the guarded
 fallback. Validation contains only one controlled context, G02 test
 remains unobserved by the hybrid method, and no cross-method or
 real-world generalization claim is authorized by D-075.
+
+## D-076 — P5-R2 report-only execution and comparison gate
+
+Decision: Permit exactly one new held-out hybrid evaluation only
+through an atomic report coordinator that independently reverifies
+the complete P5-R1 freeze before traversing G02.
+
+The coordinator must verify the unchanged Hybrid Policy v1 SHA-256,
+all five accepted baseline hashes, selected-policy SHA-256, selected
+candidate identity, both candidate manifests, and all 96 P5-R1
+development prediction/evaluation artifacts. It must fail before G02
+source collection on any mismatch.
+
+After the gate, only consensus_abstain_v1 may generate the six G02
+predictions. All six predictions must exist before the Evaluator
+reads any test ground truth. The coordinator may not refit the ML
+model, rerun selection, change policy, tune a threshold, generate the
+second candidate, or regenerate train/validation outputs.
+
+The first complete hybrid Method Evaluation Result v1 must reuse the
+24 selected P5-R1 development outputs and add the six P5-R2 test
+outputs. Every record carries seven hash-bound references, yielding
+210 sample-level references. The output directory is atomic,
+non-overwriting, and contains exactly six G02 predictions, six G02
+evaluations, one hybrid report, and one cross-method comparison.
+
+Cross-Method Comparison v1 must bind the immutable D-069 rule report,
+D-073 ML report, and new hybrid report. It compares accuracy, macro
+precision/recall/F1, exact diagnosis, affected-prefix correctness,
+coverage, and abstention values for the same train, validation, test,
+and overall scopes. It is descriptive_only, preserves G02 as
+report_only, performs no statistical superiority test, and records
+that test did not influence policy or selection.
+
+Status: Accepted and runtime-verified on 2026-08-05. The canonical
+report-only execution passed the complete freeze gate before G02,
+preserved the policy, five accepted baselines, and selected-policy
+artifact, and generated exactly six consensus_abstain_v1 predictions
+before test ground truth was evaluated.
+
+The atomic output contains six G02 predictions, six evaluations, one
+30-row hybrid report, and one cross-method comparison. The hybrid
+report verified 210/210 sample references and has SHA-256
+e990a29882f1b7cec4fe003ee5ee65b3fa3dfd25250092a0f9f2a908074a9c75.
+The comparison has SHA-256
+eebf97dfe340a05feba70874f54727e1a8ccf7ce4224301f162544537d8ecf80.
+
+On the six-row G02 test group, the frozen hybrid policy obtained 1.0
+macro-F1, 1.0 exact-diagnosis rate, 1.0 affected-prefix correctness,
+1.0 coverage, and zero abstentions. Test use remained report_only and
+did not influence policy design or selection. Independent output
+verification, 14/14 targeted tests, and the complete 243/243
+regression suite passed. D-076 and P5-R2 are therefore closed, and
+Phase 5 is complete for the frozen controlled campaign.
+
+Limitation:
+
+D-076 defines the only authorized execution and reporting path. The
+accepted values describe one six-row held-out context in a small,
+controlled campaign. Equal class metrics and stronger hybrid
+localization than the independent ML baseline do not establish
+statistical superiority or real-world generalization.
