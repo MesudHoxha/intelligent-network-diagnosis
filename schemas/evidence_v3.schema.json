@@ -1,0 +1,351 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Auditable Role-Neutral Evidence v3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "topology_id",
+    "collected_at_utc",
+    "direction",
+    "source_node",
+    "route_observer_node",
+    "transit_node",
+    "source_address",
+    "source_prefix",
+    "destination_address",
+    "destination_prefix",
+    "source_expected_gateway_address",
+    "source_default_gateway_on_source",
+    "expected_next_hop",
+    "route_next_hop_on_observer",
+    "observer_egress_interface",
+    "observer_egress_oper_state",
+    "flow_protocol",
+    "flow_source_port",
+    "flow_destination_port",
+    "policy_backend",
+    "policy_table",
+    "policy_chain",
+    "matching_block_rule_id",
+    "features",
+    "availability",
+    "probes"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 3
+    },
+    "topology_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "collected_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "direction": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_]*_to_[a-z0-9][a-z0-9_]*$"
+    },
+    "source_node": {
+      "$ref": "#/$defs/identifier"
+    },
+    "route_observer_node": {
+      "$ref": "#/$defs/identifier"
+    },
+    "transit_node": {
+      "$ref": "#/$defs/identifier"
+    },
+    "source_address": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "source_prefix": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "destination_address": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "destination_prefix": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "source_expected_gateway_address": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "source_default_gateway_on_source": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "expected_next_hop": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "route_next_hop_on_observer": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "observer_egress_interface": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,14}$"
+    },
+    "observer_egress_oper_state": {
+      "enum": [
+        "up",
+        "down",
+        null
+      ]
+    },
+    "flow_protocol": {
+      "enum": [
+        "icmp",
+        "tcp",
+        "udp"
+      ]
+    },
+    "flow_source_port": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 65535
+    },
+    "flow_destination_port": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 65535
+    },
+    "policy_backend": {
+      "const": "iptables"
+    },
+    "policy_table": {
+      "const": "filter"
+    },
+    "policy_chain": {
+      "const": "FORWARD"
+    },
+    "matching_block_rule_id": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/identifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "features": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_expected_gateway_reachable",
+        "source_default_gateway_matches_expected",
+        "destination_reachable",
+        "route_to_destination_exists_on_observer",
+        "route_next_hop_matches_expected",
+        "route_next_hop_reachable_from_observer",
+        "expected_next_hop_reachable_from_observer",
+        "observer_egress_interface_oper_up",
+        "destination_reachable_from_transit",
+        "flow_blocked_by_policy"
+      ],
+      "properties": {
+        "source_expected_gateway_reachable": {
+          "$ref": "#/$defs/triState"
+        },
+        "source_default_gateway_matches_expected": {
+          "$ref": "#/$defs/triState"
+        },
+        "destination_reachable": {
+          "$ref": "#/$defs/triState"
+        },
+        "route_to_destination_exists_on_observer": {
+          "$ref": "#/$defs/triState"
+        },
+        "route_next_hop_matches_expected": {
+          "$ref": "#/$defs/triState"
+        },
+        "route_next_hop_reachable_from_observer": {
+          "$ref": "#/$defs/triState"
+        },
+        "expected_next_hop_reachable_from_observer": {
+          "$ref": "#/$defs/triState"
+        },
+        "observer_egress_interface_oper_up": {
+          "$ref": "#/$defs/triState"
+        },
+        "destination_reachable_from_transit": {
+          "$ref": "#/$defs/triState"
+        },
+        "flow_blocked_by_policy": {
+          "$ref": "#/$defs/triState"
+        }
+      }
+    },
+    "availability": {
+      "$ref": "#/$defs/availabilityMap"
+    },
+    "probes": {
+      "$ref": "#/$defs/probeMap"
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "triState": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "availability": {
+      "enum": [
+        "observed",
+        "structurally_unavailable",
+        "collection_unavailable"
+      ]
+    },
+    "probe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "producer",
+        "status",
+        "raw_artifact",
+        "raw_artifact_sha256"
+      ],
+      "properties": {
+        "producer": {
+          "$ref": "#/$defs/identifier"
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "not_applicable",
+            "failed"
+          ]
+        },
+        "raw_artifact": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "raw_artifact_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "availabilityMap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_expected_gateway_reachable",
+        "source_default_gateway_matches_expected",
+        "destination_reachable",
+        "route_to_destination_exists_on_observer",
+        "route_next_hop_matches_expected",
+        "route_next_hop_reachable_from_observer",
+        "expected_next_hop_reachable_from_observer",
+        "observer_egress_interface_oper_up",
+        "destination_reachable_from_transit",
+        "flow_blocked_by_policy"
+      ],
+      "properties": {
+        "source_expected_gateway_reachable": {
+          "$ref": "#/$defs/availability"
+        },
+        "source_default_gateway_matches_expected": {
+          "$ref": "#/$defs/availability"
+        },
+        "destination_reachable": {
+          "$ref": "#/$defs/availability"
+        },
+        "route_to_destination_exists_on_observer": {
+          "$ref": "#/$defs/availability"
+        },
+        "route_next_hop_matches_expected": {
+          "$ref": "#/$defs/availability"
+        },
+        "route_next_hop_reachable_from_observer": {
+          "$ref": "#/$defs/availability"
+        },
+        "expected_next_hop_reachable_from_observer": {
+          "$ref": "#/$defs/availability"
+        },
+        "observer_egress_interface_oper_up": {
+          "$ref": "#/$defs/availability"
+        },
+        "destination_reachable_from_transit": {
+          "$ref": "#/$defs/availability"
+        },
+        "flow_blocked_by_policy": {
+          "$ref": "#/$defs/availability"
+        }
+      }
+    },
+    "probeMap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_expected_gateway_reachable",
+        "source_default_gateway_matches_expected",
+        "destination_reachable",
+        "route_to_destination_exists_on_observer",
+        "route_next_hop_matches_expected",
+        "route_next_hop_reachable_from_observer",
+        "expected_next_hop_reachable_from_observer",
+        "observer_egress_interface_oper_up",
+        "destination_reachable_from_transit",
+        "flow_blocked_by_policy"
+      ],
+      "properties": {
+        "source_expected_gateway_reachable": {
+          "$ref": "#/$defs/probe"
+        },
+        "source_default_gateway_matches_expected": {
+          "$ref": "#/$defs/probe"
+        },
+        "destination_reachable": {
+          "$ref": "#/$defs/probe"
+        },
+        "route_to_destination_exists_on_observer": {
+          "$ref": "#/$defs/probe"
+        },
+        "route_next_hop_matches_expected": {
+          "$ref": "#/$defs/probe"
+        },
+        "route_next_hop_reachable_from_observer": {
+          "$ref": "#/$defs/probe"
+        },
+        "expected_next_hop_reachable_from_observer": {
+          "$ref": "#/$defs/probe"
+        },
+        "observer_egress_interface_oper_up": {
+          "$ref": "#/$defs/probe"
+        },
+        "destination_reachable_from_transit": {
+          "$ref": "#/$defs/probe"
+        },
+        "flow_blocked_by_policy": {
+          "$ref": "#/$defs/probe"
+        }
+      }
+    }
+  }
+}

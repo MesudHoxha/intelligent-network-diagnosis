@@ -175,8 +175,21 @@ Status: In progress
   design gate
 - P6-R0 Containerlab execution, new dataset, training, predictions,
   and metrics: absent
-- Next milestone: P6-R1 Evidence v3, Dataset Row v3, and Observation
-  Profile v2 contracts
+- P6-R1 Observation Profile v2, Evidence v3, and Dataset Row v3
+  runtime validators and strict JSON Schemas: completed
+- Exact ten-feature predictor whitelist and raw-probe SHA-256
+  provenance: implemented and contract-tested
+- Structural unavailable, collection unavailable, and masked-missing
+  semantics: implemented without imputation
+- Backwards-compatible Observation v1/v2, Evidence v2/v3, and Dataset
+  Row v1/v2/v3 dispatch: implemented and tested
+- Dataset Row v2 runtime default retained until collector v3 closeout
+- P6-R1 targeted tests: 57/57 passed
+- Full automated regression suite: 316/316 passed in isolated
+  verification
+- P6-R1 Containerlab execution and Phase 6 runtime artifacts: absent
+- Next milestone: P6-R2 Evidence v3 collector and raw-probe
+  implementation
 
 ## Phase 7 — Dashboard and API
 Status: Not started

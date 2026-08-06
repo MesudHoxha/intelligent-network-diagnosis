@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Observation Profile v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "direction",
+    "source_node",
+    "source_container",
+    "source_address",
+    "source_prefix",
+    "source_gateway_address",
+    "destination_address",
+    "destination_prefix",
+    "route_observer_node",
+    "route_observer_container",
+    "expected_next_hop",
+    "observer_egress_interface",
+    "transit_node",
+    "transit_container",
+    "flow_protocol",
+    "flow_source_port",
+    "flow_destination_port",
+    "policy_backend",
+    "policy_table",
+    "policy_chain",
+    "policy_rule_tag_prefix"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 2
+    },
+    "direction": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_]*_to_[a-z0-9][a-z0-9_]*$"
+    },
+    "source_node": {
+      "$ref": "#/$defs/identifier"
+    },
+    "source_container": {
+      "$ref": "#/$defs/identifier"
+    },
+    "source_address": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "source_prefix": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "source_gateway_address": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "destination_address": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "destination_prefix": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "route_observer_node": {
+      "$ref": "#/$defs/identifier"
+    },
+    "route_observer_container": {
+      "$ref": "#/$defs/identifier"
+    },
+    "expected_next_hop": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "observer_egress_interface": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,14}$"
+    },
+    "transit_node": {
+      "$ref": "#/$defs/identifier"
+    },
+    "transit_container": {
+      "$ref": "#/$defs/identifier"
+    },
+    "flow_protocol": {
+      "enum": [
+        "icmp",
+        "tcp",
+        "udp"
+      ]
+    },
+    "flow_source_port": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 65535
+    },
+    "flow_destination_port": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 65535
+    },
+    "policy_backend": {
+      "const": "iptables"
+    },
+    "policy_table": {
+      "const": "filter"
+    },
+    "policy_chain": {
+      "const": "FORWARD"
+    },
+    "policy_rule_tag_prefix": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,63}$"
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

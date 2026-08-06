@@ -1560,3 +1560,60 @@ that still require implementation and real smoke verification. The
 planned six deterministic contexts do not establish population-level
 generalization or statistical superiority. OSPF remains proposed
 under D-034 and is outside this decision.
+
+## D-078 — Phase 6 observation, evidence, and dataset contracts
+
+Decision: Accept Observation Profile v2, Evidence v3, and Dataset Row
+v3 as the strict contract boundary for future Phase 6 collection while
+preserving the accepted v1-v2 contracts and keeping Dataset Row v2 as
+the runtime default until a real Evidence v3 collector is accepted.
+
+Observation Profile v2 adds the source-node role, source address and
+prefix, expected source gateway, observer egress interface, exact flow
+selector, and the frozen iptables/filter/FORWARD policy-inspection
+binding. Its semantic validator requires distinct source, observer,
+and transit roles; validates IPv4 and Linux-interface constraints; and
+checks fault parameters against the correct role for the three new
+single-fault classes. Existing Observation Profile v1 consumers remain
+unchanged. Explicit versioned dispatch supports v1 and v2.
+
+Evidence v3 contains exactly the ten D-077 predictor values inside a
+dedicated features object. For each feature it records an independent
+availability reason and a probe-provenance record. Observed and failed
+probes bind a normalized raw-artifact path and lowercase SHA-256;
+structurally unavailable features cannot claim a raw artifact. Derived
+gateway agreement, route next-hop agreement, interface state, and
+policy blocking must match their recorded raw values. Evidence v2 and
+its schema remain byte-for-byte unchanged, and explicit evidence
+dispatch supports v2 and v3.
+
+Dataset Row v3 exports only the ten frozen tri-state predictors. A
+separate provenance section binds the source Evidence v3 SHA-256,
+records one availability reason per feature, and stores an optional
+non-predictor mask ID. Structural unavailability, collection
+unavailability, and deterministic masked missingness are distinct
+reasons for the same predictor value unavailable. Quality counters
+must exactly match those reasons and the feature values.
+
+The four D-077 masks are non-destructive transformations of a clean
+Dataset Row v3. They may change only observed features in their frozen
+family, preserve structural reasons, labels, metadata, and the source
+Evidence v3 hash, and never impute a value. Dataset aggregation must
+be homogeneous by schema version. Labels, scenario/topology/group
+identifiers, partitions, mask IDs, predictions, metrics, hashes, and
+explanation text remain outside the predictor object.
+
+Status: Implemented and contract-tested in P6-R1 on 2026-08-06.
+Fifty-seven targeted tests and the complete 316-test regression suite
+pass in the isolated verification environment. The three Draft
+2020-12 schemas pass schema validation. No Containerlab execution,
+Phase 6 experiment, real Evidence v3 artifact, campaign row, model,
+prediction, or metric was produced.
+
+Limitation:
+
+D-078 establishes data contracts and synthetic contract behavior. It
+does not prove that the required commands work in the laboratory, that
+iptables exists in the image, that any new injector is feasible, or
+that the expected class signatures are observed. Dataset Row v2 stays
+the runtime default specifically to prevent premature Phase 6 export.

@@ -35,6 +35,15 @@ Phase 6 — Extended fault taxonomy implementation
 - Seven role-neutral Dataset Row v2 diagnostic feature names
 - Dataset Row v2 observation-context metadata
 - Canonical Dataset Row v2 builder for new experiments
+- Observation Profile v2 runtime contract and JSON Schema
+- Evidence v3 runtime contract and JSON Schema
+- Dataset Row v3 runtime contract, explicit builder, and JSON Schema
+- Exact ten-feature Phase 6 predictor whitelist
+- SHA-256-bound raw-probe provenance for Evidence v3
+- Explicit structural, collection, and masked missingness reasons
+- Backwards-compatible version dispatch through Dataset Row v3
+- Homogeneous v1-v3 dataset aggregation gate
+- Dataset Row v2 retained as the runtime default pending collector v3
 - Explicit historical Dataset Row v1 to v2 migration
 - Version-aware validation for Dataset Row v1 and v2
 - Historical Dataset Row v1 exports for C1 and C2
@@ -830,12 +839,44 @@ not establish statistical superiority or real-world generalization.
 
 The expected signatures are frozen design targets, not observed
 results. Real smoke execution and restoration verification remain
-blocked until the P6-R1 contracts and P6-R2 injectors are accepted.
+blocked until the collector, injector, and topology milestones are
+separately accepted.
+
+## Latest P6-R1 verification
+
+- Decision: D-078, implemented and contract-tested
+- Contract document: docs/P6_R1_CONTRACTS.md
+- Observation Profile v2 schema:
+  schemas/observation_profile_v2.schema.json
+- Evidence v3 schema: schemas/evidence_v3.schema.json
+- Dataset Row v3 schema: schemas/dataset_row_v3.schema.json
+- Frozen predictor features: 10/10 exact-order match with D-077
+- Observation dispatch: v1/v2 PASS
+- Evidence dispatch: v2/v3 PASS
+- Dataset Row dispatch: v1/v2/v3 PASS
+- Cross-version aggregation: rejected
+- Predictor-leakage negative gates: PASS
+- Raw artifact path and SHA-256 provenance gates: PASS
+- Structural unavailable, collection unavailable, and masked missing
+  reasons: distinct and count-verified
+- Four frozen non-destructive mask families: contract-tested
+- Source Evidence v3 hash preservation after masking: PASS
+- Dataset Row v2 runtime default: retained
+- Targeted tests: 57/57 passed
+- Full regression suite: 316/316 passed in isolated verification
+- New Containerlab execution: absent
+- Real Evidence v3 and Dataset Row v3 artifacts: absent
+- Phase 6 model, prediction, and metric: absent
+- P6-R1 closeout: completed
+
+The P6-R1 tests use synthetic contract fixtures. They verify contract
+semantics and backwards compatibility, not laboratory feasibility or
+the expected six-class signatures.
 
 ## Open issues
 
 - Final FRRouting container image for later routing extensions
-- Implement Evidence v3, Dataset Row v3, and Observation Profile v2
+- Implement the Evidence v3 collector and raw probes
 - Implement and smoke-verify wrong_default_gateway, interface_down,
   and acl_block injectors and restoration
 - Add and verify open-source iptables tooling for acl_block
@@ -853,14 +894,16 @@ blocked until the P6-R1 contracts and P6-R2 injectors are accepted.
 
 ## Next milestone
 
-P6-R1 — Implement Evidence v3, Dataset Row v3, and Observation Profile
-v2 contracts.
+P6-R2 — Implement the Evidence v3 collector and raw probes.
 
-P6-R1 must implement the frozen ten-feature contract, strict JSON
-Schemas, raw-evidence provenance, Dataset Row v3 export, predictor
-whitelisting, and backwards-compatible Evidence/Dataset v2 regression.
-It must not implement fault injection, execute Containerlab, collect
-the 72-row campaign, train a model, or access Phase 6 test results.
+P6-R2 must implement command parsing and raw-artifact persistence for
+the expected source gateway, installed default gateway, destination
+reachability, observer route and next-hop, expected next-hop,
+observer egress state, transit reachability, and exact inspected
+policy state. Every non-structural feature must bind a real raw
+artifact and SHA-256. P6-R2 must preserve the accepted v2 collector
+path and stop before new fault injectors, Containerlab execution, the
+72-row campaign, model fitting, prediction, or metrics.
 
 ## Important limitation
 
@@ -937,3 +980,11 @@ tri-state features; a 3/1/2 whole-context split; and four missing-
 evidence masks. It produces no new empirical evidence. The planned
 signatures and row counts cannot be described as implemented or
 observed until their later milestones complete.
+
+P6-R1 implements the contract boundary for those planned artifacts.
+Its 57 targeted tests and 316-test regression establish strict
+structure, version dispatch, leakage rejection, provenance binding,
+and unavailable-reason semantics on synthetic fixtures. They do not
+show that the raw probes, fault injectors, topology changes, or class
+signatures work in Containerlab. Those empirical claims remain
+absent.

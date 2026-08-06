@@ -1,0 +1,304 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Auditable Role-Neutral Dataset Row v3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "sample_id",
+    "metadata",
+    "features",
+    "labels",
+    "quality",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 3
+    },
+    "sample_id": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "experiment_id",
+        "scenario_id",
+        "variant_id",
+        "split_group_id",
+        "topology_id",
+        "direction",
+        "source_node",
+        "route_observer_node",
+        "transit_node",
+        "collected_at_utc"
+      ],
+      "properties": {
+        "experiment_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "scenario_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "variant_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "split_group_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "topology_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "direction": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_]*_to_[a-z0-9][a-z0-9_]*$"
+        },
+        "source_node": {
+          "$ref": "#/$defs/identifier"
+        },
+        "route_observer_node": {
+          "$ref": "#/$defs/identifier"
+        },
+        "transit_node": {
+          "$ref": "#/$defs/identifier"
+        },
+        "collected_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "features": {
+      "$ref": "#/$defs/featureMap"
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fault_category",
+        "fault_type",
+        "fault_location",
+        "affected_prefix"
+      ],
+      "properties": {
+        "fault_category": {
+          "$ref": "#/$defs/nullableNonEmptyString"
+        },
+        "fault_type": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "fault_location": {
+          "$ref": "#/$defs/nullableNonEmptyString"
+        },
+        "affected_prefix": {
+          "$ref": "#/$defs/nullableNonEmptyString"
+        }
+      }
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "experiment_completed",
+        "collector_completed",
+        "baseline_before_valid",
+        "baseline_after_valid",
+        "unavailable_feature_count",
+        "structural_unavailable_count",
+        "collection_unavailable_count",
+        "masked_missing_count"
+      ],
+      "properties": {
+        "experiment_completed": {
+          "type": "boolean"
+        },
+        "collector_completed": {
+          "type": "boolean"
+        },
+        "baseline_before_valid": {
+          "type": "boolean"
+        },
+        "baseline_after_valid": {
+          "type": "boolean"
+        },
+        "unavailable_feature_count": {
+          "$ref": "#/$defs/featureCount"
+        },
+        "structural_unavailable_count": {
+          "$ref": "#/$defs/featureCount"
+        },
+        "collection_unavailable_count": {
+          "$ref": "#/$defs/featureCount"
+        },
+        "masked_missing_count": {
+          "$ref": "#/$defs/featureCount"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_evidence_schema_version",
+        "source_evidence_sha256",
+        "feature_availability",
+        "mask_id"
+      ],
+      "properties": {
+        "source_evidence_schema_version": {
+          "const": 3
+        },
+        "source_evidence_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "feature_availability": {
+          "$ref": "#/$defs/availabilityMap"
+        },
+        "mask_id": {
+          "enum": [
+            "mask_source_gateway_family",
+            "mask_route_family",
+            "mask_interface_state",
+            "mask_policy_state",
+            null
+          ]
+        }
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nullableNonEmptyString": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "featureCount": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10
+    },
+    "triState": {
+      "enum": [
+        "true",
+        "false",
+        "unavailable"
+      ]
+    },
+    "availability": {
+      "enum": [
+        "observed",
+        "structurally_unavailable",
+        "collection_unavailable",
+        "masked_missing"
+      ]
+    },
+    "featureMap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_expected_gateway_reachable",
+        "source_default_gateway_matches_expected",
+        "destination_reachable",
+        "route_to_destination_exists_on_observer",
+        "route_next_hop_matches_expected",
+        "route_next_hop_reachable_from_observer",
+        "expected_next_hop_reachable_from_observer",
+        "observer_egress_interface_oper_up",
+        "destination_reachable_from_transit",
+        "flow_blocked_by_policy"
+      ],
+      "properties": {
+        "source_expected_gateway_reachable": {
+          "$ref": "#/$defs/triState"
+        },
+        "source_default_gateway_matches_expected": {
+          "$ref": "#/$defs/triState"
+        },
+        "destination_reachable": {
+          "$ref": "#/$defs/triState"
+        },
+        "route_to_destination_exists_on_observer": {
+          "$ref": "#/$defs/triState"
+        },
+        "route_next_hop_matches_expected": {
+          "$ref": "#/$defs/triState"
+        },
+        "route_next_hop_reachable_from_observer": {
+          "$ref": "#/$defs/triState"
+        },
+        "expected_next_hop_reachable_from_observer": {
+          "$ref": "#/$defs/triState"
+        },
+        "observer_egress_interface_oper_up": {
+          "$ref": "#/$defs/triState"
+        },
+        "destination_reachable_from_transit": {
+          "$ref": "#/$defs/triState"
+        },
+        "flow_blocked_by_policy": {
+          "$ref": "#/$defs/triState"
+        }
+      }
+    },
+    "availabilityMap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_expected_gateway_reachable",
+        "source_default_gateway_matches_expected",
+        "destination_reachable",
+        "route_to_destination_exists_on_observer",
+        "route_next_hop_matches_expected",
+        "route_next_hop_reachable_from_observer",
+        "expected_next_hop_reachable_from_observer",
+        "observer_egress_interface_oper_up",
+        "destination_reachable_from_transit",
+        "flow_blocked_by_policy"
+      ],
+      "properties": {
+        "source_expected_gateway_reachable": {
+          "$ref": "#/$defs/availability"
+        },
+        "source_default_gateway_matches_expected": {
+          "$ref": "#/$defs/availability"
+        },
+        "destination_reachable": {
+          "$ref": "#/$defs/availability"
+        },
+        "route_to_destination_exists_on_observer": {
+          "$ref": "#/$defs/availability"
+        },
+        "route_next_hop_matches_expected": {
+          "$ref": "#/$defs/availability"
+        },
+        "route_next_hop_reachable_from_observer": {
+          "$ref": "#/$defs/availability"
+        },
+        "expected_next_hop_reachable_from_observer": {
+          "$ref": "#/$defs/availability"
+        },
+        "observer_egress_interface_oper_up": {
+          "$ref": "#/$defs/availability"
+        },
+        "destination_reachable_from_transit": {
+          "$ref": "#/$defs/availability"
+        },
+        "flow_blocked_by_policy": {
+          "$ref": "#/$defs/availability"
+        }
+      }
+    }
+  }
+}

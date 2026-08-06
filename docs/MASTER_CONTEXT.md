@@ -771,3 +771,38 @@ complete 259-test regression suite pass. It creates no Phase 6
 experiment, dataset, model, prediction, or metric. P6-R1 must
 implement the new evidence, dataset, and observation contracts before
 injector work.
+
+P6-R1 implements the D-078 contract boundary without executing the
+laboratory. Observation Profile v2 adds explicit source-node and
+source-prefix roles, the expected source gateway, observer egress
+interface, flow protocol and ports, and the frozen
+iptables/filter/FORWARD policy-inspection binding. Its validator
+aligns future wrong_default_gateway faults to the source role and
+future interface_down and acl_block faults to the route-observer role.
+Observation Profile v1 remains supported through explicit versioned
+dispatch.
+
+Evidence v3 contains exactly the ten D-077 features plus raw values
+needed to audit gateway agreement, route next-hop agreement, interface
+operational state, and exact policy blocking. Each feature has one of
+observed, structurally_unavailable, or collection_unavailable status
+and a corresponding probe record. Observed and failed probes bind a
+normalized raw-artifact path and SHA-256; structural non-applicability
+has no raw artifact. Evidence v2 and its schema are unchanged.
+
+Dataset Row v3 exports the ten tri-state predictors and keeps source
+Evidence v3 SHA-256, availability reasons, mask ID, identifiers,
+labels, and quality counters outside the predictor object. It
+distinguishes structural_unavailable, collection_unavailable, and
+masked_missing without imputing values. The four frozen mask
+transformations preserve the clean source hash and any pre-existing
+structural reason. Generic validation accepts Dataset Row v1-v3 and
+rejects mixed-version aggregation.
+
+Dataset Row v2 remains the runtime default until the Evidence v3
+collector is separately implemented and accepted. P6-R1 passed 57/57
+targeted tests and the complete 316/316 regression suite in isolated
+verification. It created no Phase 6 runtime evidence, dataset row,
+model, prediction, or metric. P6-R2 must implement the Evidence v3
+collector and raw probes in isolated tests before any new injector or
+Containerlab execution.

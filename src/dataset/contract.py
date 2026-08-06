@@ -19,10 +19,19 @@ from src.contracts.observation_profile import (
     DIRECTION_PATTERN,
     IDENTIFIER_PATTERN,
 )
+from src.dataset.contract_v3 import (
+    DATASET_ROW_V3_SCHEMA_VERSION,
+    FEATURE_NAMES_V3,
+    DatasetRowV3ContractError,
+    build_dataset_row_v3,
+    validate_dataset_row_v3,
+)
 
 
 DATASET_ROW_V1_SCHEMA_VERSION = 1
 DATASET_ROW_V2_SCHEMA_VERSION = 2
+# The runtime default intentionally remains v2 until a real Evidence
+# v3 collector is implemented and accepted in a later Phase 6 gate.
 DATASET_SCHEMA_VERSION = DATASET_ROW_V2_SCHEMA_VERSION
 
 TRISTATE_VALUES = {
@@ -732,6 +741,11 @@ def validate_dataset_row(
 
     schema_version = row.get("schema_version")
 
+    if isinstance(schema_version, bool):
+        raise DatasetContractError(
+            "Unsupported dataset schema version."
+        )
+
     if (
         schema_version
         == DATASET_ROW_V1_SCHEMA_VERSION
@@ -746,9 +760,46 @@ def validate_dataset_row(
         validate_dataset_row_v2(row)
         return
 
+    if (
+        schema_version
+        == DATASET_ROW_V3_SCHEMA_VERSION
+    ):
+        try:
+            validate_dataset_row_v3(row)
+        except DatasetRowV3ContractError as error:
+            raise DatasetContractError(
+                f"Invalid Dataset Row v3: {error}"
+            ) from error
+        return
+
     raise DatasetContractError(
         "Unsupported dataset schema version."
     )
+
+
+def validate_homogeneous_dataset_rows(
+    rows: list[dict[str, Any]],
+) -> int:
+    """Validate rows and reject cross-version aggregation."""
+
+    if not isinstance(rows, list) or not rows:
+        raise DatasetContractError(
+            "Dataset rows must be a non-empty list."
+        )
+
+    versions: set[int] = set()
+    for row in rows:
+        validate_dataset_row(row)
+        schema_version = row.get("schema_version")
+        assert isinstance(schema_version, int)
+        versions.add(schema_version)
+
+    if len(versions) != 1:
+        raise DatasetContractError(
+            "Dataset aggregation cannot mix row schema versions."
+        )
+
+    return next(iter(versions))
 
 
 def _read_experiment_artifacts(
@@ -1126,6 +1177,18 @@ def write_dataset_row(
         row = build_dataset_row_v2(
             experiment_directory
         )
+    elif (
+        schema_version
+        == DATASET_ROW_V3_SCHEMA_VERSION
+    ):
+        try:
+            row = build_dataset_row_v3(
+                experiment_directory
+            )
+        except DatasetRowV3ContractError as error:
+            raise DatasetContractError(
+                f"Cannot build Dataset Row v3: {error}"
+            ) from error
     else:
         raise DatasetContractError(
             "Unsupported dataset schema version."
@@ -1172,6 +1235,7 @@ def build_parser() -> argparse.ArgumentParser:
         choices=(
             DATASET_ROW_V1_SCHEMA_VERSION,
             DATASET_ROW_V2_SCHEMA_VERSION,
+            DATASET_ROW_V3_SCHEMA_VERSION,
         ),
         default=DATASET_SCHEMA_VERSION,
         help=(
