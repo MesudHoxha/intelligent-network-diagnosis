@@ -1617,3 +1617,60 @@ does not prove that the required commands work in the laboratory, that
 iptables exists in the image, that any new injector is feasible, or
 that the expected class signatures are observed. Dataset Row v2 stays
 the runtime default specifically to prevent premature Phase 6 export.
+
+## D-079 — Evidence v3 collector and raw-probe boundary
+
+Decision: Accept a separate, explicitly invoked Evidence v3 collector
+that implements the ten D-077 measurements without changing the
+accepted Evidence v2 collector, Experiment Runner path, or Dataset Row
+runtime default.
+
+The collector receives only a validated Observation Profile v2 and an
+output directory. It has no scenario label, ground truth, fault type,
+expected class signature, prediction, partition, correctness, or metric
+input. Its bounded command set measures the expected source gateway,
+the installed source default route, end-to-end reachability, the exact
+observer destination route, installed and expected next-hop
+reachability, the observer egress operational state, downstream transit
+reachability, and iptables/filter/FORWARD policy state.
+
+Every executed command is persisted atomically under raw/v3 before
+Evidence v3 is written. The raw artifact records the exact container,
+command, return code, stdout, stderr, and UTC timestamp; its exact bytes
+are bound to the corresponding feature-provenance record with SHA-256.
+The collector refuses existing Evidence v3 output and never overwrites
+an earlier collection.
+
+Ping return codes zero and one mean observed true and false. Other
+return codes, malformed executor results, invalid JSON, ambiguous
+routes, unsupported interface state, a failed iptables command, or an
+ambiguous exact policy match become collection_unavailable with a
+failure artifact. An observed absent route alone makes the installed
+next-hop agreement and reachability features
+structurally_unavailable; a failed route probe may not be relabeled as
+an absent route.
+
+The policy parser reports a block only for one uniquely tagged DROP
+rule whose chain, source /32, destination /32, protocol, and, for TCP
+or UDP, both ports exactly match Observation Profile v2. A nonmatching
+tagged rule does not block the selected flow, while duplicate exact
+matches or unparsable policy output fail closed as
+collection_unavailable.
+
+Status: Implemented and synthetically verified in P6-R2 on 2026-08-06.
+The targeted collector boundary passed 26/26 tests, including the four
+accepted v2 collector tests, and the complete regression suite passed
+338/338 tests in the isolated verification environment. No Containerlab
+command, real Evidence v3 artifact, Phase 6 Dataset Row, fault
+injection, model, prediction, or metric was produced.
+
+Limitation:
+
+D-079 accepts the implementation and fail-safe parsing semantics, not
+laboratory feasibility. It does not establish that iptables is present
+in the current image, that real interface state is represented as
+expected, or that any D-077 class signature occurs in a deployed
+topology. Dataset Row v2 remains the runtime default and the historical
+Experiment Runner still invokes only the unchanged v2 collector. P6-R3
+must perform a separately reviewed healthy runtime and toolchain gate
+before any new injector is implemented or executed.

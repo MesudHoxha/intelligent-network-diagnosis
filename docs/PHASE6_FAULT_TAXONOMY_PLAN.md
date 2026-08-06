@@ -334,13 +334,19 @@ artifact overwrite, or test-guided change stops the stage.
 - P6-R0: freeze this taxonomy and evaluation plan.
 - P6-R1: implement Evidence v3, Dataset Row v3, Observation Profile v2,
   and compatibility gates without running the full campaign.
-- P6-R2: implement the three new injectors and rule signatures; smoke
-  each new class in one reviewed context.
-- P6-R3: implement/review E01-E06 and execute the 72-row clean
+- P6-R2: implement the separate Evidence v3 collector, raw-probe
+  persistence, and fail-safe parsing in isolated tests without network
+  execution.
+- P6-R3: verify the healthy Evidence v3 runtime path and required
+  open-source probe tools in one reviewed laboratory context without
+  fault injection.
+- P6-R4: implement the three new fail-stop injectors and rule
+  signatures; smoke each new class in one reviewed context.
+- P6-R5: implement/review E01-E06 and execute the 72-row clean
   fail-stop campaign with the frozen split.
-- P6-R4: fit/select the new ML and Hybrid versions, then perform the
+- P6-R6: fit/select the new ML and Hybrid versions, then perform the
   one report-only clean and missing-evidence test evaluation.
-- P6-R5: decide whether a bounded multi-label multiple-fault experiment
+- P6-R7: decide whether a bounded multi-label multiple-fault experiment
   is academically justified and feasible; it is not pre-authorized.
 
 Each milestone requires its own HANDOFF and central-document update.

@@ -806,3 +806,28 @@ verification. It created no Phase 6 runtime evidence, dataset row,
 model, prediction, or metric. P6-R2 must implement the Evidence v3
 collector and raw probes in isolated tests before any new injector or
 Containerlab execution.
+
+P6-R2 implements the separate Evidence v3 collector under D-079. The
+collector consumes only Observation Profile v2 and has no access to a
+scenario label, ground truth, fault type, expected signature,
+partition, prediction, or metric. It runs bounded ping, ip -j route,
+ip -j link, and iptables/filter/FORWARD inspections, persists exact raw
+success or failure records atomically under raw/v3, and binds every
+non-structural feature to the exact raw bytes with SHA-256.
+
+Fail-safe parsing distinguishes an observed absent route from a failed
+route probe. Only the former makes installed next-hop agreement and
+reachability structurally unavailable. Other command, executor, JSON,
+interface-state, or policy ambiguity becomes collection_unavailable
+with a raw failure artifact. Exact policy blocking requires one tagged
+DROP rule matching the selected chain, source, destination, protocol,
+and applicable ports.
+
+P6-R2 passed 26/26 targeted collector tests, including the accepted v2
+collector regression, and the complete 338/338 regression suite in the
+isolated verification environment. The v2 collector file, historical
+Experiment Runner path, and Dataset Row v2 runtime default remain
+unchanged. P6-R2 performed no Containerlab execution and created no real
+Evidence v3, Dataset Row v3, injector result, model, prediction, or
+metric. P6-R3 must verify the healthy Evidence v3 path and required
+open-source tools in the laboratory before new injector work.

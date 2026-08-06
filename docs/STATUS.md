@@ -873,10 +873,42 @@ The P6-R1 tests use synthetic contract fixtures. They verify contract
 semantics and backwards compatibility, not laboratory feasibility or
 the expected six-class signatures.
 
+## Latest P6-R2 verification
+
+- Decision: D-079, implemented and synthetic-test verified
+- Implementation document: docs/P6_R2_EVIDENCE_COLLECTOR.md
+- Collector: src/collection/evidence_collector_v3.py
+- Required input: validated Observation Profile v2 only
+- Ground truth, label, fault type, expected signature, partition,
+  prediction, and metric inputs: absent
+- Frozen feature order: 10/10 preserved
+- Bounded command families: ping, ip -j route, ip -j link, and
+  iptables/filter/FORWARD
+- Atomic raw artifact directory: raw/v3
+- Exact raw-byte SHA-256 provenance: verified
+- Installed and expected next-hop reachability probes: separate
+- Observed absent route versus failed route probe: distinct
+- Exact tagged policy selector and duplicate-match failure: tested
+- Existing-output overwrite protection: tested
+- Evidence v2 collector source and historical runtime path: unchanged
+- Dataset Row v2 runtime default: retained
+- New collector v3 tests: 22/22 passed
+- Targeted v2/v3 collector boundary: 26/26 passed
+- Full regression suite: 338/338 passed in isolated verification
+- New Containerlab execution: absent
+- Real Evidence v3 and Dataset Row v3 artifacts: absent
+- New fault injection, model, prediction, and metric: absent
+- P6-R2 closeout: completed
+
+P6-R2 verifies implementation behavior with synthetic command outputs.
+It does not establish laboratory tool availability, healthy runtime
+features, fault signatures, restoration, or experimental performance.
+
 ## Open issues
 
 - Final FRRouting container image for later routing extensions
-- Implement the Evidence v3 collector and raw probes
+- Verify the healthy Evidence v3 path and raw hashes in one real
+  laboratory context
 - Implement and smoke-verify wrong_default_gateway, interface_down,
   and acl_block injectors and restoration
 - Add and verify open-source iptables tooling for acl_block
@@ -894,16 +926,15 @@ the expected six-class signatures.
 
 ## Next milestone
 
-P6-R2 — Implement the Evidence v3 collector and raw probes.
+P6-R3 — Healthy Evidence v3 Runtime and Toolchain Gate.
 
-P6-R2 must implement command parsing and raw-artifact persistence for
-the expected source gateway, installed default gateway, destination
-reachability, observer route and next-hop, expected next-hop,
-observer egress state, transit reachability, and exact inspected
-policy state. Every non-structural feature must bind a real raw
-artifact and SHA-256. P6-R2 must preserve the accepted v2 collector
-path and stop before new fault injectors, Containerlab execution, the
-72-row campaign, model fitting, prediction, or metrics.
+P6-R3 must review one existing topology binding for Observation Profile
+v2, verify the required open-source commands in the local image, and
+run only a normal fault-free Evidence v3 collection. It must validate
+all ten healthy features, audit every raw artifact and SHA-256, and
+preserve the accepted Evidence v2 regression path. It must stop before
+new fault injection, the 72-row campaign, model fitting, prediction, or
+metrics.
 
 ## Important limitation
 
@@ -988,3 +1019,11 @@ and unavailable-reason semantics on synthetic fixtures. They do not
 show that the raw probes, fault injectors, topology changes, or class
 signatures work in Containerlab. Those empirical claims remain
 absent.
+
+P6-R2 implements the raw probe and Evidence v3 construction path. Its
+22 new collector tests, 26-test targeted v2/v3 collector boundary, and
+338-test regression establish fail-safe parsing, atomic persistence,
+raw-byte hash binding, output protection, and no v2 regression on
+synthetic command outputs. They still do not prove command availability
+or any expected signature in Containerlab. P6-R3 is the first milestone
+authorized to test only the healthy Evidence v3 runtime path.

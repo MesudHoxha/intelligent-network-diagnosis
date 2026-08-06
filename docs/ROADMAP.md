@@ -188,8 +188,21 @@ Status: In progress
 - Full automated regression suite: 316/316 passed in isolated
   verification
 - P6-R1 Containerlab execution and Phase 6 runtime artifacts: absent
-- Next milestone: P6-R2 Evidence v3 collector and raw-probe
-  implementation
+- P6-R2 separate Evidence v3 collector and bounded raw probes:
+  implemented and synthetic-test verified
+- Atomic raw/v3 command artifacts and per-feature SHA-256 provenance:
+  implemented
+- Fail-safe route, gateway, interface-state, and exact flow-policy
+  parsing: implemented
+- Observed route absence separated from route-probe collection failure:
+  implemented and negative-tested
+- Accepted Evidence v2 collector and historical Experiment Runner path:
+  unchanged
+- P6-R2 targeted collector tests: 26/26 passed
+- Full automated regression suite: 338/338 passed in isolated
+  verification
+- P6-R2 Containerlab execution and real Phase 6 artifacts: absent
+- Next milestone: P6-R3 healthy Evidence v3 runtime and toolchain gate
 
 ## Phase 7 — Dashboard and API
 Status: Not started
