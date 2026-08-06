@@ -1,0 +1,352 @@
+{
+  "schema_version": 1,
+  "plan_id": "p6_extended_fault_taxonomy_v1",
+  "status": "FROZEN_DESIGN",
+  "frozen_date": "2026-08-05",
+  "immutable_predecessors": {
+    "phases": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+    ],
+    "reuse_rows_for_phase6_training": false,
+    "rewrite_existing_artifacts": false,
+    "reason": "Phase 6 uses a new evidence and dataset contract; historical P2-P5 artifacts remain immutable references."
+  },
+  "taxonomy": {
+    "class_order": [
+      "no_fault",
+      "missing_static_route",
+      "wrong_next_hop",
+      "wrong_default_gateway",
+      "interface_down",
+      "acl_block"
+    ],
+    "classes": [
+      {
+        "fault_type": "no_fault",
+        "scenario_kind": "normal",
+        "category": "normal",
+        "injection_role": "none",
+        "injection_mechanism": "none",
+        "restoration_mechanism": "baseline_revalidation",
+        "expected_signature": {
+          "source_expected_gateway_reachable": "true",
+          "source_default_gateway_matches_expected": "true",
+          "destination_reachable": "true",
+          "route_to_destination_exists_on_observer": "true",
+          "route_next_hop_matches_expected": "true",
+          "route_next_hop_reachable_from_observer": "true",
+          "expected_next_hop_reachable_from_observer": "true",
+          "observer_egress_interface_oper_up": "true",
+          "destination_reachable_from_transit": "true",
+          "flow_blocked_by_policy": "false"
+        }
+      },
+      {
+        "fault_type": "missing_static_route",
+        "scenario_kind": "fault",
+        "category": "routing",
+        "injection_role": "route_observer",
+        "injection_mechanism": "delete_exact_destination_route",
+        "restoration_mechanism": "replace_exact_destination_route",
+        "expected_signature": {
+          "source_expected_gateway_reachable": "true",
+          "source_default_gateway_matches_expected": "true",
+          "destination_reachable": "false",
+          "route_to_destination_exists_on_observer": "false",
+          "route_next_hop_matches_expected": "unavailable",
+          "route_next_hop_reachable_from_observer": "unavailable",
+          "expected_next_hop_reachable_from_observer": "true",
+          "observer_egress_interface_oper_up": "true",
+          "destination_reachable_from_transit": "true",
+          "flow_blocked_by_policy": "false"
+        }
+      },
+      {
+        "fault_type": "wrong_next_hop",
+        "scenario_kind": "fault",
+        "category": "routing",
+        "injection_role": "route_observer",
+        "injection_mechanism": "replace_destination_route_next_hop",
+        "restoration_mechanism": "replace_exact_destination_route",
+        "expected_signature": {
+          "source_expected_gateway_reachable": "true",
+          "source_default_gateway_matches_expected": "true",
+          "destination_reachable": "false",
+          "route_to_destination_exists_on_observer": "true",
+          "route_next_hop_matches_expected": "false",
+          "route_next_hop_reachable_from_observer": "false",
+          "expected_next_hop_reachable_from_observer": "true",
+          "observer_egress_interface_oper_up": "true",
+          "destination_reachable_from_transit": "true",
+          "flow_blocked_by_policy": "false"
+        }
+      },
+      {
+        "fault_type": "wrong_default_gateway",
+        "scenario_kind": "fault",
+        "category": "routing",
+        "injection_role": "source",
+        "injection_mechanism": "replace_source_default_gateway",
+        "restoration_mechanism": "replace_expected_source_default_gateway",
+        "expected_signature": {
+          "source_expected_gateway_reachable": "true",
+          "source_default_gateway_matches_expected": "false",
+          "destination_reachable": "false",
+          "route_to_destination_exists_on_observer": "true",
+          "route_next_hop_matches_expected": "true",
+          "route_next_hop_reachable_from_observer": "true",
+          "expected_next_hop_reachable_from_observer": "true",
+          "observer_egress_interface_oper_up": "true",
+          "destination_reachable_from_transit": "true",
+          "flow_blocked_by_policy": "false"
+        }
+      },
+      {
+        "fault_type": "interface_down",
+        "scenario_kind": "fault",
+        "category": "link",
+        "injection_role": "route_observer_egress",
+        "injection_mechanism": "set_observer_egress_interface_down",
+        "restoration_mechanism": "set_observer_egress_interface_up_and_revalidate",
+        "expected_signature": {
+          "source_expected_gateway_reachable": "true",
+          "source_default_gateway_matches_expected": "true",
+          "destination_reachable": "false",
+          "route_to_destination_exists_on_observer": "true",
+          "route_next_hop_matches_expected": "true",
+          "route_next_hop_reachable_from_observer": "false",
+          "expected_next_hop_reachable_from_observer": "false",
+          "observer_egress_interface_oper_up": "false",
+          "destination_reachable_from_transit": "true",
+          "flow_blocked_by_policy": "false"
+        }
+      },
+      {
+        "fault_type": "acl_block",
+        "scenario_kind": "fault",
+        "category": "access_control",
+        "injection_role": "route_observer_forwarding_policy",
+        "injection_mechanism": "insert_exact_tagged_forward_drop_rule",
+        "restoration_mechanism": "delete_exact_tagged_forward_drop_rule",
+        "expected_signature": {
+          "source_expected_gateway_reachable": "true",
+          "source_default_gateway_matches_expected": "true",
+          "destination_reachable": "false",
+          "route_to_destination_exists_on_observer": "true",
+          "route_next_hop_matches_expected": "true",
+          "route_next_hop_reachable_from_observer": "true",
+          "expected_next_hop_reachable_from_observer": "true",
+          "observer_egress_interface_oper_up": "true",
+          "destination_reachable_from_transit": "true",
+          "flow_blocked_by_policy": "true"
+        }
+      }
+    ]
+  },
+  "planned_evidence_contract": {
+    "evidence_schema_version": 3,
+    "dataset_row_schema_version": 3,
+    "predecessor_contracts_immutable": true,
+    "feature_order": [
+      "source_expected_gateway_reachable",
+      "source_default_gateway_matches_expected",
+      "destination_reachable",
+      "route_to_destination_exists_on_observer",
+      "route_next_hop_matches_expected",
+      "route_next_hop_reachable_from_observer",
+      "expected_next_hop_reachable_from_observer",
+      "observer_egress_interface_oper_up",
+      "destination_reachable_from_transit",
+      "flow_blocked_by_policy"
+    ],
+    "value_domain": [
+      "true",
+      "false",
+      "unavailable"
+    ],
+    "no_imputation": true,
+    "mask_identity_is_not_a_predictor": true
+  },
+  "campaign": {
+    "campaign_id": "P6_EXTENDED_6CLASS_6CTX_V1",
+    "context_count": 6,
+    "class_count": 6,
+    "repetitions_per_class_context": 2,
+    "rows_per_context": 12,
+    "expected_clean_rows": 72,
+    "complete_class_set_required_per_context": true,
+    "contexts": [
+      {
+        "slot": "E01",
+        "split_group_id": "CTX_P6_E01_TOP01_LINEAR_SOURCE_EDGE",
+        "semantic_context": "linear two-router source-edge path",
+        "implementation_source": "TOP_01",
+        "status": "DESIGN_ONLY"
+      },
+      {
+        "slot": "E02",
+        "split_group_id": "CTX_P6_E02_TOP02_CHAIN_OBSERVER_EDGE",
+        "semantic_context": "three-router chain with downstream reachability",
+        "implementation_source": "TOP_02_CHAIN",
+        "status": "DESIGN_ONLY"
+      },
+      {
+        "slot": "E03",
+        "split_group_id": "CTX_P6_E03_TOP02_BRANCH_TARGET_ARM",
+        "semantic_context": "branched topology with one selected destination arm",
+        "implementation_source": "TOP_02_BRANCH",
+        "status": "DESIGN_ONLY"
+      },
+      {
+        "slot": "E04",
+        "split_group_id": "CTX_P6_E04_TOP02_DUAL_TRANSIT_SELECTED_ARM",
+        "semantic_context": "dual-transit topology with one selected forwarding arm",
+        "implementation_source": "TOP_02_DUAL_TRANSIT",
+        "status": "DESIGN_ONLY"
+      },
+      {
+        "slot": "E05",
+        "split_group_id": "CTX_P6_E05_TOP03_ASYMMETRIC_FORWARD",
+        "semantic_context": "asymmetric forward and return paths",
+        "implementation_source": "TOP_03_ASYMMETRIC_RETURN",
+        "status": "DESIGN_ONLY"
+      },
+      {
+        "slot": "E06",
+        "split_group_id": "CTX_P6_E06_TOP04_FILTER_BOUNDARY",
+        "semantic_context": "new routed context with an explicit forwarding-policy boundary",
+        "implementation_source": "NEW_TOP_04_REQUIRED",
+        "status": "DESIGN_ONLY"
+      }
+    ],
+    "split": {
+      "algorithm": "explicit_complete_context_v1",
+      "train_groups": [
+        "CTX_P6_E01_TOP01_LINEAR_SOURCE_EDGE",
+        "CTX_P6_E03_TOP02_BRANCH_TARGET_ARM",
+        "CTX_P6_E05_TOP03_ASYMMETRIC_FORWARD"
+      ],
+      "validation_groups": [
+        "CTX_P6_E04_TOP02_DUAL_TRANSIT_SELECTED_ARM"
+      ],
+      "test_groups": [
+        "CTX_P6_E02_TOP02_CHAIN_OBSERVER_EDGE",
+        "CTX_P6_E06_TOP04_FILTER_BOUNDARY"
+      ],
+      "expected_rows": {
+        "train": 36,
+        "validation": 12,
+        "test": 24
+      },
+      "test_use": "report_only",
+      "group_ids_may_not_be_renamed_after_freeze": true
+    }
+  },
+  "robustness_tracks": {
+    "unseen_context": {
+      "enabled": true,
+      "definition": "Both test groups are absent from Phase 6 training and validation; E06 is also a newly implemented topology.",
+      "report_per_group": true
+    },
+    "missing_evidence": {
+      "enabled": true,
+      "source": "deterministic_non_destructive_masks_over_clean_evidence",
+      "fit_on_masked_rows": false,
+      "validation_use": "development_only",
+      "test_use": "report_only_after_freeze",
+      "expected_behavior": "No fabricated values; rule and hybrid methods may return insufficient evidence or abstain.",
+      "mask_order": [
+        "mask_source_gateway_family",
+        "mask_route_family",
+        "mask_interface_state",
+        "mask_policy_state"
+      ],
+      "masks": [
+        {
+          "mask_id": "mask_source_gateway_family",
+          "features": [
+            "source_expected_gateway_reachable",
+            "source_default_gateway_matches_expected"
+          ]
+        },
+        {
+          "mask_id": "mask_route_family",
+          "features": [
+            "route_to_destination_exists_on_observer",
+            "route_next_hop_matches_expected",
+            "route_next_hop_reachable_from_observer"
+          ]
+        },
+        {
+          "mask_id": "mask_interface_state",
+          "features": [
+            "observer_egress_interface_oper_up"
+          ]
+        },
+        {
+          "mask_id": "mask_policy_state",
+          "features": [
+            "flow_blocked_by_policy"
+          ]
+        }
+      ]
+    },
+    "multiple_fault": {
+      "enabled_in_first_campaign": false,
+      "reason": "The current diagnosis and evaluation contracts are single-label; a later reviewed milestone must define multi-label ground truth and non-identifiability handling before any combined injection."
+    }
+  },
+  "evaluation": {
+    "method_order": [
+      "rule_based",
+      "machine_learning",
+      "hybrid"
+    ],
+    "selection_partition": "validation",
+    "test_partition": "report_only",
+    "primary_metrics": [
+      "macro_f1",
+      "exact_diagnosis_rate",
+      "affected_prefix_rate",
+      "coverage",
+      "abstention_rate",
+      "insufficient_evidence_rate"
+    ],
+    "required_scopes": [
+      "overall",
+      "per_partition",
+      "per_class",
+      "per_context",
+      "per_missing_evidence_mask"
+    ],
+    "statistical_superiority_claim_allowed": false
+  },
+  "implementation_boundaries": {
+    "new_scenario_execution_in_p6_r0": false,
+    "containerlab_execution_in_p6_r0": false,
+    "model_training_in_p6_r0": false,
+    "dynamic_routing_in_scope": false,
+    "automatic_remediation_in_scope": false,
+    "paid_dependency_required": false,
+    "acl_runtime_dependency": "Open-source iptables tooling must be added and verified in a later implementation milestone before acl_block execution."
+  },
+  "acceptance_gates": [
+    "strict_schema_and_semantic_validation",
+    "six_unique_complete_evidence_signatures",
+    "six_complete_context_groups",
+    "two_repetitions_per_class_context",
+    "exact_36_12_24_row_split",
+    "no_group_crosses_partitions",
+    "all_phase6_rows_use_evidence_v3_and_dataset_row_v3",
+    "no_p2_p5_row_rewrite_or_phase6_training_reuse",
+    "injector_preconditions_postconditions_and_restoration_for_every_fault",
+    "baseline_valid_before_and_after_every_experiment",
+    "prediction_inputs_exclude_labels_ground_truth_partition_and_metrics",
+    "selected_models_and_hybrid_policy_frozen_before_test",
+    "missing_evidence_masks_preserve_source_hashes_and_do_not_impute",
+    "test_outputs_generated_once_for_report_only_use"
+  ]
+}

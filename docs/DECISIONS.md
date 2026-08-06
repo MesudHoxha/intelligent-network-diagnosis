@@ -1488,3 +1488,75 @@ accepted values describe one six-row held-out context in a small,
 controlled campaign. Equal class metrics and stronger hybrid
 localization than the independent ML baseline do not establish
 statistical superiority or real-world generalization.
+
+## D-077 — Bounded Phase 6 taxonomy and evaluation design
+
+Decision: Freeze Phase 6 Extended Fault Taxonomy and Evaluation Plan
+v1 before implementing or executing a new fault scenario.
+
+The canonical class order is no_fault, missing_static_route,
+wrong_next_hop, wrong_default_gateway, interface_down, and acl_block.
+The earlier wrong_gateway candidate name is replaced by the precise
+wrong_default_gateway label so a source default-route error is not
+confused with the existing observer wrong_next_hop class.
+
+The accepted P2-P5 rows, split, reports, model, and hybrid policy
+remain immutable reference artifacts. Phase 6 does not append new
+labels to Dataset Row v2 or reuse historical rows for fitting. It
+must recollect all six classes through planned Evidence v3 and
+Dataset Row v3 contracts because the seven existing predictors do not
+distinguish the three new classes safely.
+
+The planned feature contract contains exactly ten ordered tri-state
+features covering expected source-gateway reachability, installed
+default-gateway agreement, end-to-end reachability, observer route
+existence, route next-hop agreement and reachability, expected
+next-hop reachability, observer egress operational state, downstream
+transit reachability, and exact flow-policy blocking. Labels, ground
+truth, partitions, mask IDs, identifiers, metrics, and explanation
+text remain forbidden predictors. No unavailable value is imputed.
+
+The first Phase 6 clean campaign is frozen at six complete contexts,
+six classes per context, and two repetitions per class/context pair:
+72 rows. The explicit split is 36 train rows in E01/E03/E05, 12
+validation rows in E04, and 24 report-only test rows in E02/E06. The
+entire six-class context bundle stays in one partition, and group IDs
+cannot be renamed after freeze. Both test groups are unseen by Phase
+6 fitting/selection; E06 additionally requires a new topology with an
+explicit forwarding-policy boundary.
+
+Missing evidence is a separate robustness track, not a fault class.
+Four deterministic non-destructive masks cover source-gateway, route,
+interface-state, and policy-state feature families. Masked rows do not
+fit the first model; validation masks are development-only and test
+masks remain report-only until model and hybrid-policy freeze. Source
+artifacts and hashes must remain unchanged, no values are imputed, and
+insufficient-evidence or abstention outputs stay in full denominators.
+
+Multiple faults are not authorized in the first campaign. The current
+single-label ground-truth and evaluation contracts cannot represent
+multiple root causes, causal masking, or non-identifiability. A later
+reviewed milestone must define those semantics before any combined
+injection.
+
+The machine-readable plan is
+plans/taxonomies/P6_EXTENDED_FAULT_TAXONOMY_V1.json. Its SHA-256 is
+f2cf0feced412af5fa76f1ffa861b3500389c430209d8e5b09a4d9e985f1b4f9.
+The strict Draft 2020-12 schema is
+schemas/fault_taxonomy_plan_v1.schema.json and the semantic validator
+is src/planning/fault_taxonomy.py.
+
+Status: Approved, implemented as a design contract, and
+runtime-verified on 2026-08-05. Sixteen targeted tests and the complete
+259-test regression suite pass. P6-R0 performed no Containerlab
+execution, scenario injection, dataset collection, model fitting,
+prediction, or Phase 6 metric calculation.
+
+Limitation:
+
+D-077 freezes a bounded experimental design, not a realized dataset
+or result. The expected evidence signatures are acceptance targets
+that still require implementation and real smoke verification. The
+planned six deterministic contexts do not establish population-level
+generalization or statistical superiority. OSPF remains proposed
+under D-034 and is outside this decision.

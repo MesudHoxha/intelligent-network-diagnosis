@@ -1,0 +1,511 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Phase 6 Extended Fault Taxonomy Plan v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "plan_id",
+    "status",
+    "frozen_date",
+    "immutable_predecessors",
+    "taxonomy",
+    "planned_evidence_contract",
+    "campaign",
+    "robustness_tracks",
+    "evaluation",
+    "implementation_boundaries",
+    "acceptance_gates"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "plan_id": {
+      "const": "p6_extended_fault_taxonomy_v1"
+    },
+    "status": {
+      "const": "FROZEN_DESIGN"
+    },
+    "frozen_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "immutable_predecessors": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "phases",
+        "reuse_rows_for_phase6_training",
+        "rewrite_existing_artifacts",
+        "reason"
+      ],
+      "properties": {
+        "phases": {
+          "type": "array",
+          "prefixItems": [
+            { "const": "P2" },
+            { "const": "P3" },
+            { "const": "P4" },
+            { "const": "P5" }
+          ],
+          "items": false,
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "reuse_rows_for_phase6_training": {
+          "const": false
+        },
+        "rewrite_existing_artifacts": {
+          "const": false
+        },
+        "reason": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "taxonomy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "class_order",
+        "classes"
+      ],
+      "properties": {
+        "class_order": {
+          "$ref": "#/$defs/classOrder"
+        },
+        "classes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/faultClass"
+          },
+          "minItems": 6,
+          "maxItems": 6
+        }
+      }
+    },
+    "planned_evidence_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_schema_version",
+        "dataset_row_schema_version",
+        "predecessor_contracts_immutable",
+        "feature_order",
+        "value_domain",
+        "no_imputation",
+        "mask_identity_is_not_a_predictor"
+      ],
+      "properties": {
+        "evidence_schema_version": {
+          "const": 3
+        },
+        "dataset_row_schema_version": {
+          "const": 3
+        },
+        "predecessor_contracts_immutable": {
+          "const": true
+        },
+        "feature_order": {
+          "$ref": "#/$defs/featureOrder"
+        },
+        "value_domain": {
+          "type": "array",
+          "prefixItems": [
+            { "const": "true" },
+            { "const": "false" },
+            { "const": "unavailable" }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "no_imputation": {
+          "const": true
+        },
+        "mask_identity_is_not_a_predictor": {
+          "const": true
+        }
+      }
+    },
+    "campaign": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "campaign_id",
+        "context_count",
+        "class_count",
+        "repetitions_per_class_context",
+        "rows_per_context",
+        "expected_clean_rows",
+        "complete_class_set_required_per_context",
+        "contexts",
+        "split"
+      ],
+      "properties": {
+        "campaign_id": {
+          "const": "P6_EXTENDED_6CLASS_6CTX_V1"
+        },
+        "context_count": {
+          "const": 6
+        },
+        "class_count": {
+          "const": 6
+        },
+        "repetitions_per_class_context": {
+          "const": 2
+        },
+        "rows_per_context": {
+          "const": 12
+        },
+        "expected_clean_rows": {
+          "const": 72
+        },
+        "complete_class_set_required_per_context": {
+          "const": true
+        },
+        "contexts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/context"
+          },
+          "minItems": 6,
+          "maxItems": 6
+        },
+        "split": {
+          "$ref": "#/$defs/split"
+        }
+      }
+    },
+    "robustness_tracks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "unseen_context",
+        "missing_evidence",
+        "multiple_fault"
+      ],
+      "properties": {
+        "unseen_context": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "enabled",
+            "definition",
+            "report_per_group"
+          ],
+          "properties": {
+            "enabled": { "const": true },
+            "definition": { "$ref": "#/$defs/nonEmptyString" },
+            "report_per_group": { "const": true }
+          }
+        },
+        "missing_evidence": {
+          "$ref": "#/$defs/missingEvidence"
+        },
+        "multiple_fault": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "enabled_in_first_campaign",
+            "reason"
+          ],
+          "properties": {
+            "enabled_in_first_campaign": { "const": false },
+            "reason": { "$ref": "#/$defs/nonEmptyString" }
+          }
+        }
+      }
+    },
+    "evaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method_order",
+        "selection_partition",
+        "test_partition",
+        "primary_metrics",
+        "required_scopes",
+        "statistical_superiority_claim_allowed"
+      ],
+      "properties": {
+        "method_order": {
+          "type": "array",
+          "prefixItems": [
+            { "const": "rule_based" },
+            { "const": "machine_learning" },
+            { "const": "hybrid" }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "selection_partition": { "const": "validation" },
+        "test_partition": { "const": "report_only" },
+        "primary_metrics": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/identifier" },
+          "minItems": 6,
+          "uniqueItems": true
+        },
+        "required_scopes": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/identifier" },
+          "minItems": 5,
+          "uniqueItems": true
+        },
+        "statistical_superiority_claim_allowed": { "const": false }
+      }
+    },
+    "implementation_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "new_scenario_execution_in_p6_r0",
+        "containerlab_execution_in_p6_r0",
+        "model_training_in_p6_r0",
+        "dynamic_routing_in_scope",
+        "automatic_remediation_in_scope",
+        "paid_dependency_required",
+        "acl_runtime_dependency"
+      ],
+      "properties": {
+        "new_scenario_execution_in_p6_r0": { "const": false },
+        "containerlab_execution_in_p6_r0": { "const": false },
+        "model_training_in_p6_r0": { "const": false },
+        "dynamic_routing_in_scope": { "const": false },
+        "automatic_remediation_in_scope": { "const": false },
+        "paid_dependency_required": { "const": false },
+        "acl_runtime_dependency": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "acceptance_gates": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/identifier" },
+      "minItems": 14,
+      "uniqueItems": true
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "classOrder": {
+      "type": "array",
+      "prefixItems": [
+        { "const": "no_fault" },
+        { "const": "missing_static_route" },
+        { "const": "wrong_next_hop" },
+        { "const": "wrong_default_gateway" },
+        { "const": "interface_down" },
+        { "const": "acl_block" }
+      ],
+      "items": false,
+      "minItems": 6,
+      "maxItems": 6
+    },
+    "featureOrder": {
+      "type": "array",
+      "prefixItems": [
+        { "const": "source_expected_gateway_reachable" },
+        { "const": "source_default_gateway_matches_expected" },
+        { "const": "destination_reachable" },
+        { "const": "route_to_destination_exists_on_observer" },
+        { "const": "route_next_hop_matches_expected" },
+        { "const": "route_next_hop_reachable_from_observer" },
+        { "const": "expected_next_hop_reachable_from_observer" },
+        { "const": "observer_egress_interface_oper_up" },
+        { "const": "destination_reachable_from_transit" },
+        { "const": "flow_blocked_by_policy" }
+      ],
+      "items": false,
+      "minItems": 10,
+      "maxItems": 10
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_expected_gateway_reachable",
+        "source_default_gateway_matches_expected",
+        "destination_reachable",
+        "route_to_destination_exists_on_observer",
+        "route_next_hop_matches_expected",
+        "route_next_hop_reachable_from_observer",
+        "expected_next_hop_reachable_from_observer",
+        "observer_egress_interface_oper_up",
+        "destination_reachable_from_transit",
+        "flow_blocked_by_policy"
+      ],
+      "properties": {
+        "source_expected_gateway_reachable": { "$ref": "#/$defs/tristate" },
+        "source_default_gateway_matches_expected": { "$ref": "#/$defs/tristate" },
+        "destination_reachable": { "$ref": "#/$defs/tristate" },
+        "route_to_destination_exists_on_observer": { "$ref": "#/$defs/tristate" },
+        "route_next_hop_matches_expected": { "$ref": "#/$defs/tristate" },
+        "route_next_hop_reachable_from_observer": { "$ref": "#/$defs/tristate" },
+        "expected_next_hop_reachable_from_observer": { "$ref": "#/$defs/tristate" },
+        "observer_egress_interface_oper_up": { "$ref": "#/$defs/tristate" },
+        "destination_reachable_from_transit": { "$ref": "#/$defs/tristate" },
+        "flow_blocked_by_policy": { "$ref": "#/$defs/tristate" }
+      }
+    },
+    "tristate": {
+      "type": "string",
+      "enum": [
+        "true",
+        "false",
+        "unavailable"
+      ]
+    },
+    "faultClass": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fault_type",
+        "scenario_kind",
+        "category",
+        "injection_role",
+        "injection_mechanism",
+        "restoration_mechanism",
+        "expected_signature"
+      ],
+      "properties": {
+        "fault_type": { "$ref": "#/$defs/identifier" },
+        "scenario_kind": {
+          "type": "string",
+          "enum": ["normal", "fault"]
+        },
+        "category": { "$ref": "#/$defs/identifier" },
+        "injection_role": { "$ref": "#/$defs/identifier" },
+        "injection_mechanism": { "$ref": "#/$defs/identifier" },
+        "restoration_mechanism": { "$ref": "#/$defs/identifier" },
+        "expected_signature": { "$ref": "#/$defs/signature" }
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "slot",
+        "split_group_id",
+        "semantic_context",
+        "implementation_source",
+        "status"
+      ],
+      "properties": {
+        "slot": {
+          "type": "string",
+          "pattern": "^E0[1-6]$"
+        },
+        "split_group_id": { "$ref": "#/$defs/identifier" },
+        "semantic_context": { "$ref": "#/$defs/nonEmptyString" },
+        "implementation_source": { "$ref": "#/$defs/identifier" },
+        "status": { "const": "DESIGN_ONLY" }
+      }
+    },
+    "split": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "train_groups",
+        "validation_groups",
+        "test_groups",
+        "expected_rows",
+        "test_use",
+        "group_ids_may_not_be_renamed_after_freeze"
+      ],
+      "properties": {
+        "algorithm": { "const": "explicit_complete_context_v1" },
+        "train_groups": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/identifier" },
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true
+        },
+        "validation_groups": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/identifier" },
+          "minItems": 1,
+          "maxItems": 1,
+          "uniqueItems": true
+        },
+        "test_groups": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/identifier" },
+          "minItems": 2,
+          "maxItems": 2,
+          "uniqueItems": true
+        },
+        "expected_rows": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["train", "validation", "test"],
+          "properties": {
+            "train": { "const": 36 },
+            "validation": { "const": 12 },
+            "test": { "const": 24 }
+          }
+        },
+        "test_use": { "const": "report_only" },
+        "group_ids_may_not_be_renamed_after_freeze": { "const": true }
+      }
+    },
+    "missingEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled",
+        "source",
+        "fit_on_masked_rows",
+        "validation_use",
+        "test_use",
+        "expected_behavior",
+        "mask_order",
+        "masks"
+      ],
+      "properties": {
+        "enabled": { "const": true },
+        "source": { "const": "deterministic_non_destructive_masks_over_clean_evidence" },
+        "fit_on_masked_rows": { "const": false },
+        "validation_use": { "const": "development_only" },
+        "test_use": { "const": "report_only_after_freeze" },
+        "expected_behavior": { "$ref": "#/$defs/nonEmptyString" },
+        "mask_order": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/identifier" },
+          "minItems": 4,
+          "maxItems": 4,
+          "uniqueItems": true
+        },
+        "masks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["mask_id", "features"],
+            "properties": {
+              "mask_id": { "$ref": "#/$defs/identifier" },
+              "features": {
+                "type": "array",
+                "items": { "$ref": "#/$defs/identifier" },
+                "minItems": 1,
+                "uniqueItems": true
+              }
+            }
+          },
+          "minItems": 4,
+          "maxItems": 4
+        }
+      }
+    }
+  }
+}

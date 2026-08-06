@@ -158,10 +158,25 @@ Status: Completed
 - P5-R2 closeout and HANDOFF: completed
 
 ## Phase 6 — Extended fault taxonomy
-Status: Not started
+Status: In progress
 
-- First milestone: freeze the bounded Phase 6 fault taxonomy and
-  evaluation plan before implementing or collecting new scenarios
+- P6-R0 bounded six-class fault taxonomy: frozen and
+  contract-verified
+- Canonical new labels: wrong_default_gateway, interface_down, and
+  acl_block
+- Planned Evidence v3 and Dataset Row v3 ten-feature boundary: frozen
+- Six complete contexts, two repetitions, and 72-row clean campaign:
+  precommitted
+- Explicit whole-context split: 36/12/24 rows across 3/1/2 groups
+- Two unseen report-only test contexts: precommitted
+- Four deterministic missing-evidence masks: precommitted
+- P2-P5 datasets and method artifacts: immutable references
+- Multiple-fault execution: deferred pending a separate multi-label
+  design gate
+- P6-R0 Containerlab execution, new dataset, training, predictions,
+  and metrics: absent
+- Next milestone: P6-R1 Evidence v3, Dataset Row v3, and Observation
+  Profile v2 contracts
 
 ## Phase 7 — Dashboard and API
 Status: Not started

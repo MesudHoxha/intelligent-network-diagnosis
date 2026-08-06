@@ -2,7 +2,7 @@
 
 ## Current phase
 
-Phase 6 — Extended fault taxonomy planning
+Phase 6 — Extended fault taxonomy implementation
 
 ## Implemented and tested
 
@@ -796,29 +796,71 @@ P5-R2.
 The accepted values describe the frozen controlled campaign. They do
 not establish statistical superiority or real-world generalization.
 
+## Latest P6-R0 verification
+
+- Decision: D-077, approved and design-contract verified
+- Design document: docs/PHASE6_FAULT_TAXONOMY_PLAN.md
+- Machine-readable plan:
+  plans/taxonomies/P6_EXTENDED_FAULT_TAXONOMY_V1.json
+- Strict schema: schemas/fault_taxonomy_plan_v1.schema.json
+- Semantic validator: src/planning/fault_taxonomy.py
+- Canonical class count: 6
+- Canonical class order: no_fault, missing_static_route,
+  wrong_next_hop, wrong_default_gateway, interface_down, acl_block
+- Planned Evidence v3/Dataset Row v3 feature count: 10
+- Complete context groups: 6 design-only groups
+- Repetitions: 2 per class/context pair
+- Expected clean campaign rows: 72
+- Frozen split rows: 36 train, 12 validation, 24 test
+- Frozen split groups: 3 train, 1 validation, 2 test
+- Test role: report_only after independent freeze verification
+- Missing-evidence masks: 4 deterministic non-destructive families
+- Multiple faults: excluded pending a later multi-label design gate
+- Accepted P2-P5 rows and artifacts: immutable; no Phase 6 training
+  reuse
+- Canonical plan SHA-256:
+  f2cf0feced412af5fa76f1ffa861b3500389c430209d8e5b09a4d9e985f1b4f9
+- Targeted tests: 16/16 passed
+- Full regression suite: 259/259 passed
+- New Phase 6 scenarios executed: 0
+- Phase 6 dataset rows collected: 0
+- Phase 6 models/predictions/metrics: absent
+- Containerlab required for P6-R0: no
+- P6-R0 closeout: completed
+
+The expected signatures are frozen design targets, not observed
+results. Real smoke execution and restoration verification remain
+blocked until the P6-R1 contracts and P6-R2 injectors are accepted.
+
 ## Open issues
 
 - Final FRRouting container image for later routing extensions
-- Final set of pilot fault classes beyond C1 and C2
-- Missing-evidence experiments
-- Unseen scenario or topology variants
-- Controlled multiple-fault subset
-- Larger and more varied dataset beyond the accepted 30-row P2
-  campaign
+- Implement Evidence v3, Dataset Row v3, and Observation Profile v2
+- Implement and smoke-verify wrong_default_gateway, interface_down,
+  and acl_block injectors and restoration
+- Add and verify open-source iptables tooling for acl_block
+- Implement or review all six complete Phase 6 contexts, including
+  the new E06 forwarding-policy-boundary topology
+- Execute the frozen 72-row clean campaign and 36/12/24 split
+- Implement the four non-destructive missing-evidence masks
+- Fit and select new six-class Rule-based, ML, and Hybrid versions
+  without using report-only test contexts
+- Define multi-label truth and causal masking before any controlled
+  multiple-fault experiment
 - Reproducible backup or publication policy for generated runtime
   datasets before final thesis archiving
 - OSPF implementation; its current status remains proposed
 
 ## Next milestone
 
-P6-R0 — Freeze the bounded Phase 6 fault taxonomy and evaluation plan.
+P6-R1 — Implement Evidence v3, Dataset Row v3, and Observation Profile
+v2 contracts.
 
-Review wrong_gateway, interface_down, and acl_block as the deferred
-candidate classes; define their observable evidence, topology and
-fault-injection requirements, class balance, missing-evidence cases,
-split-group boundaries, and acceptance tests before implementing or
-collecting any new scenario. Preserve the accepted P2-P5 campaign and
-all three method baselines as immutable reference artifacts.
+P6-R1 must implement the frozen ten-feature contract, strict JSON
+Schemas, raw-evidence provenance, Dataset Row v3 export, predictor
+whitelisting, and backwards-compatible Evidence/Dataset v2 regression.
+It must not implement fault injection, execute Containerlab, collect
+the 72-row campaign, train a model, or access Phase 6 test results.
 
 ## Important limitation
 
@@ -888,3 +930,10 @@ Phase 5. The hybrid result is exact for the accepted six-row G02 test
 group, but the small one-context test still cannot establish
 statistical superiority or real-world generalization. Additional
 controlled variation remains required in Phase 6.
+
+P6-R0 addresses that limitation only at the design level. It freezes
+a new six-class, six-context, 72-row clean campaign; ten planned
+tri-state features; a 3/1/2 whole-context split; and four missing-
+evidence masks. It produces no new empirical evidence. The planned
+signatures and row counts cannot be described as implemented or
+observed until their later milestones complete.

@@ -731,3 +731,43 @@ tests. G02 remained report_only and did not influence policy or
 selection. D-076 and P5-R2 are accepted, and Phase 5 is complete for
 the frozen controlled campaign. The descriptive comparison does not
 establish statistical superiority or real-world generalization.
+
+P6-R0 freezes Phase 6 Extended Fault Taxonomy and Evaluation Plan v1
+under D-077 before any new network execution. The six canonical
+classes are no_fault, missing_static_route, wrong_next_hop,
+wrong_default_gateway, interface_down, and acl_block. The precise
+wrong_default_gateway label resolves the earlier wrong_gateway
+candidate without changing the historical wrong_next_hop class.
+
+The seven Evidence/Dataset v2 predictors are insufficient to separate
+the three new faults. Phase 6 therefore plans Evidence v3 and Dataset
+Row v3 with ten ordered tri-state predictors, including installed
+source default-gateway agreement, route next-hop agreement, observer
+egress operational state, and exact flow-policy blocking. Evidence v2,
+Dataset Row v2, the accepted 30-row campaign, and all P3-P5 baseline
+artifacts remain immutable. Historical rows are not reused for Phase
+6 model fitting.
+
+The first extended clean campaign is precommitted at six complete
+contexts, six classes per context, two repetitions per class/context,
+and 72 rows. Its explicit whole-context split is 36 train, 12
+validation, and 24 report-only test rows across 3/1/2 groups. The two
+test groups are unseen by Phase 6 fitting and selection, and one
+requires a new forwarding-policy-boundary topology.
+
+Four non-destructive missing-evidence masks are planned separately
+from the class taxonomy. They preserve clean source hashes, forbid
+imputation and mask identity as a predictor, use validation only for
+development, and keep masked test evaluation report-only after model
+and policy freeze. Multiple faults remain outside the first campaign
+until a later multi-label design defines causal masking and
+non-identifiability.
+
+The canonical plan SHA-256 is
+f2cf0feced412af5fa76f1ffa861b3500389c430209d8e5b09a4d9e985f1b4f9.
+P6-R0 implements only the plan, strict schema, semantic validator,
+documentation, and contract tests. Sixteen targeted tests and the
+complete 259-test regression suite pass. It creates no Phase 6
+experiment, dataset, model, prediction, or metric. P6-R1 must
+implement the new evidence, dataset, and observation contracts before
+injector work.
