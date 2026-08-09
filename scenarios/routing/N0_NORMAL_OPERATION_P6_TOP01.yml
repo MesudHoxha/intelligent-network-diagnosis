@@ -1,0 +1,68 @@
+schema_version: 1
+
+scenario:
+  id: N0_NORMAL_OPERATION_P6_TOP01
+  name: Normal Phase 6 TOP-01 operation
+  kind: normal
+  variant_id: healthy_runtime_gate
+  split_group_id: CTX_P6_R3_TOP01_HEALTHY_GATE
+  category: baseline
+  description: >
+    Observe one healthy TOP-01 flow through Observation Profile v2 and
+    Evidence v3. This reviewed runtime-gate binding does not replace or
+    relabel any historical TOP-01 scenario.
+
+  topology:
+    id: TOP_01
+    file: labs/topologies/top01_routed/topology.clab.yml
+
+  observation:
+    schema_version: 2
+    direction: hosta_to_hostb
+    source_node: hosta
+    source_container: clab-top01-hosta
+    source_address: 10.10.1.10
+    source_prefix: 10.10.1.0/24
+    source_gateway_address: 10.10.1.1
+    destination_address: 10.10.2.10
+    destination_prefix: 10.10.2.0/24
+    route_observer_node: r1
+    route_observer_container: clab-top01-r1
+    expected_next_hop: 10.10.12.2
+    observer_egress_interface: eth2
+    transit_node: r2
+    transit_container: clab-top01-r2
+    flow_protocol: icmp
+    flow_source_port: null
+    flow_destination_port: null
+    policy_backend: iptables
+    policy_table: filter
+    policy_chain: FORWARD
+    policy_rule_tag_prefix: IND-P6
+
+  preconditions:
+    - id: required_probe_tools_present
+      description: ip, ping, and iptables are installed in ind-linux:0.1
+    - id: baseline_end_to_end_connectivity
+      description: The TOP-01 13-check baseline is valid
+    - id: phase6_source_default_route_binding
+      description: The isolated P6-R3 setup binds HostA default via 10.10.1.1
+    - id: no_phase_6_block_rule
+      description: No matching IND-P6 DROP rule exists on R1
+
+  expected_effects:
+    - id: no_fault_injected
+      description: No fault configuration is injected or restored
+    - id: ten_healthy_features_observed
+      description: All ten Evidence v3 features have the healthy values
+    - id: raw_probe_provenance_valid
+      description: Nine raw probes exist and match their SHA-256 bindings
+    - id: baseline_remains_valid
+      description: TOP-01 remains valid after evidence collection
+
+  ground_truth:
+    fault_category: null
+    fault_type: no_fault
+    fault_location: null
+    affected_prefix: null
+    root_cause: null

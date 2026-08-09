@@ -831,3 +831,29 @@ unchanged. P6-R2 performed no Containerlab execution and created no real
 Evidence v3, Dataset Row v3, injector result, model, prediction, or
 metric. P6-R3 must verify the healthy Evidence v3 path and required
 open-source tools in the laboratory before new injector work.
+
+P6-R3 accepts the healthy Evidence v3 runtime and toolchain gate under
+D-080. The Ubuntu 24.04 ind-linux image now declares the open-source
+iptables package in addition to ip and ping. Before rebuild, the prior
+image was preserved locally as ind-linux:p6-r2-preflight. The accepted
+historical TOP-01 topology and G01 fingerprint are unchanged; an
+isolated post-deploy script adds the Phase 6 source default route without
+altering the topology file.
+
+The reviewed N0_NORMAL_OPERATION_P6_TOP01 Observation Profile v2 binds
+HostA as source, R1 as route observer, R2 as transit, HostB as
+destination, eth2 as observer egress, and iptables/filter/FORWARD as the
+policy boundary. Real experiment
+p6_r3_healthy_top01-20260806T090542Z produced a contract-valid Evidence
+v3 artifact with all ten healthy features observed and nine raw JSON
+probe artifacts bound by exact SHA-256. Evidence SHA-256 is
+654cb717aa823091b6832d586b22503eb26f37aad81dc3e2f40f7d1f64c75ac2.
+
+TOP-01 remained 13/13 valid before the Phase 6 binding, before
+collection, and after collection. The gate passed 31/31 targeted tests
+and 343/343 full regression tests, then removed every TOP-01 container.
+No fault injection, Dataset Row v3, Phase 6 campaign row, model,
+prediction, or metric was produced, and Dataset Row v2 remains the
+runtime default. P6-R4 may now implement the three reviewed single-fault
+injectors and rule signatures, but it must stop after one fail-stop smoke
+execution per new class.

@@ -904,14 +904,51 @@ P6-R2 verifies implementation behavior with synthetic command outputs.
 It does not establish laboratory tool availability, healthy runtime
 features, fault signatures, restoration, or experimental performance.
 
+## Latest P6-R3 verification
+
+- Decision: D-080, implemented and real-runtime verified
+- Runtime-gate document: docs/P6_R3_HEALTHY_EVIDENCE_GATE.md
+- Reviewed scenario: N0_NORMAL_OPERATION_P6_TOP01
+- Topology and direction: TOP_01, hosta_to_hostb
+- Observation roles: source hosta, route observer r1, transit r2,
+  destination hostb
+- Historical TOP-01 topology and frozen G01 fingerprint: unchanged
+- Image base: Ubuntu 24.04
+- Required commands: ip, ping, and iptables present
+- iptables version/backend: 1.8.10, nf_tables
+- Previous image recovery tag: ind-linux:p6-r2-preflight
+- New ind-linux:0.1 image ID:
+  sha256:66392daabae6054416fba5043f312bfc464bcc18246956867870e4953847ff5c
+- Real experiment: p6_r3_healthy_top01-20260806T090542Z
+- Collector runtime return code: 0
+- Healthy Evidence v3 features: 10/10 observed and signature-verified
+- Raw probe artifacts: 9/9 present and SHA-256 verified
+- Evidence SHA-256:
+  654cb717aa823091b6832d586b22503eb26f37aad81dc3e2f40f7d1f64c75ac2
+- Collector-status SHA-256:
+  d68b14f65b80f72ab7f0b8c7f3709b37b2f0a18165167ec3dd3593c914aed88d
+- TOP-01 baseline before binding: 13/13 valid
+- TOP-01 baseline before collection: 13/13 valid
+- TOP-01 baseline after collection: 13/13 valid
+- New P6-R3 verification tests: 5/5 passed
+- Targeted v2/v3/gate boundary: 31/31 passed
+- Full regression suite: 343/343 passed in the real local environment
+- Containerlab containers after cleanup: 0
+- Fault injection and restoration: absent
+- Dataset Row v2 runtime default: retained
+- Dataset Row v3, campaign row, model, prediction, and metric: absent
+- P6-R3 closeout: completed
+
+P6-R3 establishes only one controlled healthy runtime signature and its
+provenance. It does not establish the three new fault signatures,
+restoration, six-class separability, cross-topology behavior, campaign
+results, ML performance, or real-world generalization.
+
 ## Open issues
 
 - Final FRRouting container image for later routing extensions
-- Verify the healthy Evidence v3 path and raw hashes in one real
-  laboratory context
 - Implement and smoke-verify wrong_default_gateway, interface_down,
   and acl_block injectors and restoration
-- Add and verify open-source iptables tooling for acl_block
 - Implement or review all six complete Phase 6 contexts, including
   the new E06 forwarding-policy-boundary topology
 - Execute the frozen 72-row clean campaign and 36/12/24 split
@@ -926,15 +963,16 @@ features, fault signatures, restoration, or experimental performance.
 
 ## Next milestone
 
-P6-R3 — Healthy Evidence v3 Runtime and Toolchain Gate.
+P6-R4 — Fail-stop Injectors, Rule Signatures, and New-Class Smoke Gate.
 
-P6-R3 must review one existing topology binding for Observation Profile
-v2, verify the required open-source commands in the local image, and
-run only a normal fault-free Evidence v3 collection. It must validate
-all ten healthy features, audit every raw artifact and SHA-256, and
-preserve the accepted Evidence v2 regression path. It must stop before
-new fault injection, the 72-row campaign, model fitting, prediction, or
-metrics.
+P6-R4 must implement wrong_default_gateway on the source role,
+interface_down on the route-observer egress interface, and acl_block as
+one exact tagged FORWARD-chain rule. Every injector must verify its
+precondition, exact injected state, exact restoration, healthy baseline
+recovery, and the frozen Evidence v3 signature. One reviewed context per
+new class is sufficient for this milestone. It must stop before E01-E06,
+the 72-row campaign, Dataset Row v3 aggregation, model fitting,
+prediction, or metrics.
 
 ## Important limitation
 
@@ -1027,3 +1065,12 @@ raw-byte hash binding, output protection, and no v2 regression on
 synthetic command outputs. They still do not prove command availability
 or any expected signature in Containerlab. P6-R3 is the first milestone
 authorized to test only the healthy Evidence v3 runtime path.
+
+P6-R3 proves that ip, ping, and open-source iptables are present in the
+rebuilt local image and that one reviewed fault-free TOP-01 flow produces
+the frozen ten-feature healthy Evidence v3 signature with nine exact raw
+hash bindings. Three 13/13 baseline validations and zero remaining lab
+containers establish preservation for this execution. This single
+healthy context does not prove any new fault signature, injector
+restoration, campaign feasibility, six-class generalization, or method
+performance. Those claims remain prohibited until their later gates.

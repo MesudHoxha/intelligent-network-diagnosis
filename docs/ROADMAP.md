@@ -202,7 +202,22 @@ Status: In progress
 - Full automated regression suite: 338/338 passed in isolated
   verification
 - P6-R2 Containerlab execution and real Phase 6 artifacts: absent
-- Next milestone: P6-R3 healthy Evidence v3 runtime and toolchain gate
+- P6-R3 Ubuntu 24.04 image toolchain with ip, ping, and open-source
+  iptables: real-runtime verified
+- P6-R3 reviewed TOP-01 Observation Profile v2 binding and isolated
+  source-default-route setup: completed without changing the historical
+  topology or G01 fingerprint
+- Real healthy Evidence v3 collection: 10/10 observed features and 9/9
+  SHA-256-bound raw probes verified
+- TOP-01 baseline before binding, before collection, and after
+  collection: 13/13 valid
+- P6-R3 targeted tests: 31/31 passed
+- Full automated regression suite: 343/343 passed in the real local
+  verification environment
+- Fault injection, Dataset Row v3, Phase 6 campaign, model, prediction,
+  and metric in P6-R3: absent
+- Next milestone: P6-R4 fail-stop injectors and one-context smoke
+  verification for wrong_default_gateway, interface_down, and acl_block
 
 ## Phase 7 — Dashboard and API
 Status: Not started

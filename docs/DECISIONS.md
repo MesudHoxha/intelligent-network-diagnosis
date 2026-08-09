@@ -1674,3 +1674,53 @@ topology. Dataset Row v2 remains the runtime default and the historical
 Experiment Runner still invokes only the unchanged v2 collector. P6-R3
 must perform a separately reviewed healthy runtime and toolchain gate
 before any new injector is implemented or executed.
+
+## D-080 — Healthy Evidence v3 runtime and toolchain gate
+
+Decision: Accept the first real, fault-free Evidence v3 collection on
+the reviewed TOP-01 hosta-to-hostb binding as the runtime prerequisite
+for Phase 6 injector work.
+
+The accepted laboratory image remains Ubuntu 24.04 and now declares the
+open-source iptables package alongside iproute2 and iputils-ping. The
+pre-existing image was retained locally under the recovery tag
+ind-linux:p6-r2-preflight before ind-linux:0.1 was rebuilt. The rebuilt
+image exposed ip, ping, and iptables, with iptables v1.8.10 using the
+nf_tables backend.
+
+The reviewed Observation Profile v2 binding is isolated in
+N0_NORMAL_OPERATION_P6_TOP01. It observes HostA as source, R1 as route
+observer, R2 as transit, and HostB as destination. A separate fail-stop
+setup script adds HostA's default route through 10.10.1.1 only after
+deployment. The accepted historical TOP-01 topology and its frozen G01
+fingerprint remain byte-for-byte unchanged.
+
+The real experiment
+p6_r3_healthy_top01-20260806T090542Z completed with collector return code
+zero. All ten features were observed with the frozen healthy signature,
+all nine raw JSON probes completed with return code zero, and every raw
+artifact matched its Evidence v3 SHA-256 binding. Evidence SHA-256 is
+654cb717aa823091b6832d586b22503eb26f37aad81dc3e2f40f7d1f64c75ac2
+and collector-status SHA-256 is
+d68b14f65b80f72ab7f0b8c7f3709b37b2f0a18165167ec3dd3593c914aed88d.
+
+TOP-01 passed all 13 baseline checks before the Phase 6 binding, before
+collection, and after collection. No fault was injected or restored.
+The targeted boundary passed 31/31 tests and the complete regression
+suite passed 343/343 tests. Containerlab cleanup removed all four lab
+containers. Dataset Row v2 remains the runtime default; no Dataset Row
+v3, campaign row, model, prediction, or metric was created.
+
+Status: Implemented, real-runtime verified, and accepted in P6-R3 on
+2026-08-06.
+
+Limitation:
+
+D-080 proves tool availability, the reviewed healthy TOP-01 binding,
+the no-fault ten-feature signature, raw-probe provenance, and baseline
+preservation in one local controlled context. It does not prove any
+fault signature, injector restoration, cross-topology behavior,
+six-class separability, campaign completeness, ML performance, or
+real-world generalization. P6-R4 must implement and smoke each new
+single-fault class through separately reviewed fail-stop injectors
+before the 72-row campaign is authorized.
