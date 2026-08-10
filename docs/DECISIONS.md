@@ -1724,3 +1724,108 @@ six-class separability, campaign completeness, ML performance, or
 real-world generalization. P6-R4 must implement and smoke each new
 single-fault class through separately reviewed fail-stop injectors
 before the 72-row campaign is authorized.
+
+## D-081 — Runtime amendment to the interface-down signature
+
+Decision: Amend only the `interface_down` route-family expectation in
+D-077 after two fail-stop P6-R4 runtimes disproved the assumption that
+Linux retains or permits re-adding routes through an administratively
+down device.
+
+Runtime `p6_r4_new_class_smoke-20260810T114903Z` set R1 `eth2` down
+successfully and observed the exact destination route as absent, the
+expected next-hop and end-to-end destination as unreachable, and the
+independent R2-to-HostB path as healthy. Runtime
+`p6_r4_interface_recovery_smoke-20260810T122212Z` then proved that both
+attempts to recreate the recorded routes with `onlink` while `eth2`
+was down returned code 2 with `Error: Nexthop device is not up.` Both
+failed gates restored the controlled baseline safely; neither produced
+accepted fault evidence, a dataset row, a campaign result, a model,
+prediction, or metric.
+
+The amended `interface_down` signature is T,T,F,F,U,U,F,F,T,F in the
+unchanged D-077 feature order. The route-existence probe is observed
+false; installed next-hop agreement and reachability are structurally
+unavailable under the existing Evidence v3 contract. The class remains
+distinct from `missing_static_route`, whose expected next-hop remains
+reachable and observer egress interface remains operationally up.
+
+Injection sets only the selected interface down and verifies the
+kernel removal of every explicitly bound baseline route. It must not
+attempt route insertion through the down device. Restoration raises the
+interface, replaces every exact recorded baseline route without
+`onlink`, and requires complete healthy-baseline revalidation.
+
+The original D-077 plan hash
+f2cf0feced412af5fa76f1ffa861b3500389c430209d8e5b09a4d9e985f1b4f9
+is retained as historical identity. The amended canonical plan at the
+same versioned path has SHA-256
+571cc26518d81a1768261970fb2d3847587fc4bbc1a9c62678c8f97f3e524746.
+Git history preserves the original bytes. All later Phase 6 work must
+use the amended hash and may not claim the superseded signature as an
+observed result.
+
+Status: Approved, implementation-corrected, and real-runtime verified
+on 2026-08-10. The amended `interface_down` smoke passed in runtime
+`p6_r4_d081_amended_smoke-20260810T130119Z` with eight observed and two
+structurally unavailable features, exact rule match, exact restoration,
+healthy Evidence v3 recovery, and a 13/13 final baseline.
+
+Limitation:
+
+D-081 is a runtime-informed contract correction whose amended
+single-context smoke is now accepted under D-082. It does not authorize
+Dataset Row v3 aggregation, E01-E06 execution, the 72-row campaign,
+fitting, prediction, metrics, or any claim beyond the reviewed TOP-01
+kernel and diagnostic behavior.
+
+## D-082 — Phase 6 new-class injector and smoke gate
+
+Decision: Accept the three new fail-stop injectors, their Rule Engine
+v3 signatures, and one reviewed TOP-01 smoke per new class as the P6-R4
+prerequisite for the later six-context campaign.
+
+The accepted classes and rules are:
+
+- `wrong_default_gateway` through `R_P6_ROUTING_003`;
+- `interface_down` through `R_P6_LINK_001`; and
+- `acl_block` through `R_P6_POLICY_001`.
+
+Each injector records explicit preconditions, applies only its reviewed
+mutation, verifies the exact fault state, restores the recorded
+baseline, validates the complete 13-check TOP-01 baseline, and verifies
+the restored healthy Evidence v3 signature before another class may
+run. The ACL injector uses one exact tagged iptables/FORWARD DROP rule.
+The interface injector follows D-081: it treats removal of the two
+device-bound routes as a kernel side effect and recreates both routes
+only after raising the interface.
+
+The accepted smoke evidence combines the saved
+`wrong_default_gateway` result from
+`p6_r4_new_class_smoke-20260810T114903Z` with `interface_down` and
+`acl_block` from
+`p6_r4_d081_amended_smoke-20260810T130119Z`. All three injectors and
+restorers were confirmed, all three rules were exact matches, all three
+post-restoration healthy signatures passed, and 26/26 raw fault
+artifacts were SHA-256 bound. Across the three fault signatures, 28
+features were observed and the two D-081 installed-next-hop features
+were structurally unavailable.
+
+The final TOP-01 baseline passed 13/13 checks and cleanup left zero lab
+containers. The implementation passed 46/46 targeted tests and 373/373
+full regression tests. The gate summary SHA-256 is
+d7d8dd30e0ad537c1a2897209c2a58285ba7fbe241653fa561649869e8c46a4b.
+The two stopped interface diagnostics remain immutable diagnostic
+evidence and are not accepted samples.
+
+Status: Implemented, real-runtime verified, and accepted in P6-R4 on
+2026-08-10.
+
+Limitation:
+
+D-082 proves bounded single-fault feasibility and rule separability in
+one reviewed TOP-01 context per new class. It does not establish all six
+classes across E01-E06, campaign completeness, cross-topology
+generalization, ML or Hybrid performance, missing-evidence robustness,
+or real-world accuracy. No Dataset Row v3, campaign, model, prediction,
+or metric was produced by P6-R4.

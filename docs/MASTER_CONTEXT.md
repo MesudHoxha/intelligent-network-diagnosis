@@ -857,3 +857,44 @@ prediction, or metric was produced, and Dataset Row v2 remains the
 runtime default. P6-R4 may now implement the three reviewed single-fault
 injectors and rule signatures, but it must stop after one fail-stop smoke
 execution per new class.
+
+P6-R4 produced one accepted `wrong_default_gateway` smoke and two
+fail-stop `interface_down` diagnostics on 2026-08-10. The first runtime
+proved that Linux removes the exact R1 routes bound to `eth2` when the
+interface is set down. The second proved that `onlink` cannot recreate
+those routes while the device remains down; both commands returned code
+2 with `Error: Nexthop device is not up.` The controlled interface,
+routes, complete baseline, and healthy Evidence v3 were restored after
+each stopped gate. Neither failed runtime is an accepted fault Evidence
+v3 result or dataset input.
+
+D-081 therefore amends only the `interface_down` feature signature to
+T,T,F,F,U,U,F,F,T,F. The exact route absence is observed, while installed
+next-hop agreement and reachability are structurally unavailable under
+the existing Evidence v3 contract. The class remains distinct from
+`missing_static_route` through expected-next-hop reachability and
+observer-interface state. Injection performs only `eth2 down` and
+verifies kernel route removal; restoration raises the interface and
+replaces the exact recorded baseline routes before complete healthy
+revalidation.
+
+The original D-077 plan hash remains a historical identity. The amended
+canonical plan hash is
+571cc26518d81a1768261970fb2d3847587fc4bbc1a9c62678c8f97f3e524746.
+
+The amended runtime
+`p6_r4_d081_amended_smoke-20260810T130119Z` then accepted both the
+`interface_down` and `acl_block` smokes. Together with the previously
+accepted `wrong_default_gateway` smoke, P6-R4 closed with three exact
+rule matches, three confirmed restorations, three restored healthy
+Evidence v3 signatures, and 26/26 raw fault artifacts bound by SHA-256.
+The amended interface case contributed the only two structurally
+unavailable values; the other 28 fault-feature values were observed.
+
+The closeout gate passed 46/46 targeted tests and the complete 373/373
+regression suite. TOP-01 was 13/13 healthy after the final restoration,
+all prior failed-runtime digests remained unchanged, and no TOP-01
+container remained. D-082 accepts the bounded three-new-class smoke
+gate only. Dataset Row v3 aggregation, E01-E06, the 72-row campaign,
+fitting, prediction, and metrics were not executed and move to P6-R5
+or later milestones.

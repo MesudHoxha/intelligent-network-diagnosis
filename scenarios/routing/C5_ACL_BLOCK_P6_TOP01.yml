@@ -1,0 +1,79 @@
+schema_version: 1
+
+scenario:
+  id: C5_ACL_BLOCK_P6_TOP01
+  name: Exact tagged forwarding ACL block on Phase 6 TOP-01
+  kind: fault
+  variant_id: p6_r4_top01_smoke
+  split_group_id: CTX_P6_R4_TOP01_NEW_CLASS_SMOKE
+  category: access_control
+  description: >
+    Insert one uniquely tagged iptables/filter/FORWARD DROP rule for
+    only the observed HostA-to-HostB ICMP flow on R1.
+
+  topology:
+    id: TOP_01
+    file: labs/topologies/top01_routed/topology.clab.yml
+
+  observation:
+    schema_version: 2
+    direction: hosta_to_hostb
+    source_node: hosta
+    source_container: clab-top01-hosta
+    source_address: 10.10.1.10
+    source_prefix: 10.10.1.0/24
+    source_gateway_address: 10.10.1.1
+    destination_address: 10.10.2.10
+    destination_prefix: 10.10.2.0/24
+    route_observer_node: r1
+    route_observer_container: clab-top01-r1
+    expected_next_hop: 10.10.12.2
+    observer_egress_interface: eth2
+    transit_node: r2
+    transit_container: clab-top01-r2
+    flow_protocol: icmp
+    flow_source_port: null
+    flow_destination_port: null
+    policy_backend: iptables
+    policy_table: filter
+    policy_chain: FORWARD
+    policy_rule_tag_prefix: IND-P6
+
+  fault:
+    type: acl_block
+    injector: insert_exact_tagged_forward_drop_rule
+    target_node: r1
+    target_container: clab-top01-r1
+    parameters:
+      source_address: 10.10.1.10
+      destination_address: 10.10.2.10
+      protocol: icmp
+      source_port: null
+      destination_port: null
+      policy_backend: iptables
+      policy_table: filter
+      policy_chain: FORWARD
+      rule_tag: IND-P6-R4-ACL-TOP01
+
+  expected_effects:
+    - id: exact_tagged_rule_present
+      description: One matching IND-P6-R4-ACL-TOP01 DROP rule exists
+    - id: selected_flow_unreachable
+      description: HostA no longer reaches HostB by ICMP
+    - id: routing_and_link_state_healthy
+      description: Route, next-hop, interface, and transit remain healthy
+    - id: no_broad_policy_mutation
+      description: No other forwarding rule is inserted or removed
+
+  ground_truth:
+    fault_category: access_control
+    fault_type: acl_block
+    fault_location: r1
+    affected_prefix: 10.10.2.0/24
+    root_cause: >
+      One exact tagged R1 FORWARD-chain DROP rule blocks only the
+      observed HostA-to-HostB ICMP flow
+
+  restoration:
+    method: delete_exact_tagged_forward_drop_rule
+    rule_tag: IND-P6-R4-ACL-TOP01

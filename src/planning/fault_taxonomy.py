@@ -71,7 +71,9 @@ EXPECTED_SIGNATURE_DISCRIMINATORS = {
         "source_expected_gateway_reachable": "true",
     },
     "interface_down": {
-        "route_next_hop_matches_expected": "true",
+        "route_to_destination_exists_on_observer": "false",
+        "route_next_hop_matches_expected": "unavailable",
+        "expected_next_hop_reachable_from_observer": "false",
         "observer_egress_interface_oper_up": "false",
     },
     "acl_block": {
@@ -98,8 +100,8 @@ EXPECTED_SIGNATURES = {
         "true", "true", "true", "true", "false",
     ),
     "interface_down": (
-        "true", "true", "false", "true", "true",
-        "false", "false", "false", "true", "false",
+        "true", "true", "false", "false", "unavailable",
+        "unavailable", "false", "false", "true", "false",
     ),
     "acl_block": (
         "true", "true", "false", "true", "true",

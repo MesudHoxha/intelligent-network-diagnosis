@@ -4,7 +4,19 @@ Version: 1
 
 Date: 2026-08-05
 
-Status: DESIGN FROZEN; CONTRACT IMPLEMENTED; NO NETWORK EXECUTION
+Status: DESIGN FROZEN; D-081 AMENDED; P6-R4 SMOKE VERIFIED
+
+The original D-077 design was frozen before new-fault execution. D-081
+amends only the `interface_down` route-family expectation after two
+fail-stop P6-R4 runtimes established the Linux kernel behavior. The
+class order, ten-feature boundary, contexts, split, masks, and all
+P2-P5 immutable artifacts remain unchanged.
+
+D-082 closed P6-R4 after one accepted smoke for each new class. The
+three rules matched exactly, all three mutations were restored, all
+three healthy signatures recovered, and the final TOP-01 baseline was
+13/13 valid. This smoke result does not realize the planned E01-E06
+campaign or authorize a claim about ML or Hybrid performance.
 
 ## 1. Purpose
 
@@ -114,9 +126,9 @@ acceptance targets. They are not experimental results.
 | Expected gateway reachable | T | T | T | T | T | T |
 | Default gateway matches | T | T | T | F | T | T |
 | Destination reachable | T | F | F | F | F | F |
-| Observer route exists | T | F | T | T | T | T |
-| Route next-hop matches | T | U | F | T | T | T |
-| Installed next-hop reachable | T | U | F | T | F | T |
+| Observer route exists | T | F | T | T | F | T |
+| Route next-hop matches | T | U | F | T | U | T |
+| Installed next-hop reachable | T | U | F | T | U | T |
 | Expected next-hop reachable | T | T | T | T | F | T |
 | Observer egress operational | T | T | T | T | F | T |
 | Transit reaches destination | T | T | T | T | T | T |
@@ -124,10 +136,15 @@ acceptance targets. They are not experimental results.
 
 `T`, `F`, and `U` mean true, false, and structurally unavailable.
 
-The configured next-hop fields are structurally unavailable for
-`missing_static_route`; this is not an artificial missing-evidence
-case. Artificial masks are tracked separately and never overwrite the
-clean evidence artifact.
+The configured next-hop fields are structurally unavailable whenever
+the exact observer route is absent. For `missing_static_route`, route
+absence is the injected mutation. For `interface_down`, it is the
+deterministic Linux kernel consequence of disabling the route's device.
+The two classes remain distinguishable because the expected next-hop
+and observer interface remain healthy for `missing_static_route` and
+are both down/unreachable for `interface_down`. These structural values
+are not artificial missing-evidence cases. Artificial masks are tracked
+separately and never overwrite the clean evidence artifact.
 
 ## 6. Injection and restoration contracts
 
@@ -177,10 +194,15 @@ Class-specific requirements are:
 - The selected observer egress interface, its peer, and the route must
   be healthy before injection.
 - Only the selected observer interface is set down.
-- The route stays present and continues to name the expected next-hop,
-  while the interface and neighbor reachability become false.
-- Restoration sets the interface up and requires full baseline
-  revalidation; a command return code alone is insufficient.
+- Linux removes routes bound to the disabled device; the injector must
+  verify the absence of every explicitly recorded baseline route and
+  must not attempt to recreate a route through a down device.
+- Route-dependent next-hop agreement and installed-next-hop
+  reachability become structurally unavailable, while interface state
+  and expected-neighbor reachability become false.
+- Restoration sets the interface up, restores every exact recorded
+  baseline route without `onlink`, and requires full baseline
+  revalidation; command return codes alone are insufficient.
 
 ### ACL block
 

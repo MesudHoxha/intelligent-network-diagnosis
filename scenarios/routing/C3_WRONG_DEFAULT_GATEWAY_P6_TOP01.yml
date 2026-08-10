@@ -1,0 +1,83 @@
+schema_version: 1
+
+scenario:
+  id: C3_WRONG_DEFAULT_GATEWAY_P6_TOP01
+  name: Wrong source default gateway on Phase 6 TOP-01
+  kind: fault
+  variant_id: p6_r4_top01_smoke
+  split_group_id: CTX_P6_R4_TOP01_NEW_CLASS_SMOKE
+  category: routing
+  description: >
+    Replace HostA's expected default gateway with one controlled,
+    unreachable address on the same source segment. The isolated
+    P6-R4 setup makes the observed destination depend on this default
+    route without changing the historical TOP-01 topology file.
+
+  topology:
+    id: TOP_01
+    file: labs/topologies/top01_routed/topology.clab.yml
+
+  observation:
+    schema_version: 2
+    direction: hosta_to_hostb
+    source_node: hosta
+    source_container: clab-top01-hosta
+    source_address: 10.10.1.10
+    source_prefix: 10.10.1.0/24
+    source_gateway_address: 10.10.1.1
+    destination_address: 10.10.2.10
+    destination_prefix: 10.10.2.0/24
+    route_observer_node: r1
+    route_observer_container: clab-top01-r1
+    expected_next_hop: 10.10.12.2
+    observer_egress_interface: eth2
+    transit_node: r2
+    transit_container: clab-top01-r2
+    flow_protocol: icmp
+    flow_source_port: null
+    flow_destination_port: null
+    policy_backend: iptables
+    policy_table: filter
+    policy_chain: FORWARD
+    policy_rule_tag_prefix: IND-P6
+
+  fault:
+    type: wrong_default_gateway
+    injector: replace_source_default_gateway
+    target_node: hosta
+    target_container: clab-top01-hosta
+    parameters:
+      correct_gateway: 10.10.1.1
+      wrong_gateway: 10.10.1.254
+      source_interface: eth1
+
+  expected_effects:
+    - id: expected_gateway_remains_reachable
+      description: HostA still reaches 10.10.1.1 on the source segment
+    - id: wrong_default_installed
+      description: HostA's only default route uses 10.10.1.254
+    - id: selected_destination_unreachable
+      description: HostA no longer reaches 10.10.2.10
+    - id: observer_and_transit_remain_healthy
+      description: R1 and R2 retain the healthy downstream path
+
+  ground_truth:
+    fault_category: routing
+    fault_type: wrong_default_gateway
+    fault_location: hosta
+    affected_prefix: 10.10.2.0/24
+    root_cause: >
+      HostA's default route uses an unreachable gateway on the source
+      segment instead of the expected R1 address
+
+  restoration:
+    method: replace_expected_source_default_gateway
+    command:
+      - ip
+      - route
+      - replace
+      - default
+      - via
+      - 10.10.1.1
+      - dev
+      - eth1

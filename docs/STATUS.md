@@ -944,11 +944,55 @@ provenance. It does not establish the three new fault signatures,
 restoration, six-class separability, cross-topology behavior, campaign
 results, ML performance, or real-world generalization.
 
+## Latest P6-R4 verification
+
+- Decisions: D-081 runtime amendment and D-082 smoke-gate acceptance
+- P6-R4 status: completed
+- First stopped interface runtime:
+  `p6_r4_new_class_smoke-20260810T114903Z`
+- First observed kernel behavior: `eth2=DOWN`, exact bound routes absent
+- Second stopped interface runtime:
+  `p6_r4_interface_recovery_smoke-20260810T122212Z`
+- Route recreation through down device: 2/2 rejected with return code 2
+- Exact stderr: `Error: Nexthop device is not up.`
+- Safe interface, route, 13/13 baseline, and healthy Evidence v3
+  restoration after the second gate: confirmed
+- Superseded D-077 interface signature: T,T,F,T,T,F,F,F,T,F
+- Amended D-081 interface signature: T,T,F,F,U,U,F,F,T,F
+- Amended raw/availability boundary: 8 raw probes, 8 observed features,
+  2 structurally unavailable route-dependent features
+- Amended plan SHA-256:
+  571cc26518d81a1768261970fb2d3847587fc4bbc1a9c62678c8f97f3e524746
+- Accepted D-081 runtime:
+  `p6_r4_d081_amended_smoke-20260810T130119Z`
+- Accepted new-class smokes: 3/3
+- Accepted rules: R_P6_ROUTING_003, R_P6_LINK_001, R_P6_POLICY_001
+- Rule exact matches: 3/3
+- Injection confirmations: 3/3
+- Exact restorations: 3/3
+- Restored healthy Evidence v3 signatures: 3/3
+- Fault raw artifacts: 26/26 SHA-256 bound
+- Fault-feature availability: 28 observed, 2 structurally unavailable
+- Gate-summary SHA-256:
+  d7d8dd30e0ad537c1a2897209c2a58285ba7fbe241653fa561649869e8c46a4b
+- Targeted P6-R4 tests: 46/46 passed
+- Full regression suite: 373/373 passed
+- Final TOP-01 baseline: 13/13 valid
+- TOP-01 containers after cleanup: 0
+- Previous stopped runtime digests: 2/2 unchanged
+- Dataset Row v3 aggregation, E01-E06, campaign, fitting, prediction,
+  and metrics: absent
+- P6-R4 closeout: completed
+
+The two stopped interface runtimes are diagnostic evidence, not
+accepted class samples. The three accepted smokes establish only
+single-context fault feasibility, restoration, Evidence v3 signatures,
+and exact Rule Engine v3 matches. P6-R5 must implement and review all
+E01-E06 bindings before executing the frozen 72-row campaign.
+
 ## Open issues
 
 - Final FRRouting container image for later routing extensions
-- Implement and smoke-verify wrong_default_gateway, interface_down,
-  and acl_block injectors and restoration
 - Implement or review all six complete Phase 6 contexts, including
   the new E06 forwarding-policy-boundary topology
 - Execute the frozen 72-row clean campaign and 36/12/24 split
@@ -963,16 +1007,15 @@ results, ML performance, or real-world generalization.
 
 ## Next milestone
 
-P6-R4 — Fail-stop Injectors, Rule Signatures, and New-Class Smoke Gate.
+P6-R5 — Complete Context Bindings and 72-Row Clean Campaign.
 
-P6-R4 must implement wrong_default_gateway on the source role,
-interface_down on the route-observer egress interface, and acl_block as
-one exact tagged FORWARD-chain rule. Every injector must verify its
-precondition, exact injected state, exact restoration, healthy baseline
-recovery, and the frozen Evidence v3 signature. One reviewed context per
-new class is sufficient for this milestone. It must stop before E01-E06,
-the 72-row campaign, Dataset Row v3 aggregation, model fitting,
-prediction, or metrics.
+P6-R5 must implement or review E01-E06 as complete six-class context
+bundles, including the new E06 forwarding-policy-boundary topology,
+before campaign execution. The coordinator must then execute exactly
+72 fail-stop experiments, create Dataset Row v3 records, and produce
+the frozen 36/12/24 whole-context split without leakage. It must stop
+before model fitting, Hybrid selection, report-only test evaluation,
+or missing-evidence result claims.
 
 ## Important limitation
 

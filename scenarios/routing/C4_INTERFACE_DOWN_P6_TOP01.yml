@@ -1,0 +1,85 @@
+schema_version: 1
+
+scenario:
+  id: C4_INTERFACE_DOWN_P6_TOP01
+  name: Observer egress interface down on Phase 6 TOP-01
+  kind: fault
+  variant_id: p6_r4_top01_smoke
+  split_group_id: CTX_P6_R4_TOP01_NEW_CLASS_SMOKE
+  category: link
+  description: >
+    Set only R1's selected egress interface down, observe the Linux
+    kernel removing routes bound to that device, and preserve the
+    independent R2-to-HostB path.
+
+  topology:
+    id: TOP_01
+    file: labs/topologies/top01_routed/topology.clab.yml
+
+  observation:
+    schema_version: 2
+    direction: hosta_to_hostb
+    source_node: hosta
+    source_container: clab-top01-hosta
+    source_address: 10.10.1.10
+    source_prefix: 10.10.1.0/24
+    source_gateway_address: 10.10.1.1
+    destination_address: 10.10.2.10
+    destination_prefix: 10.10.2.0/24
+    route_observer_node: r1
+    route_observer_container: clab-top01-r1
+    expected_next_hop: 10.10.12.2
+    observer_egress_interface: eth2
+    transit_node: r2
+    transit_container: clab-top01-r2
+    flow_protocol: icmp
+    flow_source_port: null
+    flow_destination_port: null
+    policy_backend: iptables
+    policy_table: filter
+    policy_chain: FORWARD
+    policy_rule_tag_prefix: IND-P6
+
+  fault:
+    type: interface_down
+    injector: set_observer_egress_interface_down
+    target_node: r1
+    target_container: clab-top01-r1
+    parameters:
+      interface: eth2
+      baseline_routes:
+        - prefix: 10.10.2.0/24
+          next_hop: 10.10.12.2
+        - prefix: 10.10.22.0/24
+          next_hop: 10.10.12.2
+
+  expected_effects:
+    - id: selected_interface_down
+      description: R1 eth2 is operationally down
+    - id: observer_routes_removed_by_kernel
+      description: >
+        Routes bound to R1 eth2 are absent while the device is down
+    - id: next_hop_unreachable
+      description: R1 no longer reaches 10.10.12.2 through eth2
+    - id: transit_destination_healthy
+      description: R2 still reaches HostB independently
+
+  ground_truth:
+    fault_category: link
+    fault_type: interface_down
+    fault_location: r1
+    affected_prefix: 10.10.2.0/24
+    root_cause: >
+      R1's selected forwarding interface eth2 is administratively and
+      operationally down; Linux removes routes bound to that device as
+      a deterministic consequence of the interface fault
+
+  restoration:
+    method: set_observer_egress_interface_up_and_revalidate
+    command:
+      - ip
+      - link
+      - set
+      - dev
+      - eth2
+      - up

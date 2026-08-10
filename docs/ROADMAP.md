@@ -216,8 +216,22 @@ Status: In progress
   verification environment
 - Fault injection, Dataset Row v3, Phase 6 campaign, model, prediction,
   and metric in P6-R3: absent
-- Next milestone: P6-R4 fail-stop injectors and one-context smoke
-  verification for wrong_default_gateway, interface_down, and acl_block
+- P6-R4 `wrong_default_gateway` one-context smoke: verified
+- D-081 runtime amendment: `interface_down` route absence and two
+  structurally unavailable installed-next-hop features accepted after
+  two safely restored fail-stop diagnostics
+- P6-R4 amended `interface_down` re-smoke: verified
+- P6-R4 exact tagged `acl_block` smoke: verified
+- Three new-class injections, rule exact matches, restorations, and
+  restored healthy signatures: 3/3 verified
+- P6-R4 targeted tests: 46/46 passed
+- Full automated regression suite: 373/373 passed
+- Final TOP-01 baseline: 13/13 valid; cleanup containers: 0
+- P6-R4 closeout and HANDOFF: completed
+- Dataset Row v3, E01-E06, 72-row campaign, fitting, prediction, and
+  metrics in P6-R4: absent
+- Next milestone: P6-R5 complete-context review and 72-row clean
+  campaign
 
 ## Phase 7 — Dashboard and API
 Status: Not started
