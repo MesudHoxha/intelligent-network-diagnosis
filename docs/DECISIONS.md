@@ -2018,3 +2018,51 @@ identifiability, data, method, and evaluation expansion is not justified
 inside the current bachelor scope. Any future attempt requires a new
 precommitted protocol and may not use P6-R6 test outcomes for tuning or
 selection.
+
+## D-086 — Freeze a local read-only Dashboard/API projection boundary
+
+Decision: Accept P7-R0 as the version-1 interface contract and permit
+Phase 7 to present only verified projections of accepted P6-R6
+artifacts.
+
+The application architecture is FastAPI served by Uvicorn on
+`127.0.0.1`, with static same-origin HTML, CSS, and JavaScript for the
+Dashboard. It requires no React/Node toolchain, database, cloud service,
+external asset host, telemetry system, paid API, license, or dataset.
+The server and Dashboard are not implemented in P7-R0.
+
+The application must verify the accepted freeze-manifest,
+freeze-receipt, run-manifest, and cross-method comparison SHA-256 values
+before reporting readiness. Its projection source is restricted to the
+15 JSON/JSONL files frozen in
+`plans/phase7/P7_R0_READ_ONLY_INTERFACE_V1.json`; transitive artifact
+references must also verify. The estimator, development train/validation
+inputs, source test split, arbitrary paths, and generic downloads are
+not runtime sources.
+
+The version-1 API contains exactly six `GET` routes for health,
+overview, comparison, case listing, case detail, and provenance. It has
+no mutation, inference, experiment, remediation, file-path, or model-
+download route. Missing or drifted artifacts fail closed. Stable success
+and error envelopes, deterministic pagination, filters, and claim limits
+are frozen in `contracts/api/p7_readonly_api_v1.openapi.yml`.
+
+The interface may filter, sort, paginate, and format accepted values for
+display. It may not deserialize the model, execute Rule/ML/Hybrid
+methods, fit or select a model or policy, calculate a new empirical
+performance or superiority statistic, execute Docker/Containerlab or a
+subprocess, write an artifact, or imply real-world generalization.
+
+Status: Accepted as a contract-only decision on 2026-08-11. No API
+server, Dashboard, artifact catalog, runtime read, prediction, metric,
+network command, or filesystem mutation was executed by P7-R0. P7-R1 is
+next and is limited to a fail-closed artifact catalog and immutable
+projection layer.
+
+Limitation:
+
+D-086 does not establish that the Dashboard or API works. It freezes the
+scope against which later implementation is tested. The accepted P6-R6
+results remain descriptive-only, the E02/E06 authorization remains
+consumed, and ML and Hybrid remain empirically identical in the accepted
+aggregate scopes.

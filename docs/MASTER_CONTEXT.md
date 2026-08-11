@@ -1006,3 +1006,30 @@ prediction, or metric occurs in P6-R7, and all P6-R6 artifacts remain
 immutable. Phase 6 is complete. P7-R0 is next and must freeze a
 read-only Dashboard/API scope around accepted artifacts without network
 mutation, model retraining, or new empirical claims.
+
+P7-R0 freezes that boundary under D-086 without implementing or starting
+an application. The selected local stack is FastAPI/Uvicorn plus static
+same-origin HTML/CSS/JavaScript bound by default to `127.0.0.1`. It adds
+no database, React/Node build, cloud dependency, external asset, paid
+service, telemetry, or production deployment requirement.
+
+The interface contract binds the accepted P6-R6 freeze-manifest,
+freeze-receipt, run-manifest, and descriptive comparison hashes. A
+machine-readable allowlist limits projection to 15 JSON/JSONL gate,
+selection, report, input, target, and prediction artifacts. The selected
+estimator is neither served nor deserialized; development inputs, the
+source test split, arbitrary paths, and generic downloads are excluded.
+
+The API surface is six versioned `GET` routes: health, overview,
+comparison, case list, case detail, and provenance. The Dashboard scope
+is overview, method comparison, case explorer, and provenance/
+limitations. Missing or drifted artifacts must fail closed. Network
+mutation, fault injection, collection, live diagnosis, inference,
+training, selection, new metrics, automatic remediation, subprocesses,
+and filesystem writes are prohibited.
+
+P7-R0 creates the plan, OpenAPI contract, documentation, and static
+contract tests only. It reads no runtime artifact and creates no server,
+UI, evidence, prediction, or metric. P7-R1 is next and may implement
+only the verified artifact catalog and immutable 120-case projection
+layer before any HTTP or Dashboard implementation is authorized.

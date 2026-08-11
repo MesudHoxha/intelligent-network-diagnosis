@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "contract_id": "p7_readonly_dashboard_api_v1",
+  "status": "FROZEN_FOR_IMPLEMENTATION",
+  "mode": "READ_ONLY_ACCEPTED_ARTIFACT_PROJECTION",
+  "deployment": {
+    "api_framework": "fastapi",
+    "application_server": "uvicorn",
+    "bind_host": "127.0.0.1",
+    "dashboard": "static_html_css_javascript",
+    "same_origin": true,
+    "external_assets": false,
+    "database": "NONE",
+    "paid_service": "NONE"
+  },
+  "accepted_root_bindings": [
+    {
+      "artifact_id": "freeze_manifest",
+      "path": "models/p6_r6_six_class_v1/freeze_manifest.json",
+      "sha256": "fa98a17e2ffae42f6dd009a13af65ad32174035eca8352bf26f321531a4fe0f5"
+    },
+    {
+      "artifact_id": "freeze_receipt",
+      "path": "models/p6_r6_six_class_v1/freeze_receipt.json",
+      "sha256": "5c6c6537cb233efdeb52c6872f7a6ef7fb32eb3ac7b2474e2514b2908cd29bcc"
+    },
+    {
+      "artifact_id": "run_manifest",
+      "path": "reports/experiments/p6_r6_six_class_v1/run_manifest.json",
+      "sha256": "44c505b451c6211b4515564f4b889633b6d74ed0c618f19cc0ab3b9bdfe72b1d"
+    },
+    {
+      "artifact_id": "cross_method_comparison",
+      "path": "reports/experiments/p6_r6_six_class_v1/cross_method_comparison.json",
+      "sha256": "ca1c15d04828c0ae61cacaf80a5ee6f49f64a9cf3ac151a4b4ccd2386987e570"
+    }
+  ],
+  "projection_source_allowlist": [
+    "data/metadata/p6_r6_six_class_method_gate_v1.json",
+    "models/p6_r6_six_class_v1/freeze_manifest.json",
+    "models/p6_r6_six_class_v1/freeze_receipt.json",
+    "models/p6_r6_six_class_v1/ml_selection.json",
+    "models/p6_r6_six_class_v1/hybrid_selection.json",
+    "reports/experiments/p6_r6_six_class_v1/test_inputs.jsonl",
+    "reports/experiments/p6_r6_six_class_v1/test_targets.jsonl",
+    "reports/experiments/p6_r6_six_class_v1/rule_predictions.jsonl",
+    "reports/experiments/p6_r6_six_class_v1/ml_predictions.jsonl",
+    "reports/experiments/p6_r6_six_class_v1/hybrid_predictions.jsonl",
+    "reports/experiments/p6_r6_six_class_v1/rule_report.json",
+    "reports/experiments/p6_r6_six_class_v1/ml_report.json",
+    "reports/experiments/p6_r6_six_class_v1/hybrid_report.json",
+    "reports/experiments/p6_r6_six_class_v1/cross_method_comparison.json",
+    "reports/experiments/p6_r6_six_class_v1/run_manifest.json"
+  ],
+  "forbidden_runtime_sources": [
+    "models/p6_r6_six_class_v1/selected_estimator.joblib",
+    "models/p6_r6_six_class_v1/train_inputs.jsonl",
+    "models/p6_r6_six_class_v1/train_targets.jsonl",
+    "models/p6_r6_six_class_v1/validation_inputs.jsonl",
+    "models/p6_r6_six_class_v1/validation_targets.jsonl",
+    "data/processed/p6_r5_clean_campaign_recovery-20260811T070536Z-split/test.jsonl",
+    "arbitrary_repository_path"
+  ],
+  "allowed_http_methods": [
+    "GET"
+  ],
+  "api_routes": [
+    "/api/v1/health",
+    "/api/v1/overview",
+    "/api/v1/comparison",
+    "/api/v1/cases",
+    "/api/v1/cases/{input_id}",
+    "/api/v1/provenance"
+  ],
+  "dashboard_views": [
+    "overview",
+    "method_comparison",
+    "case_explorer",
+    "provenance_and_limitations"
+  ],
+  "fixed_method_order": [
+    "rule_based_p6_v1",
+    "machine_learning_p6_v1",
+    "hybrid_p6_v1"
+  ],
+  "fixed_scope_order": [
+    "clean",
+    "masked_overall",
+    "overall"
+  ],
+  "pagination": {
+    "default_page": 1,
+    "default_page_size": 25,
+    "maximum_page_size": 100,
+    "sort_key": "input_id",
+    "sort_direction": "ascending"
+  },
+  "error_codes": [
+    "INVALID_QUERY",
+    "CASE_NOT_FOUND",
+    "METHOD_NOT_ALLOWED",
+    "ARTIFACT_SET_UNAVAILABLE",
+    "ARTIFACT_INTEGRITY_FAILED",
+    "INTERNAL_ERROR"
+  ],
+  "invariants": [
+    "VERIFY_ACCEPTED_ROOT_HASHES_BEFORE_READY",
+    "VERIFY_TRANSITIVE_ARTIFACT_REFERENCES_BEFORE_PROJECTION",
+    "FAIL_CLOSED_ON_MISSING_OR_DRIFTED_ARTIFACT",
+    "NO_MODEL_DESERIALIZATION_OR_INFERENCE",
+    "NO_MODEL_FIT_SELECTION_OR_THRESHOLD_CHANGE",
+    "NO_NETWORK_DOCKER_CONTAINERLAB_OR_SUBPROCESS_CONTROL",
+    "NO_FILESYSTEM_WRITE",
+    "NO_GENERIC_FILE_OR_DOWNLOAD_ENDPOINT",
+    "NO_NEW_EMPIRICAL_METRIC_OR_SUPERIORITY_CLAIM",
+    "PRESERVE_RAW_ACCEPTED_NUMERIC_VALUES"
+  ],
+  "next_milestone": "P7-R1_ARTIFACT_CATALOG_AND_PROJECTION"
+}

@@ -2,7 +2,7 @@
 
 ## Current phase
 
-Phase 7 — Dashboard and API planning
+Phase 7 — Read-only Dashboard/API implementation
 
 ## Implemented and tested
 
@@ -1128,15 +1128,35 @@ population-level or real-world generalization.
 - P6-R6 artifacts and one-use test boundary: unchanged
 - Phase 6 status: complete
 
+## Latest P7-R0 decision
+
+- Decision: D-086, local read-only projection of accepted P6-R6
+  artifacts
+- P7-R0 status: completed as a contract-only gate
+- API stack: FastAPI with Uvicorn, bound by default to `127.0.0.1`
+- Dashboard stack: static same-origin HTML/CSS/JavaScript
+- Required database, React/Node, cloud, external asset, or paid service:
+  none
+- Accepted root bindings: 4 exact SHA-256 values
+- Projection allowlist: 15 JSON/JSONL artifacts
+- API surface: 6 versioned `GET` routes
+- Dashboard views: overview, method comparison, case explorer, and
+  provenance/limitations
+- Model deserialization, inference, training, selection, new metrics,
+  network commands, subprocesses, filesystem writes, and automatic
+  remediation: prohibited
+- API server or Dashboard implementation in P7-R0: absent
+- Runtime artifact access or change in P7-R0: none
+
 ## Next milestone
 
-P7-R0 — Dashboard/API Scope and Read-Only Contract Gate.
+P7-R1 — Artifact Catalog and Immutable Projection Layer.
 
-P7-R0 must decide which accepted evidence, diagnosis, provenance,
-method-prediction, and comparison artifacts the interface may expose;
-freeze stable read-only request/response and failure semantics; and keep
-network mutation, automatic remediation, model fitting, test reuse, and
-new empirical claims outside the Dashboard/API layer.
+P7-R1 may implement only fail-closed verification of the four accepted
+roots and 15 allowlisted sources, transitive hash validation, immutable
+joins for 120 report-only inputs, and deterministic Python projections.
+It must not start FastAPI, deserialize the estimator, execute diagnosis,
+write artifacts, or calculate new empirical metrics.
 
 ## Important limitation
 

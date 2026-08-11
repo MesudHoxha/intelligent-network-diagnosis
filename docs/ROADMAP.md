@@ -277,13 +277,20 @@ Status: Complete
 - Phase 6 closeout and HANDOFF: completed
 
 ## Phase 7 — Dashboard and API
-Status: Planning
+Status: In progress
 
-- Next milestone: P7-R0 Dashboard/API scope and read-only contract gate
-- Accepted evidence, diagnosis, provenance, and comparison artifacts may
-  be exposed only through a separately frozen interface contract
-- Network mutation, automatic remediation, model retraining, and new
-  empirical claims remain outside the interface layer
+- P7-R0 Dashboard/API scope and read-only contract gate: complete
+- D-086 freezes FastAPI/Uvicorn plus static same-origin HTML/CSS/JS as
+  the local zero-cost architecture
+- The interface is limited to six versioned `GET` routes and 15 verified
+  JSON/JSONL projection sources
+- Model deserialization, live inference, mutation, automatic
+  remediation, retraining, arbitrary file access, and new empirical
+  claims remain outside the interface layer
+- Next milestone: P7-R1 artifact catalog and immutable projection layer
+- Later sequence: P7-R2 API implementation, P7-R3 Dashboard
+  implementation and visual verification, then a separate Phase 7
+  closeout gate
 
 ## Phase 8 — Experiments and evaluation
 Status: Not started
