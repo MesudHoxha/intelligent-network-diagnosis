@@ -158,7 +158,7 @@ Status: Completed
 - P5-R2 closeout and HANDOFF: completed
 
 ## Phase 6 — Extended fault taxonomy
-Status: In progress
+Status: Complete
 
 - P6-R0 bounded six-class fault taxonomy: frozen and
   contract-verified
@@ -270,11 +270,20 @@ Status: In progress
   absent
 - P6-R6 tests: 185/185 targeted and 428/428 full regression passed
 - P6-R6 closeout and HANDOFF: completed
-- Next milestone: P6-R7 multi-label multiple-fault academic-value and
-  feasibility decision; combined fault execution is not authorized
+- P6-R7 multi-label multiple-fault academic-value and feasibility gate:
+  completed as a design-only decision
+- D-085: multiple-fault runtime not authorized in the current bachelor
+  scope; no combined injection or new experimental artifact created
+- Phase 6 closeout and HANDOFF: completed
 
 ## Phase 7 — Dashboard and API
-Status: Not started
+Status: Planning
+
+- Next milestone: P7-R0 Dashboard/API scope and read-only contract gate
+- Accepted evidence, diagnosis, provenance, and comparison artifacts may
+  be exposed only through a separately frozen interface contract
+- Network mutation, automatic remediation, model retraining, and new
+  empirical claims remain outside the interface layer
 
 ## Phase 8 — Experiments and evaluation
 Status: Not started

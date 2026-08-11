@@ -2,7 +2,7 @@
 
 ## Current phase
 
-Phase 6 — Extended fault taxonomy implementation
+Phase 7 — Dashboard and API planning
 
 ## Implemented and tested
 
@@ -1103,24 +1103,40 @@ population-level or real-world generalization.
 ## Open issues
 
 - Final FRRouting container image for later routing extensions
-- Decide whether multi-label truth, causal masking, and
-  non-identifiability can support a bounded multiple-fault experiment
-  within bachelor scope
 - Reproducible backup or publication policy for generated runtime
   datasets, models, and reports before final thesis archiving
 - OSPF implementation; its current status remains proposed
 
+## Latest P6-R7 decision
+
+- Decision: D-085, no multiple-fault runtime in the current bachelor
+  scope
+- P6-R7 status: completed as a design-only gate
+- Injected/effective/diagnosable truth separation: required but absent
+  from the accepted single-label contracts
+- Nominal unordered two-fault pairs: 10
+- Nominal balanced pair-only campaign: 120 clean rows across six
+  contexts and two repetitions
+- Pair support under the existing 3/1/2 context allocation: 6 train,
+  2 validation, and 4 test rows before invalid pairs are removed
+- Mutually exclusive, causally dominated, or order-dependent pairs:
+  identified at the design level
+- New multi-label contracts, campaign, methods, freeze, and evaluation:
+  not authorized
+- Containerlab commands and combined injections: 0
+- New Evidence, Dataset Row, model, prediction, or metric artifacts: 0
+- P6-R6 artifacts and one-use test boundary: unchanged
+- Phase 6 status: complete
+
 ## Next milestone
 
-P6-R7 — Multiple-Fault Academic-Value and Feasibility Decision.
+P7-R0 — Dashboard/API Scope and Read-Only Contract Gate.
 
-P6-R7 is a design and decision gate. It must assess multi-label ground
-truth, causal masking, non-identifiability, dataset requirements,
-evaluation metrics, implementation cost, and incremental academic value
-before deciding whether a bounded multiple-fault experiment belongs in
-the bachelor scope. Combined fault injection is not pre-authorized. If
-the design is not justified, P6-R7 must record that decision and close
-Phase 6 without a multiple-fault runtime.
+P7-R0 must decide which accepted evidence, diagnosis, provenance,
+method-prediction, and comparison artifacts the interface may expose;
+freeze stable read-only request/response and failure semantics; and keep
+network mutation, automatic remediation, model fitting, test reuse, and
+new empirical claims outside the Dashboard/API layer.
 
 ## Important limitation
 

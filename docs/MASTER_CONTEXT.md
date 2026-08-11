@@ -987,3 +987,22 @@ experiments, and no population-level, statistical, production, or
 real-world superiority claim is authorized. P6-R7 is next and may only
 decide whether a separate multi-label multiple-fault experiment is
 academically justified and feasible.
+
+P6-R7 completes that decision gate under D-085 without authorizing or
+executing a multiple-fault runtime. The review distinguishes injected,
+effective, and diagnosable fault sets and finds that the current
+single-label contracts cannot score them validly. Several of the ten
+nominal two-fault pairs are mutually exclusive, causally dominated, or
+injection-order dependent. A nominal balanced pair-only campaign would
+require 120 clean rows yet provide only 6/2/4 rows per pair across the
+accepted 3/1/2 context split, before invalid pairs are removed.
+
+A defensible extension would require new composition and rollback,
+multi-set truth, Dataset Row, Rule/ML/Hybrid prediction, grouped split,
+freeze, and multi-label evaluation contracts. That separate track is
+disproportionate to the incremental bachelor-scope value after P6-R6.
+No Containerlab command, combined injection, collection, fitting,
+prediction, or metric occurs in P6-R7, and all P6-R6 artifacts remain
+immutable. Phase 6 is complete. P7-R0 is next and must freeze a
+read-only Dashboard/API scope around accepted artifacts without network
+mutation, model retraining, or new empirical claims.

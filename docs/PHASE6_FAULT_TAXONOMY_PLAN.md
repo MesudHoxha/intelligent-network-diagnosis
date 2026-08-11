@@ -382,9 +382,15 @@ artifact overwrite, or test-guided change stops the stage.
 - P6-R6: completed; fit/select the new ML and Hybrid versions, then
   perform the one report-only clean and missing-evidence test evaluation.
 - P6-R7: decide whether a bounded multi-label multiple-fault experiment
-  is academically justified and feasible; it is not pre-authorized.
+  is academically justified and feasible; completed under D-085 without
+  authorizing multiple-fault runtime.
 
 Each milestone requires its own HANDOFF and central-document update.
+
+Phase 6 is complete after P6-R7. The accepted scope remains the six
+single-fault classes, the 72-row clean campaign, and the P6-R6
+clean/missing-evidence three-method comparison. Multiple-fault diagnosis
+is future work requiring a separately frozen protocol.
 
 ## 13. Explicit exclusions and limitations
 

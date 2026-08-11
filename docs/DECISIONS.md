@@ -1964,3 +1964,57 @@ rules, thresholds, models, or Hybrid policy. Multiple simultaneous
 faults remain unauthorized. P6-R7 may only decide whether a bounded
 multi-label design is academically justified and feasible before any
 combined injection is considered.
+
+## D-085 — Exclude multiple-fault runtime from the current bachelor scope
+
+Decision: Close P6-R7 and Phase 6 without authorizing a simultaneous-
+fault or multi-label runtime.
+
+The design audit distinguishes the set of injected mutations from the
+set of effective faults and the set of root causes diagnosable from the
+available evidence. Those sets are not guaranteed to be equal. The
+current single-label ground truth cannot score a hidden, dominated, or
+non-identifiable second cause without either penalizing a correct
+evidence-bounded diagnosis or overstating what the system observed.
+
+The five non-healthy labels nominally yield ten unordered pairs. Some
+pairs are not valid joint states: a destination route cannot be both
+missing and installed through a wrong next hop, and an interface-down
+mutation removes routes bound to that interface. Other pairs are
+order-dependent or require independent direct evidence to distinguish a
+second fault from the same end-to-end symptom. The accepted individual
+injector preconditions and restoration snapshots do not constitute an
+atomic composition contract.
+
+A balanced pair-only six-context, two-repetition design would nominally
+require 120 clean rows before incompatible pairs are removed, while the
+accepted 3/1/2 whole-context split would still provide only six train,
+two validation, and four test rows per pair. Applying four masks would
+create 240 validation/test transformations rather than independent
+experiments. The existing 72 single-label rows cannot be reinterpreted
+as interaction observations, and D-084 prohibits using the consumed
+E02/E06 results to guide a new design.
+
+A valid future study would require new versioned contracts for injected,
+effective, and diagnosable truth; compositional injection and rollback;
+multi-label Dataset Rows; Rule-based, ML, and Hybrid label-set outputs;
+multi-label metrics; a newly frozen grouped split; independent method
+freeze; and one-use report-only evaluation. This is a separate
+experimental track whose cost is disproportionate to its incremental
+bachelor-scope claim after the completed six-class and missing-evidence
+comparison.
+
+Status: Accepted as a design-only no-runtime decision on 2026-08-11.
+No Containerlab command, combined injection, evidence collection,
+dataset row, fitting, prediction, or metric was executed. No P6-R6
+artifact or result was changed. Phase 6 is complete, and P7-R0 is the
+next milestone.
+
+Limitation:
+
+D-085 does not claim that multiple-fault diagnosis lacks research value
+or is technically impossible. It records only that the required truth,
+identifiability, data, method, and evaluation expansion is not justified
+inside the current bachelor scope. Any future attempt requires a new
+precommitted protocol and may not use P6-R6 test outcomes for tuning or
+selection.
