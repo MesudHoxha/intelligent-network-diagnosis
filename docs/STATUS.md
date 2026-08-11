@@ -1048,29 +1048,79 @@ laboratory contexts. It does not prove ML or Hybrid accuracy,
 missing-evidence robustness, statistical superiority, production
 suitability, or real-world generalization.
 
+## Latest P6-R6 verification
+
+- Decision: D-084, six-class method freeze and report-only result
+  accepted
+- P6-R6 status: completed
+- Method input: ten frozen tri-state features encoded as 20 binary
+  predictor columns
+- Forbidden predictors: labels, ground truth, partition, mask identity,
+  identifiers, hashes, correctness, metrics, and explanations
+- Missing-evidence masks: 4/4 deterministic and non-destructive
+- Fit inputs: 36 clean E01/E03/E05 rows; masked fit inputs: 0
+- Validation inputs: 12 clean and 48 masked E04 inputs
+- Selected ML candidate: `logreg_l2_c1`
+- Selected Hybrid policy: `rule_then_ml_fallback_v1`
+- Independent freeze verification: passed before test access
+- Test evaluation attempts: 1/1
+- Report-only inputs per method: 24 clean, 96 masked, 120 total
+- Model refit after freeze: false
+- Policy reselection after freeze: false
+- Test-guided revision: false
+- Statistical-superiority test: not performed
+- Rule-based clean accuracy/macro-F1/coverage: 1.0/1.0/1.0
+- Rule-based masked accuracy/macro-F1/coverage: 0.0/0.0/0.0
+- Rule-based masked insufficient-evidence rate: 1.0
+- Rule-based overall accuracy/macro-F1/coverage:
+  0.200000/0.333333/0.200000
+- ML clean accuracy/macro-F1/coverage: 1.0/1.0/1.0
+- ML masked accuracy/macro-F1/coverage: 0.791667/0.810486/1.0
+- ML overall accuracy/macro-F1/coverage: 0.833333/0.846672/1.0
+- Hybrid clean accuracy/macro-F1/coverage: 1.0/1.0/1.0
+- Hybrid masked accuracy/macro-F1/coverage: 0.791667/0.810486/1.0
+- Hybrid overall accuracy/macro-F1/coverage: 0.833333/0.846672/1.0
+- ML versus Hybrid aggregate difference: absent in every reported scope
+- Freeze-manifest SHA-256:
+  `fa98a17e2ffae42f6dd009a13af65ad32174035eca8352bf26f321531a4fe0f5`
+- Freeze-receipt SHA-256:
+  `5c6c6537cb233efdeb52c6872f7a6ef7fb32eb3ac7b2474e2514b2908cd29bcc`
+- Run-manifest SHA-256:
+  `44c505b451c6211b4515564f4b889633b6d74ed0c618f19cc0ab3b9bdfe72b1d`
+- Cross-method comparison SHA-256:
+  `ca1c15d04828c0ae61cacaf80a5ee6f49f64a9cf3ac151a4b4ccd2386987e570`
+- Targeted Phase 6 tests: 185/185 passed
+- Full regression suite: 428/428 passed
+- Containerlab: not required and not started
+- P6-R6 closeout: completed
+
+P6-R6 establishes a controlled descriptive comparison under four
+deterministic missing-evidence transformations. The masks are not
+independent network experiments or observed production missingness. The
+accepted run establishes neither Hybrid superiority over ML nor
+population-level or real-world generalization.
+
 ## Open issues
 
 - Final FRRouting container image for later routing extensions
-- Implement the four non-destructive missing-evidence masks
-- Fit and select new six-class Rule-based, ML, and Hybrid versions
-  without using report-only test contexts
-- Define multi-label truth and causal masking before any controlled
-  multiple-fault experiment
+- Decide whether multi-label truth, causal masking, and
+  non-identifiability can support a bounded multiple-fault experiment
+  within bachelor scope
 - Reproducible backup or publication policy for generated runtime
-  datasets before final thesis archiving
+  datasets, models, and reports before final thesis archiving
 - OSPF implementation; its current status remains proposed
 
 ## Next milestone
 
-P6-R6 — Six-Class Method Freeze and Report-Only Evaluation.
+P6-R7 — Multiple-Fault Academic-Value and Feasibility Decision.
 
-P6-R6 must implement the four precommitted non-destructive masks,
-derive the new ten-feature Rule-based, ML, and Hybrid method versions,
-fit only on E01/E03/E05, and select only with E04. The chosen model and
-Hybrid policy must be independently frozen before any access to E02 or
-E06. Only then may one report-only clean and missing-evidence test
-evaluation be produced. P6-R6 must not refit, retune, or revise features,
-rules, thresholds, or policy from report-only results.
+P6-R7 is a design and decision gate. It must assess multi-label ground
+truth, causal masking, non-identifiability, dataset requirements,
+evaluation metrics, implementation cost, and incremental academic value
+before deciding whether a bounded multiple-fault experiment belongs in
+the bachelor scope. Combined fault injection is not pre-authorized. If
+the design is not justified, P6-R7 must record that decision and close
+Phase 6 without a multiple-fault runtime.
 
 ## Important limitation
 

@@ -1891,3 +1891,76 @@ performance, missing-evidence robustness, statistical superiority,
 production readiness, or real-world generalization. Report-only E02 and
 E06 results may not influence fitting, feature design, rules, thresholds,
 candidate selection, or policy selection.
+
+## D-084 — Phase 6 six-class method freeze and one report-only evaluation
+
+Decision: Accept the P6-R6 six-class Rule-based, Machine Learning, and
+Hybrid implementation, the independently verified development freeze,
+and the single descriptive E02/E06 clean/missing-evidence evaluation.
+
+The four D-077 missing-evidence masks are implemented as deterministic,
+non-destructive Method Input v1 transformations. They preserve the clean
+Dataset Row v3 and Evidence v3 hashes, change only the frozen feature
+family to unavailable, and keep mask identity, partition, labels,
+ground truth, hashes, and evaluation metadata outside the 20-column
+encoded predictor vector.
+
+Six precommitted ML candidates were fit only on 36 clean E01/E03/E05
+train rows. Validation-only selection used 12 clean and 48 masked E04
+inputs and selected `logreg_l2_c1`. Five immutable Hybrid candidates
+were evaluated on the same validation boundary and selected
+`rule_then_ml_fallback_v1`. Neither selection was changed after the
+development freeze.
+
+An independent verifier rebound the accepted P6-R5 campaign and split,
+the protocol, every method-affecting implementation file, all
+development artifacts, the selected estimator, and the selected Hybrid
+policy before authorizing exactly one report-only test evaluation. The
+authorization was consumed once. The accepted run opened 24 immutable
+E02/E06 clean inputs, derived 96 deterministic masked copies, and
+produced 120 predictions per method without refitting, reselection, or
+test-guided revision.
+
+On the 24 clean inputs, all three methods achieved 1.0 accuracy,
+macro-F1, exact-diagnosis rate, affected-prefix rate, and coverage. On
+the 96 masked inputs, Rule-based returned
+`INSUFFICIENT_EVIDENCE` in all cases, giving zero coverage, accuracy,
+and macro-F1. ML and Hybrid both achieved 0.791667 accuracy, 0.810486
+macro-F1, and full coverage. Across all 120 inputs, Rule-based accuracy,
+macro-F1, and coverage were 0.200000, 0.333333, and 0.200000; ML and
+Hybrid both obtained 0.833333, 0.846672, and 1.000000.
+
+The accepted identities are:
+
+- freeze-manifest SHA-256:
+  `fa98a17e2ffae42f6dd009a13af65ad32174035eca8352bf26f321531a4fe0f5`;
+- independent freeze-receipt SHA-256:
+  `5c6c6537cb233efdeb52c6872f7a6ef7fb32eb3ac7b2474e2514b2908cd29bcc`;
+- report-only run-manifest SHA-256:
+  `44c505b451c6211b4515564f4b889633b6d74ed0c618f19cc0ab3b9bdfe72b1d`;
+- descriptive comparison SHA-256:
+  `ca1c15d04828c0ae61cacaf80a5ee6f49f64a9cf3ac151a4b4ccd2386987e570`.
+
+The implementation and accepted source boundary passed 185/185 targeted
+Phase 6 tests and 428/428 full regression tests. Containerlab was not
+required or started.
+
+Status: Implemented, independently frozen, real report-only runtime
+verified, and accepted in P6-R6 on 2026-08-11.
+
+Limitation:
+
+The comparison is descriptive only. No statistical-superiority test was
+performed, and ML and Hybrid produced identical aggregate results in
+every reported scope; P6-R6 therefore establishes no Hybrid advantage.
+The 96 masked inputs are deterministic transformations of 24 clean test
+rows, not independent network experiments or observed production
+missingness. The results do not establish population-level
+generalization, production suitability, or real-world accuracy.
+
+The E02/E06 one-use report-only authorization is consumed. These test
+results must not cause refitting, reselection, or revision of features,
+rules, thresholds, models, or Hybrid policy. Multiple simultaneous
+faults remain unauthorized. P6-R7 may only decide whether a bounded
+multi-label design is academically justified and feasible before any
+combined injection is considered.

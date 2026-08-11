@@ -248,8 +248,30 @@ Status: In progress
 - Model, prediction, selection, evaluation, and metric artifacts in
   P6-R5: absent
 - P6-R5 closeout and HANDOFF: completed
-- Next milestone: P6-R6 six-class Rule-based, ML, and Hybrid freeze
-  and one report-only clean/missing-evidence evaluation
+- P6-R6 four deterministic missing-evidence masks and leakage-safe
+  20-column method input: implemented and verified
+- Six ML candidates fit only on 36 clean E01/E03/E05 train rows
+- ML selection: `logreg_l2_c1`, chosen only with E04 validation
+- Hybrid selection: `rule_then_ml_fallback_v1`, chosen only with E04
+  clean/masked validation
+- Independent development-freeze verification: passed before E02/E06
+  access
+- E02/E06 report-only evaluation: opened and completed exactly once
+- Report inputs per method: 24 clean, 96 masked, 120 total
+- Clean accuracy and macro-F1: 1.0 for Rule-based, ML, and Hybrid
+- Masked Rule-based accuracy/macro-F1/coverage: 0.0/0.0/0.0, with
+  insufficient-evidence rate 1.0
+- Masked ML and Hybrid accuracy/macro-F1/coverage:
+  0.791667/0.810486/1.0 for both methods
+- Overall ML and Hybrid accuracy/macro-F1: 0.833333/0.846672, with no
+  empirical difference between them
+- Comparison: descriptive only; statistical-superiority test absent
+- Post-freeze model refit, policy reselection, and test-guided revision:
+  absent
+- P6-R6 tests: 185/185 targeted and 428/428 full regression passed
+- P6-R6 closeout and HANDOFF: completed
+- Next milestone: P6-R7 multi-label multiple-fault academic-value and
+  feasibility decision; combined fault execution is not authorized
 
 ## Phase 7 — Dashboard and API
 Status: Not started

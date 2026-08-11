@@ -940,3 +940,50 @@ artifact was created. D-083 accepts the P6-R5 clean-data boundary only;
 method fitting, missing-evidence evaluation, and report-only test access
 remain blocked until P6-R6 freezes and independently verifies the new
 methods.
+
+P6-R6 implements Method Input, Prediction, Freeze, and Report v1
+contracts around the ten frozen Evidence v3 features. Each tri-state
+feature is encoded as an `available/true` pair, for 20 binary predictor
+columns. Labels, ground truth, partition identity, mask identity,
+provenance hashes, metrics, correctness, and explanations remain outside
+the predictor vector. The four D-077 masks preserve source-row and
+Evidence v3 hashes and make only their declared observed feature family
+unavailable without imputation.
+
+Development fit used only 36 clean E01/E03/E05 rows. Six precommitted ML
+candidates and five immutable Hybrid candidates were selected only with
+12 clean plus 48 masked E04 validation inputs. The accepted selections
+are `logreg_l2_c1` and `rule_then_ml_fallback_v1`. The development freeze
+manifest and an independent verifier bound all method-affecting source
+and development artifacts before producing a one-use report-only
+authorization.
+
+The authorization was consumed once on 2026-08-11. The immutable E02/E06
+source supplied 24 clean test inputs; four deterministic masks produced
+96 additional robustness inputs. No model refit, Hybrid-policy
+reselection, test-guided revision, or statistical-superiority test
+occurred. The freeze-manifest, freeze-receipt, run-manifest, and
+cross-method comparison SHA-256 values are respectively
+`fa98a17e2ffae42f6dd009a13af65ad32174035eca8352bf26f321531a4fe0f5`,
+`5c6c6537cb233efdeb52c6872f7a6ef7fb32eb3ac7b2474e2514b2908cd29bcc`,
+`44c505b451c6211b4515564f4b889633b6d74ed0c618f19cc0ab3b9bdfe72b1d`,
+and
+`ca1c15d04828c0ae61cacaf80a5ee6f49f64a9cf3ac151a4b4ccd2386987e570`.
+
+All three methods achieved clean accuracy and macro-F1 of 1.0 on 24
+inputs. Rule-based returned `INSUFFICIENT_EVIDENCE` for all 96 masked
+inputs, so masked accuracy, macro-F1, and coverage were zero. ML and
+Hybrid both achieved masked accuracy 0.791667, macro-F1 0.810486, and
+coverage 1.0. Overall Rule-based accuracy/macro-F1/coverage were
+0.200000/0.333333/0.200000; both ML and Hybrid obtained
+0.833333/0.846672/1.000000. Because ML and Hybrid are identical in every
+aggregate scope, P6-R6 establishes no empirical Hybrid advantage.
+
+The implementation passed 185/185 targeted Phase 6 tests and 428/428
+full regression tests. Containerlab was not required or started. D-084
+accepts P6-R6 only as a descriptive controlled robustness result. The 96
+masks are transformations of the same 24 clean inputs, not independent
+experiments, and no population-level, statistical, production, or
+real-world superiority claim is authorized. P6-R7 is next and may only
+decide whether a separate multi-label multiple-fault experiment is
+academically justified and feasible.

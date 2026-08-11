@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Phase 6 Leakage-Safe Method Input v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "input_id", "sample_id", "partition",
+    "split_group_id", "topology_id", "direction", "source_node",
+    "route_observer_node", "transit_node", "destination_prefix",
+    "mask_id", "features", "availability", "provenance"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "input_id": {"$ref": "#/$defs/nonEmptyString"},
+    "sample_id": {"$ref": "#/$defs/nonEmptyString"},
+    "partition": {"enum": ["train", "validation", "test"]},
+    "split_group_id": {"$ref": "#/$defs/nonEmptyString"},
+    "topology_id": {"$ref": "#/$defs/nonEmptyString"},
+    "direction": {"$ref": "#/$defs/nonEmptyString"},
+    "source_node": {"$ref": "#/$defs/nonEmptyString"},
+    "route_observer_node": {"$ref": "#/$defs/nonEmptyString"},
+    "transit_node": {"$ref": "#/$defs/nonEmptyString"},
+    "destination_prefix": {"$ref": "#/$defs/nonEmptyString"},
+    "mask_id": {
+      "enum": [
+        null,
+        "mask_source_gateway_family",
+        "mask_route_family",
+        "mask_interface_state",
+        "mask_policy_state"
+      ]
+    },
+    "features": {"$ref": "#/$defs/featureMap"},
+    "availability": {"$ref": "#/$defs/availabilityMap"},
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dataset_row_sha256", "evidence_path", "evidence_sha256"],
+      "properties": {
+        "dataset_row_sha256": {"$ref": "#/$defs/sha256"},
+        "evidence_path": {"$ref": "#/$defs/nonEmptyString"},
+        "evidence_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {"type": "string", "minLength": 1},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "triState": {"enum": ["true", "false", "unavailable"]},
+    "availability": {
+      "enum": [
+        "observed", "structurally_unavailable",
+        "collection_unavailable", "masked_missing"
+      ]
+    },
+    "featureMap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_expected_gateway_reachable",
+        "source_default_gateway_matches_expected",
+        "destination_reachable",
+        "route_to_destination_exists_on_observer",
+        "route_next_hop_matches_expected",
+        "route_next_hop_reachable_from_observer",
+        "expected_next_hop_reachable_from_observer",
+        "observer_egress_interface_oper_up",
+        "destination_reachable_from_transit",
+        "flow_blocked_by_policy"
+      ],
+      "properties": {
+        "source_expected_gateway_reachable": {"$ref": "#/$defs/triState"},
+        "source_default_gateway_matches_expected": {"$ref": "#/$defs/triState"},
+        "destination_reachable": {"$ref": "#/$defs/triState"},
+        "route_to_destination_exists_on_observer": {"$ref": "#/$defs/triState"},
+        "route_next_hop_matches_expected": {"$ref": "#/$defs/triState"},
+        "route_next_hop_reachable_from_observer": {"$ref": "#/$defs/triState"},
+        "expected_next_hop_reachable_from_observer": {"$ref": "#/$defs/triState"},
+        "observer_egress_interface_oper_up": {"$ref": "#/$defs/triState"},
+        "destination_reachable_from_transit": {"$ref": "#/$defs/triState"},
+        "flow_blocked_by_policy": {"$ref": "#/$defs/triState"}
+      }
+    },
+    "availabilityMap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_expected_gateway_reachable",
+        "source_default_gateway_matches_expected",
+        "destination_reachable",
+        "route_to_destination_exists_on_observer",
+        "route_next_hop_matches_expected",
+        "route_next_hop_reachable_from_observer",
+        "expected_next_hop_reachable_from_observer",
+        "observer_egress_interface_oper_up",
+        "destination_reachable_from_transit",
+        "flow_blocked_by_policy"
+      ],
+      "properties": {
+        "source_expected_gateway_reachable": {"$ref": "#/$defs/availability"},
+        "source_default_gateway_matches_expected": {"$ref": "#/$defs/availability"},
+        "destination_reachable": {"$ref": "#/$defs/availability"},
+        "route_to_destination_exists_on_observer": {"$ref": "#/$defs/availability"},
+        "route_next_hop_matches_expected": {"$ref": "#/$defs/availability"},
+        "route_next_hop_reachable_from_observer": {"$ref": "#/$defs/availability"},
+        "expected_next_hop_reachable_from_observer": {"$ref": "#/$defs/availability"},
+        "observer_egress_interface_oper_up": {"$ref": "#/$defs/availability"},
+        "destination_reachable_from_transit": {"$ref": "#/$defs/availability"},
+        "flow_blocked_by_policy": {"$ref": "#/$defs/availability"}
+      }
+    }
+  }
+}

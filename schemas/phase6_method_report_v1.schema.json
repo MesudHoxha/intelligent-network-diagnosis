@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Phase 6 Report-Only Method Evaluation v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "report_id", "method_id", "evaluation_role",
+    "class_order", "input_count", "clean_input_count", "masked_input_count",
+    "sources", "scopes", "records", "test_influenced_fitting_or_selection",
+    "statistical_superiority_claim"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "report_id": {"type": "string", "minLength": 1},
+    "method_id": {
+      "enum": ["rule_based_p6_v1", "machine_learning_p6_v1", "hybrid_p6_v1"]
+    },
+    "evaluation_role": {"const": "TEST_REPORT_ONLY"},
+    "class_order": {"type": "array", "minItems": 6, "maxItems": 6, "uniqueItems": true},
+    "input_count": {"const": 120},
+    "clean_input_count": {"const": 24},
+    "masked_input_count": {"const": 96},
+    "sources": {"type": "object"},
+    "scopes": {"type": "object"},
+    "records": {"type": "array", "minItems": 120, "maxItems": 120},
+    "test_influenced_fitting_or_selection": {"const": false},
+    "statistical_superiority_claim": {"const": false}
+  }
+}

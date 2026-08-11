@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "protocol_id": "p6_r6_six_class_method_protocol_v1",
+  "class_order": [
+    "no_fault",
+    "missing_static_route",
+    "wrong_next_hop",
+    "wrong_default_gateway",
+    "interface_down",
+    "acl_block"
+  ],
+  "feature_count": 10,
+  "encoded_feature_count": 20,
+  "fit_partition": "train",
+  "fit_groups": [
+    "CTX_P6_E01_TOP01_LINEAR_SOURCE_EDGE",
+    "CTX_P6_E03_TOP02_BRANCH_TARGET_ARM",
+    "CTX_P6_E05_TOP03_ASYMMETRIC_FORWARD"
+  ],
+  "fit_clean_rows": 36,
+  "fit_masked_rows": 0,
+  "selection_partition": "validation",
+  "selection_groups": [
+    "CTX_P6_E04_TOP02_DUAL_TRANSIT_SELECTED_ARM"
+  ],
+  "selection_clean_rows": 12,
+  "selection_masked_rows": 48,
+  "report_only_partition": "test",
+  "report_only_groups": [
+    "CTX_P6_E02_TOP02_CHAIN_OBSERVER_EDGE",
+    "CTX_P6_E06_TOP04_FILTER_BOUNDARY"
+  ],
+  "report_only_clean_rows": 24,
+  "report_only_masked_rows": 96,
+  "missing_evidence_masks": [
+    "mask_source_gateway_family",
+    "mask_route_family",
+    "mask_interface_state",
+    "mask_policy_state"
+  ],
+  "ml_candidate_count": 6,
+  "hybrid_policy_candidate_count": 5,
+  "model_random_seed": 20260811,
+  "test_use": "one_report_only_after_independent_freeze_verification",
+  "statistical_superiority_test": "PROHIBITED",
+  "refit_after_test": "PROHIBITED",
+  "test_guided_revision": "PROHIBITED",
+  "multiple_faults": "OUT_OF_SCOPE"
+}

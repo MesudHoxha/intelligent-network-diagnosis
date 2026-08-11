@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Phase 6 Method Prediction v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "input_id", "sample_id", "method_id", "status",
+    "predicted_fault_type", "confidence", "diagnosis", "reason"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "input_id": {"type": "string", "minLength": 1},
+    "sample_id": {"type": "string", "minLength": 1},
+    "method_id": {
+      "enum": ["rule_based_p6_v1", "machine_learning_p6_v1", "hybrid_p6_v1"]
+    },
+    "status": {
+      "enum": ["RESOLVED", "INSUFFICIENT_EVIDENCE", "ABSTAINED", "NO_RULE_MATCH"]
+    },
+    "predicted_fault_type": {
+      "enum": [
+        null, "no_fault", "missing_static_route", "wrong_next_hop",
+        "wrong_default_gateway", "interface_down", "acl_block"
+      ]
+    },
+    "confidence": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "diagnosis": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["fault_type", "fault_category", "fault_location", "affected_prefix"],
+          "properties": {
+            "fault_type": {
+              "enum": [
+                "no_fault", "missing_static_route", "wrong_next_hop",
+                "wrong_default_gateway", "interface_down", "acl_block"
+              ]
+            },
+            "fault_category": {"type": ["string", "null"]},
+            "fault_location": {"type": ["string", "null"]},
+            "affected_prefix": {"type": ["string", "null"]}
+          }
+        }
+      ]
+    },
+    "reason": {"type": "string", "minLength": 1}
+  }
+}
