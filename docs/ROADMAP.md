@@ -287,10 +287,21 @@ Status: In progress
 - Model deserialization, live inference, mutation, automatic
   remediation, retraining, arbitrary file access, and new empirical
   claims remain outside the interface layer
-- Next milestone: P7-R1 artifact catalog and immutable projection layer
-- Later sequence: P7-R2 API implementation, P7-R3 Dashboard
-  implementation and visual verification, then a separate Phase 7
-  closeout gate
+- P7-R1 artifact catalog and immutable projection layer: complete
+- D-087 adds a Git-tracked 15/15 SHA-256 and size binding because the
+  four P7-R0 roots alone did not anchor every non-root projection source
+- Fail-closed path, byte, reference, contract, join, and accepted-scope
+  verification: implemented
+- Deep-immutable 120-case index and deterministic health, overview,
+  comparison, case-list, case-detail, and provenance projections:
+  implemented
+- P7-R1 tests: 23/23; combined Phase 7 tests: 33/33; targeted Phase 6:
+  185/185; full regression: 461/461
+- Estimator deserialization, inference, server startup, Dashboard,
+  subprocess, and runtime writes in P7-R1: absent
+- Next milestone: P7-R2 read-only FastAPI implementation
+- Later sequence: P7-R3 Dashboard implementation and visual
+  verification, then a separate Phase 7 closeout gate
 
 ## Phase 8 — Experiments and evaluation
 Status: Not started

@@ -2066,3 +2066,52 @@ scope against which later implementation is tested. The accepted P6-R6
 results remain descriptive-only, the E02/E06 authorization remains
 consumed, and ML and Hybrid remain empirically identical in the accepted
 aggregate scopes.
+
+## D-087 — Bind all read-only projection sources before serving data
+
+Decision: Accept the P7-R1 fail-closed artifact catalog, Git-tracked
+15-source SHA-256/size manifest, immutable 120-case join, and
+deterministic Python projection layer.
+
+P7-R1 identified that the four D-086 root hashes do not, by themselves,
+cryptographically anchor the P6-R6 gate and every case, target,
+prediction, and method-report file. The gate binds the ten report-only
+files, but no accepted D-086 root binds the gate's own bytes. Checking
+only transitive references could therefore accept a coordinated change
+to an unanchored source and its reference. This is an integrity gap in
+the planned verification mechanism, not a change to the accepted P6-R6
+result or to the 15-file allowlist.
+
+`P7_R1_ACCEPTED_ARTIFACT_CATALOG_V1.json` closes the gap by committing
+the artifact ID, canonical path, role, SHA-256, and byte size of all 15
+projection sources after the four accepted roots and the full P6-R6
+artifact graph verify. The original four root hashes remain unchanged
+and retain their scientific roles. The catalog is trusted as versioned
+repository metadata and is not an additional runtime data source.
+
+The loader fails closed on absence, symlinks, path escape, byte or size
+drift, invalid JSON/JSONL, transitive-reference mismatch, Phase 6
+contract violation, case/target/prediction join mismatch, or accepted
+scope drift. It deep-freezes all parsed values and exposes only
+deterministic health, overview, comparison, case-list, case-detail, and
+provenance projections. Raw accepted numeric values are preserved.
+
+The estimator remains forbidden. Its JSON reference is validated, but
+the `.joblib` path is not resolved, read, imported, or deserialized. No
+FastAPI server, Dashboard, diagnosis method, fitting, selection, metric,
+Containerlab command, subprocess, or runtime artifact write is part of
+P7-R1.
+
+Status: Implemented and test-verified on 2026-08-11. P7-R2 is next and
+may implement only the six frozen FastAPI GET routes and response/error
+envelopes over the verified projection layer. Verification passed
+23/23 P7-R1 tests, 33/33 combined Phase 7 tests, 185/185 targeted Phase
+6 tests, and 461/461 full regression tests.
+
+Limitation:
+
+D-087 proves deterministic integrity and projection behavior for the
+accepted local artifact set. It does not add independent experiments,
+change the descriptive P6-R6 metrics, establish Hybrid superiority,
+generalize beyond the controlled laboratory, or establish that an HTTP
+API or Dashboard is implemented.

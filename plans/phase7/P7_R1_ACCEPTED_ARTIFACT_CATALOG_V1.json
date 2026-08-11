@@ -1,0 +1,121 @@
+{
+  "artifact_count": 15,
+  "artifacts": [
+    {
+      "artifact_id": "method_gate",
+      "path": "data/metadata/p6_r6_six_class_method_gate_v1.json",
+      "role": "accepted_gate",
+      "sha256": "706905126e5e64f5fb5f7322aa003311ebcf51be5f15e57a2ea839b0b0ae96fc",
+      "size_bytes": 2796
+    },
+    {
+      "artifact_id": "freeze_manifest",
+      "path": "models/p6_r6_six_class_v1/freeze_manifest.json",
+      "role": "accepted_root",
+      "sha256": "fa98a17e2ffae42f6dd009a13af65ad32174035eca8352bf26f321531a4fe0f5",
+      "size_bytes": 6944
+    },
+    {
+      "artifact_id": "freeze_receipt",
+      "path": "models/p6_r6_six_class_v1/freeze_receipt.json",
+      "role": "accepted_root",
+      "sha256": "5c6c6537cb233efdeb52c6872f7a6ef7fb32eb3ac7b2474e2514b2908cd29bcc",
+      "size_bytes": 1124
+    },
+    {
+      "artifact_id": "ml_selection",
+      "path": "models/p6_r6_six_class_v1/ml_selection.json",
+      "role": "selection",
+      "sha256": "77dedc34ccf0b0fe795f992241874f40380e81b1013814f1b9cf2c88872a76c9",
+      "size_bytes": 514374
+    },
+    {
+      "artifact_id": "hybrid_selection",
+      "path": "models/p6_r6_six_class_v1/hybrid_selection.json",
+      "role": "selection",
+      "sha256": "cf9eb7e1df68587c99463f813a4a11188b843aff0ef1cbb592eec03d9572a9ad",
+      "size_bytes": 424064
+    },
+    {
+      "artifact_id": "test_inputs",
+      "path": "reports/experiments/p6_r6_six_class_v1/test_inputs.jsonl",
+      "role": "case_source",
+      "sha256": "7c41478383484615f44707d2d00c6e84431c4965dc845cd593b88faa6a60ffc3",
+      "size_bytes": 218972
+    },
+    {
+      "artifact_id": "test_targets",
+      "path": "reports/experiments/p6_r6_six_class_v1/test_targets.jsonl",
+      "role": "target_source",
+      "sha256": "5cbe635bfd89eb549aa6177b02ab4f4920bfabea0d744635e44e191ca56f934e",
+      "size_bytes": 39072
+    },
+    {
+      "artifact_id": "rule_predictions",
+      "path": "reports/experiments/p6_r6_six_class_v1/rule_predictions.jsonl",
+      "role": "prediction_source",
+      "sha256": "efe17586327ceaf12fa064991a4b91420f1be132ac34f00805f1c07ea73f03d8",
+      "size_bytes": 57968
+    },
+    {
+      "artifact_id": "ml_predictions",
+      "path": "reports/experiments/p6_r6_six_class_v1/ml_predictions.jsonl",
+      "role": "prediction_source",
+      "sha256": "9847c0ee04dd605ef1db68578541528c47acf1a73dcad30479b95c66dd1478d0",
+      "size_bytes": 64260
+    },
+    {
+      "artifact_id": "hybrid_predictions",
+      "path": "reports/experiments/p6_r6_six_class_v1/hybrid_predictions.jsonl",
+      "role": "prediction_source",
+      "sha256": "547dce9afd7a4d83260191eb309ebd677c12958746f3ca40d3c1f4fea993f57d",
+      "size_bytes": 64216
+    },
+    {
+      "artifact_id": "rule_report",
+      "path": "reports/experiments/p6_r6_six_class_v1/rule_report.json",
+      "role": "method_report",
+      "sha256": "3eadf4bb569cbdf54573927a9935a36f4431b01d5b394f50a76efd59d080f329",
+      "size_bytes": 114072
+    },
+    {
+      "artifact_id": "ml_report",
+      "path": "reports/experiments/p6_r6_six_class_v1/ml_report.json",
+      "role": "method_report",
+      "sha256": "dbcdecd24cad186fed4b689411b0b2bf0b761006e44cffdf041decdcee1158de",
+      "size_bytes": 113978
+    },
+    {
+      "artifact_id": "hybrid_report",
+      "path": "reports/experiments/p6_r6_six_class_v1/hybrid_report.json",
+      "role": "method_report",
+      "sha256": "f33b6f0485df4da99ba9566e6a1f504986bcaf42202bb6c4bf22d2b991ba9bd8",
+      "size_bytes": 113962
+    },
+    {
+      "artifact_id": "cross_method_comparison",
+      "path": "reports/experiments/p6_r6_six_class_v1/cross_method_comparison.json",
+      "role": "accepted_root",
+      "sha256": "ca1c15d04828c0ae61cacaf80a5ee6f49f64a9cf3ac151a4b4ccd2386987e570",
+      "size_bytes": 3385
+    },
+    {
+      "artifact_id": "run_manifest",
+      "path": "reports/experiments/p6_r6_six_class_v1/run_manifest.json",
+      "role": "accepted_root",
+      "sha256": "44c505b451c6211b4515564f4b889633b6d74ed0c618f19cc0ab3b9bdfe72b1d",
+      "size_bytes": 2324
+    }
+  ],
+  "catalog_id": "p7_r1_accepted_artifact_catalog_v1",
+  "contract_id": "p7_readonly_dashboard_api_v1",
+  "integrity_model": "GIT_TRACKED_CATALOG_BINDS_ALL_PROJECTION_SOURCES",
+  "root_artifact_ids": [
+    "freeze_manifest",
+    "freeze_receipt",
+    "run_manifest",
+    "cross_method_comparison"
+  ],
+  "schema_version": 1,
+  "status": "ACCEPTED_IMMUTABLE"
+}

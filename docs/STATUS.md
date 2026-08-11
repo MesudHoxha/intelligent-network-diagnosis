@@ -1148,15 +1148,43 @@ population-level or real-world generalization.
 - API server or Dashboard implementation in P7-R0: absent
 - Runtime artifact access or change in P7-R0: none
 
+## Latest P7-R1 implementation
+
+- Decision: D-087, bind all 15 allowed projection sources before use
+- P7-R1 status: artifact catalog and immutable projection layer
+  implemented and test-verified
+- Accepted P7-R0 root identities: unchanged, 4/4 required
+- Git-tracked projection catalog: 15/15 canonical path, SHA-256, and
+  byte-size bindings
+- Transitive gate, freeze, receipt, run, report, input, target, and
+  prediction references: verified
+- Immutable in-memory index: 120 inputs, 120 targets, and 120
+  predictions for each of three methods
+- Deep immutability: mappings frozen and arrays converted to tuples
+- Deterministic projections: health, overview, comparison, case list,
+  case detail, and provenance
+- Estimator file in synthetic loader test: absent, proving no model read
+  or deserialization
+- Missing, drifted, rebound, malformed, and join-inconsistent sources:
+  fail closed
+- FastAPI/Uvicorn server and Dashboard: not implemented or started
+- Inference, refit, selection, new metric, network command, subprocess,
+  and runtime artifact write: absent
+- P7-R1 tests: 23/23 passed
+- Combined Phase 7 tests: 33/33 passed
+- Targeted Phase 6 regression: 185/185 passed
+- Full regression suite: 461/461 passed
+
 ## Next milestone
 
-P7-R1 — Artifact Catalog and Immutable Projection Layer.
+P7-R2 — Read-Only FastAPI Implementation.
 
-P7-R1 may implement only fail-closed verification of the four accepted
-roots and 15 allowlisted sources, transitive hash validation, immutable
-joins for 120 report-only inputs, and deterministic Python projections.
-It must not start FastAPI, deserialize the estimator, execute diagnosis,
-write artifacts, or calculate new empirical metrics.
+P7-R2 may implement only the six frozen GET routes, success/error
+envelopes, framework-validation normalization, method rejection, and
+local binding over the verified `ProjectionLayer`. It must not bypass
+the catalog, add routes, serve arbitrary files, deserialize the
+estimator, execute diagnosis, write artifacts, or implement the
+Dashboard UI.
 
 ## Important limitation
 

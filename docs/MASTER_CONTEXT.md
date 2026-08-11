@@ -1033,3 +1033,26 @@ contract tests only. It reads no runtime artifact and creates no server,
 UI, evidence, prediction, or metric. P7-R1 is next and may implement
 only the verified artifact catalog and immutable 120-case projection
 layer before any HTTP or Dashboard implementation is authorized.
+
+P7-R1 implements that boundary under D-087. An integrity audit found
+that the four D-086 roots did not themselves anchor the gate bytes and
+all non-root case/prediction sources. P7-R1 therefore adds one
+Git-tracked catalog containing the canonical path, role, SHA-256, and
+size of every one of the same 15 allowed sources. The four accepted
+root identities and the P6-R6 result remain unchanged.
+
+The loader verifies 4/4 roots, 15/15 catalog bindings, all allowed
+transitive references, 120 inputs and targets, 120 predictions per
+method, clean/masked structure, class balance, accepted status
+boundaries, and report/comparison consistency before it constructs an
+in-memory index. Parsed dictionaries become read-only mapping proxies
+and arrays become tuples. Case IDs resolve only against that index.
+
+The projection layer now returns deterministic Python data for health,
+overview, three-scope comparison, filtered/paginated case listing, case
+detail, and provenance. It preserves accepted numeric values and claim
+limitations. It starts no server, performs no inference, does not read
+the estimator or source test split, and writes no runtime artifact.
+P7-R2 is next and may add only the six frozen FastAPI GET routes and
+response/error normalization over this layer; Dashboard rendering
+remains P7-R3.
