@@ -2161,3 +2161,50 @@ diagnosis service or a production deployment. It does not create new
 experimental evidence, change any accepted P6-R6 value, establish
 Hybrid superiority, provide remote-network security, or generalize the
 controlled results beyond their accepted scope.
+
+## D-089 — Present accepted projections through one static same-origin Dashboard
+
+Decision: Accept the P7-R3 static Dashboard as the only browser client
+for the D-088 local read-only API.
+
+The Dashboard consists of exactly three repository assets: one semantic
+HTML document, one responsive stylesheet, and one dependency-free
+JavaScript client. FastAPI mounts only that dedicated directory after
+the six data routes. The mount does not add a data API operation, expose
+arbitrary repository files, enable generated documentation, or change
+the P7-R0 OpenAPI contract.
+
+The client implements the four D-086 views: overview, three-scope method
+comparison, filterable and paginated case exploration with case detail,
+and provenance/limitations. It performs only same-origin `GET` requests
+to the six D-088 routes. It has no external asset, CDN, React/Node build,
+browser persistence, telemetry, authentication, upload, mutation,
+download, inference, experiment, remediation, or live-network path.
+
+Accepted API numbers remain unchanged. Percentages and confidence may
+be rounded only for display, while the exact API value remains available
+as presentation metadata. The Dashboard explicitly identifies the
+comparison as descriptive, states that no statistical-superiority test
+was performed, distinguishes 96 deterministic masks from independent
+experiments, states that ML and Hybrid aggregate results are identical,
+and retains the controlled-laboratory non-generalization warning.
+
+The interface has explicit loading, empty, fail-closed error, and retry
+states. Keyboard-focus styling, a skip link, semantic landmarks and
+tables, native dialog behavior, reduced-motion handling, responsive
+desktop and 390-pixel layouts, and `Escape` dialog closing were checked.
+Visual verification used a local contract-shaped fixture only; no
+accepted result was recomputed. The full UI/API read path left all 15
+fixture sources unchanged and did not require an estimator.
+
+Status: Implemented and verified on 2026-08-11. Verification passed
+10/10 P7-R3 tests, 75/75 combined Phase 7 tests, 185/185 targeted Phase
+6 tests, and 503/503 full regression tests. P7-R4 is next and is limited
+to the Phase 7 closeout gate and reproducible local run/archive handoff.
+
+Limitation:
+
+D-089 proves the bounded local presentation behavior, responsive layout,
+and integration with accepted projections. It does not prove production
+deployment, remote-user security, real-time diagnosis, statistical
+superiority, new empirical performance, or real-world generalization.

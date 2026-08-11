@@ -307,9 +307,16 @@ Status: In progress
   inference, runtime writes, and Dashboard rendering in P7-R2: absent
 - P7-R2 tests: 32/32; combined Phase 7 tests: 65/65; targeted Phase 6:
   185/185; full regression: 493/493
-- Next milestone: P7-R3 static Dashboard implementation and visual
-  verification
-- Later sequence: a separate Phase 7 closeout gate
+- P7-R3 static same-origin Dashboard implementation: complete
+- D-089 accepts exactly four views over the unchanged six-route API,
+  explicit loading/empty/fail-closed states, accessible interaction, and
+  responsive desktop/390-pixel presentation
+- External assets, React/Node build, browser persistence, new data route,
+  inference, runtime writes, and new empirical claims in P7-R3: absent
+- P7-R3 tests: 10/10; combined Phase 7 tests: 75/75; targeted Phase 6:
+  185/185; full regression: 503/503
+- Next milestone: P7-R4 Phase 7 closeout, reproducible local run
+  instructions, and archive handoff
 
 ## Phase 8 — Experiments and evaluation
 Status: Not started

@@ -10,6 +10,7 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.exception_handlers import http_exception_handler
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from src.phase7.catalog import (
@@ -25,6 +26,7 @@ from src.phase7.projections import (
 
 
 SOURCE_ROLE = "ACCEPTED_P6_R6_REPORT_ONLY_ARTIFACTS"
+DASHBOARD_DIRECTORY = RepositoryPath(__file__).resolve().parent / "dashboard"
 
 Scope = Literal["clean", "masked_overall", "overall"]
 FaultType = Literal[
@@ -151,7 +153,7 @@ def create_app(
     projection_layer: ProjectionLayer | None = None,
     projection_factory: ProjectionFactory | None = None,
 ) -> FastAPI:
-    """Build the six-route, local, read-only P7 API application."""
+    """Build the six-route API and its same-origin static Dashboard."""
 
     root = (repository_root or RepositoryPath.cwd()).resolve()
     factory = projection_factory or _load_projection
@@ -275,6 +277,12 @@ def create_app(
         projection: Annotated[ProjectionLayer, Depends(_projection_from_request)],
     ) -> JSONResponse:
         return _success(projection.provenance())
+
+    application.mount(
+        "/",
+        StaticFiles(directory=DASHBOARD_DIRECTORY, html=True),
+        name="dashboard",
+    )
 
     return application
 

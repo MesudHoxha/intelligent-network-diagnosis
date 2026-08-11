@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Read-only presentation of the accepted P6-R6 intelligent network diagnosis result.">
+    <title>Intelligent Network Diagnosis — Accepted P6-R6 Result</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to dashboard content</a>
+
+    <header class="topbar">
+      <div class="brand-mark" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="brand-copy">
+        <p class="eyebrow">Bachelor project · local read-only interface</p>
+        <p class="brand-title">Intelligent Network Diagnosis</p>
+      </div>
+      <div class="service-status" id="service-status" role="status" aria-live="polite">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="service-status-text">Checking artifacts</span>
+      </div>
+    </header>
+
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Dashboard navigation">
+        <nav class="section-nav">
+          <a class="nav-link is-active" href="#overview" data-section="overview">
+            <span class="nav-number">01</span><span>Overview</span>
+          </a>
+          <a class="nav-link" href="#comparison" data-section="comparison">
+            <span class="nav-number">02</span><span>Method comparison</span>
+          </a>
+          <a class="nav-link" href="#cases" data-section="cases">
+            <span class="nav-number">03</span><span>Case explorer</span>
+          </a>
+          <a class="nav-link" href="#provenance" data-section="provenance">
+            <span class="nav-number">04</span><span>Provenance</span>
+          </a>
+        </nav>
+
+        <div class="boundary-card">
+          <span class="boundary-label">Result boundary</span>
+          <strong>Descriptive only</strong>
+          <p>No inference, retraining, remediation, or network mutation occurs here.</p>
+        </div>
+      </aside>
+
+      <main id="main-content" class="dashboard-main">
+        <section id="overview" class="dashboard-section hero-section" aria-labelledby="overview-title">
+          <div class="section-heading hero-heading">
+            <div>
+              <p class="section-kicker">Accepted result / P6-R6</p>
+              <h1 id="overview-title">Evidence-first diagnosis, presented without changing the experiment.</h1>
+              <p class="section-intro">A verified view of the frozen Rule-based, Machine Learning, and Hybrid outputs from the controlled local laboratory.</p>
+            </div>
+            <span class="read-only-badge">Read-only</span>
+          </div>
+
+          <div id="overview-state" class="state-box" role="status" aria-live="polite">
+            <span class="spinner" aria-hidden="true"></span> Loading accepted overview…
+          </div>
+
+          <div id="overview-content" class="content-region" hidden>
+            <div class="stat-grid" id="overview-stats"></div>
+
+            <div class="overview-grid">
+              <article class="panel">
+                <div class="panel-heading">
+                  <div>
+                    <p class="panel-kicker">Diagnosis space</p>
+                    <h2>Six accepted classes</h2>
+                  </div>
+                  <span class="count-badge" id="class-count">6</span>
+                </div>
+                <div class="chip-list" id="class-list"></div>
+              </article>
+
+              <article class="panel">
+                <div class="panel-heading">
+                  <div>
+                    <p class="panel-kicker">Evaluation track</p>
+                    <h2>Three methods</h2>
+                  </div>
+                  <span class="count-badge" id="method-count">3</span>
+                </div>
+                <div class="method-list" id="method-list"></div>
+              </article>
+            </div>
+
+            <aside class="notice notice-caution" aria-labelledby="overview-boundary-title">
+              <div class="notice-icon" aria-hidden="true">!</div>
+              <div>
+                <h2 id="overview-boundary-title">Interpretation boundary</h2>
+                <p id="overview-boundary-text"></p>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section id="comparison" class="dashboard-section" aria-labelledby="comparison-title">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Accepted descriptive metrics</p>
+              <h2 id="comparison-title">Method comparison</h2>
+              <p class="section-intro">Compare unchanged values across the clean, masked, and combined report-only scopes.</p>
+            </div>
+            <div class="segmented-control" id="scope-control" aria-label="Comparison scope">
+              <button type="button" data-scope="clean">Clean</button>
+              <button type="button" data-scope="masked_overall">Masked</button>
+              <button type="button" data-scope="overall" class="is-selected" aria-pressed="true">Overall</button>
+            </div>
+          </div>
+
+          <div class="comparison-note">
+            <span>Descriptive comparison</span>
+            <span class="separator" aria-hidden="true"></span>
+            <span>Statistical superiority: not performed</span>
+          </div>
+
+          <div id="comparison-state" class="state-box" role="status" aria-live="polite">
+            <span class="spinner" aria-hidden="true"></span> Loading accepted metrics…
+          </div>
+          <div id="comparison-content" class="content-region" hidden>
+            <div class="comparison-grid" id="comparison-cards"></div>
+            <div class="table-wrap metric-table-wrap">
+              <table class="data-table metric-table">
+                <caption class="sr-only">Exact accepted metric values for the selected comparison scope</caption>
+                <thead id="comparison-table-head"></thead>
+                <tbody id="comparison-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section id="cases" class="dashboard-section" aria-labelledby="cases-title">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">120 verified report-only inputs</p>
+              <h2 id="cases-title">Case explorer</h2>
+              <p class="section-intro">Filter accepted cases, then inspect their evidence availability, target, and all three frozen predictions.</p>
+            </div>
+          </div>
+
+          <form id="case-filters" class="filter-panel" aria-label="Case filters">
+            <label>
+              <span>Context ID</span>
+              <input type="text" id="context-filter" name="context_id" placeholder="Exact context ID" autocomplete="off">
+            </label>
+            <label>
+              <span>Expected fault</span>
+              <select id="fault-filter" name="fault_type">
+                <option value="">All fault types</option>
+              </select>
+            </label>
+            <label>
+              <span>Evidence mask</span>
+              <select id="mask-filter" name="mask_id">
+                <option value="">All evidence states</option>
+                <option value="clean">Clean</option>
+                <option value="mask_source_gateway_family">Source gateway family</option>
+                <option value="mask_route_family">Route family</option>
+                <option value="mask_interface_state">Interface state</option>
+                <option value="mask_policy_state">Policy state</option>
+              </select>
+            </label>
+            <label>
+              <span>Method</span>
+              <select id="method-filter" name="method_id">
+                <option value="">All methods</option>
+              </select>
+            </label>
+            <label>
+              <span>Prediction status</span>
+              <select id="status-filter" name="prediction_status" disabled>
+                <option value="">All statuses</option>
+                <option value="RESOLVED">Resolved</option>
+                <option value="INSUFFICIENT_EVIDENCE">Insufficient evidence</option>
+                <option value="ABSTAINED">Abstained</option>
+                <option value="NO_RULE_MATCH">No rule match</option>
+              </select>
+            </label>
+            <div class="filter-actions">
+              <button class="button button-primary" type="submit">Apply filters</button>
+              <button class="button button-secondary" type="button" id="reset-filters">Reset</button>
+            </div>
+          </form>
+
+          <div id="cases-state" class="state-box" role="status" aria-live="polite">
+            <span class="spinner" aria-hidden="true"></span> Loading verified cases…
+          </div>
+          <div id="cases-content" class="content-region" hidden>
+            <div class="results-bar">
+              <p id="case-result-count">0 cases</p>
+              <p id="case-sort">Sorted by input ID</p>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table case-table">
+                <caption class="sr-only">Filtered accepted report-only cases</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Input</th>
+                    <th scope="col">Context</th>
+                    <th scope="col">Mask</th>
+                    <th scope="col">Expected</th>
+                    <th scope="col">Rule</th>
+                    <th scope="col">ML</th>
+                    <th scope="col">Hybrid</th>
+                    <th scope="col"><span class="sr-only">Inspect</span></th>
+                  </tr>
+                </thead>
+                <tbody id="case-table-body"></tbody>
+              </table>
+            </div>
+            <nav class="pagination" aria-label="Case result pages">
+              <button class="button button-secondary" type="button" id="previous-page">Previous</button>
+              <span id="page-status" aria-live="polite">Page 1</span>
+              <button class="button button-secondary" type="button" id="next-page">Next</button>
+            </nav>
+          </div>
+        </section>
+
+        <section id="provenance" class="dashboard-section" aria-labelledby="provenance-title">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Integrity and claim limits</p>
+              <h2 id="provenance-title">Provenance & limitations</h2>
+              <p class="section-intro">The interface reports only data anchored to the accepted artifact boundary.</p>
+            </div>
+          </div>
+
+          <div id="provenance-state" class="state-box" role="status" aria-live="polite">
+            <span class="spinner" aria-hidden="true"></span> Verifying provenance projection…
+          </div>
+          <div id="provenance-content" class="content-region" hidden>
+            <div class="provenance-summary" id="provenance-summary"></div>
+            <article class="panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="panel-kicker">Cryptographic anchors</p>
+                  <h3>Four verified roots</h3>
+                </div>
+                <span class="verified-badge">SHA-256 verified</span>
+              </div>
+              <div class="root-list" id="root-list"></div>
+            </article>
+            <article class="limitations-panel">
+              <p class="panel-kicker">Required interpretation</p>
+              <h3>What these results do not claim</h3>
+              <ol id="limitations-list"></ol>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="case-dialog" class="case-dialog" aria-labelledby="case-dialog-title">
+      <div class="dialog-shell">
+        <header class="dialog-header">
+          <div>
+            <p class="section-kicker">Verified case detail</p>
+            <h2 id="case-dialog-title">Case</h2>
+          </div>
+          <button class="icon-button" type="button" id="close-case-dialog" aria-label="Close case detail">×</button>
+        </header>
+        <div id="case-detail-state" class="state-box" role="status" aria-live="polite"></div>
+        <div id="case-detail-content"></div>
+      </div>
+    </dialog>
+
+    <noscript>
+      <div class="noscript-message">This local read-only Dashboard requires JavaScript to request the accepted API projections.</div>
+    </noscript>
+  </body>
+</html>

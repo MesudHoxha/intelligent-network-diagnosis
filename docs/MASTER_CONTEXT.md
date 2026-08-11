@@ -1079,3 +1079,25 @@ regression tests. P7-R3 is next and may implement only the four static
 same-origin Dashboard views; the API remains read-only and no live
 diagnosis, inference, experiment, remediation, or new metric is
 authorized.
+
+P7-R3 implements the browser presentation boundary under D-089. The
+same FastAPI application mounts one dedicated repository directory
+containing semantic HTML, responsive CSS, and dependency-free
+JavaScript after the unchanged six data routes. The Dashboard adds no
+data operation and requests only those routes with same-origin `GET`.
+
+The four frozen views are now implemented: overview, three-scope method
+comparison, filterable/paginated case exploration with evidence and all
+three accepted predictions, and provenance/limitations. Display-only
+rounding never replaces API values. Loading, empty, fail-closed error,
+retry, keyboard, reduced-motion, desktop, and 390-pixel behaviors are
+implemented and visually checked. No external asset, React/Node build,
+browser persistence, model read, inference, network action, new metric,
+or runtime write is part of the application.
+
+Verification passed 10/10 P7-R3 tests, 75/75 combined Phase 7 tests,
+185/185 targeted Phase 6 tests, and 503/503 full regression tests. The
+estimator remained absent from the full UI/API fixture and 15/15 source
+hashes remained unchanged. P7-R4 is next and may perform only the Phase
+7 closeout gate, reproducible local run instructions, and archive
+handoff; it may not reopen the interface or experimental result.

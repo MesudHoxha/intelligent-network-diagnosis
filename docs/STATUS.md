@@ -1204,17 +1204,47 @@ population-level or real-world generalization.
 - Targeted Phase 6 regression: 185/185 passed
 - Full regression suite: 493/493 passed
 
+## Latest P7-R3 implementation
+
+- Decision: D-089, present only accepted projections through one static
+  same-origin Dashboard
+- P7-R3 status: implemented, test-verified, and visually verified
+- Dashboard assets: one semantic HTML document, one responsive CSS file,
+  and one dependency-free JavaScript client
+- Dashboard views: overview, three-scope method comparison, case explorer,
+  and provenance/limitations
+- FastAPI static mount: dedicated Dashboard directory only, after the six
+  unchanged data routes
+- Browser requests: same-origin `GET` only
+- Loading, empty, fail-closed error, and retry states: implemented
+- Case exploration: frozen filters, deterministic pagination, evidence
+  availability, expected diagnosis, three predictions, confidence where
+  defined, and accepted explanation text
+- Claim controls: descriptive-only label, no superiority test, deterministic
+  mask warning, ML/Hybrid aggregate equality, and non-generalization warning
+- Accessibility/responsiveness: semantic landmarks and tables, skip link,
+  focus-visible styles, reduced motion, native dialog, `Escape` closing,
+  desktop view, and 390-pixel view checked
+- External asset, CDN, React/Node build, database, browser persistence,
+  telemetry, upload, mutation, inference, remediation, or live-network path:
+  none
+- Estimator in full UI/API fixture: absent and never required
+- Accepted fixture sources after full UI/API read path: 15/15 unchanged
+- P7-R3 tests: 10/10 passed
+- Combined Phase 7 tests: 75/75 passed
+- Targeted Phase 6 regression: 185/185 passed
+- Full regression suite: 503/503 passed
+
 ## Next milestone
 
-P7-R3 — Static Dashboard Implementation and Visual Verification.
+P7-R4 — Phase 7 Closeout and Reproducible Local Handoff.
 
-P7-R3 may implement only the four frozen same-origin views—overview,
-method comparison, case explorer, and provenance/limitations—using
-static HTML/CSS/JavaScript over the accepted six-route API. It must not
-add data routes, change API semantics, introduce a Node/React build,
-deserialize the estimator, execute diagnosis, create metrics, or write
-runtime artifacts. Visual verification and responsive/accessibility
-checks are required before P7-R3 closes.
+P7-R4 may only verify the completed P7-R0 through P7-R3 boundary,
+produce reproducible local start/stop and acceptance instructions,
+confirm archive/publication exclusions for generated runtime artifacts,
+and close Phase 7. It must not add a route or view, change API or
+Dashboard semantics, deserialize the estimator, execute diagnosis,
+recompute a metric, run Containerlab, or modify accepted runtime sources.
 
 ## Important limitation
 
