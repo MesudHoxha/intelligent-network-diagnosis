@@ -4,12 +4,20 @@ version = "0.1.0"
 description = "Hybrid intelligent system for diagnosing computer network problems"
 requires-python = ">=3.12"
 dependencies = [
+    "fastapi>=0.115,<1",
+    "starlette>=0.46,<1",
+    "uvicorn>=0.30,<1",
     "joblib>=1.4,<2",
     "pydantic",
     "pyyaml",
     "rich",
     "jsonschema>=4.18,<5",
     "scikit-learn>=1.5,<1.8",
+]
+
+[project.optional-dependencies]
+test = [
+    "httpx>=0.27,<1",
 ]
 
 [tool.pytest.ini_options]

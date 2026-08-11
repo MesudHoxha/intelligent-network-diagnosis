@@ -1056,3 +1056,26 @@ the estimator or source test split, and writes no runtime artifact.
 P7-R2 is next and may add only the six frozen FastAPI GET routes and
 response/error normalization over this layer; Dashboard rendering
 remains P7-R3.
+
+P7-R2 implements the HTTP boundary under D-088. The FastAPI application
+contains exactly the six P7-R0 `GET` routes and disables automatic docs,
+Redoc, and generated OpenAPI endpoints. It loads and verifies the P7-R1
+catalog once during startup and serves only immutable in-memory
+projections. Requests never reread an artifact.
+
+Success envelopes preserve the frozen contract metadata. FastAPI
+validation is normalized to `400 INVALID_QUERY`; unknown verified-index
+case IDs return `404 CASE_NOT_FOUND`; mutating methods return
+`405 METHOD_NOT_ALLOWED`; missing or drifted accepted artifacts return
+the two frozen `503` codes; and unexpected failures return a generic
+path-free `500`. The local entry point binds Uvicorn to
+`127.0.0.1:8000` with reload disabled.
+
+All response families validate against the P7-R0 OpenAPI 3.1 schemas.
+The API path was tested with no estimator file and with all 15 source
+hashes unchanged. Verification passed 32/32 P7-R2 tests, 65/65 combined
+Phase 7 tests, 185/185 targeted Phase 6 tests, and 493/493 full
+regression tests. P7-R3 is next and may implement only the four static
+same-origin Dashboard views; the API remains read-only and no live
+diagnosis, inference, experiment, remediation, or new metric is
+authorized.

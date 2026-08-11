@@ -299,9 +299,17 @@ Status: In progress
   185/185; full regression: 461/461
 - Estimator deserialization, inference, server startup, Dashboard,
   subprocess, and runtime writes in P7-R1: absent
-- Next milestone: P7-R2 read-only FastAPI implementation
-- Later sequence: P7-R3 Dashboard implementation and visual
-  verification, then a separate Phase 7 closeout gate
+- P7-R2 read-only FastAPI implementation: complete
+- D-088 accepts exactly six `GET` routes, one startup catalog load,
+  OpenAPI-conformant envelopes, normalized `400/404/405/503/500`
+  failures, and the `127.0.0.1:8000` Uvicorn entry point
+- Automatic docs/OpenAPI routes, remote binding, CORS, authentication,
+  inference, runtime writes, and Dashboard rendering in P7-R2: absent
+- P7-R2 tests: 32/32; combined Phase 7 tests: 65/65; targeted Phase 6:
+  185/185; full regression: 493/493
+- Next milestone: P7-R3 static Dashboard implementation and visual
+  verification
+- Later sequence: a separate Phase 7 closeout gate
 
 ## Phase 8 — Experiments and evaluation
 Status: Not started

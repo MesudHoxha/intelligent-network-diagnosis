@@ -2115,3 +2115,49 @@ accepted local artifact set. It does not add independent experiments,
 change the descriptive P6-R6 metrics, establish Hybrid superiority,
 generalize beyond the controlled laboratory, or establish that an HTTP
 API or Dashboard is implemented.
+
+## D-088 — Serve only the verified immutable projection over local HTTP
+
+Decision: Accept the P7-R2 FastAPI transport as the only HTTP boundary
+for the accepted P7-R1 projection layer.
+
+The application exposes exactly the six `GET` operations frozen by
+D-086: health, overview, comparison, case listing, case detail, and
+provenance. FastAPI's automatic documentation and OpenAPI routes are
+disabled so they do not enlarge the runtime route set. `POST`, `PUT`,
+`PATCH`, and `DELETE` requests to the API are rejected with the frozen
+`405 METHOD_NOT_ALLOWED` envelope.
+
+The artifact catalog is loaded and verified once during application
+startup. Successful startup retains only the immutable P7-R1 projection
+in memory; requests do not reread files. Missing sources and integrity
+drift leave the process available only to return the corresponding
+fail-closed `503` envelope. Framework query-validation failures are
+normalized from FastAPI defaults to `400 INVALID_QUERY`, unknown case
+identities to `404 CASE_NOT_FOUND`, and unexpected failures to a
+path-free `500 INTERNAL_ERROR` response.
+
+The Uvicorn entry point binds to `127.0.0.1:8000` with reload disabled.
+There is no configurable remote bind, CORS policy, authentication
+system, database, cloud service, telemetry, or external asset
+dependency. FastAPI, Starlette, Uvicorn, and the HTTP test client are
+open-source local dependencies. P7-R2 adds no Dashboard files.
+
+The API responses were validated against the P7-R0 OpenAPI 3.1 schemas.
+The complete request path was exercised while the fixture estimator was
+absent and while all 15 accepted source hashes remained unchanged. No
+method executes, no model is deserialized, and no new evidence,
+prediction, metric, or runtime artifact is written.
+
+Status: Implemented and test-verified on 2026-08-11. Verification passed
+32/32 P7-R2 tests, 65/65 combined Phase 7 tests, 185/185 targeted Phase
+6 tests, and 493/493 full regression tests. P7-R3 is next and may add
+only the four static same-origin Dashboard views over these six routes.
+
+Limitation:
+
+D-088 establishes a deterministic local presentation API, not a live
+diagnosis service or a production deployment. It does not create new
+experimental evidence, change any accepted P6-R6 value, establish
+Hybrid superiority, provide remote-network security, or generalize the
+controlled results beyond their accepted scope.

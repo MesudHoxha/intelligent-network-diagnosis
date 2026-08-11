@@ -1175,16 +1175,46 @@ population-level or real-world generalization.
 - Targeted Phase 6 regression: 185/185 passed
 - Full regression suite: 461/461 passed
 
+## Latest P7-R2 implementation
+
+- Decision: D-088, serve only verified immutable projections over local
+  HTTP
+- P7-R2 status: read-only FastAPI transport implemented and test-
+  verified
+- Runtime route set: exactly 6 versioned `GET` routes
+- Automatic FastAPI docs, Redoc, and generated OpenAPI routes: disabled
+- Catalog behavior: verified once during startup and retained as one
+  immutable in-memory projection
+- Per-request artifact reads or writes: none
+- Success responses: P7-R0 schema version, data, and source metadata
+  envelopes
+- Normalized errors: `400 INVALID_QUERY`, `404 CASE_NOT_FOUND`,
+  `405 METHOD_NOT_ALLOWED`, both frozen artifact `503` codes, and
+  path-free `500 INTERNAL_ERROR`
+- Local server entry point: Uvicorn on `127.0.0.1:8000`, reload disabled
+- Response validation: all success families and the error envelope
+  checked against the frozen OpenAPI 3.1 schemas
+- Estimator in full API fixture: absent and never required
+- Accepted source hashes after full API exercise: 15/15 unchanged
+- Dashboard HTML/CSS/JavaScript: not implemented
+- Diagnosis execution, inference, refit, selection, new metrics,
+  Containerlab, subprocesses, and runtime artifact writes: absent
+- P7-R2 tests: 32/32 passed
+- Combined Phase 7 tests: 65/65 passed
+- Targeted Phase 6 regression: 185/185 passed
+- Full regression suite: 493/493 passed
+
 ## Next milestone
 
-P7-R2 — Read-Only FastAPI Implementation.
+P7-R3 — Static Dashboard Implementation and Visual Verification.
 
-P7-R2 may implement only the six frozen GET routes, success/error
-envelopes, framework-validation normalization, method rejection, and
-local binding over the verified `ProjectionLayer`. It must not bypass
-the catalog, add routes, serve arbitrary files, deserialize the
-estimator, execute diagnosis, write artifacts, or implement the
-Dashboard UI.
+P7-R3 may implement only the four frozen same-origin views—overview,
+method comparison, case explorer, and provenance/limitations—using
+static HTML/CSS/JavaScript over the accepted six-route API. It must not
+add data routes, change API semantics, introduce a Node/React build,
+deserialize the estimator, execute diagnosis, create metrics, or write
+runtime artifacts. Visual verification and responsive/accessibility
+checks are required before P7-R3 closes.
 
 ## Important limitation
 
