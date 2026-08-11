@@ -4,7 +4,7 @@ Version: 1
 
 Date: 2026-08-05
 
-Status: DESIGN FROZEN; D-081 AMENDED; P6-R4 SMOKE VERIFIED
+Status: DESIGN FROZEN; D-081 AMENDED; P6-R5 CLEAN CAMPAIGN ACCEPTED
 
 The original D-077 design was frozen before new-fault execution. D-081
 amends only the `interface_down` route-family expectation after two
@@ -17,6 +17,12 @@ three rules matched exactly, all three mutations were restored, all
 three healthy signatures recovered, and the final TOP-01 baseline was
 13/13 valid. This smoke result does not realize the planned E01-E06
 campaign or authorize a claim about ML or Hybrid performance.
+
+D-083 closes P6-R5 after the recovered clean campaign completed all
+72 experiments and produced the frozen 36/12/24 whole-context split.
+The report-only E02 and E06 test partitions remain sealed. The accepted
+campaign creates no diagnosis, prediction, model, selection, or metric
+artifact and does not change the mask or multiple-fault boundaries.
 
 ## 1. Purpose
 
@@ -364,8 +370,8 @@ artifact overwrite, or test-guided change stops the stage.
   fault injection.
 - P6-R4: implement the three new fail-stop injectors and rule
   signatures; smoke each new class in one reviewed context.
-- P6-R5: implement/review E01-E06 and execute the 72-row clean
-  fail-stop campaign with the frozen split.
+- P6-R5: completed; E01-E06 and the 72-row clean fail-stop campaign
+  were accepted with the frozen 36/12/24 split.
 - P6-R6: fit/select the new ML and Hybrid versions, then perform the
   one report-only clean and missing-evidence test evaluation.
 - P6-R7: decide whether a bounded multi-label multiple-fault experiment

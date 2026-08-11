@@ -1,0 +1,54 @@
+schema_version: 1
+scenario:
+  id: P6_E06_WRONG_NEXT_HOP
+  name: Phase 6 E06 wrong_next_hop
+  kind: fault
+  variant_id: p6_e06_clean_v1
+  split_group_id: CTX_P6_E06_TOP04_FILTER_BOUNDARY
+  category: controlled_fault
+  description: Collect clean Evidence v3 for wrong_next_hop in the frozen E06 complete-context
+    bundle.
+  topology:
+    id: TOP_04_FILTER_BOUNDARY
+    file: labs/topologies/p6_e06_top04_filter_boundary/topology.clab.yml
+  observation:
+    schema_version: 2
+    direction: hosta_to_hostb
+    source_node: hosta
+    source_container: clab-p6top04filter-hosta
+    source_address: 10.60.1.10
+    source_prefix: 10.60.1.0/24
+    source_gateway_address: 10.60.1.1
+    destination_address: 10.60.3.10
+    destination_prefix: 10.60.3.0/24
+    route_observer_node: fw1
+    route_observer_container: clab-p6top04filter-fw1
+    expected_next_hop: 10.60.23.2
+    observer_egress_interface: eth2
+    transit_node: r2
+    transit_container: clab-p6top04filter-r2
+    flow_protocol: icmp
+    flow_source_port: null
+    flow_destination_port: null
+    policy_backend: iptables
+    policy_table: filter
+    policy_chain: FORWARD
+    policy_rule_tag_prefix: IND-P6
+  fault:
+    type: wrong_next_hop
+    injector: replace_destination_route_next_hop
+    target_node: fw1
+    target_container: clab-p6top04filter-fw1
+    parameters:
+      destination_prefix: 10.60.3.0/24
+      correct_next_hop: 10.60.23.2
+      wrong_next_hop: 10.60.23.6
+      egress_interface: eth2
+  ground_truth:
+    fault_category: routing
+    fault_type: wrong_next_hop
+    fault_location: fw1
+    affected_prefix: 10.60.3.0/24
+    root_cause: The destination route uses a controlled unreachable next hop.
+  restoration:
+    method: replace_exact_destination_route

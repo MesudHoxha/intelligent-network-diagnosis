@@ -230,8 +230,26 @@ Status: In progress
 - P6-R4 closeout and HANDOFF: completed
 - Dataset Row v3, E01-E06, 72-row campaign, fitting, prediction, and
   metrics in P6-R4: absent
-- Next milestone: P6-R5 complete-context review and 72-row clean
-  campaign
+- P6-R5 E01-E06 complete six-class context bundles: implemented and
+  runtime-verified
+- Initial P6-R5 campaign: stopped safely after eight diagnostic-only
+  rows because C4 used an obsolete route-binding key; no partial dataset
+  was accepted
+- D-081 C4 contract recovery: six isolated interface-down smokes,
+  injections, and restorations verified without Dataset Row export
+- Recovered clean campaign: 72/72 experiments and six clean context
+  teardowns accepted
+- Dataset Row v3: 72 clean, unmasked rows with 12 rows per class and
+  12 rows per context
+- Explicit split: 36/12/24 rows across 3/1/2 whole contexts with no
+  group leakage
+- E02 and E06 test partition: sealed for P6-R6 report-only use
+- P6-R5 tests: 144/144 targeted and 387/387 full regression passed
+- Model, prediction, selection, evaluation, and metric artifacts in
+  P6-R5: absent
+- P6-R5 closeout and HANDOFF: completed
+- Next milestone: P6-R6 six-class Rule-based, ML, and Hybrid freeze
+  and one report-only clean/missing-evidence evaluation
 
 ## Phase 7 — Dashboard and API
 Status: Not started

@@ -27,6 +27,30 @@ class FaultEvidenceV3VerificationError(RuntimeError):
 
 
 FAULT_FEATURES: dict[str, dict[str, bool | None]] = {
+    "missing_static_route": {
+        "source_expected_gateway_reachable": True,
+        "source_default_gateway_matches_expected": True,
+        "destination_reachable": False,
+        "route_to_destination_exists_on_observer": False,
+        "route_next_hop_matches_expected": None,
+        "route_next_hop_reachable_from_observer": None,
+        "expected_next_hop_reachable_from_observer": True,
+        "observer_egress_interface_oper_up": True,
+        "destination_reachable_from_transit": True,
+        "flow_blocked_by_policy": False,
+    },
+    "wrong_next_hop": {
+        "source_expected_gateway_reachable": True,
+        "source_default_gateway_matches_expected": True,
+        "destination_reachable": False,
+        "route_to_destination_exists_on_observer": True,
+        "route_next_hop_matches_expected": False,
+        "route_next_hop_reachable_from_observer": False,
+        "expected_next_hop_reachable_from_observer": True,
+        "observer_egress_interface_oper_up": True,
+        "destination_reachable_from_transit": True,
+        "flow_blocked_by_policy": False,
+    },
     "wrong_default_gateway": {
         "source_expected_gateway_reachable": True,
         "source_default_gateway_matches_expected": False,
@@ -66,6 +90,13 @@ FAULT_FEATURES: dict[str, dict[str, bool | None]] = {
 }
 
 NONZERO_RAW_PROBES = {
+    "missing_static_route": {
+        "raw/v3/source_destination_ping_v3.json",
+    },
+    "wrong_next_hop": {
+        "raw/v3/source_destination_ping_v3.json",
+        "raw/v3/observer_installed_next_hop_ping_v3.json",
+    },
     "wrong_default_gateway": {
         "raw/v3/source_destination_ping_v3.json",
     },
@@ -88,7 +119,7 @@ FAULT_RAW_ARTIFACTS = {
         EXPECTED_RAW_ARTIFACTS
         - (
             {"raw/v3/observer_installed_next_hop_ping_v3.json"}
-            if fault_type == "interface_down"
+            if fault_type in {"missing_static_route", "interface_down"}
             else set()
         )
     )
@@ -261,7 +292,7 @@ def verify_fault_evidence_v3(
     expected_availability = {
         name: (
             "structurally_unavailable"
-            if fault_type == "interface_down"
+            if fault_type in {"missing_static_route", "interface_down"}
             and name in STRUCTURAL_FEATURES
             else "observed"
         )
@@ -280,7 +311,9 @@ def verify_fault_evidence_v3(
         ),
         "route_next_hop_on_observer": (
             None
-            if fault_type == "interface_down"
+            if fault_type in {"missing_static_route", "interface_down"}
+            else binding.parameters["wrong_next_hop"]
+            if fault_type == "wrong_next_hop"
             else profile.expected_next_hop
         ),
         "observer_egress_oper_state": (
@@ -311,10 +344,14 @@ def verify_fault_evidence_v3(
         "evidence_schema_version": 3,
         "probe_artifact_count": len(FAULT_RAW_ARTIFACTS[fault_type]),
         "observed_feature_count": (
-            8 if fault_type == "interface_down" else 10
+            8
+            if fault_type in {"missing_static_route", "interface_down"}
+            else 10
         ),
         "structural_unavailable_count": (
-            2 if fault_type == "interface_down" else 0
+            2
+            if fault_type in {"missing_static_route", "interface_down"}
+            else 0
         ),
         "collection_unavailable_count": 0,
         "topology_id": profile.topology_id,
@@ -325,7 +362,11 @@ def verify_fault_evidence_v3(
             "collector_status does not match the P6-R4 gate."
         )
     return {
-        "status": "P6_R4_FAULT_EVIDENCE_V3_VERIFIED",
+        "status": (
+            "P6_R5_FAULT_EVIDENCE_V3_VERIFIED"
+            if fault_type in {"missing_static_route", "wrong_next_hop"}
+            else "P6_R4_FAULT_EVIDENCE_V3_VERIFIED"
+        ),
         "fault_type": fault_type,
         "topology_id": profile.topology_id,
         "direction": profile.direction,

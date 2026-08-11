@@ -1,0 +1,54 @@
+schema_version: 1
+scenario:
+  id: P6_E03_INTERFACE_DOWN
+  name: Phase 6 E03 interface_down
+  kind: fault
+  variant_id: p6_e03_clean_v1
+  split_group_id: CTX_P6_E03_TOP02_BRANCH_TARGET_ARM
+  category: controlled_fault
+  description: Collect clean Evidence v3 for interface_down in the frozen E03 complete-context
+    bundle.
+  topology:
+    id: TOP_02_BRANCH
+    file: labs/topologies/p6_e03_top02_branch/topology.clab.yml
+  observation:
+    schema_version: 2
+    direction: hosta_to_hostc
+    source_node: hosta
+    source_container: clab-top02branch-hosta
+    source_address: 10.30.1.10
+    source_prefix: 10.30.1.0/24
+    source_gateway_address: 10.30.1.1
+    destination_address: 10.30.4.10
+    destination_prefix: 10.30.4.0/24
+    route_observer_node: r2
+    route_observer_container: clab-top02branch-r2
+    expected_next_hop: 10.30.24.2
+    observer_egress_interface: eth3
+    transit_node: r4
+    transit_container: clab-top02branch-r4
+    flow_protocol: icmp
+    flow_source_port: null
+    flow_destination_port: null
+    policy_backend: iptables
+    policy_table: filter
+    policy_chain: FORWARD
+    policy_rule_tag_prefix: IND-P6
+  fault:
+    type: interface_down
+    injector: set_observer_egress_interface_down
+    target_node: r2
+    target_container: clab-top02branch-r2
+    parameters:
+      interface: eth3
+      baseline_routes:
+      - prefix: 10.30.4.0/24
+        next_hop: 10.30.24.2
+  ground_truth:
+    fault_category: link
+    fault_type: interface_down
+    fault_location: r2
+    affected_prefix: 10.30.4.0/24
+    root_cause: The observer egress interface is administratively down.
+  restoration:
+    method: set_observer_egress_interface_up_and_revalidate

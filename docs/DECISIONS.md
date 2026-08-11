@@ -1829,3 +1829,65 @@ classes across E01-E06, campaign completeness, cross-topology
 generalization, ML or Hybrid performance, missing-evidence robustness,
 or real-world accuracy. No Dataset Row v3, campaign, model, prediction,
 or metric was produced by P6-R4.
+
+## D-083 — Phase 6 clean six-context campaign and sealed split
+
+Decision: Accept the recovered P6-R5 campaign as the canonical clean
+Dataset Row v3 source for later six-class method development, while
+retaining the first stopped campaign as diagnostic-only evidence.
+
+The first runtime,
+`p6_r5_clean_campaign-20260811T063119Z`, stopped in E01 before the first
+`interface_down` row because all C4 scenarios still used the obsolete
+`preserved_routes` key. D-081 had already established
+`baseline_routes` as the accepted explicit restoration contract. Eight
+earlier experiments completed, but no merged dataset or split was
+created and those rows are not accepted campaign inputs. The ninth
+attempt produced no Dataset Row v3. Cleanup completed with zero
+containers, and the failed runtime tree SHA-256 is
+`531c872cd392ac7308ae4684ab422b06736e7d1c894f04c7ac5780745fd69d79`.
+
+The recovery changed only the six C4 scenario bindings, their static
+validator, the six normalized context fingerprints, and the associated
+contract test. It did not amend D-081, the class order, Evidence v3,
+Dataset Row v3, the ten-feature signatures, the context allocation, or
+the test-use policy. Runtime
+`p6_r5_c4_recovery_smoke-20260811T070536Z` confirmed all six
+interface-down injections and exact restorations without exporting a
+Dataset Row.
+
+The replacement clean runtime
+`p6_r5_clean_campaign_recovery-20260811T070536Z` completed 72/72
+experiments across all six context groups. Every group contains two
+rows for each of the six classes. All 72 rows are unmasked, no accepted
+row contains a collection-unavailable feature, all context baselines
+were restored, every cleanup passed, and zero lab containers remained.
+The campaign-result SHA-256 is
+`c4c45e19e8b98d00a3fa2ed3b4d4a8ad2ba6debd04baae05c2d7d7377f9df4d2`;
+the merged-dataset SHA-256 is
+`50dd030e51e4873eac7665980e033a0236e4ddf26e446b66bd3d11613c4a0a9d`.
+
+The accepted allocation is the precommitted explicit whole-context
+split: E01/E03/E05 provide 36 train rows, E04 provides 12 validation
+rows, and E02/E06 provide 24 report-only test rows. No group crosses a
+partition. The split-manifest SHA-256 is
+`adf70942a740be43e085aca67f9acb4085dd118827ceba8482913dbc6adb5f9f`,
+and the test partition remains `SEALED_FOR_P6_R6_REPORT_ONLY`.
+
+The recovered implementation passed 144/144 targeted Phase 6 tests and
+387/387 full regression tests. No diagnosis, model, selection,
+prediction, evaluation, or metric artifact was created. P6-R6 may use
+only train and validation for fitting and selection until the new ML
+model and Hybrid policy are independently frozen.
+
+Status: Implemented, real-runtime verified, and accepted in P6-R5 on
+2026-08-11.
+
+Limitation:
+
+D-083 establishes a balanced clean dataset and a leakage-safe partition
+boundary in six controlled local contexts. It does not establish method
+performance, missing-evidence robustness, statistical superiority,
+production readiness, or real-world generalization. Report-only E02 and
+E06 results may not influence fitting, feature design, rules, thresholds,
+candidate selection, or policy selection.

@@ -223,6 +223,14 @@ def load_phase6_scenario(
             "Phase 6 scenario fault type does not match the injector."
         )
     expected_mechanisms = {
+        "missing_static_route": (
+            "delete_exact_destination_route",
+            "replace_exact_destination_route",
+        ),
+        "wrong_next_hop": (
+            "replace_destination_route_next_hop",
+            "replace_exact_destination_route",
+        ),
         "wrong_default_gateway": (
             "replace_source_default_gateway",
             "replace_expected_source_default_gateway",

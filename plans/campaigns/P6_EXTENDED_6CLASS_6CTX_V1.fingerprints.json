@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "campaign_id": "P6_EXTENDED_6CLASS_6CTX_V1",
+  "algorithm": "normalized_text_path_bundle_sha256_v1",
+  "contexts": [
+    {
+      "group_slot": "E01",
+      "files": [
+        "labs/topologies/p6_e01_top01/topology.clab.yml",
+        "labs/topologies/p6_e01_top01/scripts/validate_baseline.sh",
+        "plans/batches/P6_E01_CLEAN_CAMPAIGN.yml",
+        "scenarios/phase6/E01_N0_NO_FAULT.yml",
+        "scenarios/phase6/E01_C1_MISSING_STATIC_ROUTE.yml",
+        "scenarios/phase6/E01_C2_WRONG_NEXT_HOP.yml",
+        "scenarios/phase6/E01_C3_WRONG_DEFAULT_GATEWAY.yml",
+        "scenarios/phase6/E01_C4_INTERFACE_DOWN.yml",
+        "scenarios/phase6/E01_C5_ACL_BLOCK.yml"
+      ],
+      "sha256": "3d50dea32f72c48be3b5d28651b6c07a6faf4541f0912a4a3d1cad93d2125f08"
+    },
+    {
+      "group_slot": "E02",
+      "files": [
+        "labs/topologies/p6_e02_top02_chain/topology.clab.yml",
+        "labs/topologies/p6_e02_top02_chain/scripts/validate_baseline.sh",
+        "plans/batches/P6_E02_CLEAN_CAMPAIGN.yml",
+        "scenarios/phase6/E02_N0_NO_FAULT.yml",
+        "scenarios/phase6/E02_C1_MISSING_STATIC_ROUTE.yml",
+        "scenarios/phase6/E02_C2_WRONG_NEXT_HOP.yml",
+        "scenarios/phase6/E02_C3_WRONG_DEFAULT_GATEWAY.yml",
+        "scenarios/phase6/E02_C4_INTERFACE_DOWN.yml",
+        "scenarios/phase6/E02_C5_ACL_BLOCK.yml"
+      ],
+      "sha256": "6490d23c23cbfdfe9a6022c529ad7683d0e38f837a3705ccd9ff8c4dc0b59242"
+    },
+    {
+      "group_slot": "E03",
+      "files": [
+        "labs/topologies/p6_e03_top02_branch/topology.clab.yml",
+        "labs/topologies/p6_e03_top02_branch/scripts/validate_baseline.sh",
+        "plans/batches/P6_E03_CLEAN_CAMPAIGN.yml",
+        "scenarios/phase6/E03_N0_NO_FAULT.yml",
+        "scenarios/phase6/E03_C1_MISSING_STATIC_ROUTE.yml",
+        "scenarios/phase6/E03_C2_WRONG_NEXT_HOP.yml",
+        "scenarios/phase6/E03_C3_WRONG_DEFAULT_GATEWAY.yml",
+        "scenarios/phase6/E03_C4_INTERFACE_DOWN.yml",
+        "scenarios/phase6/E03_C5_ACL_BLOCK.yml"
+      ],
+      "sha256": "c14ddd318365cd8c8bd99b2fd56e610f241abc33baed93665b75d231645f3b38"
+    },
+    {
+      "group_slot": "E04",
+      "files": [
+        "labs/topologies/p6_e04_top02_dual_transit/topology.clab.yml",
+        "labs/topologies/p6_e04_top02_dual_transit/scripts/validate_baseline.sh",
+        "plans/batches/P6_E04_CLEAN_CAMPAIGN.yml",
+        "scenarios/phase6/E04_N0_NO_FAULT.yml",
+        "scenarios/phase6/E04_C1_MISSING_STATIC_ROUTE.yml",
+        "scenarios/phase6/E04_C2_WRONG_NEXT_HOP.yml",
+        "scenarios/phase6/E04_C3_WRONG_DEFAULT_GATEWAY.yml",
+        "scenarios/phase6/E04_C4_INTERFACE_DOWN.yml",
+        "scenarios/phase6/E04_C5_ACL_BLOCK.yml"
+      ],
+      "sha256": "2064742bd2147d7c6591002015244153570fd4b28406ac598aef2d320c55bdac"
+    },
+    {
+      "group_slot": "E05",
+      "files": [
+        "labs/topologies/p6_e05_top03_asymmetric/topology.clab.yml",
+        "labs/topologies/p6_e05_top03_asymmetric/scripts/validate_baseline.sh",
+        "plans/batches/P6_E05_CLEAN_CAMPAIGN.yml",
+        "scenarios/phase6/E05_N0_NO_FAULT.yml",
+        "scenarios/phase6/E05_C1_MISSING_STATIC_ROUTE.yml",
+        "scenarios/phase6/E05_C2_WRONG_NEXT_HOP.yml",
+        "scenarios/phase6/E05_C3_WRONG_DEFAULT_GATEWAY.yml",
+        "scenarios/phase6/E05_C4_INTERFACE_DOWN.yml",
+        "scenarios/phase6/E05_C5_ACL_BLOCK.yml"
+      ],
+      "sha256": "9c75cbc563c861fcc768babef392eae652f8fd4ea0bf52940c39cadfe4e108ac"
+    },
+    {
+      "group_slot": "E06",
+      "files": [
+        "labs/topologies/p6_e06_top04_filter_boundary/topology.clab.yml",
+        "labs/topologies/p6_e06_top04_filter_boundary/scripts/validate_baseline.sh",
+        "plans/batches/P6_E06_CLEAN_CAMPAIGN.yml",
+        "scenarios/phase6/E06_N0_NO_FAULT.yml",
+        "scenarios/phase6/E06_C1_MISSING_STATIC_ROUTE.yml",
+        "scenarios/phase6/E06_C2_WRONG_NEXT_HOP.yml",
+        "scenarios/phase6/E06_C3_WRONG_DEFAULT_GATEWAY.yml",
+        "scenarios/phase6/E06_C4_INTERFACE_DOWN.yml",
+        "scenarios/phase6/E06_C5_ACL_BLOCK.yml"
+      ],
+      "sha256": "c8bfb493fcded38da524dc641d364ae682823766f0fccb5ad3295c4ddb507548"
+    }
+  ]
+}

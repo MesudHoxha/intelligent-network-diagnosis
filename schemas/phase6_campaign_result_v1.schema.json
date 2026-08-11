@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:intelligent-network-diagnosis:schema:phase6-campaign-result:v1",
+  "title": "Phase 6 Campaign Result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "campaign_run_id",
+    "campaign_id",
+    "plan_path",
+    "campaign_plan_sha256",
+    "fingerprint_manifest_path",
+    "fingerprint_manifest_sha256",
+    "failure_policy",
+    "status",
+    "planned_context_count",
+    "completed_context_count",
+    "planned_experiment_count",
+    "completed_experiment_count",
+    "dataset_row_schema_version",
+    "dataset_row_count",
+    "diagnosis_count",
+    "prediction_count",
+    "metric_count",
+    "masked_row_count",
+    "test_partition_status",
+    "started_at_utc",
+    "completed_at_utc",
+    "failed_context",
+    "error",
+    "merged_dataset",
+    "split",
+    "contexts"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "campaign_run_id": {"$ref": "#/$defs/identifier"},
+    "campaign_id": {"const": "P6_EXTENDED_6CLASS_6CTX_V1"},
+    "plan_path": {"type": "string", "minLength": 1},
+    "campaign_plan_sha256": {"$ref": "#/$defs/sha256"},
+    "fingerprint_manifest_path": {"type": "string", "minLength": 1},
+    "fingerprint_manifest_sha256": {"$ref": "#/$defs/sha256"},
+    "failure_policy": {"const": "stop"},
+    "status": {"enum": ["RUNNING", "FAILED", "COMPLETED"]},
+    "planned_context_count": {"const": 6},
+    "completed_context_count": {"type": "integer", "minimum": 0, "maximum": 6},
+    "planned_experiment_count": {"const": 72},
+    "completed_experiment_count": {"type": "integer", "minimum": 0, "maximum": 72},
+    "dataset_row_schema_version": {"const": 3},
+    "dataset_row_count": {"type": "integer", "minimum": 0, "maximum": 72},
+    "diagnosis_count": {"const": 0},
+    "prediction_count": {"const": 0},
+    "metric_count": {"const": 0},
+    "masked_row_count": {"const": 0},
+    "test_partition_status": {
+      "enum": ["NOT_CREATED", "SEALED_FOR_P6_R6_REPORT_ONLY"]
+    },
+    "started_at_utc": {"type": "string", "format": "date-time"},
+    "completed_at_utc": {"type": ["string", "null"], "format": "date-time"},
+    "failed_context": {"type": ["string", "null"]},
+    "error": {"type": ["object", "null"]},
+    "merged_dataset": {"type": ["object", "null"]},
+    "split": {"type": ["object", "null"]},
+    "contexts": {
+      "type": "array",
+      "maxItems": 6,
+      "items": {"$ref": "#/$defs/context"}
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "group_slot",
+        "topology_id",
+        "split_group_id",
+        "artifact_bundle_sha256",
+        "status",
+        "deploy_return_code",
+        "initial_baseline_return_code",
+        "completed_experiment_count",
+        "dataset_row_count",
+        "dataset_path",
+        "dataset_sha256",
+        "class_row_counts",
+        "final_baseline_return_code",
+        "destroy_return_code",
+        "cleanup_verified",
+        "error"
+      ],
+      "properties": {
+        "group_slot": {"type": "string", "pattern": "^E0[1-6]$"},
+        "topology_id": {"type": "string", "minLength": 1},
+        "split_group_id": {"type": "string", "minLength": 1},
+        "artifact_bundle_sha256": {"$ref": "#/$defs/sha256"},
+        "status": {"enum": ["RUNNING", "FAILED", "COMPLETED"]},
+        "deploy_return_code": {"type": ["integer", "null"]},
+        "initial_baseline_return_code": {"type": ["integer", "null"]},
+        "completed_experiment_count": {"type": "integer", "minimum": 0, "maximum": 12},
+        "dataset_row_count": {"type": "integer", "minimum": 0, "maximum": 12},
+        "dataset_path": {"type": ["string", "null"]},
+        "dataset_sha256": {
+          "oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]
+        },
+        "class_row_counts": {"type": "object"},
+        "final_baseline_return_code": {"type": ["integer", "null"]},
+        "destroy_return_code": {"type": ["integer", "null"]},
+        "cleanup_verified": {"type": "boolean"},
+        "error": {"type": ["object", "null"]}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"const": "COMPLETED"}}},
+      "then": {
+        "properties": {
+          "completed_context_count": {"const": 6},
+          "completed_experiment_count": {"const": 72},
+          "dataset_row_count": {"const": 72},
+          "test_partition_status": {"const": "SEALED_FOR_P6_R6_REPORT_ONLY"},
+          "completed_at_utc": {"type": "string", "format": "date-time"},
+          "failed_context": {"type": "null"},
+          "error": {"type": "null"},
+          "merged_dataset": {"type": "object"},
+          "split": {"type": "object"},
+          "contexts": {"minItems": 6, "maxItems": 6}
+        }
+      }
+    }
+  ]
+}

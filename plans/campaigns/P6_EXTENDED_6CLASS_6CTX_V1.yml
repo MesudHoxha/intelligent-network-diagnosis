@@ -1,0 +1,78 @@
+schema_version: 1
+campaign:
+  id: P6_EXTENDED_6CLASS_6CTX_V1
+  description: >-
+    Execute the frozen six-class, six-complete-context Phase 6 clean
+    campaign without diagnosis, fitting, prediction, metrics, or masked rows.
+  execution:
+    order: listed
+    failure_policy: stop
+  dataset:
+    evidence_schema_version: 3
+    row_schema_version: 3
+    expected_fault_types:
+      - no_fault
+      - missing_static_route
+      - wrong_next_hop
+      - wrong_default_gateway
+      - interface_down
+      - acl_block
+    repetitions_per_class_context: 2
+    expected_row_count: 72
+  split:
+    algorithm: explicit_complete_context_v1
+    expected_group_allocation:
+      train:
+        - CTX_P6_E01_TOP01_LINEAR_SOURCE_EDGE
+        - CTX_P6_E03_TOP02_BRANCH_TARGET_ARM
+        - CTX_P6_E05_TOP03_ASYMMETRIC_FORWARD
+      validation:
+        - CTX_P6_E04_TOP02_DUAL_TRANSIT_SELECTED_ARM
+      test:
+        - CTX_P6_E02_TOP02_CHAIN_OBSERVER_EDGE
+        - CTX_P6_E06_TOP04_FILTER_BOUNDARY
+    expected_rows: {train: 36, validation: 12, test: 24}
+    test_use: report_only_after_p6_r6_freeze
+  contexts:
+    - group_slot: E01
+      topology_id: TOP_01
+      split_group_id: CTX_P6_E01_TOP01_LINEAR_SOURCE_EDGE
+      topology_file: labs/topologies/p6_e01_top01/topology.clab.yml
+      baseline_validator: labs/topologies/p6_e01_top01/scripts/validate_baseline.sh
+      batch_plan: plans/batches/P6_E01_CLEAN_CAMPAIGN.yml
+      observation: {direction: hosta_to_hostb, source_node: hosta, route_observer_node: r1, transit_node: r2}
+    - group_slot: E02
+      topology_id: TOP_02_CHAIN
+      split_group_id: CTX_P6_E02_TOP02_CHAIN_OBSERVER_EDGE
+      topology_file: labs/topologies/p6_e02_top02_chain/topology.clab.yml
+      baseline_validator: labs/topologies/p6_e02_top02_chain/scripts/validate_baseline.sh
+      batch_plan: plans/batches/P6_E02_CLEAN_CAMPAIGN.yml
+      observation: {direction: hosta_to_hostb, source_node: hosta, route_observer_node: r1, transit_node: r2}
+    - group_slot: E03
+      topology_id: TOP_02_BRANCH
+      split_group_id: CTX_P6_E03_TOP02_BRANCH_TARGET_ARM
+      topology_file: labs/topologies/p6_e03_top02_branch/topology.clab.yml
+      baseline_validator: labs/topologies/p6_e03_top02_branch/scripts/validate_baseline.sh
+      batch_plan: plans/batches/P6_E03_CLEAN_CAMPAIGN.yml
+      observation: {direction: hosta_to_hostc, source_node: hosta, route_observer_node: r2, transit_node: r4}
+    - group_slot: E04
+      topology_id: TOP_02_DUAL_TRANSIT
+      split_group_id: CTX_P6_E04_TOP02_DUAL_TRANSIT_SELECTED_ARM
+      topology_file: labs/topologies/p6_e04_top02_dual_transit/topology.clab.yml
+      baseline_validator: labs/topologies/p6_e04_top02_dual_transit/scripts/validate_baseline.sh
+      batch_plan: plans/batches/P6_E04_CLEAN_CAMPAIGN.yml
+      observation: {direction: hosta_to_hostc, source_node: hosta, route_observer_node: r1, transit_node: r3}
+    - group_slot: E05
+      topology_id: TOP_03_ASYMMETRIC_RETURN
+      split_group_id: CTX_P6_E05_TOP03_ASYMMETRIC_FORWARD
+      topology_file: labs/topologies/p6_e05_top03_asymmetric/topology.clab.yml
+      baseline_validator: labs/topologies/p6_e05_top03_asymmetric/scripts/validate_baseline.sh
+      batch_plan: plans/batches/P6_E05_CLEAN_CAMPAIGN.yml
+      observation: {direction: hosta_to_hostb, source_node: hosta, route_observer_node: r2, transit_node: r3}
+    - group_slot: E06
+      topology_id: TOP_04_FILTER_BOUNDARY
+      split_group_id: CTX_P6_E06_TOP04_FILTER_BOUNDARY
+      topology_file: labs/topologies/p6_e06_top04_filter_boundary/topology.clab.yml
+      baseline_validator: labs/topologies/p6_e06_top04_filter_boundary/scripts/validate_baseline.sh
+      batch_plan: plans/batches/P6_E06_CLEAN_CAMPAIGN.yml
+      observation: {direction: hosta_to_hostb, source_node: hosta, route_observer_node: fw1, transit_node: r2}

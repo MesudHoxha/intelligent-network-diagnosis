@@ -898,3 +898,45 @@ container remained. D-082 accepts the bounded three-new-class smoke
 gate only. Dataset Row v3 aggregation, E01-E06, the 72-row campaign,
 fitting, prediction, and metrics were not executed and move to P6-R5
 or later milestones.
+
+P6-R5 implements the six complete E01-E06 context bundles and a
+versioned fail-stop campaign path for Evidence v3 and Dataset Row v3.
+Every context binds the same six classes with two repetitions per class,
+uses its own topology and complete baseline validator, and is protected
+by a normalized nine-file context fingerprint. The explicit splitter
+allocates E01/E03/E05 to train, E04 to validation, and E02/E06 to the
+sealed report-only test partition.
+
+The first real campaign,
+`p6_r5_clean_campaign-20260811T063119Z`, stopped at E01 C4 because the
+generated interface-down scenarios used the obsolete
+`preserved_routes` key instead of the D-081 `baseline_routes` contract.
+Its eight completed rows and one failed attempt are retained only as
+diagnostic evidence; no merged dataset or split was created. Cleanup
+left zero containers.
+
+The bounded recovery corrected six C4 scenarios, their validator,
+fingerprints, and contract test without changing D-081 or the frozen
+taxonomy. Runtime `p6_r5_c4_recovery_smoke-20260811T070536Z` then
+verified interface-down injection and exact restoration in all six
+contexts without exporting Dataset Row v3 records.
+
+The clean runtime
+`p6_r5_clean_campaign_recovery-20260811T070536Z` completed 72/72
+experiments. It produced 72 clean, unmasked Dataset Row v3 records,
+with 12 per class and 12 per context, and the exact 36/12/24 split with
+no group leakage. E02 and E06 are sealed as
+`SEALED_FOR_P6_R6_REPORT_ONLY`. Campaign-result, merged-dataset, and
+split-manifest SHA-256 values are respectively
+`c4c45e19e8b98d00a3fa2ed3b4d4a8ad2ba6debd04baae05c2d7d7377f9df4d2`,
+`50dd030e51e4873eac7665980e033a0236e4ddf26e446b66bd3d11613c4a0a9d`,
+and
+`adf70942a740be43e085aca67f9acb4085dd118827ceba8482913dbc6adb5f9f`.
+
+The recovered source passed 144/144 Phase 6 tests and 387/387 full
+regression tests. All contexts cleaned up, zero containers remained,
+and no diagnosis, model, selection, prediction, evaluation, or metric
+artifact was created. D-083 accepts the P6-R5 clean-data boundary only;
+method fitting, missing-evidence evaluation, and report-only test access
+remain blocked until P6-R6 freezes and independently verifies the new
+methods.

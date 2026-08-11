@@ -1,0 +1,66 @@
+name: p6top04filter
+
+topology:
+  defaults:
+    kind: linux
+    image: ind-linux:0.1
+    image-pull-policy: Never
+
+  nodes:
+    hosta:
+      exec:
+        - ip addr flush dev eth1
+        - ip addr add 10.60.1.10/24 dev eth1
+        - ip link set eth1 up
+        - ip route replace default via 10.60.1.1 dev eth1
+
+    r1:
+      sysctls:
+        net.ipv4.ip_forward: 1
+      exec:
+        - ip addr flush dev eth1
+        - ip addr add 10.60.1.1/24 dev eth1
+        - ip link set eth1 up
+        - ip addr flush dev eth2
+        - ip addr add 10.60.12.1/29 dev eth2
+        - ip link set eth2 up
+        - ip route replace 10.60.3.0/24 via 10.60.12.2 dev eth2
+
+    fw1:
+      sysctls:
+        net.ipv4.ip_forward: 1
+      exec:
+        - ip addr flush dev eth1
+        - ip addr add 10.60.12.2/29 dev eth1
+        - ip link set eth1 up
+        - ip addr flush dev eth2
+        - ip addr add 10.60.23.1/29 dev eth2
+        - ip link set eth2 up
+        - ip route replace 10.60.1.0/24 via 10.60.12.1 dev eth1
+        - ip route replace 10.60.3.0/24 via 10.60.23.2 dev eth2
+        - iptables -w 2 -t filter -P FORWARD ACCEPT
+
+    r2:
+      sysctls:
+        net.ipv4.ip_forward: 1
+      exec:
+        - ip addr flush dev eth1
+        - ip addr add 10.60.23.2/29 dev eth1
+        - ip link set eth1 up
+        - ip addr flush dev eth2
+        - ip addr add 10.60.3.1/24 dev eth2
+        - ip link set eth2 up
+        - ip route replace 10.60.1.0/24 via 10.60.23.1 dev eth1
+
+    hostb:
+      exec:
+        - ip addr flush dev eth1
+        - ip addr add 10.60.3.10/24 dev eth1
+        - ip link set eth1 up
+        - ip route replace 10.60.1.0/24 via 10.60.3.1 dev eth1
+
+  links:
+    - endpoints: ["hosta:eth1", "r1:eth1"]
+    - endpoints: ["r1:eth2", "fw1:eth1"]
+    - endpoints: ["fw1:eth2", "r2:eth1"]
+    - endpoints: ["r2:eth2", "hostb:eth1"]

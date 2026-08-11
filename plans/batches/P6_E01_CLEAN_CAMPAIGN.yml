@@ -1,0 +1,12 @@
+schema_version: 1
+batch:
+  id: P6_E01_CLEAN_CAMPAIGN
+  description: Frozen two-repetition six-class E01 clean bundle.
+  execution: {order: listed, failure_policy: stop}
+  entries:
+    - {entry_id: e01_no_fault, scenario_path: scenarios/phase6/E01_N0_NO_FAULT.yml, repetitions: 2}
+    - {entry_id: e01_missing_static_route, scenario_path: scenarios/phase6/E01_C1_MISSING_STATIC_ROUTE.yml, repetitions: 2}
+    - {entry_id: e01_wrong_next_hop, scenario_path: scenarios/phase6/E01_C2_WRONG_NEXT_HOP.yml, repetitions: 2}
+    - {entry_id: e01_wrong_default_gateway, scenario_path: scenarios/phase6/E01_C3_WRONG_DEFAULT_GATEWAY.yml, repetitions: 2}
+    - {entry_id: e01_interface_down, scenario_path: scenarios/phase6/E01_C4_INTERFACE_DOWN.yml, repetitions: 2}
+    - {entry_id: e01_acl_block, scenario_path: scenarios/phase6/E01_C5_ACL_BLOCK.yml, repetitions: 2}

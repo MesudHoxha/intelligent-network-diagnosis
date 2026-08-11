@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:intelligent-network-diagnosis:schema:phase6-campaign-plan:v1",
+  "title": "Phase 6 Campaign Plan v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "campaign"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "campaign": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "description", "execution", "dataset", "split", "contexts"],
+      "properties": {
+        "id": {"const": "P6_EXTENDED_6CLASS_6CTX_V1"},
+        "description": {"type": "string", "minLength": 1},
+        "execution": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["order", "failure_policy"],
+          "properties": {"order": {"const": "listed"}, "failure_policy": {"const": "stop"}}
+        },
+        "dataset": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["evidence_schema_version", "row_schema_version", "expected_fault_types", "repetitions_per_class_context", "expected_row_count"],
+          "properties": {
+            "evidence_schema_version": {"const": 3},
+            "row_schema_version": {"const": 3},
+            "expected_fault_types": {
+              "const": ["no_fault", "missing_static_route", "wrong_next_hop", "wrong_default_gateway", "interface_down", "acl_block"]
+            },
+            "repetitions_per_class_context": {"const": 2},
+            "expected_row_count": {"const": 72}
+          }
+        },
+        "split": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["algorithm", "expected_group_allocation", "expected_rows", "test_use"],
+          "properties": {
+            "algorithm": {"const": "explicit_complete_context_v1"},
+            "expected_group_allocation": {"$ref": "#/$defs/allocation"},
+            "expected_rows": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["train", "validation", "test"],
+              "properties": {"train": {"const": 36}, "validation": {"const": 12}, "test": {"const": 24}}
+            },
+            "test_use": {"const": "report_only_after_p6_r6_freeze"}
+          }
+        },
+        "contexts": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {"$ref": "#/$defs/context"}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "groupList": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "allocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["train", "validation", "test"],
+      "properties": {"train": {"$ref": "#/$defs/groupList"}, "validation": {"$ref": "#/$defs/groupList"}, "test": {"$ref": "#/$defs/groupList"}}
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["group_slot", "topology_id", "split_group_id", "topology_file", "baseline_validator", "batch_plan", "observation"],
+      "properties": {
+        "group_slot": {"pattern": "^E0[1-6]$", "type": "string"},
+        "topology_id": {"type": "string", "minLength": 1},
+        "split_group_id": {"type": "string", "minLength": 1},
+        "topology_file": {"type": "string", "pattern": "^labs/.+\\.ya?ml$"},
+        "baseline_validator": {"type": "string", "pattern": "^labs/.+\\.sh$"},
+        "batch_plan": {"type": "string", "pattern": "^plans/.+\\.ya?ml$"},
+        "observation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["direction", "source_node", "route_observer_node", "transit_node"],
+          "properties": {
+            "direction": {"type": "string", "minLength": 1},
+            "source_node": {"type": "string", "minLength": 1},
+            "route_observer_node": {"type": "string", "minLength": 1},
+            "transit_node": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    }
+  }
+}

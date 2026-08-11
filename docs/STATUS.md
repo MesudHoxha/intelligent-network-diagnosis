@@ -990,12 +990,67 @@ single-context fault feasibility, restoration, Evidence v3 signatures,
 and exact Rule Engine v3 matches. P6-R5 must implement and review all
 E01-E06 bindings before executing the frozen 72-row campaign.
 
+## Latest P6-R5 verification
+
+- Decision: D-083, clean six-context campaign accepted
+- P6-R5 status: completed
+- Frozen campaign plan SHA-256:
+  `ef295fc436d383dc94925c3dc8fd11d9f3a7f6d8e87549d6c1c82db590277988`
+- Recovered fingerprint manifest SHA-256:
+  `e5e721e4b9fc1ad71fa6a9acf0fd37f8df5af1faa2e5846bf9e221e843c2cbe9`
+- First failed campaign:
+  `p6_r5_clean_campaign-20260811T063119Z`
+- Failed campaign completed rows: 8, diagnostic-only
+- Failed C4 attempt: 1, no Dataset Row v3 produced
+- Failure cause: obsolete `preserved_routes` scenario key versus the
+  accepted D-081 `baseline_routes` injector contract
+- Failed runtime tree SHA-256:
+  `531c872cd392ac7308ae4684ab422b06736e7d1c894f04c7ac5780745fd69d79`
+- C4 recovery smoke:
+  `p6_r5_c4_recovery_smoke-20260811T070536Z`
+- C4 recovery injection/restoration: 6/6 confirmed
+- C4 diagnostic Dataset Row export: 0
+- Accepted clean campaign:
+  `p6_r5_clean_campaign_recovery-20260811T070536Z`
+- Contexts completed and cleanup-verified: 6/6
+- Experiments completed: 72/72
+- Dataset Row v3 records: 72/72 clean and unmasked
+- Class balance: 12 rows for each of six classes
+- Context balance: 12 rows for each of six contexts
+- Collection-unavailable rows: 0
+- Explicit split: 36 train, 12 validation, 24 test
+- Split groups: 3 train, 1 validation, 2 test
+- Cross-partition group leakage: absent
+- Report-only test groups: E02 and E06
+- Test status: `SEALED_FOR_P6_R6_REPORT_ONLY`
+- Campaign-result SHA-256:
+  `c4c45e19e8b98d00a3fa2ed3b4d4a8ad2ba6debd04baae05c2d7d7377f9df4d2`
+- Merged Dataset Row v3 SHA-256:
+  `50dd030e51e4873eac7665980e033a0236e4ddf26e446b66bd3d11613c4a0a9d`
+- Split-manifest SHA-256:
+  `adf70942a740be43e085aca67f9acb4085dd118827ceba8482913dbc6adb5f9f`
+- Train partition SHA-256:
+  `128e3b6316a2f9065db0d8478b9571cd0474c39f3cec1c0e766e8f489884fec7`
+- Validation partition SHA-256:
+  `8ae10a384f318e4e01a18da386585300547456ed32004eacd39054899176e60b`
+- Test partition SHA-256:
+  `4757ba82cbe939fadb2491b1907f0f13cc70be9d3f0117758896931484bcfee7`
+- Diagnosis/model/selection/prediction/evaluation/metric outputs: absent
+- Targeted Phase 6 tests: 144/144 passed
+- Full regression suite: 387/387 passed
+- Containerlab containers after final cleanup: 0
+- Failed campaign retained: diagnostic-only
+- P6-R5 closeout: completed
+
+P6-R5 proves controlled six-class data collection, exact restoration,
+complete-context balance, and a leakage-safe sealed split in six local
+laboratory contexts. It does not prove ML or Hybrid accuracy,
+missing-evidence robustness, statistical superiority, production
+suitability, or real-world generalization.
+
 ## Open issues
 
 - Final FRRouting container image for later routing extensions
-- Implement or review all six complete Phase 6 contexts, including
-  the new E06 forwarding-policy-boundary topology
-- Execute the frozen 72-row clean campaign and 36/12/24 split
 - Implement the four non-destructive missing-evidence masks
 - Fit and select new six-class Rule-based, ML, and Hybrid versions
   without using report-only test contexts
@@ -1007,15 +1062,15 @@ E01-E06 bindings before executing the frozen 72-row campaign.
 
 ## Next milestone
 
-P6-R5 — Complete Context Bindings and 72-Row Clean Campaign.
+P6-R6 — Six-Class Method Freeze and Report-Only Evaluation.
 
-P6-R5 must implement or review E01-E06 as complete six-class context
-bundles, including the new E06 forwarding-policy-boundary topology,
-before campaign execution. The coordinator must then execute exactly
-72 fail-stop experiments, create Dataset Row v3 records, and produce
-the frozen 36/12/24 whole-context split without leakage. It must stop
-before model fitting, Hybrid selection, report-only test evaluation,
-or missing-evidence result claims.
+P6-R6 must implement the four precommitted non-destructive masks,
+derive the new ten-feature Rule-based, ML, and Hybrid method versions,
+fit only on E01/E03/E05, and select only with E04. The chosen model and
+Hybrid policy must be independently frozen before any access to E02 or
+E06. Only then may one report-only clean and missing-evidence test
+evaluation be produced. P6-R6 must not refit, retune, or revise features,
+rules, thresholds, or policy from report-only results.
 
 ## Important limitation
 
