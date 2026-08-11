@@ -277,7 +277,7 @@ Status: Complete
 - Phase 6 closeout and HANDOFF: completed
 
 ## Phase 7 — Dashboard and API
-Status: In progress
+Status: Complete
 
 - P7-R0 Dashboard/API scope and read-only contract gate: complete
 - D-086 freezes FastAPI/Uvicorn plus static same-origin HTML/CSS/JS as
@@ -315,11 +315,25 @@ Status: In progress
   inference, runtime writes, and new empirical claims in P7-R3: absent
 - P7-R3 tests: 10/10; combined Phase 7 tests: 75/75; targeted Phase 6:
   185/185; full regression: 503/503
-- Next milestone: P7-R4 Phase 7 closeout, reproducible local run
-  instructions, and archive handoff
+- P7-R4 Phase 7 closeout: complete
+- D-090 accepts the final six-route/four-view local read-only boundary,
+  reproducible start/health/stop operation, and separate tracked-source
+  versus private 15-source projection archives
+- Temporary live-server acceptance: passed and stopped cleanly; no
+  Containerlab, estimator read, method execution, or runtime write
+- P7-R4 tests: 10/10; combined Phase 7 tests: 85/85; targeted Phase 6:
+  185/185; full regression: 513/513
+- Phase 7 closeout and HANDOFF: completed
 
 ## Phase 8 — Experiments and evaluation
 Status: Not started
+
+- Next milestone: P8-R0 evidence-completeness, final-evaluation, and
+  thesis-claim scope gate
+- P8-R0 must inventory accepted evidence and identify only defensible
+  thesis-critical gaps before proposing runtime
+- New experiments and reopening the consumed P6-R6 E02/E06 report-only
+  evaluation are not implicitly authorized by the Phase 7 closeout
 
 ## Phase 9 — Thesis writing and defense
 Status: Not started

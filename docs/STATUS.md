@@ -1235,16 +1235,43 @@ population-level or real-world generalization.
 - Targeted Phase 6 regression: 185/185 passed
 - Full regression suite: 503/503 passed
 
+## Latest P7-R4 closeout
+
+- Decision: D-090, close Phase 7 with separate source and accepted-
+  projection archive semantics
+- P7-R4 status: completed; Phase 7 closed
+- Final data API: exactly 6 versioned `GET` routes
+- Final Dashboard: exactly 4 views and 3 static assets
+- Local entry point: fixed `127.0.0.1:8000`, reload disabled
+- Temporary live-server smoke: accepted health, overview, comparison,
+  case list/detail, provenance, and Dashboard paths passed; server then
+  stopped cleanly
+- Catalog sources: 15/15 verified before and unchanged after acceptance
+- Estimator: excluded from the projection bundle, not read, and not
+  deserialized
+- Public archive: tracked source, tests, contracts, plans, and
+  documentation only
+- Private reproducibility archive: tracked P7-R1 catalog plus exactly 15
+  accepted projection sources
+- Containerlab, diagnosis execution, model fitting/selection, new
+  prediction, new metric, and runtime artifact write: absent
+- P7-R4 tests: 10/10 passed
+- Combined Phase 7 tests: 85/85 passed
+- Targeted Phase 6 regression: 185/185 passed
+- Full regression suite: 513/513 passed
+- Phase 7 closeout and HANDOFF: completed
+
 ## Next milestone
 
-P7-R4 — Phase 7 Closeout and Reproducible Local Handoff.
+P8-R0 — Evidence-Completeness, Final-Evaluation, and Thesis-Claim Scope
+Gate.
 
-P7-R4 may only verify the completed P7-R0 through P7-R3 boundary,
-produce reproducible local start/stop and acceptance instructions,
-confirm archive/publication exclusions for generated runtime artifacts,
-and close Phase 7. It must not add a route or view, change API or
-Dashboard semantics, deserialize the estimator, execute diagnosis,
-recompute a metric, run Containerlab, or modify accepted runtime sources.
+P8-R0 must inventory the accepted experimental evidence, map it to
+defensible thesis claims, and decide whether any thesis-critical
+evaluation gap remains. It is a design and scope gate. It must not
+reopen the consumed P6-R6 E02/E06 report-only evaluation, execute a new
+experiment, change an accepted metric, or revise a frozen model/policy
+without a separate precommitted authorization.
 
 ## Important limitation
 

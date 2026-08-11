@@ -1101,3 +1101,26 @@ estimator remained absent from the full UI/API fixture and 15/15 source
 hashes remained unchanged. P7-R4 is next and may perform only the Phase
 7 closeout gate, reproducible local run instructions, and archive
 handoff; it may not reopen the interface or experimental result.
+
+P7-R4 closes Phase 7 under D-090 without adding runtime functionality.
+The final acceptance boundary remains six versioned `GET` routes, four
+Dashboard views, three static assets, one startup catalog verification,
+15 immutable projection sources, and loopback-only
+`127.0.0.1:8000` operation. A temporary live-server smoke exercised the
+health, overview, comparison, case, provenance, and Dashboard paths and
+then stopped cleanly. It started no laboratory and wrote no result.
+
+The reproducible handoff separates the tracked public source archive
+from the private accepted-projection archive. The public Git tree omits
+ignored generated runtime artifacts. The private presentation bundle
+contains the tracked P7-R1 catalog plus exactly its 15 accepted sources;
+the selected estimator is excluded, unread, and undeserialized. A fresh
+source-only clone is expected to fail closed until this bundle is
+restored and independently verified by the catalog loader.
+
+Final verification passed 10/10 P7-R4 tests, 85/85 combined Phase 7
+tests, 185/185 targeted Phase 6 tests, and 513/513 full regression tests.
+The 15 source hashes remained unchanged. Phase 7 is complete. P8-R0 is
+next and must first audit evidence completeness and freeze the final
+evaluation/thesis-claim scope; it may not implicitly reopen the consumed
+P6-R6 report-only evaluation or create a new experiment.

@@ -2208,3 +2208,51 @@ D-089 proves the bounded local presentation behavior, responsive layout,
 and integration with accepted projections. It does not prove production
 deployment, remote-user security, real-time diagnosis, statistical
 superiority, new empirical performance, or real-world generalization.
+
+## D-090 — Close Phase 7 with separate source and accepted-projection archives
+
+Decision: Accept the P7-R0 through P7-R3 implementation as the complete
+Phase 7 local read-only interface and close the phase with a reproducible
+local operating and archive handoff.
+
+The final runtime boundary remains exactly six versioned `GET` data
+routes, four Dashboard views, three static assets, one startup artifact
+verification, and one loopback-only `127.0.0.1:8000` Uvicorn entry point.
+P7-R4 adds no API or Dashboard behavior. Its live acceptance smoke starts
+the existing server temporarily, reads the accepted projections, and
+stops it; it does not start Containerlab or execute diagnosis.
+
+The public source archive is the tracked Git tree only. It contains
+source, tests, contracts, plans, and documentation, but not ignored
+generated datasets, reports, models, virtual environments, caches,
+Containerlab state, or accepted projection sources. A source-only clone
+therefore fails closed until its accepted sources are separately
+restored; that is intended behavior, not an availability guarantee.
+
+Reproducible local presentation requires a separate private bundle of
+exactly the 15 P7-R1 catalog sources plus the tracked catalog. The
+catalog remains the authoritative SHA-256 and byte-size gate after
+restoration. The selected estimator is excluded from this projection
+bundle and remains unread and undeserialized. Creating or restoring the
+bundle does not authorize recomputation, refit, reselection, or revision
+of the accepted P6-R6 result.
+
+Status: Accepted and verified on 2026-08-11. Verification passed 10/10
+P7-R4 tests, 85/85 combined Phase 7 tests, 185/185 targeted Phase 6
+tests, and 513/513 full regression tests. The temporary live server
+returned the accepted health, overview, comparison, case, provenance,
+and Dashboard responses, then stopped cleanly. All 15 accepted sources
+retained their hashes; the estimator was not read or deserialized.
+
+Phase 7 is complete. P8-R0 is next and must first freeze the Phase 8
+evidence-completeness, evaluation, and thesis-claim scope. It receives no
+implicit authorization to reopen the consumed E02/E06 report-only
+evaluation or execute a new experiment.
+
+Limitation:
+
+D-090 establishes reproducible local operation and preservation of the
+accepted presentation sources. It does not establish production
+readiness, remote-user security, real-time diagnosis, statistical
+superiority, new empirical evidence, or generalization beyond the
+controlled laboratory.
