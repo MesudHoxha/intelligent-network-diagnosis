@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "p8_private_archive_receipt_v1.schema.json",
+  "title": "P8 Private Archive Receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "status",
+    "archive_file_name",
+    "archive_sha256",
+    "archive_size_bytes",
+    "archive_member_count",
+    "runtime_artifact_count",
+    "registry",
+    "source_checkpoint",
+    "estimator_deserialized",
+    "experiment_executed",
+    "metric_recalculated",
+    "next_milestone"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "receipt_id": {"const": "p8_r1_private_archive_receipt_v1"},
+    "status": {"const": "VERIFIED"},
+    "archive_file_name": {"const": "P8-R1-final-evidence-private.tar.gz"},
+    "archive_sha256": {"$ref": "#/$defs/sha256"},
+    "archive_size_bytes": {"type": "integer", "minimum": 1},
+    "archive_member_count": {"type": "integer", "minimum": 33},
+    "runtime_artifact_count": {"type": "integer", "minimum": 31},
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "size_bytes", "registry_id"],
+      "properties": {
+        "path": {"const": "plans/phase8/P8_R1_FINAL_EVIDENCE_REGISTRY_V1.json"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "size_bytes": {"type": "integer", "minimum": 1},
+        "registry_id": {"const": "p8_r1_final_evidence_registry_v1"}
+      }
+    },
+    "source_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["branch", "commit", "commit_short", "public_archive"],
+      "properties": {
+        "branch": {"const": "main"},
+        "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "commit_short": {"type": "string", "pattern": "^[0-9a-f]{7}$"},
+        "public_archive": {"const": "GIT_TRACKED_SOURCE_AT_CHECKPOINT"}
+      }
+    },
+    "estimator_deserialized": {"const": false},
+    "experiment_executed": {"const": false},
+    "metric_recalculated": {"const": false},
+    "next_milestone": {"const": "P8-R2"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

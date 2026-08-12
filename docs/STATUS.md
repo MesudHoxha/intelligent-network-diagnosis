@@ -1286,17 +1286,38 @@ population-level or real-world generalization.
 - Targeted Phase 6 regression: 185/185 passed
 - Full regression suite: 528/528 passed
 
+## Latest P8-R1 evidence archive
+
+- Decision: D-092, accept the immutable registry/private-archive model
+- Final runtime scope: accepted P6-R5 through P6-R6 numerical chain
+- Raw campaign manifests: 72/72 required
+- Context datasets: 6/6 required
+- Split files: 4/4 required
+- Development/model files: 13/13 required
+- Report-only files: 10/10 required
+- Exact runtime artifact and byte counts: generated and frozen in the
+  P8-R1 registry
+- Accepted archive roots: 8/8
+- Public source: bound to the Git checkpoint, not duplicated as private
+  runtime payload
+- Estimator: opaque bytes hashed and copied; not deserialized
+- Test partition: hashed and copied; not reevaluated
+- Runtime authorization: all ten experiment/mutation/recomputation flags
+  false
+- Deterministic archive and tracked SHA-256 receipt: required
+- P8-R1 tests: 15/15 passed
+- Combined Phase 7 plus Phase 8 tests: 115/115 passed
+- Targeted Phase 6 regression: 185/185 passed
+- Full regression suite: 543/543 passed
+
 ## Next milestone
 
-P8-R1 — Immutable Final Evidence Registry and Private Reproducibility
-Archive.
+P8-R2 — Thesis-Ready Final Evaluation Synthesis.
 
-P8-R1 may inventory, hash, classify, and copy already accepted runtime
-artifacts into a private reproducibility archive. It must keep the
-tracked public source archive separate, preserve every accepted byte,
-avoid estimator deserialization, and fail closed on a missing or drifted
-accepted identity. It may not execute a new experiment or create a new
-empirical result.
+P8-R2 may format hash-verified accepted values into tables, figures,
+and claim-to-evidence references. It may not execute an experiment,
+deserialize the estimator, recompute a metric, add a new metric, or
+broaden the D-091 thesis claims.
 
 ## Important limitation
 

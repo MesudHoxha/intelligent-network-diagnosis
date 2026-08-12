@@ -1155,3 +1155,26 @@ P8-R0 verification passed 15/15 targeted tests, 100/100 combined Phase
 7 plus P8-R0 tests, 185/185 targeted Phase 6 tests, and 528/528 full
 regression tests. All 15 accepted projection sources retained their
 hashes; the selected estimator was not read or deserialized.
+
+P8-R1 closes the reproducibility-archive gap under D-092. It inventories
+the accepted final numerical chain from the P6-R5 campaign through the
+P6-R6 report-only comparison: the complete 72-experiment raw tree, six
+context datasets, merged Dataset Row v3, four split files, method gate,
+13 development/model files, and 10 report-only files. The generated
+tracked registry records the exact artifact count, byte total, path,
+role, size, and SHA-256 for the real local accepted bytes.
+
+The tracked Git checkpoint remains the public source archive. A separate
+deterministic private bundle contains the registry, archival README, and
+ignored runtime artifacts only. Its tracked receipt binds archive hash,
+size, member count, registry, and source commit. P1-P5 runtime remains
+development history represented by tracked HANDOFFs; it is not promoted
+into the D-091 final P6 numerical archive.
+
+The selected estimator is preserved as opaque bytes. P8-R1 imports no
+serialization loader and performs no deserialization, inference,
+Containerlab execution, refit, policy selection, metric calculation,
+test-guided revision, or accepted-artifact write. Verification passed
+15/15 targeted tests, 115/115 combined Phase 7 plus Phase 8 tests,
+185/185 targeted Phase 6 tests, and 543/543 full regression tests. P8-R2
+is next and may only synthesize accepted values for the thesis.

@@ -2309,3 +2309,47 @@ D-091 establishes evidence completeness only for the frozen controlled-
 laboratory bachelor scope. It does not turn the accepted descriptive
 comparison into independent replication, statistical inference,
 production readiness, or external validity.
+
+## D-092 — Accept the immutable final-chain registry and private archive
+
+Decision: Accept the P8-R1 registry and deterministic private archive as
+the reproducibility boundary for the final numerical evidence chain.
+
+The private runtime scope begins with the accepted P6-R5 campaign and
+ends with the accepted P6-R6 report-only comparison. It includes the
+complete 72-experiment raw tree, six context datasets, the merged and
+split Dataset Row v3 artifacts, the P6-R6 method gate, exactly 13
+development/model files, and exactly 10 report-only files. The tracked
+registry records the real artifact count and byte total at closeout and
+binds every member by repository-relative path, role, size, and SHA-256.
+
+The Git checkpoint remains the public source archive. Relevant tracked
+plans, contracts, implementation files, HANDOFFs, the P7 catalog, and
+the P8-R0 scope are hash-bound in the registry but are not duplicated as
+private runtime payload. P1-P5 runtime artifacts remain developmental
+history represented by their accepted tracked records; D-091 identifies
+P6-R6, not the earlier baselines, as the final numerical evaluation.
+
+The selected estimator is included only as opaque bytes. Hashing and
+copying it does not authorize or perform deserialization. Likewise,
+hashing and copying the sealed test partition is preservation, not
+test evaluation. All ten experiment, mutation, model, policy, metric,
+and artifact-write authorization flags remain false.
+
+The archive is deterministic: fixed ordering and metadata plus identical
+registry and accepted bytes must reproduce identical compressed bytes.
+A separate tracked receipt binds the archive filename, SHA-256, size,
+member count, registry, and source checkpoint. Missing, drifted, extra,
+symlinked, or non-canonical accepted runtime entries fail closed.
+
+Status: Accepted and implemented on 2026-08-12. Verification passed
+15/15 P8-R1 tests, 115/115 combined Phase 7 plus Phase 8 tests, 185/185
+targeted Phase 6 tests, and 543/543 full regression tests. No accepted
+runtime byte changed. P8-R2 is next.
+
+Limitation:
+
+D-092 establishes byte-preserving reproducibility for the accepted
+controlled final chain. It does not establish independent external
+replication, statistical significance, production readiness, or
+generalization to real networks.

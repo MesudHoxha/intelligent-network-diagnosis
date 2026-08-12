@@ -1,1 +1,1 @@
-"""Phase 8 evidence and thesis-claim scope utilities."""
+"""Phase 8 evidence, claim-scope, and reproducibility utilities."""

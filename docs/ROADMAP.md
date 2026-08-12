@@ -341,8 +341,13 @@ Status: In progress
   recalculation, new metric, and artifact mutation in P8-R0: absent
 - P8-R0 tests: 15/15; combined Phase 7 plus P8-R0 tests: 100/100;
   targeted Phase 6: 185/185; full regression: 528/528
-- P8-R1 immutable final evidence registry and private archive: next
-- P8-R2 thesis-ready final evaluation synthesis: planned
+- P8-R1 immutable final evidence registry and private archive: complete
+- D-092 accepts the P6-R5/P6-R6 final-chain registry, deterministic
+  external private archive, opaque estimator preservation, and tracked
+  receipt without recomputation
+- P8-R1 tests: 15/15; combined Phase 7 plus Phase 8: 115/115;
+  targeted Phase 6: 185/185; full regression: 543/543
+- P8-R2 thesis-ready final evaluation synthesis: next
 - P8-R3 Phase 8 closeout and Phase 9 handoff: planned
 
 ## Phase 9 — Thesis writing and defense
