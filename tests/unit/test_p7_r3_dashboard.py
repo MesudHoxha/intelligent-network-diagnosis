@@ -160,8 +160,8 @@ def test_dashboard_source_covers_loading_empty_error_and_retry_states() -> None:
         "setError",
         "is-empty",
         "data-retry",
-        "No accepted cases match the selected filters.",
-        "Artifact boundary unavailable",
+        "No evaluated cases match the selected filters.",
+        "Accepted results unavailable",
     ):
         assert token in javascript
     assert ".state-box.is-error" in stylesheet

@@ -324,6 +324,13 @@ Status: Complete
 - P7-R4 tests: 10/10; combined Phase 7 tests: 85/85; targeted Phase 6:
   185/185; full regression: 513/513
 - Phase 7 closeout and HANDOFF: completed
+- P7-UX1 presentation-only maintenance amendment: complete after P9-R0
+- D-096 improves terminology, information hierarchy, explanations, and
+  technical-detail disclosure without reopening the six-route API,
+  accepted P6-R6 outputs, evidence, hashes, or read-only behavior
+- P7-UX1 verification: Phase 7 94/94; Phase 7 through Phase 9 175/175;
+  targeted Phase 6 185/185; full regression 603/603
+- P7-UX1 local visual acceptance: pending three-view browser review
 
 ## Phase 8 — Experiments and evaluation
 Status: Complete
@@ -377,5 +384,5 @@ Status: In progress
   mentor formatting override remains guarded
 - P9-R0 tests: 21/21; Phase 7 through Phase 9: 166/166; targeted Phase
   6: 185/185; full regression: 594/594
-- P9-R1 Thesis Skeleton and Traceability Matrix: next
+- P9-R1 Thesis Skeleton and Traceability Matrix: paused by user request
 - Preserve exact P8 values, claim limitations, and blocked-claim scope

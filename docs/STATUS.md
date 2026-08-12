@@ -1380,9 +1380,37 @@ population-level or real-world generalization.
 - Targeted Phase 6 regression: 185/185 passed
 - Full regression suite: 594/594 passed
 
+## Latest P7-UX1 Dashboard information-architecture amendment
+
+- Decision: D-096, presentation-only amendment to D-089/D-090
+- Phase 7 scientific/runtime status: remains complete
+- Main reading order: result, explanation, evidence, methodology,
+  technical metadata
+- Overview labels: total evaluated, original, missing-evidence, and
+  supported-condition concepts use plain language
+- Comparison labels: Original cases, Missing evidence, and Overall
+- Metric explanations: Accuracy, Macro F1, Coverage, and Insufficient
+  evidence visible without external documentation
+- Case explorer: network problem/scenario/evidence and three diagnoses
+  lead; technical context filtering remains advanced
+- Case detail: evaluation-only ground truth, three correctness states,
+  closed-mapping explanations, ten human-labeled evidence checks, and
+  collapsed technical provenance
+- API routes/contracts, projections, source allowlist, accepted metrics,
+  predictions, ground truth, evidence, hashes, and read-only behavior:
+  unchanged
+- Phase 7 tests: 94/94 passed
+- Phase 7 through Phase 9 tests: 175/175 passed
+- Targeted Phase 6 regression: 185/185 passed
+- Full regression suite: 603/603 passed
+- Automated UX gate: complete
+- Local visual acceptance: pending Overview, Case Explorer, and Case
+  Detail review
+- P9-R1: remains paused by explicit user request
+
 ## Next milestone
 
-P9-R1 — Thesis Skeleton and Traceability Matrix.
+P9-R1 — Thesis Skeleton and Traceability Matrix (paused by user request).
 
 P9-R1 must create the University-aligned front matter, seven chapter
 headings and subsections, source-to-section map, claim-to-paragraph plan,

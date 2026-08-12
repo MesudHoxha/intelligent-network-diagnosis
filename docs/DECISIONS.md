@@ -2464,3 +2464,46 @@ D-095 verifies structure, source metadata, and citation controls. It does
 not complete the 30-source literature target, draft thesis prose, verify a
 future FIEK-specific format, or change any result or inference accepted in
 Phase 8.
+
+## D-096 — Amend Dashboard presentation without reopening the accepted result
+
+Decision: Accept P7-UX1 as a controlled presentation-only amendment to
+the static Dashboard accepted by D-089 and closed by D-090. Phase 7
+remains scientifically and operationally complete; P7-UX1 does not
+reopen the API, projection, experiment, evaluation, or evidence boundary.
+
+The four existing views and three existing static assets remain. Their
+information hierarchy changes from internal identifiers and methodology
+first to result, explanation, evidence, methodology, and technical
+metadata. User-facing labels replace internal terminology in the main
+view, while exact IDs, accepted reason strings, artifact paths, schema
+context, and SHA-256 values remain available under advanced or technical
+disclosures.
+
+Case correctness is displayed only by directly comparing one already
+returned accepted prediction with its already returned ground truth. The
+comparison is not aggregated, persisted, or accepted as a new metric.
+Plain-language explanations use a closed mapping over the prediction
+`reason` strings already present in the immutable projection. Feature
+descriptions explain the meaning and availability of accepted inputs but
+do not derive a new diagnosis or causal claim.
+
+The exact six same-origin `GET` routes, P7-R0 OpenAPI contract, P7-R1
+15-source allowlist, fail-closed integrity verification, loopback-only
+server, frozen P6-R6 outputs, read-only behavior, and all D-091/D-095
+claim limitations remain unchanged. No model is loaded; no method,
+experiment, metric, retraining, remediation, network command, or runtime
+artifact write occurs.
+
+Status: Implemented and automated-test-verified on 2026-08-12. Verification passed
+94/94 Phase 7 tests, 175/175 combined Phase 7 through Phase 9 tests,
+185/185 targeted Phase 6 tests, and 603/603 full regression tests. P9-R1
+remains paused by explicit user request. Final visual acceptance remains
+pending a local-browser review of Overview, Case Explorer, and Case Detail.
+
+Limitation:
+
+D-096 improves comprehension of accepted controlled results. It does not
+establish new explanation fidelity, live diagnosis, production usability,
+statistical superiority, new empirical performance, or real-world
+generalization.

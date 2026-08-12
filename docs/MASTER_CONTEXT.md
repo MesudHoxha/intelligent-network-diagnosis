@@ -1256,3 +1256,27 @@ No separate public FIEK chapter-format guide was located as of 2026-08-12.
 Any later documented FIEK or mentor formatting instruction may be applied
 without changing the evidence or claim boundary. P9-R1 is next: Thesis
 Skeleton and Traceability Matrix.
+
+P7-UX1 subsequently applies a controlled presentation-only amendment to
+the already closed Phase 7 Dashboard under D-096. The six-route API,
+four-view/three-asset runtime shape, 15 immutable projection sources,
+accepted P6-R6 values, evidence, predictions, ground truth, hashes, and
+limitations remain unchanged.
+
+The Dashboard now leads with the network problem, diagnostic result,
+plain-language explanation, and evidence before methodology and internal
+metadata. Original and missing-evidence scopes receive user-facing names;
+metric and feature meanings receive short explanations; `RESOLVED` is
+shown as `Diagnosis available`; and Case detail makes the evaluation-only
+ground truth explicit. Case/context IDs, accepted reason strings,
+artifact paths, selected candidate/policy IDs, and SHA-256 roots remain
+available under advanced or technical disclosures.
+
+Explanation text is a closed presentation mapping over accepted
+prediction reasons. It does not infer a new causal result from the feature
+vector. Per-case correctness is a non-persisted display comparison of the
+already returned prediction and ground truth, not a new aggregate metric.
+Verification passed 94/94 Phase 7, 175/175 Phase 7-through-9, 185/185
+targeted Phase 6, and 603/603 full regression tests. P9-R1 remains paused
+by explicit user request. Automated implementation acceptance is complete;
+final visual acceptance remains pending the local-browser screenshot review.
