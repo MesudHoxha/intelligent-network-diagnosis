@@ -1,0 +1,368 @@
+{
+  "accepted_evidence": [
+    {
+      "evidence_id": "E01",
+      "role": "pipeline_validation",
+      "sources": [
+        "docs/MASTER_CONTEXT.md",
+        "docs/STATUS.md"
+      ],
+      "stage": "P1",
+      "status": "ACCEPTED_DOCUMENTED",
+      "summary": "Controlled injection, passive evidence, diagnosis, evaluation, restoration, and baseline recovery were demonstrated end to end."
+    },
+    {
+      "evidence_id": "E02",
+      "role": "pilot_dataset",
+      "sources": [
+        "docs/HANDOFF_P2_R10.md",
+        "docs/DECISIONS.md"
+      ],
+      "stage": "P2",
+      "status": "ACCEPTED_DOCUMENTED",
+      "summary": "A 30-row, three-class, five-context controlled campaign and leakage-safe 18/6/6 split were accepted."
+    },
+    {
+      "evidence_id": "E03",
+      "role": "method_development",
+      "sources": [
+        "docs/HANDOFF_P3_R0.md",
+        "docs/HANDOFF_P4_R1.md",
+        "docs/HANDOFF_P5_R2.md"
+      ],
+      "stage": "P3-P5",
+      "status": "ACCEPTED_DOCUMENTED",
+      "summary": "Traditional, Machine Learning, and Hybrid methods were developed and compared under frozen partition roles before the extended evaluation."
+    },
+    {
+      "evidence_id": "E04",
+      "role": "final_clean_dataset",
+      "sources": [
+        "docs/HANDOFF_P6_R5.md",
+        "docs/DECISIONS.md"
+      ],
+      "stage": "P6-R5",
+      "status": "ACCEPTED_DOCUMENTED",
+      "summary": "The canonical final dataset contains 72 clean rows across six classes and six complete contexts, split 36/12/24 by whole context."
+    },
+    {
+      "evidence_id": "E05",
+      "role": "final_method_evaluation",
+      "sources": [
+        "plans/phase7/P7_R1_ACCEPTED_ARTIFACT_CATALOG_V1.json",
+        "docs/HANDOFF_P6_R6.md"
+      ],
+      "stage": "P6-R6",
+      "status": "HASH_VERIFIED_NOW",
+      "summary": "The single frozen report-only comparison covers Rule-based, Machine Learning, and Hybrid methods on 24 clean and 96 deterministic masked inputs."
+    },
+    {
+      "evidence_id": "E06",
+      "role": "local_presentation",
+      "sources": [
+        "docs/HANDOFF_P7_R4.md",
+        "docs/DECISIONS.md"
+      ],
+      "stage": "P7",
+      "status": "ACCEPTED_DOCUMENTED",
+      "summary": "A fail-closed local read-only API and Dashboard present the accepted final comparison without inference or artifact mutation."
+    }
+  ],
+  "blocked_claims": [
+    {
+      "claim_id": "B01",
+      "statement": "Hybrid statistically outperforms Machine Learning or Rule-based diagnosis."
+    },
+    {
+      "claim_id": "B02",
+      "statement": "The reported metrics generalize to real-world or unseen production networks."
+    },
+    {
+      "claim_id": "B03",
+      "statement": "The 96 deterministic masks are independent experimental samples."
+    },
+    {
+      "claim_id": "B04",
+      "statement": "The system diagnoses simultaneous multiple faults."
+    },
+    {
+      "claim_id": "B05",
+      "statement": "The system supports OSPF or arbitrary dynamic-routing failures."
+    },
+    {
+      "claim_id": "B06",
+      "statement": "The Dashboard performs live inference, remediation, or production network monitoring."
+    },
+    {
+      "claim_id": "B07",
+      "statement": "The accepted confidence values are statistically calibrated uncertainty estimates."
+    },
+    {
+      "claim_id": "B08",
+      "statement": "The accepted results establish population-level statistical significance."
+    }
+  ],
+  "claim_matrix": [
+    {
+      "claim_id": "C01",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E04"
+      ],
+      "limit": "The claim is limited to the implemented local Containerlab contexts and approved single-fault taxonomy.",
+      "statement": "The project implements a controlled-laboratory pipeline from fault injection and passive evidence collection through diagnosis, evaluation, restoration, and dataset construction.",
+      "status": "SUPPORTED_BOUNDED"
+    },
+    {
+      "claim_id": "C02",
+      "evidence_ids": [
+        "E04"
+      ],
+      "limit": "Rows are controlled laboratory observations, not a representative sample of production networks.",
+      "statement": "The final clean dataset covers six diagnostic classes in six complete contexts with a whole-context 36/12/24 train/validation/test split.",
+      "status": "SUPPORTED_BOUNDED"
+    },
+    {
+      "claim_id": "C03",
+      "evidence_ids": [
+        "E03",
+        "E05"
+      ],
+      "limit": "The comparison is descriptive and contains no statistical-superiority test.",
+      "statement": "Rule-based, Machine Learning, and Hybrid methods are compared under the same frozen report-only test protocol.",
+      "status": "SUPPORTED_BOUNDED"
+    },
+    {
+      "claim_id": "C04",
+      "evidence_ids": [
+        "E05"
+      ],
+      "limit": "Perfect clean-set results do not establish performance outside E02/E06 or beyond the controlled taxonomy.",
+      "statement": "All three accepted methods achieve complete fault-type classification on the 24 clean final test inputs.",
+      "status": "SUPPORTED_BOUNDED"
+    },
+    {
+      "claim_id": "C05",
+      "evidence_ids": [
+        "E05"
+      ],
+      "limit": "The 96 masked inputs are transformations of 24 clean inputs, not independent network experiments.",
+      "statement": "Under four deterministic missing-evidence masks, the strict Rule-based method fails closed while the accepted Machine Learning and Hybrid methods retain full coverage and non-zero aggregate accuracy.",
+      "status": "SUPPORTED_BOUNDED"
+    },
+    {
+      "claim_id": "C06",
+      "evidence_ids": [
+        "E03",
+        "E05"
+      ],
+      "limit": "Its final aggregate metrics equal the Machine Learning method; no Hybrid performance advantage is claimed.",
+      "statement": "The Hybrid method implements a rule-first, Machine-Learning-fallback decision policy with auditable provenance.",
+      "status": "SUPPORTED_BOUNDED"
+    },
+    {
+      "claim_id": "C07",
+      "evidence_ids": [
+        "E05",
+        "E06"
+      ],
+      "limit": "The interface is not a live diagnosis service, production NMS, or remote deployment.",
+      "statement": "Accepted evidence, predictions, comparisons, and limitations can be inspected through a local fail-closed read-only interface.",
+      "status": "SUPPORTED_BOUNDED"
+    },
+    {
+      "claim_id": "C08",
+      "evidence_ids": [
+        "E05"
+      ],
+      "limit": "This establishes protocol integrity for the accepted run, not independent external replication.",
+      "statement": "The final evaluation preserves train/validation/test roles, verifies the development freeze before test access, and records one report-only test attempt without refit or test-guided revision.",
+      "status": "SUPPORTED_BOUNDED"
+    }
+  ],
+  "decision": "NO_NEW_EXPERIMENT_REQUIRED",
+  "final_evaluation_snapshot": {
+    "catalog_binding": {
+      "artifact_count": 15,
+      "path": "plans/phase7/P7_R1_ACCEPTED_ARTIFACT_CATALOG_V1.json",
+      "sha256": "157dd268b6ab0c9a1d2ffa5907f5b3d173ce23087bbef98dd3a9e5b891cf41f9",
+      "size_bytes": 4385
+    },
+    "comparison_binding": {
+      "path": "reports/experiments/p6_r6_six_class_v1/cross_method_comparison.json",
+      "sha256": "ca1c15d04828c0ae61cacaf80a5ee6f49f64a9cf3ac151a4b4ccd2386987e570",
+      "size_bytes": 3385
+    },
+    "comparison_id": "p6_r6_rules_ml_hybrid_report_only_comparison_v1",
+    "comparison_type": "DESCRIPTIVE_ONLY",
+    "development_freeze_verified": true,
+    "method_gate_binding": {
+      "path": "data/metadata/p6_r6_six_class_method_gate_v1.json",
+      "sha256": "706905126e5e64f5fb5f7322aa003311ebcf51be5f15e57a2ea839b0b0ae96fc",
+      "size_bytes": 2796,
+      "test_evaluation_attempt_count": 1
+    },
+    "method_order": [
+      "rule_based_p6_v1",
+      "machine_learning_p6_v1",
+      "hybrid_p6_v1"
+    ],
+    "methods": {
+      "hybrid_p6_v1": {
+        "clean": {
+          "abstention_rate": 0.0,
+          "accuracy": 1.0,
+          "affected_prefix_rate": 1.0,
+          "coverage": 1.0,
+          "exact_diagnosis_rate": 1.0,
+          "insufficient_evidence_rate": 0.0,
+          "macro_f1": 1.0,
+          "sample_count": 24
+        },
+        "masked_overall": {
+          "abstention_rate": 0.0,
+          "accuracy": 0.7916666666666666,
+          "affected_prefix_rate": 1.0,
+          "coverage": 1.0,
+          "exact_diagnosis_rate": 0.7916666666666666,
+          "insufficient_evidence_rate": 0.0,
+          "macro_f1": 0.8104858104858105,
+          "sample_count": 96
+        },
+        "overall": {
+          "abstention_rate": 0.0,
+          "accuracy": 0.8333333333333334,
+          "affected_prefix_rate": 1.0,
+          "coverage": 1.0,
+          "exact_diagnosis_rate": 0.8333333333333334,
+          "insufficient_evidence_rate": 0.0,
+          "macro_f1": 0.8466718466718467,
+          "sample_count": 120
+        }
+      },
+      "machine_learning_p6_v1": {
+        "clean": {
+          "abstention_rate": 0.0,
+          "accuracy": 1.0,
+          "affected_prefix_rate": 1.0,
+          "coverage": 1.0,
+          "exact_diagnosis_rate": 1.0,
+          "insufficient_evidence_rate": 0.0,
+          "macro_f1": 1.0,
+          "sample_count": 24
+        },
+        "masked_overall": {
+          "abstention_rate": 0.0,
+          "accuracy": 0.7916666666666666,
+          "affected_prefix_rate": 1.0,
+          "coverage": 1.0,
+          "exact_diagnosis_rate": 0.7916666666666666,
+          "insufficient_evidence_rate": 0.0,
+          "macro_f1": 0.8104858104858105,
+          "sample_count": 96
+        },
+        "overall": {
+          "abstention_rate": 0.0,
+          "accuracy": 0.8333333333333334,
+          "affected_prefix_rate": 1.0,
+          "coverage": 1.0,
+          "exact_diagnosis_rate": 0.8333333333333334,
+          "insufficient_evidence_rate": 0.0,
+          "macro_f1": 0.8466718466718467,
+          "sample_count": 120
+        }
+      },
+      "rule_based_p6_v1": {
+        "clean": {
+          "abstention_rate": 0.0,
+          "accuracy": 1.0,
+          "affected_prefix_rate": 1.0,
+          "coverage": 1.0,
+          "exact_diagnosis_rate": 1.0,
+          "insufficient_evidence_rate": 0.0,
+          "macro_f1": 1.0,
+          "sample_count": 24
+        },
+        "masked_overall": {
+          "abstention_rate": 0.0,
+          "accuracy": 0.0,
+          "affected_prefix_rate": 0.0,
+          "coverage": 0.0,
+          "exact_diagnosis_rate": 0.0,
+          "insufficient_evidence_rate": 1.0,
+          "macro_f1": 0.0,
+          "sample_count": 96
+        },
+        "overall": {
+          "abstention_rate": 0.0,
+          "accuracy": 0.2,
+          "affected_prefix_rate": 0.2,
+          "coverage": 0.2,
+          "exact_diagnosis_rate": 0.2,
+          "insufficient_evidence_rate": 0.8,
+          "macro_f1": 0.3333333333333333,
+          "sample_count": 120
+        }
+      }
+    },
+    "model_refit_after_freeze": false,
+    "policy_reselection_after_freeze": false,
+    "scopes": [
+      "clean",
+      "masked_overall",
+      "overall"
+    ],
+    "statistical_superiority_test": "NOT_PERFORMED",
+    "test_guided_revision": false
+  },
+  "gap_assessment": [
+    {
+      "category": "REPRODUCIBILITY_ARCHIVE",
+      "empirical_runtime_required": false,
+      "gap_id": "G01",
+      "resolution_milestone": "P8-R1",
+      "summary": "Create an immutable registry and private archive for the accepted experimental chain; the 15-source Phase 7 bundle is presentation-complete but not a full experiment archive.",
+      "thesis_critical": true
+    },
+    {
+      "category": "THESIS_EVALUATION_SYNTHESIS",
+      "empirical_runtime_required": false,
+      "gap_id": "G02",
+      "resolution_milestone": "P8-R2",
+      "summary": "Produce thesis-ready tables, figures, and claim-to-evidence references from hash-verified accepted values without recomputation or new metrics.",
+      "thesis_critical": true
+    }
+  ],
+  "gate_id": "p8_r0_evidence_claim_scope_v1",
+  "next_milestone": "P8-R1",
+  "phase8_milestones": [
+    {
+      "milestone": "P8-R1",
+      "purpose": "Immutable final evidence registry and private reproducibility archive."
+    },
+    {
+      "milestone": "P8-R2",
+      "purpose": "Thesis-ready final evaluation synthesis from accepted metrics."
+    },
+    {
+      "milestone": "P8-R3",
+      "purpose": "Phase 8 acceptance closeout and handoff to thesis writing."
+    }
+  ],
+  "runtime_authorization": {
+    "accepted_artifact_mutation": false,
+    "containerlab": false,
+    "metric_recalculation": false,
+    "model_deserialization": false,
+    "model_refit": false,
+    "network_mutation": false,
+    "new_experiment": false,
+    "new_metric": false,
+    "policy_reselection": false,
+    "test_partition_reopening": false
+  },
+  "schema_version": 1,
+  "scope_basis": "ACCEPTED_CONTROLLED_LABORATORY_EVIDENCE",
+  "status": "FROZEN"
+}

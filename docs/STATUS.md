@@ -2,7 +2,7 @@
 
 ## Current phase
 
-Phase 7 — Read-only Dashboard/API implementation
+Phase 8 — Final evidence and evaluation handoff
 
 ## Implemented and tested
 
@@ -1261,17 +1261,42 @@ population-level or real-world generalization.
 - Full regression suite: 513/513 passed
 - Phase 7 closeout and HANDOFF: completed
 
+## Latest P8-R0 scope gate
+
+- Decision: D-091, `NO_NEW_EXPERIMENT_REQUIRED`
+- Scope outcome: no new experiment is required for the bounded thesis
+- P8-R0 status: completed; Phase 8 scope frozen
+- Evidence inventory: six accepted roles across P1-P7
+- Final numerical evidence: accepted P6-R6 report-only comparison
+- Supported thesis claims: eight, all bounded and limitation-bearing
+- Prohibited claims: eight, including Hybrid/statistical superiority,
+  real-world generalization, independent-mask interpretation, multiple
+  faults, OSPF, live production diagnosis, confidence calibration, and
+  population significance
+- Thesis-critical empirical runtime gaps: none
+- Remaining non-empirical gaps: private full-evidence archive and
+  thesis-ready evaluation synthesis
+- Runtime authorization: all ten mutation/experiment/recomputation flags
+  false
+- Containerlab, estimator deserialization, diagnosis execution, model
+  refit, policy reselection, test reopening, metric recalculation, new
+  metric, and accepted-artifact mutation: absent
+- P8-R0 tests: 15/15 passed
+- Combined Phase 7 plus P8-R0 tests: 100/100 passed
+- Targeted Phase 6 regression: 185/185 passed
+- Full regression suite: 528/528 passed
+
 ## Next milestone
 
-P8-R0 — Evidence-Completeness, Final-Evaluation, and Thesis-Claim Scope
-Gate.
+P8-R1 — Immutable Final Evidence Registry and Private Reproducibility
+Archive.
 
-P8-R0 must inventory the accepted experimental evidence, map it to
-defensible thesis claims, and decide whether any thesis-critical
-evaluation gap remains. It is a design and scope gate. It must not
-reopen the consumed P6-R6 E02/E06 report-only evaluation, execute a new
-experiment, change an accepted metric, or revise a frozen model/policy
-without a separate precommitted authorization.
+P8-R1 may inventory, hash, classify, and copy already accepted runtime
+artifacts into a private reproducibility archive. It must keep the
+tracked public source archive separate, preserve every accepted byte,
+avoid estimator deserialization, and fail closed on a missing or drifted
+accepted identity. It may not execute a new experiment or create a new
+empirical result.
 
 ## Important limitation
 

@@ -1,0 +1,277 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://intelligent-network-diagnosis.local/schemas/p8_evidence_claim_scope_v1.schema.json",
+  "title": "P8 Evidence and Thesis Claim Scope v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "gate_id",
+    "status",
+    "decision",
+    "scope_basis",
+    "accepted_evidence",
+    "final_evaluation_snapshot",
+    "claim_matrix",
+    "blocked_claims",
+    "gap_assessment",
+    "phase8_milestones",
+    "runtime_authorization",
+    "next_milestone"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "gate_id": {"const": "p8_r0_evidence_claim_scope_v1"},
+    "status": {"const": "FROZEN"},
+    "decision": {"const": "NO_NEW_EXPERIMENT_REQUIRED"},
+    "scope_basis": {"const": "ACCEPTED_CONTROLLED_LABORATORY_EVIDENCE"},
+    "accepted_evidence": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {"$ref": "#/$defs/evidence"}
+    },
+    "final_evaluation_snapshot": {"$ref": "#/$defs/finalEvaluation"},
+    "claim_matrix": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {"$ref": "#/$defs/supportedClaim"}
+    },
+    "blocked_claims": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {"$ref": "#/$defs/blockedClaim"}
+    },
+    "gap_assessment": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {"$ref": "#/$defs/gap"}
+    },
+    "phase8_milestones": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"$ref": "#/$defs/milestone"}
+    },
+    "runtime_authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "new_experiment",
+        "containerlab",
+        "network_mutation",
+        "accepted_artifact_mutation",
+        "model_deserialization",
+        "model_refit",
+        "policy_reselection",
+        "test_partition_reopening",
+        "metric_recalculation",
+        "new_metric"
+      ],
+      "properties": {
+        "new_experiment": {"const": false},
+        "containerlab": {"const": false},
+        "network_mutation": {"const": false},
+        "accepted_artifact_mutation": {"const": false},
+        "model_deserialization": {"const": false},
+        "model_refit": {"const": false},
+        "policy_reselection": {"const": false},
+        "test_partition_reopening": {"const": false},
+        "metric_recalculation": {"const": false},
+        "new_metric": {"const": false}
+      }
+    },
+    "next_milestone": {"const": "P8-R1"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_id", "stage", "role", "status", "sources", "summary"],
+      "properties": {
+        "evidence_id": {"type": "string", "pattern": "^E0[1-6]$"},
+        "stage": {"type": "string", "minLength": 2},
+        "role": {"type": "string", "minLength": 3},
+        "status": {"enum": ["ACCEPTED_DOCUMENTED", "HASH_VERIFIED_NOW"]},
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/relativePath"}
+        },
+        "summary": {"type": "string", "minLength": 20}
+      }
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["path", "sha256", "size_bytes"],
+      "properties": {
+        "path": {"$ref": "#/$defs/relativePath"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "size_bytes": {"type": "integer", "minimum": 1}
+      }
+    },
+    "metricScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sample_count",
+        "accuracy",
+        "macro_f1",
+        "exact_diagnosis_rate",
+        "affected_prefix_rate",
+        "coverage",
+        "abstention_rate",
+        "insufficient_evidence_rate"
+      ],
+      "properties": {
+        "sample_count": {"type": "integer", "minimum": 1},
+        "accuracy": {"type": "number", "minimum": 0, "maximum": 1},
+        "macro_f1": {"type": "number", "minimum": 0, "maximum": 1},
+        "exact_diagnosis_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "affected_prefix_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "coverage": {"type": "number", "minimum": 0, "maximum": 1},
+        "abstention_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "insufficient_evidence_rate": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "methodScopes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["clean", "masked_overall", "overall"],
+      "properties": {
+        "clean": {"$ref": "#/$defs/metricScope"},
+        "masked_overall": {"$ref": "#/$defs/metricScope"},
+        "overall": {"$ref": "#/$defs/metricScope"}
+      }
+    },
+    "finalEvaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "comparison_id",
+        "comparison_type",
+        "method_order",
+        "scopes",
+        "methods",
+        "catalog_binding",
+        "comparison_binding",
+        "method_gate_binding",
+        "development_freeze_verified",
+        "model_refit_after_freeze",
+        "policy_reselection_after_freeze",
+        "test_guided_revision",
+        "statistical_superiority_test"
+      ],
+      "properties": {
+        "comparison_id": {"const": "p6_r6_rules_ml_hybrid_report_only_comparison_v1"},
+        "comparison_type": {"const": "DESCRIPTIVE_ONLY"},
+        "method_order": {
+          "const": ["rule_based_p6_v1", "machine_learning_p6_v1", "hybrid_p6_v1"]
+        },
+        "scopes": {"const": ["clean", "masked_overall", "overall"]},
+        "methods": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["rule_based_p6_v1", "machine_learning_p6_v1", "hybrid_p6_v1"],
+          "properties": {
+            "rule_based_p6_v1": {"$ref": "#/$defs/methodScopes"},
+            "machine_learning_p6_v1": {"$ref": "#/$defs/methodScopes"},
+            "hybrid_p6_v1": {"$ref": "#/$defs/methodScopes"}
+          }
+        },
+        "catalog_binding": {
+          "allOf": [
+            {"$ref": "#/$defs/binding"},
+            {
+              "type": "object",
+              "required": ["artifact_count"],
+              "properties": {"artifact_count": {"const": 15}}
+            }
+          ]
+        },
+        "comparison_binding": {"$ref": "#/$defs/binding"},
+        "method_gate_binding": {
+          "allOf": [
+            {"$ref": "#/$defs/binding"},
+            {
+              "type": "object",
+              "required": ["test_evaluation_attempt_count"],
+              "properties": {"test_evaluation_attempt_count": {"const": 1}}
+            }
+          ]
+        },
+        "development_freeze_verified": {"const": true},
+        "model_refit_after_freeze": {"const": false},
+        "policy_reselection_after_freeze": {"const": false},
+        "test_guided_revision": {"const": false},
+        "statistical_superiority_test": {"const": "NOT_PERFORMED"}
+      }
+    },
+    "supportedClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim_id", "status", "evidence_ids", "statement", "limit"],
+      "properties": {
+        "claim_id": {"type": "string", "pattern": "^C0[1-8]$"},
+        "status": {"const": "SUPPORTED_BOUNDED"},
+        "evidence_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^E0[1-6]$"}
+        },
+        "statement": {"type": "string", "minLength": 30},
+        "limit": {"type": "string", "minLength": 20}
+      }
+    },
+    "blockedClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim_id", "statement"],
+      "properties": {
+        "claim_id": {"type": "string", "pattern": "^B0[1-8]$"},
+        "statement": {"type": "string", "minLength": 20}
+      }
+    },
+    "gap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gap_id",
+        "category",
+        "thesis_critical",
+        "empirical_runtime_required",
+        "resolution_milestone",
+        "summary"
+      ],
+      "properties": {
+        "gap_id": {"enum": ["G01", "G02"]},
+        "category": {"enum": ["REPRODUCIBILITY_ARCHIVE", "THESIS_EVALUATION_SYNTHESIS"]},
+        "thesis_critical": {"const": true},
+        "empirical_runtime_required": {"const": false},
+        "resolution_milestone": {"enum": ["P8-R1", "P8-R2"]},
+        "summary": {"type": "string", "minLength": 30}
+      }
+    },
+    "milestone": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["milestone", "purpose"],
+      "properties": {
+        "milestone": {"enum": ["P8-R1", "P8-R2", "P8-R3"]},
+        "purpose": {"type": "string", "minLength": 20}
+      }
+    }
+  }
+}

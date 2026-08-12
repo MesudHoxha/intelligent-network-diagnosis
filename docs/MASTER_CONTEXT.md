@@ -1124,3 +1124,34 @@ The 15 source hashes remained unchanged. Phase 7 is complete. P8-R0 is
 next and must first audit evidence completeness and freeze the final
 evaluation/thesis-claim scope; it may not implicitly reopen the consumed
 P6-R6 report-only evaluation or create a new experiment.
+
+P8-R0 performs that audit under D-091. It distinguishes developmental
+pipeline evidence from the final P6-R6 numerical evaluation, then loads
+the Git-tracked P7-R1 catalog and all 15 accepted sources fail-closed.
+The generated P8 scope manifest binds the catalog, comparison, and
+method gate and preserves the exact accepted clean, masked, and overall
+values without executing a method or recalculating a metric.
+
+The evidence is sufficient for eight bounded thesis claims: the
+controlled end-to-end pipeline; the six-class/six-context final dataset;
+one frozen three-method comparison; complete clean fault-type
+classification; the bounded missing-evidence behavior; the operational
+rule-first/ML-fallback Hybrid policy; the local read-only presentation;
+and the no-refit/no-test-guided-revision protocol boundary. Eight
+opposite expansions remain prohibited, including Hybrid or statistical
+superiority, real-world generalization, independent-sample treatment of
+the 96 masks, multiple faults, OSPF, live production diagnosis,
+calibrated-confidence, and population-significance claims.
+
+No thesis-critical empirical runtime gap remains, so P8-R0 records
+`NO_NEW_EXPERIMENT_REQUIRED`. The only thesis-critical gaps are the
+private full-evidence reproducibility archive and the thesis-ready final
+evaluation synthesis. P8-R1 must address the archive without modifying
+or deserializing accepted artifacts; P8-R2 may format accepted values
+into tables and figures without recomputation or new metrics; P8-R3
+then closes Phase 8 and hands off to Phase 9.
+
+P8-R0 verification passed 15/15 targeted tests, 100/100 combined Phase
+7 plus P8-R0 tests, 185/185 targeted Phase 6 tests, and 528/528 full
+regression tests. All 15 accepted projection sources retained their
+hashes; the selected estimator was not read or deserialized.

@@ -326,14 +326,24 @@ Status: Complete
 - Phase 7 closeout and HANDOFF: completed
 
 ## Phase 8 — Experiments and evaluation
-Status: Not started
+Status: In progress
 
-- Next milestone: P8-R0 evidence-completeness, final-evaluation, and
-  thesis-claim scope gate
-- P8-R0 must inventory accepted evidence and identify only defensible
-  thesis-critical gaps before proposing runtime
-- New experiments and reopening the consumed P6-R6 E02/E06 report-only
-  evaluation are not implicitly authorized by the Phase 7 closeout
+- P8-R0 evidence and thesis-claim scope gate: complete
+- D-091 finds no thesis-critical empirical runtime gap and records
+  `NO_NEW_EXPERIMENT_REQUIRED`
+- Accepted evidence inventory: six roles spanning P1-P7, with P6-R6
+  retained as the final numerical evaluation
+- Thesis-claim matrix: eight bounded supported claims and eight explicit
+  prohibited claims
+- Remaining gaps: immutable full evidence archive and thesis-ready
+  evaluation synthesis; neither requires experimental runtime
+- New experiment, E02/E06 reopening, refit, policy reselection, metric
+  recalculation, new metric, and artifact mutation in P8-R0: absent
+- P8-R0 tests: 15/15; combined Phase 7 plus P8-R0 tests: 100/100;
+  targeted Phase 6: 185/185; full regression: 528/528
+- P8-R1 immutable final evidence registry and private archive: next
+- P8-R2 thesis-ready final evaluation synthesis: planned
+- P8-R3 Phase 8 closeout and Phase 9 handoff: planned
 
 ## Phase 9 — Thesis writing and defense
 Status: Not started

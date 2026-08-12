@@ -2256,3 +2256,56 @@ accepted presentation sources. It does not establish production
 readiness, remote-user security, real-time diagnosis, statistical
 superiority, new empirical evidence, or generalization beyond the
 controlled laboratory.
+
+## D-091 — Freeze the final evidence and thesis-claim scope without a new experiment
+
+Decision: Accept the existing P1-P7 evidence as sufficient for the
+bounded bachelor-level research question and record
+`NO_NEW_EXPERIMENT_REQUIRED` for P8-R0.
+
+P6-R6 remains the final numerical evaluation. Its three methods share
+the same frozen E02/E06 report-only boundary, 24 clean inputs, 96
+deterministic missing-evidence transformations, and clean, masked, and
+overall metric scopes. The P7-R1 catalog and its 15 sources are loaded
+fail-closed to generate the machine-readable P8-R0 snapshot. The method
+gate records one test attempt, an independently verified development
+freeze, no model refit, no policy reselection, no test-guided revision,
+and no statistical-superiority test.
+
+The final thesis may make only the eight bounded claims frozen in
+`plans/phase8/P8_R0_EVIDENCE_CLAIM_SCOPE_V1.json`: implemented
+controlled pipeline; six-class/six-context final dataset; comparable
+Rule-based/ML/Hybrid protocol; complete clean fault-type classification;
+bounded deterministic missing-evidence behavior; operational
+rule-first/ML-fallback Hybrid policy; local read-only presentation; and
+preserved freeze/test integrity. Every claim must retain its recorded
+limitation.
+
+The thesis may not claim Hybrid or statistical superiority, real-world
+generalization, independence of the 96 masks, simultaneous multiple-
+fault diagnosis, OSPF coverage, live production diagnosis/remediation,
+calibrated confidence, or population-level statistical significance.
+In particular, the accepted Hybrid aggregate result equals ML and
+supports no numerical Hybrid advantage.
+
+The remaining thesis-critical gaps are not empirical: the 15-source
+Phase 7 presentation bundle must be extended into a private immutable
+registry/archive of the accepted experimental chain, and the accepted
+metrics must be formatted into thesis-ready tables, figures, and
+claim-to-evidence references. P8-R1 and P8-R2 address those gaps;
+P8-R3 closes Phase 8 and hands off to Phase 9.
+
+Status: Accepted and implemented on 2026-08-11. P8-R0 performs no
+Containerlab execution, network mutation, model deserialization, model
+fit, policy selection, E02/E06 reopening, diagnosis, metric
+recalculation, new metric, or accepted-artifact mutation. Verification
+passed 15/15 P8-R0 tests, 100/100 combined Phase 7 plus P8-R0 tests,
+185/185 targeted Phase 6 tests, and 528/528 full regression tests. The
+15 accepted projection sources remained unchanged.
+
+Limitation:
+
+D-091 establishes evidence completeness only for the frozen controlled-
+laboratory bachelor scope. It does not turn the accepted descriptive
+comparison into independent replication, statistical inference,
+production readiness, or external validity.
