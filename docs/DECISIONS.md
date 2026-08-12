@@ -2430,3 +2430,37 @@ D-094 establishes a reproducible internal writing boundary for the
 accepted controlled project. It does not itself verify external academic
 citations, create independent replication, establish statistical
 significance, production readiness, or real-world generalization.
+
+## D-095 — Accept the thesis structure and source/citation gate
+
+Decision: Accept P9-R0 as the controlled entry boundary for thesis
+drafting. The seven Phase 8 chapter roles are aligned with the verified
+2026 University of Prishtina Bachelor thesis guide and frozen as a
+seven-chapter, 8,100–10,000-word body structure.
+
+The official guide establishes the empirical-thesis elements, 8,000–10,000
+word and 30–50 page orientation, abstract and keyword limits, APA citation
+family, originality and AI-use declaration, and a recommendation of at
+least 30 credible and relevant scientific references. No separate public
+FIEK structure guide was located on 2026-08-12. A later documented FIEK or
+mentor instruction may override labels and final formatting, but not the
+accepted empirical values, claims, or limitations.
+
+The primary research question compares Rule-based, Machine Learning, and
+Hybrid behavior without presupposing numerical superiority. The verified
+source seed contains 16 institutional, academic, standards, and technical
+records, including nine scientific publications. It is not the final
+bibliography. Every later source requires verified metadata, a chapter
+role, and a bounded use; search snippets and generative AI are not academic
+authorities.
+
+Status: Accepted and implemented on 2026-08-12. P9-R1 is next and may
+create the document skeleton and paragraph-level traceability only after
+the P9-R0 automated gate passes.
+
+Limitation:
+
+D-095 verifies structure, source metadata, and citation controls. It does
+not complete the 30-source literature target, draft thesis prose, verify a
+future FIEK-specific format, or change any result or inference accepted in
+Phase 8.

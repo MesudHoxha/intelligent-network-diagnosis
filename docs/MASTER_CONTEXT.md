@@ -1230,3 +1230,29 @@ Verification passed 15/15 targeted P8-R3 tests, 145/145 combined Phase
 7 plus Phase 8 tests, 185/185 targeted Phase 6 tests, and 573/573 full
 regression tests. Phase 8 is complete. P9-R0 is next: Thesis Structure
 and Source/Citation Gate.
+
+P9-R0 establishes the thesis-writing gate under D-095. It binds the exact
+public P8-R3 checkpoint and aligns the seven frozen chapter roles with the
+verified 2026 University of Prishtina Bachelor thesis guide. The accepted
+body outline contains seven chapters and targets 8,100–10,000 words while
+preserving the guide's 8,000–10,000 word, 30–50 page, abstract, keyword,
+APA, originality, and AI-use requirements.
+
+The primary research question compares Rule-based, Machine Learning, and
+Hybrid diagnosis without presupposing Hybrid superiority. Five total
+questions map to the accepted C01–C08 boundary. Hybrid remains
+operationally distinct but numerically equal to Machine Learning, and the
+96 masks remain transformations rather than independent experiments.
+
+The source gate contains 16 verified records: nine scientific
+publications, two Internet standards, two institutional records, and three
+official technical sources. This is a core seed, not the final
+bibliography. The final thesis should meet the University recommendation
+of at least 30 credible and relevant scientific references. Every source
+must have verified metadata, a chapter role, and a bounded use; literature
+cannot enlarge internal empirical claims.
+
+No separate public FIEK chapter-format guide was located as of 2026-08-12.
+Any later documented FIEK or mentor formatting instruction may be applied
+without changing the evidence or claim boundary. P9-R1 is next: Thesis
+Skeleton and Traceability Matrix.

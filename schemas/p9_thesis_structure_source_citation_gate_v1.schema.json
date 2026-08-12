@@ -1,0 +1,797 @@
+{
+  "$id": "https://example.invalid/schemas/p9_thesis_structure_source_citation_gate_v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "accepted_phase8_boundary": {
+      "additionalProperties": false,
+      "properties": {
+        "blocked_claim_ids": {
+          "$ref": "#/$defs/blockedClaimIds"
+        },
+        "hybrid_interpretation": {
+          "const": "OPERATIONALLY_DISTINCT_NUMERICALLY_EQUAL_TO_ML"
+        },
+        "masked_inputs": {
+          "const": "TRANSFORMATIONS_NOT_INDEPENDENT_EXPERIMENTS"
+        },
+        "path": {
+          "const": "plans/phase8/P8_R3_PHASE8_CLOSEOUT_V1.json"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "status": {
+          "const": "PHASE8_ACCEPTED_CLOSED"
+        },
+        "supported_claim_ids": {
+          "$ref": "#/$defs/supportedClaimIds"
+        },
+        "writing_constraints": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 6,
+          "minItems": 6,
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "size_bytes",
+        "status",
+        "supported_claim_ids",
+        "blocked_claim_ids",
+        "writing_constraints",
+        "hybrid_interpretation",
+        "masked_inputs"
+      ],
+      "type": "object"
+    },
+    "chapter_structure": {
+      "items": {
+        "$ref": "#/$defs/chapter"
+      },
+      "maxItems": 7,
+      "minItems": 7,
+      "type": "array"
+    },
+    "citation_and_asset_policy": {
+      "additionalProperties": false,
+      "properties": {
+        "direct_quote_requires_page_or_section": {
+          "const": true
+        },
+        "doi_form": {
+          "const": "https://doi.org/{doi}"
+        },
+        "edition_guard": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "external_asset_rule": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "figure_numbering": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "in_text_style": {
+          "const": "APA_AUTHOR_DATE"
+        },
+        "internal_asset_rule": {
+          "const": "P8_R2_VALUES_MUST_BE_COPIED_NOT_RECOMPUTED"
+        },
+        "reference_list_contains_only_cited_sources": {
+          "const": true
+        },
+        "reference_list_order": {
+          "const": "ALPHABETICAL_BY_FIRST_AUTHOR"
+        },
+        "table_numbering": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "in_text_style",
+        "direct_quote_requires_page_or_section",
+        "reference_list_order",
+        "reference_list_contains_only_cited_sources",
+        "doi_form",
+        "edition_guard",
+        "table_numbering",
+        "figure_numbering",
+        "internal_asset_rule",
+        "external_asset_rule"
+      ],
+      "type": "object"
+    },
+    "claim_boundary": {
+      "additionalProperties": false,
+      "properties": {
+        "blocked_claims": {
+          "items": {
+            "$ref": "#/$defs/blockedClaim"
+          },
+          "maxItems": 8,
+          "minItems": 8,
+          "type": "array"
+        },
+        "supported_claims": {
+          "items": {
+            "$ref": "#/$defs/supportedClaim"
+          },
+          "maxItems": 8,
+          "minItems": 8,
+          "type": "array"
+        }
+      },
+      "required": [
+        "supported_claims",
+        "blocked_claims"
+      ],
+      "type": "object"
+    },
+    "drafting_authorization": {
+      "additionalProperties": false,
+      "properties": {
+        "bounded_paraphrase_of_verified_sources": {
+          "const": true
+        },
+        "chapter_skeleton": {
+          "const": true
+        },
+        "claim_broadening": {
+          "const": false
+        },
+        "copy_exact_accepted_values": {
+          "const": true
+        },
+        "estimator_deserialization": {
+          "const": false
+        },
+        "format_accepted_tables_and_figures": {
+          "const": true
+        },
+        "generative_ai_as_academic_source": {
+          "const": false
+        },
+        "hybrid_superiority_claim": {
+          "const": false
+        },
+        "metric_recalculation": {
+          "const": false
+        },
+        "new_experiment": {
+          "const": false
+        },
+        "new_metric": {
+          "const": false
+        },
+        "search_snippet_as_citation": {
+          "const": false
+        },
+        "test_partition_access": {
+          "const": false
+        }
+      },
+      "required": [
+        "chapter_skeleton",
+        "bounded_paraphrase_of_verified_sources",
+        "copy_exact_accepted_values",
+        "format_accepted_tables_and_figures",
+        "new_experiment",
+        "test_partition_access",
+        "estimator_deserialization",
+        "metric_recalculation",
+        "new_metric",
+        "claim_broadening",
+        "hybrid_superiority_claim",
+        "search_snippet_as_citation",
+        "generative_ai_as_academic_source"
+      ],
+      "type": "object"
+    },
+    "gate_id": {
+      "const": "p9_r0_thesis_structure_source_citation_gate_v1"
+    },
+    "next_milestone": {
+      "const": "P9-R1_THESIS_SKELETON_AND_TRACEABILITY_MATRIX"
+    },
+    "research_questions": {
+      "items": {
+        "$ref": "#/$defs/researchQuestion"
+      },
+      "maxItems": 5,
+      "minItems": 5,
+      "type": "array"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "source_checkpoint": {
+      "additionalProperties": false,
+      "properties": {
+        "branch": {
+          "const": "main"
+        },
+        "commit": {
+          "pattern": "^[0-9a-f]{40}$",
+          "type": "string"
+        },
+        "commit_short": {
+          "pattern": "^[0-9a-f]{7}$",
+          "type": "string"
+        },
+        "repository": {
+          "const": "MesudHoxha/intelligent-network-diagnosis"
+        }
+      },
+      "required": [
+        "branch",
+        "commit",
+        "commit_short",
+        "repository"
+      ],
+      "type": "object"
+    },
+    "source_gate": {
+      "additionalProperties": false,
+      "properties": {
+        "admission_rules": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 6,
+          "minItems": 6,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "final_scientific_reference_target_minimum": {
+          "const": 30
+        },
+        "inventory_is_final_bibliography": {
+          "const": false
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/source"
+          },
+          "maxItems": 16,
+          "minItems": 16,
+          "type": "array"
+        },
+        "verified_scientific_seed_count": {
+          "const": 9
+        },
+        "verified_source_count": {
+          "const": 16
+        }
+      },
+      "required": [
+        "verified_source_count",
+        "verified_scientific_seed_count",
+        "final_scientific_reference_target_minimum",
+        "inventory_is_final_bibliography",
+        "sources",
+        "admission_rules"
+      ],
+      "type": "object"
+    },
+    "status": {
+      "const": "ACCEPTED_WITH_FIEK_OVERRIDE_GUARD"
+    },
+    "traceability_assets": {
+      "items": {
+        "$ref": "#/$defs/asset"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "university_alignment": {
+      "additionalProperties": false,
+      "properties": {
+        "abstract_max_words": {
+          "const": 350
+        },
+        "ai_use_disclosure_required": {
+          "const": true
+        },
+        "authority_source_id": {
+          "const": "INST01"
+        },
+        "body_word_range": {
+          "$ref": "#/$defs/range8000to10000"
+        },
+        "citation_family": {
+          "const": "APA_AUTHOR_DATE"
+        },
+        "fiek_or_mentor_override_policy": {
+          "const": "APPLY_ONLY_IF_DOCUMENTED_AND_DO_NOT_CHANGE_EMPIRICAL_BOUNDARY"
+        },
+        "fiek_specific_public_guide_status": {
+          "const": "NOT_LOCATED_AS_OF_2026_08_12"
+        },
+        "guide_status": {
+          "const": "UNIVERSITY_WIDE_2026_GUIDE_VERIFIED"
+        },
+        "keyword_range": {
+          "$ref": "#/$defs/range3to5"
+        },
+        "page_range_excluding_references_and_appendices": {
+          "$ref": "#/$defs/range30to50"
+        },
+        "required_back_matter": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 2,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "required_front_matter": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 5,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "scientific_reference_recommendation_minimum": {
+          "const": 30
+        },
+        "thesis_type": {
+          "const": "EMPIRICAL_ENGINEERING_PROJECT"
+        }
+      },
+      "required": [
+        "authority_source_id",
+        "guide_status",
+        "thesis_type",
+        "body_word_range",
+        "page_range_excluding_references_and_appendices",
+        "abstract_max_words",
+        "keyword_range",
+        "scientific_reference_recommendation_minimum",
+        "citation_family",
+        "required_front_matter",
+        "required_back_matter",
+        "ai_use_disclosure_required",
+        "fiek_specific_public_guide_status",
+        "fiek_or_mentor_override_policy"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "gate_id",
+    "schema_version",
+    "status",
+    "source_checkpoint",
+    "accepted_phase8_boundary",
+    "university_alignment",
+    "research_questions",
+    "chapter_structure",
+    "source_gate",
+    "citation_and_asset_policy",
+    "traceability_assets",
+    "claim_boundary",
+    "drafting_authorization",
+    "next_milestone"
+  ],
+  "title": "P9-R0 Thesis Structure and Source/Citation Gate v1",
+  "type": "object",
+  "$defs": {
+    "asset": {
+      "additionalProperties": false,
+      "properties": {
+        "asset_id": {
+          "enum": [
+            "P9T01",
+            "P9T02"
+          ]
+        },
+        "kind": {
+          "enum": [
+            "CSV_CHAPTER_STRUCTURE",
+            "CSV_VERIFIED_SOURCE_SEED"
+          ]
+        },
+        "path": {
+          "pattern": "^docs/thesis_assets/phase9/[A-Za-z0-9_]+\\.csv$",
+          "type": "string"
+        },
+        "row_count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "asset_id",
+        "path",
+        "kind",
+        "row_count",
+        "size_bytes",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "blockedClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "claim_id": {
+          "pattern": "^B0[1-8]$",
+          "type": "string"
+        },
+        "statement": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "claim_id",
+        "statement"
+      ],
+      "type": "object"
+    },
+    "blockedClaimIds": {
+      "items": {
+        "pattern": "^B0[1-8]$",
+        "type": "string"
+      },
+      "maxItems": 8,
+      "minItems": 8,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "chapter": {
+      "additionalProperties": false,
+      "properties": {
+        "asset_ids": {
+          "items": {
+            "pattern": "^(T0[1-3]|F0[1-2])$",
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "chapter_id": {
+          "pattern": "^CH0[1-7]$",
+          "type": "string"
+        },
+        "claim_ids": {
+          "items": {
+            "pattern": "^C0[1-8]$",
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "evidence_ids": {
+          "items": {
+            "pattern": "^E0[1-6]$",
+            "type": "string"
+          },
+          "minItems": 2,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "prohibited_content": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 2,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "required_content": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 4,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "research_question_ids": {
+          "items": {
+            "pattern": "^RQ[0-4]$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "role": {
+          "enum": [
+            "INTRODUCTION",
+            "BACKGROUND_AND_RELATED_WORK",
+            "METHODOLOGY",
+            "ARCHITECTURE_AND_IMPLEMENTATION",
+            "RESULTS",
+            "DISCUSSION_AND_VALIDITY",
+            "CONCLUSIONS"
+          ]
+        },
+        "source_ids": {
+          "items": {
+            "pattern": "^(INST|ACAD|STD|TECH)[0-9]{2}$",
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "title_sq": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "word_target_max": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "word_target_min": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "chapter_id",
+        "title_sq",
+        "role",
+        "word_target_min",
+        "word_target_max",
+        "evidence_ids",
+        "claim_ids",
+        "research_question_ids",
+        "source_ids",
+        "asset_ids",
+        "required_content",
+        "prohibited_content"
+      ],
+      "type": "object"
+    },
+    "range30to50": {
+      "additionalProperties": false,
+      "properties": {
+        "maximum": {
+          "const": 50
+        },
+        "minimum": {
+          "const": 30
+        }
+      },
+      "required": [
+        "minimum",
+        "maximum"
+      ],
+      "type": "object"
+    },
+    "range3to5": {
+      "additionalProperties": false,
+      "properties": {
+        "maximum": {
+          "const": 5
+        },
+        "minimum": {
+          "const": 3
+        }
+      },
+      "required": [
+        "minimum",
+        "maximum"
+      ],
+      "type": "object"
+    },
+    "range8000to10000": {
+      "additionalProperties": false,
+      "properties": {
+        "maximum": {
+          "const": 10000
+        },
+        "minimum": {
+          "const": 8000
+        }
+      },
+      "required": [
+        "minimum",
+        "maximum"
+      ],
+      "type": "object"
+    },
+    "researchQuestion": {
+      "additionalProperties": false,
+      "properties": {
+        "claim_ids": {
+          "items": {
+            "pattern": "^C0[1-8]$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "kind": {
+          "enum": [
+            "PRIMARY",
+            "SECONDARY"
+          ]
+        },
+        "question_id": {
+          "pattern": "^RQ[0-4]$",
+          "type": "string"
+        },
+        "text_sq": {
+          "minLength": 20,
+          "type": "string"
+        }
+      },
+      "required": [
+        "question_id",
+        "kind",
+        "text_sq",
+        "claim_ids"
+      ],
+      "type": "object"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "source": {
+      "additionalProperties": false,
+      "properties": {
+        "authors": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "category": {
+          "enum": [
+            "INSTITUTIONAL_GUIDE",
+            "INSTITUTIONAL_FORM",
+            "ACADEMIC_ARTICLE",
+            "ACADEMIC_BOOK_CHAPTER",
+            "INTERNET_STANDARD",
+            "OFFICIAL_TECHNICAL_DOCUMENTATION",
+            "OFFICIAL_TECHNICAL_SPECIFICATION"
+          ]
+        },
+        "chapter_ids": {
+          "items": {
+            "pattern": "^CH0[1-7]$",
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "counts_toward_scientific_minimum": {
+          "type": "boolean"
+        },
+        "persistent_id": {
+          "minLength": 3,
+          "type": "string"
+        },
+        "source_id": {
+          "pattern": "^(INST|ACAD|STD|TECH)[0-9]{2}$",
+          "type": "string"
+        },
+        "title": {
+          "minLength": 3,
+          "type": "string"
+        },
+        "use_boundary": {
+          "minLength": 20,
+          "type": "string"
+        },
+        "venue": {
+          "minLength": 2,
+          "type": "string"
+        },
+        "verification_level": {
+          "minLength": 3,
+          "type": "string"
+        },
+        "verification_url": {
+          "format": "uri",
+          "pattern": "^https://",
+          "type": "string"
+        },
+        "verified_on": {
+          "const": "2026-08-12"
+        },
+        "year": {
+          "maximum": 2026,
+          "minimum": 1900,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "source_id",
+        "category",
+        "authors",
+        "year",
+        "title",
+        "venue",
+        "persistent_id",
+        "verification_url",
+        "verification_level",
+        "verified_on",
+        "chapter_ids",
+        "use_boundary",
+        "counts_toward_scientific_minimum"
+      ],
+      "type": "object"
+    },
+    "supportedClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "claim_id": {
+          "pattern": "^C0[1-8]$",
+          "type": "string"
+        },
+        "evidence_ids": {
+          "items": {
+            "pattern": "^E0[1-6]$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "limit": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "statement": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "status": {
+          "const": "SUPPORTED_BOUNDED"
+        }
+      },
+      "required": [
+        "claim_id",
+        "evidence_ids",
+        "limit",
+        "statement",
+        "status"
+      ],
+      "type": "object"
+    },
+    "supportedClaimIds": {
+      "items": {
+        "pattern": "^C0[1-8]$",
+        "type": "string"
+      },
+      "maxItems": 8,
+      "minItems": 8,
+      "type": "array",
+      "uniqueItems": true
+    }
+  }
+}

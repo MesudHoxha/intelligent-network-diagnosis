@@ -1,0 +1,953 @@
+{
+  "accepted_phase8_boundary": {
+    "blocked_claim_ids": [
+      "B01",
+      "B02",
+      "B03",
+      "B04",
+      "B05",
+      "B06",
+      "B07",
+      "B08"
+    ],
+    "hybrid_interpretation": "OPERATIONALLY_DISTINCT_NUMERICALLY_EQUAL_TO_ML",
+    "masked_inputs": "TRANSFORMATIONS_NOT_INDEPENDENT_EXPERIMENTS",
+    "path": "plans/phase8/P8_R3_PHASE8_CLOSEOUT_V1.json",
+    "sha256": "2ca3d5f24ff9d3add6f77c0a80ea9408a252e665ddf05fa6703a0f50c938b392",
+    "size_bytes": 6349,
+    "status": "PHASE8_ACCEPTED_CLOSED",
+    "supported_claim_ids": [
+      "C01",
+      "C02",
+      "C03",
+      "C04",
+      "C05",
+      "C06",
+      "C07",
+      "C08"
+    ],
+    "writing_constraints": [
+      "PRESERVE_EXACT_ACCEPTED_VALUES",
+      "CITE_EACH_SUPPORTED_CLAIM_WITH_ITS_LIMIT",
+      "KEEP_ALL_BLOCKED_CLAIMS_PROHIBITED",
+      "DISTINGUISH_IMPLEMENTED_TESTED_AND_PROPOSED_WORK",
+      "DO_NOT_TREAT_MASKS_AS_INDEPENDENT_EXPERIMENTS",
+      "DO_NOT_CLAIM_HYBRID_OR_STATISTICAL_SUPERIORITY"
+    ]
+  },
+  "chapter_structure": [
+    {
+      "asset_ids": [],
+      "chapter_id": "CH01",
+      "claim_ids": [
+        "C01",
+        "C03"
+      ],
+      "evidence_ids": [
+        "E01",
+        "E04",
+        "E05"
+      ],
+      "prohibited_content": [
+        "presupposed_hybrid_superiority",
+        "real_world_generalization"
+      ],
+      "required_content": [
+        "problem_and_motivation",
+        "bounded_research_question",
+        "objectives_and_contributions",
+        "scope_and_thesis_structure"
+      ],
+      "research_question_ids": [
+        "RQ0",
+        "RQ1"
+      ],
+      "role": "INTRODUCTION",
+      "source_ids": [
+        "INST01",
+        "ACAD01",
+        "ACAD02",
+        "ACAD03"
+      ],
+      "title_sq": "Hyrje",
+      "word_target_max": 1100,
+      "word_target_min": 900
+    },
+    {
+      "asset_ids": [],
+      "chapter_id": "CH02",
+      "claim_ids": [],
+      "evidence_ids": [
+        "E01",
+        "E03"
+      ],
+      "prohibited_content": [
+        "literature_as_project_evidence",
+        "uncited_technical_definitions"
+      ],
+      "required_content": [
+        "network_fault_diagnosis",
+        "rule_based_diagnosis",
+        "machine_learning_for_networking",
+        "hybrid_and_explainable_diagnosis",
+        "research_gap"
+      ],
+      "research_question_ids": [
+        "RQ0"
+      ],
+      "role": "BACKGROUND_AND_RELATED_WORK",
+      "source_ids": [
+        "ACAD01",
+        "ACAD02",
+        "ACAD03",
+        "ACAD07",
+        "STD01",
+        "STD02"
+      ],
+      "title_sq": "Shqyrtimi i literaturës dhe bazat teorike",
+      "word_target_max": 2000,
+      "word_target_min": 1600
+    },
+    {
+      "asset_ids": [
+        "T01"
+      ],
+      "chapter_id": "CH03",
+      "claim_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C08"
+      ],
+      "evidence_ids": [
+        "E02",
+        "E04",
+        "E05"
+      ],
+      "prohibited_content": [
+        "masked_inputs_as_independent_experiments",
+        "unperformed_statistical_test"
+      ],
+      "required_content": [
+        "controlled_fault_injection",
+        "taxonomy_and_contexts",
+        "whole_context_split",
+        "development_freeze_and_report_only_test",
+        "metrics_and_missing_evidence_masks"
+      ],
+      "research_question_ids": [
+        "RQ1",
+        "RQ2",
+        "RQ3"
+      ],
+      "role": "METHODOLOGY",
+      "source_ids": [
+        "ACAD04",
+        "ACAD05",
+        "ACAD06",
+        "ACAD09"
+      ],
+      "title_sq": "Metodologjia dhe dizajni eksperimental",
+      "word_target_max": 1700,
+      "word_target_min": 1400
+    },
+    {
+      "asset_ids": [],
+      "chapter_id": "CH04",
+      "claim_ids": [
+        "C01",
+        "C06",
+        "C07"
+      ],
+      "evidence_ids": [
+        "E01",
+        "E03",
+        "E06"
+      ],
+      "prohibited_content": [
+        "live_production_monitoring",
+        "automatic_remediation"
+      ],
+      "required_content": [
+        "pipeline_and_artifact_contracts",
+        "three_diagnostic_methods",
+        "hybrid_rule_first_ml_fallback_provenance",
+        "read_only_api_and_dashboard",
+        "reproducible_local_toolchain"
+      ],
+      "research_question_ids": [
+        "RQ4"
+      ],
+      "role": "ARCHITECTURE_AND_IMPLEMENTATION",
+      "source_ids": [
+        "ACAD08",
+        "TECH01",
+        "TECH02",
+        "TECH03"
+      ],
+      "title_sq": "Arkitektura dhe implementimi i sistemit",
+      "word_target_max": 1700,
+      "word_target_min": 1400
+    },
+    {
+      "asset_ids": [
+        "T01",
+        "T02",
+        "F01",
+        "F02"
+      ],
+      "chapter_id": "CH05",
+      "claim_ids": [
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C08"
+      ],
+      "evidence_ids": [
+        "E04",
+        "E05"
+      ],
+      "prohibited_content": [
+        "metric_recalculation",
+        "hybrid_or_statistical_superiority"
+      ],
+      "required_content": [
+        "exact_accepted_descriptive_values",
+        "clean_scope_comparison",
+        "masked_scope_comparison",
+        "coverage_and_insufficient_evidence"
+      ],
+      "research_question_ids": [
+        "RQ1",
+        "RQ2",
+        "RQ3",
+        "RQ4"
+      ],
+      "role": "RESULTS",
+      "source_ids": [],
+      "title_sq": "Rezultatet",
+      "word_target_max": 1300,
+      "word_target_min": 1000
+    },
+    {
+      "asset_ids": [
+        "T03"
+      ],
+      "chapter_id": "CH06",
+      "claim_ids": [
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08"
+      ],
+      "evidence_ids": [
+        "E05",
+        "E06"
+      ],
+      "prohibited_content": [
+        "blocked_claim_conversion",
+        "confidence_as_calibrated_uncertainty"
+      ],
+      "required_content": [
+        "claim_to_evidence_interpretation",
+        "internal_external_construct_and_conclusion_validity",
+        "hybrid_operational_distinction_without_numeric_advantage",
+        "controlled_lab_limitations"
+      ],
+      "research_question_ids": [
+        "RQ0",
+        "RQ2",
+        "RQ3",
+        "RQ4"
+      ],
+      "role": "DISCUSSION_AND_VALIDITY",
+      "source_ids": [
+        "ACAD01",
+        "ACAD04",
+        "ACAD05",
+        "ACAD06",
+        "ACAD07"
+      ],
+      "title_sq": "Diskutimi, kufizimet dhe vlefshmëria",
+      "word_target_max": 1500,
+      "word_target_min": 1200
+    },
+    {
+      "asset_ids": [],
+      "chapter_id": "CH07",
+      "claim_ids": [
+        "C01",
+        "C03",
+        "C05",
+        "C06",
+        "C07",
+        "C08"
+      ],
+      "evidence_ids": [
+        "E01",
+        "E05",
+        "E06"
+      ],
+      "prohibited_content": [
+        "future_work_as_implemented",
+        "production_readiness"
+      ],
+      "required_content": [
+        "bounded_answers",
+        "implemented_contributions",
+        "limitations",
+        "explicitly_scoped_future_work"
+      ],
+      "research_question_ids": [
+        "RQ0"
+      ],
+      "role": "CONCLUSIONS",
+      "source_ids": [],
+      "title_sq": "Përfundimet dhe puna e ardhshme",
+      "word_target_max": 700,
+      "word_target_min": 600
+    }
+  ],
+  "citation_and_asset_policy": {
+    "direct_quote_requires_page_or_section": true,
+    "doi_form": "https://doi.org/{doi}",
+    "edition_guard": "UP_GUIDE_REQUIRES_APA_AND_SHOWS_APA6_EXAMPLES_CONFIRM_FIEK_OR_MENTOR_BEFORE_FINAL_RENDERING",
+    "external_asset_rule": "LICENSE_OR_PERMISSION_AND_ATTRIBUTION_REQUIRED",
+    "figure_numbering": "Figure 1, Figure 2, ... with caption and source/note",
+    "in_text_style": "APA_AUTHOR_DATE",
+    "internal_asset_rule": "P8_R2_VALUES_MUST_BE_COPIED_NOT_RECOMPUTED",
+    "reference_list_contains_only_cited_sources": true,
+    "reference_list_order": "ALPHABETICAL_BY_FIRST_AUTHOR",
+    "table_numbering": "Table 1, Table 2, ... with title and source/note"
+  },
+  "claim_boundary": {
+    "blocked_claims": [
+      {
+        "claim_id": "B01",
+        "statement": "Hybrid statistically outperforms Machine Learning or Rule-based diagnosis."
+      },
+      {
+        "claim_id": "B02",
+        "statement": "The reported metrics generalize to real-world or unseen production networks."
+      },
+      {
+        "claim_id": "B03",
+        "statement": "The 96 deterministic masks are independent experimental samples."
+      },
+      {
+        "claim_id": "B04",
+        "statement": "The system diagnoses simultaneous multiple faults."
+      },
+      {
+        "claim_id": "B05",
+        "statement": "The system supports OSPF or arbitrary dynamic-routing failures."
+      },
+      {
+        "claim_id": "B06",
+        "statement": "The Dashboard performs live inference, remediation, or production network monitoring."
+      },
+      {
+        "claim_id": "B07",
+        "statement": "The accepted confidence values are statistically calibrated uncertainty estimates."
+      },
+      {
+        "claim_id": "B08",
+        "statement": "The accepted results establish population-level statistical significance."
+      }
+    ],
+    "supported_claims": [
+      {
+        "claim_id": "C01",
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E04"
+        ],
+        "limit": "The claim is limited to the implemented local Containerlab contexts and approved single-fault taxonomy.",
+        "statement": "The project implements a controlled-laboratory pipeline from fault injection and passive evidence collection through diagnosis, evaluation, restoration, and dataset construction.",
+        "status": "SUPPORTED_BOUNDED"
+      },
+      {
+        "claim_id": "C02",
+        "evidence_ids": [
+          "E04"
+        ],
+        "limit": "Rows are controlled laboratory observations, not a representative sample of production networks.",
+        "statement": "The final clean dataset covers six diagnostic classes in six complete contexts with a whole-context 36/12/24 train/validation/test split.",
+        "status": "SUPPORTED_BOUNDED"
+      },
+      {
+        "claim_id": "C03",
+        "evidence_ids": [
+          "E03",
+          "E05"
+        ],
+        "limit": "The comparison is descriptive and contains no statistical-superiority test.",
+        "statement": "Rule-based, Machine Learning, and Hybrid methods are compared under the same frozen report-only test protocol.",
+        "status": "SUPPORTED_BOUNDED"
+      },
+      {
+        "claim_id": "C04",
+        "evidence_ids": [
+          "E05"
+        ],
+        "limit": "Perfect clean-set results do not establish performance outside E02/E06 or beyond the controlled taxonomy.",
+        "statement": "All three accepted methods achieve complete fault-type classification on the 24 clean final test inputs.",
+        "status": "SUPPORTED_BOUNDED"
+      },
+      {
+        "claim_id": "C05",
+        "evidence_ids": [
+          "E05"
+        ],
+        "limit": "The 96 masked inputs are transformations of 24 clean inputs, not independent network experiments.",
+        "statement": "Under four deterministic missing-evidence masks, the strict Rule-based method fails closed while the accepted Machine Learning and Hybrid methods retain full coverage and non-zero aggregate accuracy.",
+        "status": "SUPPORTED_BOUNDED"
+      },
+      {
+        "claim_id": "C06",
+        "evidence_ids": [
+          "E03",
+          "E05"
+        ],
+        "limit": "Its final aggregate metrics equal the Machine Learning method; no Hybrid performance advantage is claimed.",
+        "statement": "The Hybrid method implements a rule-first, Machine-Learning-fallback decision policy with auditable provenance.",
+        "status": "SUPPORTED_BOUNDED"
+      },
+      {
+        "claim_id": "C07",
+        "evidence_ids": [
+          "E05",
+          "E06"
+        ],
+        "limit": "The interface is not a live diagnosis service, production NMS, or remote deployment.",
+        "statement": "Accepted evidence, predictions, comparisons, and limitations can be inspected through a local fail-closed read-only interface.",
+        "status": "SUPPORTED_BOUNDED"
+      },
+      {
+        "claim_id": "C08",
+        "evidence_ids": [
+          "E05"
+        ],
+        "limit": "This establishes protocol integrity for the accepted run, not independent external replication.",
+        "statement": "The final evaluation preserves train/validation/test roles, verifies the development freeze before test access, and records one report-only test attempt without refit or test-guided revision.",
+        "status": "SUPPORTED_BOUNDED"
+      }
+    ]
+  },
+  "drafting_authorization": {
+    "bounded_paraphrase_of_verified_sources": true,
+    "chapter_skeleton": true,
+    "claim_broadening": false,
+    "copy_exact_accepted_values": true,
+    "estimator_deserialization": false,
+    "format_accepted_tables_and_figures": true,
+    "generative_ai_as_academic_source": false,
+    "hybrid_superiority_claim": false,
+    "metric_recalculation": false,
+    "new_experiment": false,
+    "new_metric": false,
+    "search_snippet_as_citation": false,
+    "test_partition_access": false
+  },
+  "gate_id": "p9_r0_thesis_structure_source_citation_gate_v1",
+  "next_milestone": "P9-R1_THESIS_SKELETON_AND_TRACEABILITY_MATRIX",
+  "research_questions": [
+    {
+      "claim_ids": [
+        "C03",
+        "C04",
+        "C05",
+        "C06"
+      ],
+      "kind": "PRIMARY",
+      "question_id": "RQ0",
+      "text_sq": "Si krahasohen qasja me rregulla, Machine Learning dhe qasja hibride në diagnostikimin e problemeve të rrjetit brenda laboratorit të kontrolluar, dhe çfarë vlere operative sjell politika hibride pa presupozuar epërsi numerike?"
+    },
+    {
+      "claim_ids": [
+        "C01",
+        "C02"
+      ],
+      "kind": "SECONDARY",
+      "question_id": "RQ1",
+      "text_sq": "Çfarë mbulimi eksperimental ofrojnë gjashtë klasat dhe gjashtë kontekstet e kontrolluara me ndarje sipas kontekstit?"
+    },
+    {
+      "claim_ids": [
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "kind": "SECONDARY",
+      "question_id": "RQ2",
+      "text_sq": "Si sillen tri metodat në 24 hyrjet e pastra të testit nën protokollin e ngrirë report-only?"
+    },
+    {
+      "claim_ids": [
+        "C05"
+      ],
+      "kind": "SECONDARY",
+      "question_id": "RQ3",
+      "text_sq": "Si ndikon mungesa deterministe e evidencës në saktësi, macro-F1, mbulim dhe dështim të kontrolluar të tri metodave?"
+    },
+    {
+      "claim_ids": [
+        "C06",
+        "C07",
+        "C08"
+      ],
+      "kind": "SECONDARY",
+      "question_id": "RQ4",
+      "text_sq": "Si sigurojnë provenienca e politikës hibride dhe ndërfaqja lokale read-only gjurmueshmëri pa inferencë të re, remedim ose pretendime të reja?"
+    }
+  ],
+  "schema_version": 1,
+  "source_checkpoint": {
+    "branch": "main",
+    "commit": "01d6d356fbac6444bbd89fd2bcbc7a6e5e1cdea7",
+    "commit_short": "01d6d35",
+    "repository": "MesudHoxha/intelligent-network-diagnosis"
+  },
+  "source_gate": {
+    "admission_rules": [
+      "VERIFY_AUTHOR_TITLE_YEAR_VENUE_AND_PERSISTENT_IDENTIFIER",
+      "READ_PRIMARY_FULL_TEXT_OR_PUBLISHER_ABSTRACT_BEFORE_BOUNDED_USE",
+      "PREFER_DOI_RFC_OR_OFFICIAL_STABLE_URL",
+      "RECORD_CHAPTER_ROLE_AND_USE_BOUNDARY",
+      "DO_NOT_CITE_SEARCH_SNIPPETS_OR_GENERATIVE_AI_AS_AUTHORITIES",
+      "DO_NOT_USE_LITERATURE_TO_ENLARGE_INTERNAL_EMPIRICAL_CLAIMS"
+    ],
+    "final_scientific_reference_target_minimum": 30,
+    "inventory_is_final_bibliography": false,
+    "sources": [
+      {
+        "authors": [
+          "Universiteti i Prishtinës Hasan Prishtina"
+        ],
+        "category": "INSTITUTIONAL_GUIDE",
+        "chapter_ids": [
+          "CH01",
+          "CH02",
+          "CH03",
+          "CH05",
+          "CH07"
+        ],
+        "counts_toward_scientific_minimum": false,
+        "persistent_id": "OFFICIAL_UP_GUIDE_2026",
+        "source_id": "INST01",
+        "title": "Udhëzues për temën e diplomës për studentët e programeve Bachelor",
+        "use_boundary": "University-wide Bachelor structure, integrity, APA, reference-count, abstract, and formatting requirements only; a documented FIEK-specific instruction overrides formatting details.",
+        "venue": "Universiteti i Prishtinës Hasan Prishtina",
+        "verification_level": "OFFICIAL_FULL_TEXT_VERIFIED",
+        "verification_url": "https://fa.uni-pr.edu/desk/inc/media/6A814270-6BC0-4EDC-8B08-4CE239A207E7.pdf",
+        "verified_on": "2026-08-12",
+        "year": 2026
+      },
+      {
+        "authors": [
+          "Fakulteti i Inxhinierisë Elektrike dhe Kompjuterike"
+        ],
+        "category": "INSTITUTIONAL_FORM",
+        "chapter_ids": [],
+        "counts_toward_scientific_minimum": false,
+        "persistent_id": "FIEK_FORM_F1B",
+        "source_id": "INST02",
+        "title": "Formulari F1B: Kërkesë për lejimin e punimit të diplomës Bachelor dhe caktimin e mentorit",
+        "use_boundary": "Administrative title and mentor-approval process only; not evidence for technical or empirical claims.",
+        "venue": "Universiteti i Prishtinës Hasan Prishtina",
+        "verification_level": "OFFICIAL_METADATA_VERIFIED",
+        "verification_url": "https://fiek.uni-pr.edu/desk/inc/media/82E71A9C-4193-4769-96C3-3A35ED5F400D.doc",
+        "verified_on": "2026-08-12",
+        "year": 2026
+      },
+      {
+        "authors": [
+          "Małgorzata Steinder",
+          "Adarshpal S. Sethi"
+        ],
+        "category": "ACADEMIC_ARTICLE",
+        "chapter_ids": [
+          "CH01",
+          "CH02",
+          "CH06"
+        ],
+        "counts_toward_scientific_minimum": true,
+        "persistent_id": "doi:10.1016/j.scico.2004.01.010",
+        "source_id": "ACAD01",
+        "title": "A survey of fault localization techniques in computer networks",
+        "use_boundary": "Definitions, challenges, and taxonomy of fault localization; not evidence that this project generalizes beyond its lab.",
+        "venue": "Science of Computer Programming, 53(2), 165–194",
+        "verification_level": "PUBLISHER_AND_AUTHOR_RECORD_VERIFIED",
+        "verification_url": "https://research.ibm.com/publications/a-survey-of-fault-localization-techniques-in-computer-networks",
+        "verified_on": "2026-08-12",
+        "year": 2004
+      },
+      {
+        "authors": [
+          "Raouf Boutaba",
+          "Mohammad A. Salahuddin",
+          "Noura Limam",
+          "Sara Ayoubi",
+          "Nashid Shahriar",
+          "Felipe Estrada-Solano",
+          "Oscar M. Caicedo"
+        ],
+        "category": "ACADEMIC_ARTICLE",
+        "chapter_ids": [
+          "CH01",
+          "CH02"
+        ],
+        "counts_toward_scientific_minimum": true,
+        "persistent_id": "doi:10.1186/s13174-018-0087-2",
+        "source_id": "ACAD02",
+        "title": "A comprehensive survey on machine learning for networking: Evolution, applications and research opportunities",
+        "use_boundary": "Machine-learning-for-networking context and limitations; not support for any project metric.",
+        "venue": "Journal of Internet Services and Applications, 9, Article 16",
+        "verification_level": "OPEN_PUBLISHER_FULL_TEXT_VERIFIED",
+        "verification_url": "https://link.springer.com/article/10.1186/s13174-018-0087-2",
+        "verified_on": "2026-08-12",
+        "year": 2018
+      },
+      {
+        "authors": [
+          "Mourad Nouioua",
+          "Philippe Fournier-Viger",
+          "Ganghuan He",
+          "Farid Nouioua",
+          "Min Zhou"
+        ],
+        "category": "ACADEMIC_BOOK_CHAPTER",
+        "chapter_ids": [
+          "CH01",
+          "CH02"
+        ],
+        "counts_toward_scientific_minimum": true,
+        "persistent_id": "doi:10.1007/978-3-030-66288-2_1",
+        "source_id": "ACAD03",
+        "title": "A survey of machine learning for network fault management",
+        "use_boundary": "Rule-based and machine-learning fault-management literature; not support for Hybrid superiority.",
+        "venue": "Machine Learning and Data Mining for Emerging Trend in Cyber Dynamics, 1–27",
+        "verification_level": "AUTHOR_FULL_TEXT_AND_DOI_METADATA_VERIFIED",
+        "verification_url": "https://www.philippe-fournier-viger.com/2021_SURVEY_NETWORK_FAULT_MANAGEMENT.pdf",
+        "verified_on": "2026-08-12",
+        "year": 2021
+      },
+      {
+        "authors": [
+          "David R. Roberts",
+          "Volker Bahn",
+          "Simone Ciuti",
+          "Mark S. Boyce",
+          "Jane Elith",
+          "Gurutzeta Guillera-Arroita",
+          "Severin Hauenstein",
+          "José J. Lahoz-Monfort",
+          "Boris Schröder",
+          "Wilfried Thuiller",
+          "David I. Warton",
+          "Brendan A. Wintle",
+          "Florian Hartig",
+          "Carsten F. Dormann"
+        ],
+        "category": "ACADEMIC_ARTICLE",
+        "chapter_ids": [
+          "CH03",
+          "CH06"
+        ],
+        "counts_toward_scientific_minimum": true,
+        "persistent_id": "doi:10.1111/ecog.02881",
+        "source_id": "ACAD04",
+        "title": "Cross-validation strategies for data with temporal, spatial, hierarchical, or phylogenetic structure",
+        "use_boundary": "Structured-data split rationale; it does not independently validate this project's split execution.",
+        "venue": "Ecography, 40(8), 913–929",
+        "verification_level": "PUBLISHER_METADATA_AND_ABSTRACT_VERIFIED",
+        "verification_url": "https://nsojournals.onlinelibrary.wiley.com/doi/abs/10.1111/ecog.02881",
+        "verified_on": "2026-08-12",
+        "year": 2017
+      },
+      {
+        "authors": [
+          "Sudhir Varma",
+          "Richard Simon"
+        ],
+        "category": "ACADEMIC_ARTICLE",
+        "chapter_ids": [
+          "CH03",
+          "CH06"
+        ],
+        "counts_toward_scientific_minimum": true,
+        "persistent_id": "doi:10.1186/1471-2105-7-91",
+        "source_id": "ACAD05",
+        "title": "Bias in error estimation when using cross-validation for model selection",
+        "use_boundary": "Model-selection and error-estimation separation rationale; not a claim of statistical significance here.",
+        "venue": "BMC Bioinformatics, 7, Article 91",
+        "verification_level": "OPEN_PUBLISHER_FULL_TEXT_VERIFIED",
+        "verification_url": "https://link.springer.com/article/10.1186/1471-2105-7-91",
+        "verified_on": "2026-08-12",
+        "year": 2006
+      },
+      {
+        "authors": [
+          "Marina Sokolova",
+          "Guy Lapalme"
+        ],
+        "category": "ACADEMIC_ARTICLE",
+        "chapter_ids": [
+          "CH03",
+          "CH06"
+        ],
+        "counts_toward_scientific_minimum": true,
+        "persistent_id": "doi:10.1016/j.ipm.2009.03.002",
+        "source_id": "ACAD06",
+        "title": "A systematic analysis of performance measures for classification tasks",
+        "use_boundary": "Accuracy and F-measure interpretation for classification; no new metric is authorized.",
+        "venue": "Information Processing & Management, 45(4), 427–437",
+        "verification_level": "PUBLISHER_METADATA_AND_ABSTRACT_VERIFIED",
+        "verification_url": "https://dl.acm.org/doi/10.1016/j.ipm.2009.03.002",
+        "verified_on": "2026-08-12",
+        "year": 2009
+      },
+      {
+        "authors": [
+          "Alejandro Barredo Arrieta",
+          "Natalia Díaz-Rodríguez",
+          "Javier Del Ser",
+          "Adrien Bennetot",
+          "Siham Tabik",
+          "Alberto Barbado",
+          "Salvador García",
+          "Sergio Gil-López",
+          "Daniel Molina",
+          "Richard Benjamins",
+          "Raja Chatila",
+          "Francisco Herrera"
+        ],
+        "category": "ACADEMIC_ARTICLE",
+        "chapter_ids": [
+          "CH02",
+          "CH06"
+        ],
+        "counts_toward_scientific_minimum": true,
+        "persistent_id": "doi:10.1016/j.inffus.2019.12.012",
+        "source_id": "ACAD07",
+        "title": "Explainable Artificial Intelligence (XAI): Concepts, taxonomies, opportunities and challenges toward responsible AI",
+        "use_boundary": "Explainability terminology and audience context; project provenance must not be relabeled as an unimplemented post-hoc XAI method.",
+        "venue": "Information Fusion, 58, 82–115",
+        "verification_level": "AUTHOR_PREPRINT_AND_PUBLISHER_METADATA_VERIFIED",
+        "verification_url": "https://arxiv.org/abs/1910.10045",
+        "verified_on": "2026-08-12",
+        "year": 2020
+      },
+      {
+        "authors": [
+          "Fabian Pedregosa",
+          "Gaël Varoquaux",
+          "Alexandre Gramfort",
+          "Vincent Michel",
+          "Bertrand Thirion",
+          "Olivier Grisel",
+          "Mathieu Blondel",
+          "Peter Prettenhofer",
+          "Ron Weiss",
+          "Vincent Dubourg",
+          "Jake VanderPlas",
+          "Alexandre Passos",
+          "David Cournapeau",
+          "Matthieu Brucher",
+          "Matthieu Perrot",
+          "Édouard Duchesnay"
+        ],
+        "category": "ACADEMIC_ARTICLE",
+        "chapter_ids": [
+          "CH04"
+        ],
+        "counts_toward_scientific_minimum": true,
+        "persistent_id": "JMLR:v12:pedregosa11a",
+        "source_id": "ACAD08",
+        "title": "Scikit-learn: Machine Learning in Python",
+        "use_boundary": "Implementation-library provenance only; estimator choice and results remain internal project evidence.",
+        "venue": "Journal of Machine Learning Research, 12, 2825–2830",
+        "verification_level": "OPEN_PUBLISHER_FULL_TEXT_VERIFIED",
+        "verification_url": "https://jmlr.org/papers/v12/pedregosa11a.html",
+        "verified_on": "2026-08-12",
+        "year": 2011
+      },
+      {
+        "authors": [
+          "Mei-Chen Hsueh",
+          "Timothy K. Tsai",
+          "Ravishankar K. Iyer"
+        ],
+        "category": "ACADEMIC_ARTICLE",
+        "chapter_ids": [
+          "CH03"
+        ],
+        "counts_toward_scientific_minimum": true,
+        "persistent_id": "doi:10.1109/2.585157",
+        "source_id": "ACAD09",
+        "title": "Fault injection techniques and tools",
+        "use_boundary": "General controlled fault-injection methodology; not evidence that every fault type is covered by this project.",
+        "venue": "Computer, 30(4), 75–82",
+        "verification_level": "INSTITUTIONAL_AND_PUBLISHER_METADATA_VERIFIED",
+        "verification_url": "https://experts.illinois.edu/en/publications/fault-injection-techniques-and-tools/",
+        "verified_on": "2026-08-12",
+        "year": 1997
+      },
+      {
+        "authors": [
+          "Jon Postel"
+        ],
+        "category": "INTERNET_STANDARD",
+        "chapter_ids": [
+          "CH02"
+        ],
+        "counts_toward_scientific_minimum": false,
+        "persistent_id": "RFC792",
+        "source_id": "STD01",
+        "title": "Internet Control Message Protocol",
+        "use_boundary": "ICMP protocol behavior underlying collected evidence; not a performance or diagnosis result.",
+        "venue": "RFC 792, STD 5",
+        "verification_level": "OFFICIAL_FULL_TEXT_VERIFIED",
+        "verification_url": "https://www.rfc-editor.org/info/rfc792/",
+        "verified_on": "2026-08-12",
+        "year": 1981
+      },
+      {
+        "authors": [
+          "Fred Baker"
+        ],
+        "category": "INTERNET_STANDARD",
+        "chapter_ids": [
+          "CH02"
+        ],
+        "counts_toward_scientific_minimum": false,
+        "persistent_id": "RFC1812",
+        "source_id": "STD02",
+        "title": "Requirements for IP Version 4 Routers",
+        "use_boundary": "IPv4 forwarding and router behavior; not support for production generalization.",
+        "venue": "RFC 1812",
+        "verification_level": "OFFICIAL_FULL_TEXT_VERIFIED",
+        "verification_url": "https://www.rfc-editor.org/info/rfc1812/",
+        "verified_on": "2026-08-12",
+        "year": 1995
+      },
+      {
+        "authors": [
+          "Containerlab project"
+        ],
+        "category": "OFFICIAL_TECHNICAL_DOCUMENTATION",
+        "chapter_ids": [
+          "CH04"
+        ],
+        "counts_toward_scientific_minimum": false,
+        "persistent_id": "containerlab:topology-definition",
+        "source_id": "TECH01",
+        "title": "Topology definition",
+        "use_boundary": "Tool and topology-file description only; implementation claims require repository evidence.",
+        "venue": "Containerlab documentation",
+        "verification_level": "OFFICIAL_DOCUMENTATION_VERIFIED",
+        "verification_url": "https://containerlab.dev/manual/topo-def-file/",
+        "verified_on": "2026-08-12",
+        "year": 2026
+      },
+      {
+        "authors": [
+          "JSON Schema project"
+        ],
+        "category": "OFFICIAL_TECHNICAL_SPECIFICATION",
+        "chapter_ids": [
+          "CH04"
+        ],
+        "counts_toward_scientific_minimum": false,
+        "persistent_id": "JSON-SCHEMA-2020-12",
+        "source_id": "TECH02",
+        "title": "JSON Schema Draft 2020-12",
+        "use_boundary": "Artifact-contract format only; validation success remains internal project evidence.",
+        "venue": "JSON Schema specification",
+        "verification_level": "OFFICIAL_SPECIFICATION_VERIFIED",
+        "verification_url": "https://json-schema.org/draft/2020-12",
+        "verified_on": "2026-08-12",
+        "year": 2020
+      },
+      {
+        "authors": [
+          "OpenAPI Initiative"
+        ],
+        "category": "OFFICIAL_TECHNICAL_SPECIFICATION",
+        "chapter_ids": [
+          "CH04"
+        ],
+        "counts_toward_scientific_minimum": false,
+        "persistent_id": "OAS:3.1.0",
+        "source_id": "TECH03",
+        "title": "OpenAPI Specification 3.1.0",
+        "use_boundary": "API contract vocabulary only; route behavior requires repository evidence.",
+        "venue": "OpenAPI Initiative",
+        "verification_level": "OFFICIAL_SPECIFICATION_VERIFIED",
+        "verification_url": "https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md",
+        "verified_on": "2026-08-12",
+        "year": 2021
+      }
+    ],
+    "verified_scientific_seed_count": 9,
+    "verified_source_count": 16
+  },
+  "status": "ACCEPTED_WITH_FIEK_OVERRIDE_GUARD",
+  "traceability_assets": [
+    {
+      "asset_id": "P9T01",
+      "kind": "CSV_CHAPTER_STRUCTURE",
+      "path": "docs/thesis_assets/phase9/P9_R0_CHAPTER_STRUCTURE.csv",
+      "row_count": 7,
+      "sha256": "033f14bcf47339331776dd9cfd1cff2729064aa8462c6e530ec729cb59d9dada",
+      "size_bytes": 1000
+    },
+    {
+      "asset_id": "P9T02",
+      "kind": "CSV_VERIFIED_SOURCE_SEED",
+      "path": "docs/thesis_assets/phase9/P9_R0_VERIFIED_SOURCE_SEED.csv",
+      "row_count": 16,
+      "sha256": "ddca02461458e321856ac1419f3c0696dbe09a6043b06923922eea2ec5cf6339",
+      "size_bytes": 7484
+    }
+  ],
+  "university_alignment": {
+    "abstract_max_words": 350,
+    "ai_use_disclosure_required": true,
+    "authority_source_id": "INST01",
+    "body_word_range": {
+      "maximum": 10000,
+      "minimum": 8000
+    },
+    "citation_family": "APA_AUTHOR_DATE",
+    "fiek_or_mentor_override_policy": "APPLY_ONLY_IF_DOCUMENTED_AND_DO_NOT_CHANGE_EMPIRICAL_BOUNDARY",
+    "fiek_specific_public_guide_status": "NOT_LOCATED_AS_OF_2026_08_12",
+    "guide_status": "UNIVERSITY_WIDE_2026_GUIDE_VERIFIED",
+    "keyword_range": {
+      "maximum": 5,
+      "minimum": 3
+    },
+    "page_range_excluding_references_and_appendices": {
+      "maximum": 50,
+      "minimum": 30
+    },
+    "required_back_matter": [
+      "references",
+      "appendices_if_used"
+    ],
+    "required_front_matter": [
+      "cover_and_title_page",
+      "copyright_page",
+      "originality_and_ai_use_declaration",
+      "table_of_contents",
+      "abstract_and_keywords"
+    ],
+    "scientific_reference_recommendation_minimum": 30,
+    "thesis_type": "EMPIRICAL_ENGINEERING_PROJECT"
+  }
+}

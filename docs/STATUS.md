@@ -1355,15 +1355,40 @@ population-level or real-world generalization.
 - Full regression suite: 573/573 passed
 - Phase 8 status: complete
 
+## Latest P9-R0 thesis structure and source/citation gate
+
+- Decision: D-095, accept the thesis structure and source/citation gate
+- Source checkpoint: exact public P8-R3 commit `01d6d35`
+- Institutional authority: verified 2026 University of Prishtina
+  Bachelor thesis guide
+- Thesis type: empirical engineering project
+- Body structure: 7/7 chapters, 8,100–10,000 target words
+- Research questions: 1 primary plus 4 secondary, mapped to C01–C08
+- Primary-question posture: comparative, without presupposed Hybrid
+  superiority
+- Source seed: 16/16 metadata- and role-bound records
+- Scientific seed: 9 publications; final recommendation target at
+  least 30 credible and relevant scientific references
+- Citation family: APA author-date; exact final edition guarded for a
+  documented FIEK or mentor instruction
+- Traceability assets: 2/2 deterministic CSV files
+- Claim boundary: 8/8 supported with limitations and 8/8 prohibited
+- Hybrid interpretation: operationally distinct but numerically equal
+  to Machine Learning in all accepted aggregate scopes
+- P9-R0 tests: 21/21 passed
+- Phase 7 through Phase 9 tests: 166/166 passed
+- Targeted Phase 6 regression: 185/185 passed
+- Full regression suite: 594/594 passed
+
 ## Next milestone
 
-P9-R0 — Thesis Structure and Source/Citation Gate.
+P9-R1 — Thesis Skeleton and Traceability Matrix.
 
-P9-R0 must align the accepted chapter roles with the University thesis
-template, freeze the writing outline, inventory and verify external
-academic sources, and define citation/table/figure conventions. It may
-not recalculate an accepted value, reopen the test partition, or broaden
-the D-091/D-094 claim boundary.
+P9-R1 must create the University-aligned front matter, seven chapter
+headings and subsections, source-to-section map, claim-to-paragraph plan,
+and locations for the five accepted Phase 8 assets. It may not recalculate
+an accepted value, reopen the test partition, or broaden the D-091/D-095
+claim boundary.
 
 ## Important limitation
 

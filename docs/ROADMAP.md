@@ -364,8 +364,18 @@ Status: Complete
 ## Phase 9 — Thesis writing and defense
 Status: In progress
 
-- P9-R0 Thesis Structure and Source/Citation Gate: next
-- Align the seven accepted chapter roles with the University thesis
-  template before drafting
-- Verify external academic sources and citation metadata independently
+- P9-R0 Thesis Structure and Source/Citation Gate: complete
+- D-095 aligns seven chapter roles and an 8,100–10,000-word body outline
+  with the verified 2026 University of Prishtina Bachelor guide
+- Five bounded research questions map to C01–C08 without presupposing
+  Hybrid superiority
+- Verified source seed: 16 records, including nine scientific
+  publications; final scientific-reference target remains at least 30
+- APA author-date, originality/AI disclosure, table/figure, DOI, and
+  source-admission controls: frozen
+- Public FIEK-specific format guide: not located; documented unit or
+  mentor formatting override remains guarded
+- P9-R0 tests: 21/21; Phase 7 through Phase 9: 166/166; targeted Phase
+  6: 185/185; full regression: 594/594
+- P9-R1 Thesis Skeleton and Traceability Matrix: next
 - Preserve exact P8 values, claim limitations, and blocked-claim scope
