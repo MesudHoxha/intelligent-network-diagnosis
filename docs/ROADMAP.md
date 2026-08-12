@@ -326,7 +326,7 @@ Status: Complete
 - Phase 7 closeout and HANDOFF: completed
 
 ## Phase 8 — Experiments and evaluation
-Status: In progress
+Status: Complete
 
 - P8-R0 evidence and thesis-claim scope gate: complete
 - D-091 finds no thesis-critical empirical runtime gap and records
@@ -353,7 +353,19 @@ Status: In progress
   without recomputation or new empirical claims
 - P8-R2 tests: 15/15; combined Phase 7 plus Phase 8: 130/130;
   targeted Phase 6: 185/185; full regression: 558/558
-- P8-R3 Phase 8 closeout and Phase 9 handoff: next
+- P8-R3 Phase 8 closeout and Phase 9 handoff: complete
+- D-094 accepts the four-input tracked closeout, full private-archive
+  verification, five thesis assets, 8/8 supported and 8/8 prohibited
+  claim boundary, and fail-closed Phase 9 writing contract
+- P8-R3 tests: 15/15; combined Phase 7 plus Phase 8: 145/145;
+  targeted Phase 6: 185/185; full regression: 573/573
+- Phase 8 closeout and HANDOFF: completed
 
 ## Phase 9 — Thesis writing and defense
-Status: Not started
+Status: In progress
+
+- P9-R0 Thesis Structure and Source/Citation Gate: next
+- Align the seven accepted chapter roles with the University thesis
+  template before drafting
+- Verify external academic sources and citation metadata independently
+- Preserve exact P8 values, claim limitations, and blocked-claim scope

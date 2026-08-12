@@ -2,7 +2,7 @@
 
 ## Current phase
 
-Phase 8 — Final evidence and evaluation handoff
+Phase 9 — Thesis writing and defense
 
 ## Implemented and tested
 
@@ -1332,14 +1332,38 @@ population-level or real-world generalization.
 - Targeted Phase 6 regression: 185/185 passed
 - Full regression suite: 558/558 passed
 
+## Latest P8-R3 Phase 8 closeout
+
+- Decision: D-094, accept the final Phase 8 chain and close the phase
+- Source checkpoint: full local P8-R2 commit recorded with accepted
+  short identity `cb489a3` and exact P8-R1 parent `c55c803`
+- Accepted tracked inputs: P8-R0 scope, P8-R1 registry, P8-R1 receipt,
+  and P8-R2 synthesis, 4/4 SHA-256- and size-bound
+- Private runtime chain: 1488/1488 artifacts verified unchanged
+- Private archive: 1490 members, accepted SHA-256 and size verified
+- Thesis assets: 3/3 CSV tables and 2/2 SVG figures verified
+- Claim boundary: 8/8 supported bounded and 8/8 prohibited retained
+- Hybrid interpretation: operationally distinct but numerically equal
+  to Machine Learning in all accepted aggregate scopes
+- Phase 9 handoff: seven chapter roles and six mandatory writing
+  constraints frozen
+- Runtime authorization: all twelve experiment, inference, mutation,
+  test, model, policy, metric, and claim-broadening actions false
+- P8-R3 tests: 15/15 passed
+- Combined Phase 7 plus Phase 8 tests: 145/145 passed
+- Targeted Phase 6 regression: 185/185 passed
+- Full regression suite: 573/573 passed
+- Phase 8 status: complete
+
 ## Next milestone
 
-P8-R3 — Phase 8 Acceptance Closeout and Phase 9 Handoff.
+P9-R0 — Thesis Structure and Source/Citation Gate.
 
-P8-R3 must verify the final Phase 8 evidence, archive, and synthesis
-chain; close Phase 8; and prepare the Phase 9 thesis-writing handoff. It
-may not execute a new experiment, deserialize the estimator, reopen the
-test partition, recalculate a metric, or broaden the D-091 claims.
+P9-R0 must align the accepted chapter roles with the University thesis
+template, freeze the writing outline, inventory and verify external
+academic sources, and define citation/table/figure conventions. It may
+not recalculate an accepted value, reopen the test partition, or broaden
+the D-091/D-094 claim boundary.
 
 ## Important limitation
 

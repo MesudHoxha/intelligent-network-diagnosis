@@ -2390,3 +2390,43 @@ D-093 makes accepted controlled results thesis-ready. It does not create
 new empirical evidence, independent samples, statistical significance,
 external replication, production readiness, or real-world
 generalization.
+
+## D-094 — Close Phase 8 with a fail-closed thesis-writing handoff
+
+Decision: Accept the P8-R0 through P8-R3 chain as the complete final
+evidence and evaluation boundary and close Phase 8.
+
+The P8-R3 manifest binds the exact local P8-R2 source checkpoint, P8-R0
+scope gate, P8-R1 registry and receipt, P8-R2 synthesis, all five thesis
+assets, and the accepted external private archive. Full closeout
+verification covers all 1,488 runtime artifacts and 1,490 deterministic
+archive members by the existing registry/archive contract. The selected
+estimator remains opaque bytes and the test partition remains preserved
+without reevaluation.
+
+The final thesis boundary is eight supported claims with required
+limitations and eight prohibited expansions. Exact values remain those
+accepted in P8-R0/P8-R2. Hybrid remains operationally distinct through
+rule-first and Machine-Learning-fallback provenance but numerically equal
+to Machine Learning in all aggregate scopes. The comparison remains
+descriptive, the 96 masks remain transformations rather than independent
+experiments, and no external generalization is established.
+
+Phase 9 may adapt thesis structure, language, captions, and print
+formatting. It may not recalculate a value, reopen the test partition,
+deserialize or refit the estimator, select a new policy, create a new
+metric, broaden a claim, or convert a blocked claim into a conclusion.
+P9-R0 must first align the seven chapter roles with the University
+template and independently verify the external source/citation plan.
+
+Status: Accepted and implemented on 2026-08-12. Verification passed
+15/15 P8-R3 tests, 145/145 combined Phase 7 plus Phase 8 tests, 185/185
+targeted Phase 6 tests, and 573/573 full regression tests. Phase 8 is
+complete and P9-R0 is next.
+
+Limitation:
+
+D-094 establishes a reproducible internal writing boundary for the
+accepted controlled project. It does not itself verify external academic
+citations, create independent replication, establish statistical
+significance, production readiness, or real-world generalization.

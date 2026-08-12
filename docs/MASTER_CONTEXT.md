@@ -1202,3 +1202,31 @@ Verification passed 15/15 targeted tests, 130/130 combined Phase 7 plus
 Phase 8 tests, 185/185 targeted Phase 6 tests, and 558/558 full
 regression tests. P8-R3 is next and must perform only the Phase 8 final
 acceptance and Phase 9 handoff.
+
+P8-R3 closes Phase 8 under D-094. Its machine-readable manifest binds
+the exact local P8-R2 Git checkpoint, the P8-R0 scope, P8-R1 registry
+and receipt, P8-R2 synthesis, all five thesis assets, and the accepted
+private archive. The final verification covers 1,488 runtime artifacts
+and 1,490 deterministic archive members without deserializing the
+estimator or reopening the test partition.
+
+The final claim boundary remains eight supported limitation-bearing
+claims and eight prohibited expansions. Hybrid is operationally
+distinct through rule-first/ML-fallback provenance but numerically
+equal to Machine Learning in every accepted aggregate scope. The 96
+masks remain deterministic transformations, not independent
+experiments. No new experiment, metric, artifact, or inference is
+created in the closeout.
+
+The Phase 9 handoff maps seven thesis chapter roles to accepted evidence
+and assets and freezes six writing constraints: preserve exact values;
+retain claim limitations; keep prohibited claims blocked; distinguish
+implemented, tested, proposed, and out-of-scope work; do not treat masks
+as independent experiments; and do not claim Hybrid or statistical
+superiority. External academic citations remain a separate P9-R0
+verification task.
+
+Verification passed 15/15 targeted P8-R3 tests, 145/145 combined Phase
+7 plus Phase 8 tests, 185/185 targeted Phase 6 tests, and 573/573 full
+regression tests. Phase 8 is complete. P9-R0 is next: Thesis Structure
+and Source/Citation Gate.

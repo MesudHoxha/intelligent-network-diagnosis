@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/p8_phase8_closeout_v1.schema.json",
+  "title": "P8-R3 Phase 8 Closeout v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "closeout_id",
+    "status",
+    "source_checkpoint",
+    "accepted_inputs",
+    "accepted_chain",
+    "thesis_assets",
+    "claim_boundary",
+    "phase9_handoff",
+    "runtime_authorization",
+    "next_milestone"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "closeout_id": {"const": "p8_r3_phase8_closeout_v1"},
+    "status": {"const": "PHASE8_ACCEPTED_CLOSED"},
+    "source_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["branch", "commit", "commit_short", "parent_commit"],
+      "properties": {
+        "branch": {"const": "main"},
+        "commit": {"type": "string", "pattern": "^cb489a3[0-9a-f]{33}$"},
+        "commit_short": {"const": "cb489a3"},
+        "parent_commit": {"const": "c55c803dbb42752f1597b2276026204267e35e0f"}
+      }
+    },
+    "accepted_inputs": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        {"$ref": "#/$defs/p8r0Input"},
+        {"$ref": "#/$defs/p8r1RegistryInput"},
+        {"$ref": "#/$defs/p8r1ReceiptInput"},
+        {"$ref": "#/$defs/p8r2Input"}
+      ],
+      "items": false
+    },
+    "accepted_chain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope_decision",
+        "runtime_artifact_count",
+        "archive_member_count",
+        "private_archive_file_name",
+        "private_archive_sha256",
+        "private_archive_size_bytes",
+        "thesis_asset_count",
+        "supported_claim_count",
+        "blocked_claim_count",
+        "estimator_deserialized",
+        "test_partition_reopened",
+        "metric_recalculated"
+      ],
+      "properties": {
+        "scope_decision": {"const": "NO_NEW_EXPERIMENT_REQUIRED"},
+        "runtime_artifact_count": {"const": 1488},
+        "archive_member_count": {"const": 1490},
+        "private_archive_file_name": {"const": "P8-R1-final-evidence-private.tar.gz"},
+        "private_archive_sha256": {"const": "e9eea5fe520779eee4f4eba4df442ae46c0fd43ea382eed9f5ad5de94cbd14b6"},
+        "private_archive_size_bytes": {"const": 639729},
+        "thesis_asset_count": {"const": 5},
+        "supported_claim_count": {"const": 8},
+        "blocked_claim_count": {"const": 8},
+        "estimator_deserialized": {"const": false},
+        "test_partition_reopened": {"const": false},
+        "metric_recalculated": {"const": false}
+      }
+    },
+    "thesis_assets": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {"$ref": "#/$defs/asset"}
+    },
+    "claim_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "supported_claim_ids",
+        "blocked_claim_ids",
+        "comparison_type",
+        "hybrid_interpretation",
+        "masked_inputs",
+        "external_generalization"
+      ],
+      "properties": {
+        "supported_claim_ids": {"const": ["C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08"]},
+        "blocked_claim_ids": {"const": ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08"]},
+        "comparison_type": {"const": "DESCRIPTIVE_ONLY"},
+        "hybrid_interpretation": {"const": "OPERATIONALLY_DISTINCT_NUMERICALLY_EQUAL_TO_ML"},
+        "masked_inputs": {"const": "TRANSFORMATIONS_NOT_INDEPENDENT_EXPERIMENTS"},
+        "external_generalization": {"const": "NOT_ESTABLISHED"}
+      }
+    },
+    "phase9_handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["next_milestone", "entry_gate", "chapter_map", "writing_constraints"],
+      "properties": {
+        "next_milestone": {"const": "P9-R0"},
+        "entry_gate": {"const": "THESIS_STRUCTURE_AND_SOURCE_CITATION_GATE"},
+        "chapter_map": {
+          "type": "array",
+          "minItems": 7,
+          "maxItems": 7,
+          "items": {"$ref": "#/$defs/chapter"}
+        },
+        "writing_constraints": {
+          "const": [
+            "PRESERVE_EXACT_ACCEPTED_VALUES",
+            "CITE_EACH_SUPPORTED_CLAIM_WITH_ITS_LIMIT",
+            "KEEP_ALL_BLOCKED_CLAIMS_PROHIBITED",
+            "DISTINGUISH_IMPLEMENTED_TESTED_AND_PROPOSED_WORK",
+            "DO_NOT_TREAT_MASKS_AS_INDEPENDENT_EXPERIMENTS",
+            "DO_NOT_CLAIM_HYBRID_OR_STATISTICAL_SUPERIORITY"
+          ]
+        }
+      }
+    },
+    "runtime_authorization": {
+      "type": "object",
+      "minProperties": 12,
+      "maxProperties": 12,
+      "additionalProperties": {"const": false}
+    },
+    "next_milestone": {"const": "P9-R0"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["milestone", "path", "sha256", "size_bytes"],
+      "properties": {
+        "milestone": {"type": "string"},
+        "path": {"type": "string", "pattern": "^plans/phase8/"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "size_bytes": {"type": "integer", "minimum": 1}
+      }
+    },
+    "p8r0Input": {
+      "allOf": [
+        {"$ref": "#/$defs/binding"},
+        {"type": "object", "properties": {"milestone": {"const": "P8-R0"}, "path": {"const": "plans/phase8/P8_R0_EVIDENCE_CLAIM_SCOPE_V1.json"}}}
+      ]
+    },
+    "p8r1RegistryInput": {
+      "allOf": [
+        {"$ref": "#/$defs/binding"},
+        {"type": "object", "properties": {"milestone": {"const": "P8-R1-REGISTRY"}, "path": {"const": "plans/phase8/P8_R1_FINAL_EVIDENCE_REGISTRY_V1.json"}}}
+      ]
+    },
+    "p8r1ReceiptInput": {
+      "allOf": [
+        {"$ref": "#/$defs/binding"},
+        {"type": "object", "properties": {"milestone": {"const": "P8-R1-RECEIPT"}, "path": {"const": "plans/phase8/P8_R1_PRIVATE_ARCHIVE_RECEIPT_V1.json"}}}
+      ]
+    },
+    "p8r2Input": {
+      "allOf": [
+        {"$ref": "#/$defs/binding"},
+        {"type": "object", "properties": {"milestone": {"const": "P8-R2"}, "path": {"const": "plans/phase8/P8_R2_THESIS_EVALUATION_SYNTHESIS_V1.json"}}}
+      ]
+    },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["asset_id", "kind", "path", "sha256", "size_bytes", "title"],
+      "properties": {
+        "asset_id": {"type": "string", "pattern": "^[TF]0[1-3]$"},
+        "kind": {"enum": ["CSV_TABLE", "SVG_FIGURE"]},
+        "path": {"type": "string", "pattern": "^docs/thesis_assets/phase8/P8_R2_"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "size_bytes": {"type": "integer", "minimum": 1},
+        "title": {"type": "string", "minLength": 1},
+        "row_count": {"type": "integer", "minimum": 1}
+      }
+    },
+    "chapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["chapter_id", "purpose", "evidence_ids"],
+      "properties": {
+        "chapter_id": {"type": "string", "pattern": "^CH0[1-7]$"},
+        "purpose": {"type": "string", "minLength": 1},
+        "evidence_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "pattern": "^E0[1-6]$"}
+        },
+        "asset_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "pattern": "^[TF]0[1-3]$"}
+        }
+      }
+    }
+  }
+}

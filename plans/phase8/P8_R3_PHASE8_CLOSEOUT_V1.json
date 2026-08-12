@@ -1,0 +1,220 @@
+{
+  "accepted_chain": {
+    "archive_member_count": 1490,
+    "blocked_claim_count": 8,
+    "estimator_deserialized": false,
+    "metric_recalculated": false,
+    "private_archive_file_name": "P8-R1-final-evidence-private.tar.gz",
+    "private_archive_sha256": "e9eea5fe520779eee4f4eba4df442ae46c0fd43ea382eed9f5ad5de94cbd14b6",
+    "private_archive_size_bytes": 639729,
+    "runtime_artifact_count": 1488,
+    "scope_decision": "NO_NEW_EXPERIMENT_REQUIRED",
+    "supported_claim_count": 8,
+    "test_partition_reopened": false,
+    "thesis_asset_count": 5
+  },
+  "accepted_inputs": [
+    {
+      "milestone": "P8-R0",
+      "path": "plans/phase8/P8_R0_EVIDENCE_CLAIM_SCOPE_V1.json",
+      "sha256": "7b501777333c59c3f68661cb91fd9c288d11d750f204e220f39ed83c0126b5f6",
+      "size_bytes": 12811
+    },
+    {
+      "milestone": "P8-R1-REGISTRY",
+      "path": "plans/phase8/P8_R1_FINAL_EVIDENCE_REGISTRY_V1.json",
+      "sha256": "12394870c20177f9530c422517483ca566476c93057b9ff3aa182a46764ba94d",
+      "size_bytes": 954159
+    },
+    {
+      "milestone": "P8-R1-RECEIPT",
+      "path": "plans/phase8/P8_R1_PRIVATE_ARCHIVE_RECEIPT_V1.json",
+      "sha256": "271429df95536fc642567c8be1fe8eb98aac2cc737e11349a153adbdc7a5d5e3",
+      "size_bytes": 925
+    },
+    {
+      "milestone": "P8-R2",
+      "path": "plans/phase8/P8_R2_THESIS_EVALUATION_SYNTHESIS_V1.json",
+      "sha256": "c98e1e3d759a916b18087989edec56aa824cb5960d4e31ddd56ab7c54e607609",
+      "size_bytes": 13688
+    }
+  ],
+  "claim_boundary": {
+    "blocked_claim_ids": [
+      "B01",
+      "B02",
+      "B03",
+      "B04",
+      "B05",
+      "B06",
+      "B07",
+      "B08"
+    ],
+    "comparison_type": "DESCRIPTIVE_ONLY",
+    "external_generalization": "NOT_ESTABLISHED",
+    "hybrid_interpretation": "OPERATIONALLY_DISTINCT_NUMERICALLY_EQUAL_TO_ML",
+    "masked_inputs": "TRANSFORMATIONS_NOT_INDEPENDENT_EXPERIMENTS",
+    "supported_claim_ids": [
+      "C01",
+      "C02",
+      "C03",
+      "C04",
+      "C05",
+      "C06",
+      "C07",
+      "C08"
+    ]
+  },
+  "closeout_id": "p8_r3_phase8_closeout_v1",
+  "next_milestone": "P9-R0",
+  "phase9_handoff": {
+    "chapter_map": [
+      {
+        "chapter_id": "CH01",
+        "evidence_ids": [
+          "E01",
+          "E04",
+          "E05"
+        ],
+        "purpose": "Introduction and bounded research question"
+      },
+      {
+        "chapter_id": "CH02",
+        "evidence_ids": [
+          "E01",
+          "E03"
+        ],
+        "purpose": "Networking and intelligent-diagnosis background"
+      },
+      {
+        "chapter_id": "CH03",
+        "evidence_ids": [
+          "E02",
+          "E04",
+          "E05"
+        ],
+        "purpose": "Controlled methodology and evaluation protocol"
+      },
+      {
+        "chapter_id": "CH04",
+        "evidence_ids": [
+          "E01",
+          "E03",
+          "E06"
+        ],
+        "purpose": "System architecture and implementation"
+      },
+      {
+        "asset_ids": [
+          "T01",
+          "T02",
+          "F01",
+          "F02"
+        ],
+        "chapter_id": "CH05",
+        "evidence_ids": [
+          "E04",
+          "E05"
+        ],
+        "purpose": "Final evaluation results"
+      },
+      {
+        "asset_ids": [
+          "T03"
+        ],
+        "chapter_id": "CH06",
+        "evidence_ids": [
+          "E05",
+          "E06"
+        ],
+        "purpose": "Discussion, limitations, and validity"
+      },
+      {
+        "chapter_id": "CH07",
+        "evidence_ids": [
+          "E01",
+          "E05",
+          "E06"
+        ],
+        "purpose": "Conclusions and bounded future work"
+      }
+    ],
+    "entry_gate": "THESIS_STRUCTURE_AND_SOURCE_CITATION_GATE",
+    "next_milestone": "P9-R0",
+    "writing_constraints": [
+      "PRESERVE_EXACT_ACCEPTED_VALUES",
+      "CITE_EACH_SUPPORTED_CLAIM_WITH_ITS_LIMIT",
+      "KEEP_ALL_BLOCKED_CLAIMS_PROHIBITED",
+      "DISTINGUISH_IMPLEMENTED_TESTED_AND_PROPOSED_WORK",
+      "DO_NOT_TREAT_MASKS_AS_INDEPENDENT_EXPERIMENTS",
+      "DO_NOT_CLAIM_HYBRID_OR_STATISTICAL_SUPERIORITY"
+    ]
+  },
+  "runtime_authorization": {
+    "accepted_artifact_mutation": false,
+    "containerlab": false,
+    "diagnosis_execution": false,
+    "metric_recalculation": false,
+    "model_deserialization": false,
+    "model_refit": false,
+    "network_mutation": false,
+    "new_experiment": false,
+    "new_metric": false,
+    "policy_reselection": false,
+    "test_evaluation": false,
+    "thesis_claim_broadening": false
+  },
+  "schema_version": 1,
+  "source_checkpoint": {
+    "branch": "main",
+    "commit": "cb489a32eb44e64ced0eec845a07586e7134226a",
+    "commit_short": "cb489a3",
+    "parent_commit": "c55c803dbb42752f1597b2276026204267e35e0f"
+  },
+  "status": "PHASE8_ACCEPTED_CLOSED",
+  "thesis_assets": [
+    {
+      "asset_id": "T01",
+      "kind": "CSV_TABLE",
+      "path": "docs/thesis_assets/phase8/P8_R2_TABLE_01_EVALUATION_DESIGN.csv",
+      "row_count": 12,
+      "sha256": "8c8fe2be4e0f8a026e97ffdfedc14ae4b15b946ce0c1b89a463141ddc41ca96f",
+      "size_bytes": 954,
+      "title": "Final evaluation design"
+    },
+    {
+      "asset_id": "T02",
+      "kind": "CSV_TABLE",
+      "path": "docs/thesis_assets/phase8/P8_R2_TABLE_02_METHOD_METRICS.csv",
+      "row_count": 9,
+      "sha256": "2eea3c1053480a6eee45eb96b868b30398493f6f176888bba1504303a61b10c9",
+      "size_bytes": 1493,
+      "title": "Accepted method metrics by scope"
+    },
+    {
+      "asset_id": "T03",
+      "kind": "CSV_TABLE",
+      "path": "docs/thesis_assets/phase8/P8_R2_TABLE_03_CLAIM_EVIDENCE.csv",
+      "row_count": 8,
+      "sha256": "5e7350e4e657479473d312a0ecdd97a1f7ba23926a4e46269b72963493069d2a",
+      "size_bytes": 3002,
+      "title": "Bounded claim-to-evidence matrix"
+    },
+    {
+      "asset_id": "F01",
+      "kind": "SVG_FIGURE",
+      "path": "docs/thesis_assets/phase8/P8_R2_FIGURE_01_ACCURACY_BY_SCOPE.svg",
+      "sha256": "baf06869ffbd995801e4624cf6a4ecf11950e453f22551bb5647a9481f8e8a71",
+      "size_bytes": 5808,
+      "title": "Accuracy by evaluation scope"
+    },
+    {
+      "asset_id": "F02",
+      "kind": "SVG_FIGURE",
+      "path": "docs/thesis_assets/phase8/P8_R2_FIGURE_02_MASKED_EVIDENCE_METRICS.svg",
+      "sha256": "0aff482f4a6ebe37732339803b7cbd1d07e666d56fd0b910daf6157f354a7376",
+      "size_bytes": 6324,
+      "title": "Behavior under deterministic missing evidence"
+    }
+  ]
+}

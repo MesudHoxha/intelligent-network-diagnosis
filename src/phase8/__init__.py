@@ -1,1 +1,1 @@
-"""Phase 8 evidence, reproducibility, and thesis-synthesis utilities."""
+"""Phase 8 evidence, reproducibility, synthesis, and closeout utilities."""
