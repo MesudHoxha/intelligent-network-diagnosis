@@ -1178,3 +1178,27 @@ test-guided revision, or accepted-artifact write. Verification passed
 15/15 targeted tests, 115/115 combined Phase 7 plus Phase 8 tests,
 185/185 targeted Phase 6 tests, and 543/543 full regression tests. P8-R2
 is next and may only synthesize accepted values for the thesis.
+
+P8-R2 resolves the thesis-ready synthesis gap under D-093. It verifies
+the P8-R0 scope hash against the P8-R1 immutable registry and verifies
+that registry against the tracked private-archive receipt. It then
+formats the frozen accepted snapshot into three CSV tables, two
+deterministic accessible SVG figures, five bounded findings, and the
+eight-claim evidence matrix. Every generated asset is bound by path,
+size, and SHA-256 in the tracked P8-R2 manifest.
+
+The exact accepted decimal metrics remain unchanged in JSON and CSV.
+Percentage conversion and rounding in prose and SVG labels are
+presentation formatting only. The final interpretation remains that
+Hybrid is operationally distinct through rule-first/ML-fallback
+provenance but numerically equal to Machine Learning in all accepted
+aggregate scopes. Neither Hybrid nor statistical superiority is
+claimed.
+
+P8-R2 performs no Containerlab execution, network mutation, diagnosis,
+estimator deserialization, test evaluation, refit, policy reselection,
+metric recalculation, new metric, or accepted-artifact mutation.
+Verification passed 15/15 targeted tests, 130/130 combined Phase 7 plus
+Phase 8 tests, 185/185 targeted Phase 6 tests, and 558/558 full
+regression tests. P8-R3 is next and must perform only the Phase 8 final
+acceptance and Phase 9 handoff.

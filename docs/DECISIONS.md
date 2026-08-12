@@ -2353,3 +2353,40 @@ D-092 establishes byte-preserving reproducibility for the accepted
 controlled final chain. It does not establish independent external
 replication, statistical significance, production readiness, or
 generalization to real networks.
+
+## D-093 — Accept the thesis-ready final evaluation synthesis
+
+Decision: Accept the P8-R2 deterministic tables, figures, findings, and
+claim-to-evidence references as the thesis presentation boundary for
+the final P6-R6 evaluation.
+
+P8-R2 reads only the tracked P8-R0 scope snapshot and the tracked P8-R1
+registry/receipt chain. The P8-R0 hash must match its immutable-registry
+binding, and the registry hash must match the receipt before synthesis.
+The resulting manifest binds three CSV tables and two accessible SVG
+figures by path, size, and SHA-256.
+
+Exact accepted decimals are preserved in JSON and CSV. Multiplication by
+100 and rounding in prose or figure labels are presentation formatting,
+not metric recalculation. No aggregation, new metric, model execution,
+or test access is authorized.
+
+The accepted interpretation remains bounded: all three methods achieve
+complete clean classification; the strict Rule-based method fails
+closed under deterministic missing evidence; and Machine Learning and
+Hybrid retain full masked coverage with identical accepted aggregate
+metrics. Hybrid is operationally distinct through rule-first and
+Machine-Learning-fallback provenance but numerically equal to Machine
+Learning. No Hybrid or statistical-superiority claim is permitted.
+
+Status: Accepted and implemented on 2026-08-12. Verification passed
+15/15 P8-R2 tests, 130/130 combined Phase 7 plus Phase 8 tests, 185/185
+targeted Phase 6 tests, and 558/558 full regression tests. P8-R3 is
+next.
+
+Limitation:
+
+D-093 makes accepted controlled results thesis-ready. It does not create
+new empirical evidence, independent samples, statistical significance,
+external replication, production readiness, or real-world
+generalization.

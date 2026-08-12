@@ -1310,14 +1310,36 @@ population-level or real-world generalization.
 - Targeted Phase 6 regression: 185/185 passed
 - Full regression suite: 543/543 passed
 
+## Latest P8-R2 thesis synthesis
+
+- Decision: D-093, accept the thesis-ready final evaluation synthesis
+- Accepted input chain: P8-R0 scope hash verified by the P8-R1 registry;
+  P8-R1 registry hash verified by the tracked archive receipt
+- Generated exact-value tables: 3/3
+- Generated deterministic accessible SVG figures: 2/2
+- Bounded findings: 5/5
+- Supported claim-to-evidence references: 8/8
+- Explicit prohibited claims preserved: 8/8
+- Exact accepted decimals: unchanged in JSON and CSV
+- Percentage conversion and rounding: presentation labels only
+- Hybrid interpretation: operationally distinct but numerically equal
+  to Machine Learning in all accepted aggregate scopes
+- Statistical-superiority test: not performed
+- Runtime authorization: all eleven experiment, inference, mutation,
+  test, model, policy, and metric actions false
+- P8-R2 tests: 15/15 passed
+- Combined Phase 7 plus Phase 8 tests: 130/130 passed
+- Targeted Phase 6 regression: 185/185 passed
+- Full regression suite: 558/558 passed
+
 ## Next milestone
 
-P8-R2 — Thesis-Ready Final Evaluation Synthesis.
+P8-R3 — Phase 8 Acceptance Closeout and Phase 9 Handoff.
 
-P8-R2 may format hash-verified accepted values into tables, figures,
-and claim-to-evidence references. It may not execute an experiment,
-deserialize the estimator, recompute a metric, add a new metric, or
-broaden the D-091 thesis claims.
+P8-R3 must verify the final Phase 8 evidence, archive, and synthesis
+chain; close Phase 8; and prepare the Phase 9 thesis-writing handoff. It
+may not execute a new experiment, deserialize the estimator, reopen the
+test partition, recalculate a metric, or broaden the D-091 claims.
 
 ## Important limitation
 

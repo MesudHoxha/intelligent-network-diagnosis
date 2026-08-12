@@ -347,8 +347,13 @@ Status: In progress
   receipt without recomputation
 - P8-R1 tests: 15/15; combined Phase 7 plus Phase 8: 115/115;
   targeted Phase 6: 185/185; full regression: 543/543
-- P8-R2 thesis-ready final evaluation synthesis: next
-- P8-R3 Phase 8 closeout and Phase 9 handoff: planned
+- P8-R2 thesis-ready final evaluation synthesis: complete
+- D-093 accepts three exact-value CSV tables, two deterministic SVG
+  figures, five bounded findings, and the claim-to-evidence matrix
+  without recomputation or new empirical claims
+- P8-R2 tests: 15/15; combined Phase 7 plus Phase 8: 130/130;
+  targeted Phase 6: 185/185; full regression: 558/558
+- P8-R3 Phase 8 closeout and Phase 9 handoff: next
 
 ## Phase 9 — Thesis writing and defense
 Status: Not started

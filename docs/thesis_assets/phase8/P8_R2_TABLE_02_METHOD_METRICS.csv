@@ -1,0 +1,10 @@
+scope,method_id,method_label,sample_count,accuracy,macro_f1,coverage,exact_diagnosis_rate,affected_prefix_rate,insufficient_evidence_rate,abstention_rate,source
+clean,rule_based_p6_v1,Rule-based,24,1.0,1.0,1.0,1.0,1.0,0.0,0.0,P8_R0_EVIDENCE_CLAIM_SCOPE_V1.final_evaluation_snapshot
+clean,machine_learning_p6_v1,Machine Learning,24,1.0,1.0,1.0,1.0,1.0,0.0,0.0,P8_R0_EVIDENCE_CLAIM_SCOPE_V1.final_evaluation_snapshot
+clean,hybrid_p6_v1,Hybrid,24,1.0,1.0,1.0,1.0,1.0,0.0,0.0,P8_R0_EVIDENCE_CLAIM_SCOPE_V1.final_evaluation_snapshot
+masked_overall,rule_based_p6_v1,Rule-based,96,0.0,0.0,0.0,0.0,0.0,1.0,0.0,P8_R0_EVIDENCE_CLAIM_SCOPE_V1.final_evaluation_snapshot
+masked_overall,machine_learning_p6_v1,Machine Learning,96,0.7916666666666666,0.8104858104858105,1.0,0.7916666666666666,1.0,0.0,0.0,P8_R0_EVIDENCE_CLAIM_SCOPE_V1.final_evaluation_snapshot
+masked_overall,hybrid_p6_v1,Hybrid,96,0.7916666666666666,0.8104858104858105,1.0,0.7916666666666666,1.0,0.0,0.0,P8_R0_EVIDENCE_CLAIM_SCOPE_V1.final_evaluation_snapshot
+overall,rule_based_p6_v1,Rule-based,120,0.2,0.3333333333333333,0.2,0.2,0.2,0.8,0.0,P8_R0_EVIDENCE_CLAIM_SCOPE_V1.final_evaluation_snapshot
+overall,machine_learning_p6_v1,Machine Learning,120,0.8333333333333334,0.8466718466718467,1.0,0.8333333333333334,1.0,0.0,0.0,P8_R0_EVIDENCE_CLAIM_SCOPE_V1.final_evaluation_snapshot
+overall,hybrid_p6_v1,Hybrid,120,0.8333333333333334,0.8466718466718467,1.0,0.8333333333333334,1.0,0.0,0.0,P8_R0_EVIDENCE_CLAIM_SCOPE_V1.final_evaluation_snapshot

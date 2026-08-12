@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="660" viewBox="0 0 1080 660" role="img" aria-labelledby="title desc">
+  <title id="title">Masked-evidence method behavior</title>
+  <desc id="desc">Accepted masked-evidence metrics for Rule-based, Machine Learning, and Hybrid methods. The strict Rule-based method reports insufficient evidence, while Machine Learning and Hybrid retain coverage and have identical aggregate results.</desc>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="540" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#0f172a">Behavior under deterministic missing evidence</text>
+  <text x="540" y="72" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#475569">96 transformations of 24 clean cases; they are not independent experiments</text>
+  <rect x="210" y="94" width="18" height="18" rx="3" fill="#0f766e"/>
+  <text x="237" y="108" font-family="Arial, sans-serif" font-size="15" fill="#1e293b">Rule-based</text>
+  <rect x="430" y="94" width="18" height="18" rx="3" fill="#2563eb"/>
+  <text x="457" y="108" font-family="Arial, sans-serif" font-size="15" fill="#1e293b">Machine Learning</text>
+  <rect x="650" y="94" width="18" height="18" rx="3" fill="#d97706"/>
+  <text x="677" y="108" font-family="Arial, sans-serif" font-size="15" fill="#1e293b">Hybrid</text>
+  <line x1="82" y1="542" x2="1040" y2="542" stroke="#dbe3ea" stroke-width="1"/>
+  <text x="68" y="547" text-anchor="end" font-family="Arial, sans-serif" font-size="14" fill="#475569">0%</text>
+  <line x1="82" y1="442" x2="1040" y2="442" stroke="#dbe3ea" stroke-width="1"/>
+  <text x="68" y="447" text-anchor="end" font-family="Arial, sans-serif" font-size="14" fill="#475569">25%</text>
+  <line x1="82" y1="342" x2="1040" y2="342" stroke="#dbe3ea" stroke-width="1"/>
+  <text x="68" y="347" text-anchor="end" font-family="Arial, sans-serif" font-size="14" fill="#475569">50%</text>
+  <line x1="82" y1="242" x2="1040" y2="242" stroke="#dbe3ea" stroke-width="1"/>
+  <text x="68" y="247" text-anchor="end" font-family="Arial, sans-serif" font-size="14" fill="#475569">75%</text>
+  <line x1="82" y1="142" x2="1040" y2="142" stroke="#dbe3ea" stroke-width="1"/>
+  <text x="68" y="147" text-anchor="end" font-family="Arial, sans-serif" font-size="14" fill="#475569">100%</text>
+  <line x1="82" y1="142" x2="82" y2="542" stroke="#64748b" stroke-width="1.5"/>
+  <line x1="82" y1="542" x2="1040" y2="542" stroke="#64748b" stroke-width="1.5"/>
+  <rect x="117.75" y="542.0" width="50" height="0.0" rx="4" fill="#0f766e"/>
+  <text x="142.75" y="534" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#334155">0%</text>
+  <rect x="176.75" y="225.3333333333333600" width="50" height="316.6666666666666400" rx="4" fill="#2563eb"/>
+  <text x="201.75" y="217.3333333333333600" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#334155">79.17%</text>
+  <rect x="235.75" y="225.3333333333333600" width="50" height="316.6666666666666400" rx="4" fill="#d97706"/>
+  <text x="260.75" y="217.3333333333333600" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#334155">79.17%</text>
+  <text x="201.75" y="580" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="600" fill="#1e293b">Accuracy</text>
+  <rect x="357.25" y="542.0" width="50" height="0.0" rx="4" fill="#0f766e"/>
+  <text x="382.25" y="534" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#334155">0%</text>
+  <rect x="416.25" y="217.8056758056758000" width="50" height="324.1943241943242000" rx="4" fill="#2563eb"/>
+  <text x="441.25" y="209.8056758056758000" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#334155">81.05%</text>
+  <rect x="475.25" y="217.8056758056758000" width="50" height="324.1943241943242000" rx="4" fill="#d97706"/>
+  <text x="500.25" y="209.8056758056758000" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#334155">81.05%</text>
+  <text x="441.25" y="580" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="600" fill="#1e293b">Macro F1</text>
+  <rect x="596.75" y="542.0" width="50" height="0.0" rx="4" fill="#0f766e"/>
+  <text x="621.75" y="534" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#334155">0%</text>
+  <rect x="655.75" y="142.0" width="50" height="400.0" rx="4" fill="#2563eb"/>
+  <text x="680.75" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#334155">100%</text>
+  <rect x="714.75" y="142.0" width="50" height="400.0" rx="4" fill="#d97706"/>
+  <text x="739.75" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#334155">100%</text>
+  <text x="680.75" y="580" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="600" fill="#1e293b">Coverage</text>
+  <rect x="836.25" y="142.0" width="50" height="400.0" rx="4" fill="#0f766e"/>
+  <text x="861.25" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#334155">100%</text>
+  <rect x="895.25" y="542.0" width="50" height="0.0" rx="4" fill="#2563eb"/>
+  <text x="920.25" y="534" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#334155">0%</text>
+  <rect x="954.25" y="542.0" width="50" height="0.0" rx="4" fill="#d97706"/>
+  <text x="979.25" y="534" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#334155">0%</text>
+  <text x="920.25" y="572" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="600" fill="#1e293b">Insufficient</text>
+  <text x="920.25" y="591" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="600" fill="#1e293b">evidence</text>
+  <text x="540" y="636" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#64748b">Hybrid is operationally distinct but numerically equal to Machine Learning in the accepted aggregate comparison.</text>
+</svg>

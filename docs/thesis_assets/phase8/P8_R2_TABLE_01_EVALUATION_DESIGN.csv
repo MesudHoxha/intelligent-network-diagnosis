@@ -1,0 +1,13 @@
+item,value,evidence,interpretation
+diagnostic_classes,6,E04;C02,Six accepted single-fault diagnostic classes.
+complete_contexts,6,E04;C02,Six complete controlled laboratory contexts.
+clean_dataset_rows,72,E04;C02,Accepted final clean Dataset Row v3 observations.
+train_rows,36,E04;C02,Whole-context training partition.
+validation_rows,12,E04;C02,Whole-context validation partition.
+test_rows,24,E04;C02,Whole-context sealed test partition.
+clean_test_inputs,24,E05;C04,Clean report-only inputs.
+masked_test_inputs,96,E05;C05,Deterministic missing-evidence transformations; not independent experiments.
+total_evaluation_inputs,120,E05;C03,Accepted descriptive comparison inputs per method.
+deterministic_masks,4,E05;C05,Four frozen missing-evidence masks applied to clean test inputs.
+compared_methods,3,E03;E05;C03,"Rule-based, Machine Learning, and Hybrid."
+report_only_test_attempts,1,E05;C08,One accepted test evaluation after the development freeze.
