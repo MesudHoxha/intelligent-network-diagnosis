@@ -1349,3 +1349,21 @@ are next. X1 verification passed 29/29 targeted tests, 18/18 X0, 185/185
 Phase 6, 6/6 H1, 175/175 Phase 7-through-9, 656 passed/1 skipped materialized,
 654 passed/3 skipped in a clean clone, and 1/1 existing real Containerlab
 lifecycle regression. The E2E is a baseline regression, not new X1 evidence.
+
+X2-R0 subsequently freezes the addressing design and runtime boundary under
+D-100. Four single-fault signatures are explicit and disjoint: wrong IP changes
+address identity only; wrong subnet mask changes prefix identity only; missing
+default route removes route presence without becoming wrong gateway; and
+duplicate IP requires active detection plus temporal MAC churn.
+
+The gate binds the X0 taxonomy, X1 contract manifest, five addressing feature
+definitions, mask plan, Topology Context v1, Evidence v4, the metadata-only
+collector registry, and the X1 verifier by SHA-256. The addressing collector
+remains design-only. Runtime is divided into X2-R1 wrong IP, X2-R2 wrong mask,
+X2-R3 missing default route, X2-R4 duplicate IP, and X2-R5 closeout. Every
+slice requires a separate gate, recovery intent, idempotent restoration, real
+Evidence v4, real E2E, restored baseline, and cleanup.
+
+X2-R0 executes no Containerlab command, network mutation, new collection,
+dataset generation, model operation, prediction, metric, report-only access,
+or multiple-fault run. P9-R1 remains paused; X2-R1 is next.

@@ -1520,26 +1520,26 @@ restoration, campaign feasibility, six-class generalization, or method
 performance. Those claims remain prohibited until their later gates.
 
 ## H1 — Runtime safety and reproducibility hardening
-Status: Implemented; commit-package verification required
+Status: Complete
 
 - D-097 maintenance-only scope: implemented
 - Durable pre-mutation recovery intent and exception-path cleanup: implemented
 - Idempotent restoration and interrupted-run recovery replay: implemented
 - All production subprocess calls bounded; timeout return code 124: implemented
 - Clean-clone and accepted-runtime pytest tiers: implemented
-- Optional real Containerlab E2E lifecycle: implemented but not executed by
-  default; operational pass remains pending local lab execution
+- Optional real Containerlab E2E lifecycle: implemented and operationally
+  verified; remains excluded from the default clean-clone suite
 - P4 Joblib CLI accepted-hash trust anchor: implemented
 - Large-module and duplicated frozen-helper refactor: deliberately deferred
 - P6-R6 hard-coded coordinator binding: retained as intentional freeze
-- Expected package gate: H1 6/6; Phase 6 185/185; Phase 7–9 175/175;
-  materialized full suite 609 passed/1 skipped; clean clone 607 passed/3 skipped
+- Accepted package gate: H1 6/6; Phase 6 185/185; Phase 7–9 175/175;
+  materialized and clean-clone suites green; real infrastructure 1/1
 - Accepted artifacts, scientific results, P7 API/Dashboard contract, P8/P9
   claims, and P9-R0 source gate: unchanged
 - P9-R1: remains paused by explicit user request
 
 ## Expansion Track X — Ambitious technical scope
-Status: X0 and X1 complete; X2 next
+Status: X0, X1, and X2-R0 complete; X2-R1 next
 
 - D-098 append-only expansion decision: accepted
 - Phase 8 interpretation: strong frozen six-class baseline, not the end of the
@@ -1583,6 +1583,21 @@ Status: X0 and X1 complete; X2 next
 - Existing real Containerlab lifecycle regression: 1/1 passed
 - Protected hashes: unchanged; X1 gate: verified
 
+### X2-R0 addressing design gate
+
+- D-100 disjoint four-fault addressing boundary: implemented
+- Wrong IP, wrong mask, missing default route, and duplicate IP signatures:
+  frozen without connectivity-only classification
+- X1 addressing feature binding: 5/5 planned features
+- Duplicate IP: active plus temporal MAC evidence required
+- X2 release sequence: X2-R0 through X2-R5, runtime never inherited
+- Recovery intent, atomic journal, best-effort/idempotent restoration, restored
+  baseline, real E2E, and cleanup: required per runtime slice
+- Runtime authorization: 10/10 false
+- New empirical evidence, dataset, model, prediction, metric, and report-only
+  access: absent
+- Frozen Phase 6/7/8 baseline and P9-R1 pause: unchanged
+
 ### Next technical milestone
 
-X2 — Addressing Vertical Slices. X1 does not authorize X2 runtime by itself.
+X2-R1 — Wrong IP Address and the isolated addressing runtime foundation.

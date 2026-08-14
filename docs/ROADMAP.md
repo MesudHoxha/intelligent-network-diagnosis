@@ -388,7 +388,7 @@ Status: In progress
 - Preserve exact P8 values, claim limitations, and blocked-claim scope
 
 ## H1 — Runtime Safety and Reproducibility Hardening
-Status: Maintenance implementation complete; package verification pending
+Status: Complete
 
 H1 is inserted after P7-UX1 and P9-R0 as a non-scientific maintenance gate.
 It adds durable/idempotent Phase 6 recovery, bounded external commands,
@@ -396,15 +396,15 @@ clean-clone-safe tests, an opt-in real infrastructure cycle, and a trusted P4
 Joblib CLI boundary. It neither changes the accepted Phase 6 result chain nor
 advances Phase 9 writing.
 
-Acceptance requires exact-preimage installation, unchanged private archive and
-P8/P9 gates, 609 passed plus one infrastructure skip in the materialized tree,
-and 607 passed plus three explicit skips in a clean clone. The real
-Containerlab smoke may be run later as operational verification only.
+H1 acceptance passed exact-preimage installation, unchanged private archive
+and P8/P9 gates, the materialized and clean-clone suites, and the opt-in real
+Containerlab lifecycle. Later X1 verification re-proved the same safety tests
+and infrastructure cycle without changing accepted results.
 
 P9-R1 remains paused by user request.
 
 ## Expansion Track X — Original ambitious technical vision
-Status: X0 complete; X1 planned
+Status: X0, X1, and X2-R0 complete; X2-R1 next
 
 This track extends the frozen Phase 6/7/8 baseline append-only. It does not
 reopen accepted results or resume the separately paused P9-R1 thesis milestone.
@@ -436,12 +436,19 @@ Status: Complete
 - No collector executor or new empirical runtime
 
 ### X2 — Addressing
-Status: Next
+Status: In progress — X2-R0 complete; X2-R1 next
 
 - Wrong IP address
 - Wrong subnet mask
 - Missing default route
 - Duplicate IP with temporal ARP/MAC evidence
+- X2-R0: disjoint signatures, X1 feature binding, safety invariants, and
+  non-inherited runtime gate complete
+- X2-R1: wrong IP plus isolated addressing runtime foundation next
+- X2-R2: wrong subnet mask planned
+- X2-R3: missing default route planned
+- X2-R4: duplicate IP with active and temporal evidence planned
+- X2-R5: addressing closeout planned
 
 ### X3 — Layer 2 and VLAN
 Status: Planned

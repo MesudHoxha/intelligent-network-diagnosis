@@ -2617,3 +2617,36 @@ D-099 establishes structure, feature semantics, composition planning, and
 backward-compatible projection. It does not prove a new probe, injector,
 topology, feature value, dataset row, diagnosis, model, metric, or
 generalization claim.
+
+## D-100 — Freeze disjoint addressing signatures before X2 runtime
+
+Decision: Accept X2-R0 as a design-only gate for the four X2 vertical slices:
+`wrong_ip_address`, `wrong_subnet_mask`, `missing_default_route`, and
+`duplicate_ip`. Diagnosis must be grounded in disjoint address, prefix,
+default-route, active-duplicate, and temporal-MAC signatures rather than only
+in end-to-end reachability.
+
+Wrong IP preserves the expected prefix and installed default route while the
+exact address differs. Wrong subnet mask preserves the exact address and
+default route while the prefix differs. Missing default route preserves the
+expected address and prefix but has no installed default route; it is not the
+frozen wrong-gateway class. Duplicate IP preserves the expected local
+configuration and requires both active duplicate detection and temporal MAC
+churn. A stale neighbor entry alone is insufficient.
+
+Each slice is released separately from X2-R1 through X2-R4 and requires a
+durable pre-mutation recovery intent, atomic journal, best-effort idempotent
+restoration, real Evidence v4 with raw hashes and collector provenance, a real
+Containerlab lifecycle, restored baseline, and zero-container cleanup. X2-R5
+closes addressing. Runtime authorization is never inherited between releases.
+
+Status: X2-R0 is implemented as a design-only manifest, schema, fail-closed
+verifier, unit tests, and cross-gate integration tests. All ten runtime flags
+remain false, no empirical evidence is created, accepted results remain
+immutable, and P9-R1 remains paused. X2-R1 is next.
+
+Limitation:
+
+D-100 does not prove an addressing topology, command availability, injector,
+collector value, rule diagnosis, restoration, E2E execution, dataset row,
+model, metric, or generalization claim.
