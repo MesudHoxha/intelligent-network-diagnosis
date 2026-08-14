@@ -15,6 +15,13 @@ from tests.unit.p7_r1_fixtures import build_p7_fixture_repository
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 PLAN_PATH = Path("plans/phase8/P8_R0_EVIDENCE_CLAIM_SCOPE_V1.json")
 SCHEMA_PATH = Path("schemas/p8_evidence_claim_scope_v1.schema.json")
+ACCEPTED_RUNTIME_PATHS = (
+    Path("data/metadata/p6_r6_six_class_method_gate_v1.json"),
+    Path(
+        "reports/experiments/p6_r6_six_class_v1/"
+        "cross_method_comparison.json"
+    ),
+)
 
 
 def _json(path: Path) -> dict[str, object]:
@@ -25,6 +32,19 @@ def _json(path: Path) -> dict[str, object]:
 
 def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _require_accepted_runtime() -> None:
+    missing = [
+        path.as_posix()
+        for path in ACCEPTED_RUNTIME_PATHS
+        if not (PROJECT_ROOT / path).is_file()
+    ]
+    if missing:
+        pytest.skip(
+            "accepted ignored runtime is not materialized: "
+            + ", ".join(missing)
+        )
 
 
 def test_scope_manifest_schema_is_valid_on_disposable_evidence(tmp_path: Path) -> None:
@@ -47,14 +67,18 @@ def test_scope_builder_fails_closed_on_accepted_artifact_drift(tmp_path: Path) -
         build_scope_manifest(repository_root=root)
 
 
+@pytest.mark.accepted_runtime
 def test_tracked_scope_manifest_matches_verified_repository() -> None:
+    _require_accepted_runtime()
     tracked = _json(PROJECT_ROOT / PLAN_PATH)
     rebuilt = build_scope_manifest(repository_root=PROJECT_ROOT)
 
     assert tracked == rebuilt
 
 
+@pytest.mark.accepted_runtime
 def test_final_evaluation_snapshot_is_hash_bound() -> None:
+    _require_accepted_runtime()
     manifest = _json(PROJECT_ROOT / PLAN_PATH)
     snapshot = manifest["final_evaluation_snapshot"]
     assert isinstance(snapshot, dict)

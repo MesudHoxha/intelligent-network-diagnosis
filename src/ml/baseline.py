@@ -52,6 +52,14 @@ EXPECTED_DATASET_SHA256 = (
     "be92cef4e78764e772909e15f43ab5cba98ef9610f4a446fc"
     "95e8afb5e830c80"
 )
+ACCEPTED_SELECTION_SHA256 = (
+    "a02536d6f2478d9fdc40510275dd3b48a2824ee7b1f0fa08c"
+    "1aed472611fb6fb"
+)
+ACCEPTED_MODEL_SHA256 = (
+    "90db38e625f4bcf6a234b6a0516371b76f98e01b4437f684f"
+    "fea119cbc09cdb2"
+)
 SELECTION_FILE_NAME = "selection.json"
 MODEL_FILE_NAME = "estimator.joblib"
 REPORT_FILE_NAME = "method_evaluation_result.json"
@@ -1337,14 +1345,30 @@ def build_parser() -> argparse.ArgumentParser:
     )
     verify_selection.add_argument("--selection", type=Path, required=True)
     verify_selection.add_argument("--model", type=Path, required=True)
-    verify_selection.add_argument("--expected-selection-sha256")
-    verify_selection.add_argument("--expected-model-sha256")
+    verify_selection.add_argument(
+        "--expected-selection-sha256",
+        required=True,
+        choices=(ACCEPTED_SELECTION_SHA256,),
+    )
+    verify_selection.add_argument(
+        "--expected-model-sha256",
+        required=True,
+        choices=(ACCEPTED_MODEL_SHA256,),
+    )
 
     report_parser = subparsers.add_parser("report", parents=[common])
     report_parser.add_argument("--selection", type=Path, required=True)
     report_parser.add_argument("--model", type=Path, required=True)
-    report_parser.add_argument("--expected-selection-sha256", required=True)
-    report_parser.add_argument("--expected-model-sha256", required=True)
+    report_parser.add_argument(
+        "--expected-selection-sha256",
+        required=True,
+        choices=(ACCEPTED_SELECTION_SHA256,),
+    )
+    report_parser.add_argument(
+        "--expected-model-sha256",
+        required=True,
+        choices=(ACCEPTED_MODEL_SHA256,),
+    )
     report_parser.add_argument("--experiments-root", type=Path, required=True)
     report_parser.add_argument("--report-directory", type=Path, required=True)
     report_parser.add_argument(

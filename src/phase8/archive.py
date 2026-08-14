@@ -12,13 +12,13 @@ import gzip
 import hashlib
 import io
 import json
-import subprocess
 import tarfile
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from typing import Any, Iterable, Mapping, Sequence
 
 from src.phase7.catalog import ArtifactCatalog
+from src.runtime.subprocesses import run_capture
 
 
 REGISTRY_ID = "p8_r1_final_evidence_registry_v1"
@@ -243,12 +243,9 @@ def _verify_reference(root: Path, value: Any, label: str) -> dict[str, Any]:
 
 
 def _git(root: Path, *arguments: str) -> str:
-    result = subprocess.run(
+    result = run_capture(
         ["git", "-C", str(root), *arguments],
-        check=False,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
+        timeout_seconds=30.0,
     )
     if result.returncode != 0:
         raise EvidenceArchiveError(

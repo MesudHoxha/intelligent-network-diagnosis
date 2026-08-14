@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
@@ -16,6 +15,7 @@ from src.collection.evidence_collector_v3 import (
 )
 from src.contracts.experiment_manifest import validate_experiment_manifest
 from src.fault_injection.phase6_common import (
+    RECOVERY_INTENT_NAME,
     load_json_object,
     utc_now,
     write_json_atomic,
@@ -26,10 +26,14 @@ from src.fault_injection.phase6_registry import (
 )
 from src.verification.fault_evidence_v3 import verify_fault_evidence_v3
 from src.verification.healthy_evidence_v3 import verify_healthy_evidence_v3
+from src.runtime.subprocesses import run_capture
 
 
 class Phase6ExperimentRunnerError(RuntimeError):
     """Raised when one clean Phase 6 experiment cannot be accepted."""
+
+
+BASELINE_TIMEOUT_SECONDS = 120.0
 
 
 BaselineValidator = Callable[[Path], dict[str, object]]
@@ -44,11 +48,9 @@ def build_experiment_id(scenario_id: str) -> str:
 
 
 def run_baseline_validator(script_path: Path) -> dict[str, object]:
-    process = subprocess.run(
+    process = run_capture(
         ["bash", str(script_path)],
-        capture_output=True,
-        text=True,
-        check=False,
+        timeout_seconds=BASELINE_TIMEOUT_SECONDS,
     )
     return {
         "command": ["bash", str(script_path)],
@@ -109,6 +111,91 @@ def _restoration_confirmed(mutation_directory: Path) -> bool:
     if not path.exists():
         return False
     return load_json_object(path).get("status") == "RESTORATION_CONFIRMED"
+
+
+def _recovery_required(mutation_directory: Path) -> bool:
+    if _restoration_confirmed(mutation_directory):
+        return False
+    return (
+        mutation_directory / RECOVERY_INTENT_NAME
+    ).exists() or _mutation_applied(mutation_directory)
+
+
+def recover_phase6_experiment(
+    scenario_path: Path,
+    experiment_directory: Path,
+    baseline_validator_path: Path,
+    *,
+    baseline_validator: BaselineValidator = run_baseline_validator,
+    fault_restorer: FaultMutator = restore_phase6_fault,
+) -> dict[str, object]:
+    """Replay restoration from a durable intent after process interruption."""
+
+    scenario_path = Path(scenario_path)
+    experiment_directory = Path(experiment_directory)
+    baseline_validator_path = Path(baseline_validator_path)
+    _, scenario = _load_scenario(scenario_path)
+    fault = scenario.get("fault")
+    if scenario.get("kind") != "fault" or not isinstance(fault, dict):
+        raise Phase6ExperimentRunnerError(
+            "Recovery requires one reviewed Phase 6 fault scenario."
+        )
+    fault_type = fault.get("type")
+    if not isinstance(fault_type, str) or not fault_type:
+        raise Phase6ExperimentRunnerError(
+            "Recovery scenario has no valid fault type."
+        )
+    if not experiment_directory.is_dir():
+        raise Phase6ExperimentRunnerError(
+            f"Recovery experiment directory does not exist: "
+            f"{experiment_directory}"
+        )
+
+    mutation_directory = experiment_directory / "mutation"
+    if not (
+        _recovery_required(mutation_directory)
+        or _restoration_confirmed(mutation_directory)
+    ):
+        raise Phase6ExperimentRunnerError(
+            "No recovery intent, applied mutation, or confirmed restoration "
+            "exists for this experiment."
+        )
+
+    restoration = fault_restorer(
+        fault_type,
+        scenario_path,
+        mutation_directory,
+    )
+    if _recovery_required(mutation_directory) or not (
+        isinstance(restoration, dict)
+        and restoration.get("status") == "RESTORATION_CONFIRMED"
+    ):
+        raise Phase6ExperimentRunnerError(
+            "Interrupted Phase 6 experiment was not restored."
+        )
+
+    baseline_after = baseline_validator(baseline_validator_path)
+    write_json_atomic(
+        experiment_directory / "validation" / "baseline_after_recovery.json",
+        baseline_after,
+    )
+    if baseline_after.get("return_code") != 0:
+        raise Phase6ExperimentRunnerError(
+            "Restoration completed but the baseline recovery check failed."
+        )
+
+    result = {
+        "schema_version": 1,
+        "status": "RECOVERY_CONFIRMED",
+        "scenario_id": scenario.get("id"),
+        "fault_type": fault_type,
+        "experiment_directory": str(experiment_directory),
+        "restoration_confirmed": True,
+        "baseline_restored": True,
+        "completed_at_utc": utc_now(),
+    }
+    write_json_atomic(experiment_directory / "recovery_replay.json", result)
+    return result
 
 
 def run_phase6_experiment(
@@ -259,18 +346,15 @@ def run_phase6_experiment(
                 restoration = load_json_object(
                     mutation_directory / "restoration_record.json"
                 )
-            elif _mutation_applied(mutation_directory):
+            elif _recovery_required(mutation_directory):
                 restoration = fault_restorer(
                     fault_type,
                     scenario_path,
                     mutation_directory,
                 )
-            if _mutation_applied(mutation_directory) and not (
-                isinstance(restoration, dict)
-                and restoration.get("status") == "RESTORATION_CONFIRMED"
-            ):
+            if _recovery_required(mutation_directory):
                 raise Phase6ExperimentRunnerError(
-                    "Applied Phase 6 mutation lacks a confirmed restoration."
+                    "Phase 6 recovery intent lacks a confirmed restoration."
                 )
         except Exception as error:
             restoration_error = error
@@ -340,17 +424,32 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--scenario", type=Path, required=True)
     parser.add_argument("--output-root", type=Path, default=Path("data/raw"))
     parser.add_argument("--baseline-validator", type=Path, required=True)
+    parser.add_argument(
+        "--recover-experiment-directory",
+        type=Path,
+        help=(
+            "Replay idempotent restoration for an interrupted experiment "
+            "instead of starting a new one."
+        ),
+    )
     return parser
 
 
 def main() -> int:
     arguments = build_parser().parse_args()
     try:
-        result = run_phase6_experiment(
-            arguments.scenario,
-            arguments.output_root,
-            arguments.baseline_validator,
-        )
+        if arguments.recover_experiment_directory is not None:
+            result = recover_phase6_experiment(
+                arguments.scenario,
+                arguments.recover_experiment_directory,
+                arguments.baseline_validator,
+            )
+        else:
+            result = run_phase6_experiment(
+                arguments.scenario,
+                arguments.output_root,
+                arguments.baseline_validator,
+            )
     except Exception as error:
         print(f"[ERROR] {error}")
         return 1

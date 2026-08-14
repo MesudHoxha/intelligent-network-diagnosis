@@ -12,6 +12,7 @@ from src.fault_injection.phase6_common import (
     effective_route_check,
     execute_checked,
     interface_state_check,
+    load_confirmed_restoration,
     load_phase6_scenario,
     observer_route_absent_check,
     observer_route_check,
@@ -19,6 +20,7 @@ from src.fault_injection.phase6_common import (
     require_new_mutation_output,
     require_restorable_record,
     utc_now,
+    write_recovery_intent,
     write_json_atomic,
 )
 
@@ -162,6 +164,8 @@ def inject_missing_static_route(
             "missing_static_route preconditions failed; no mutation was attempted."
         )
 
+    write_recovery_intent(output_directory, binding)
+
     command = execute_checked(
         executor,
         profile.route_observer_container,
@@ -237,10 +241,9 @@ def restore_missing_static_route(
 ) -> dict[str, object]:
     binding = load_phase6_scenario(scenario_path, MISSING_ROUTE)
     output_directory = Path(output_directory)
-    if (output_directory / "restoration_record.json").exists():
-        raise Phase6FaultInjectionError(
-            "missing_static_route restoration was already recorded."
-        )
+    existing = load_confirmed_restoration(output_directory, binding)
+    if existing is not None:
+        return existing
     require_restorable_record(output_directory, binding)
     profile = binding.profile
     started = utc_now()
@@ -278,11 +281,7 @@ def restore_missing_static_route(
         ],
     )
     postconditions = _healthy_checks(binding, executor)
-    restored = (
-        all_checks_pass(preconditions)
-        and command["return_code"] == 0
-        and all_checks_pass(postconditions)
-    )
+    restored = command["return_code"] == 0 and all_checks_pass(postconditions)
     record = {
         "schema_version": 1,
         "scenario_id": binding.scenario["id"],
@@ -342,6 +341,8 @@ def inject_wrong_next_hop_v3(
         raise Phase6FaultInjectionError(
             "wrong_next_hop preconditions failed; no mutation was attempted."
         )
+
+    write_recovery_intent(output_directory, binding)
 
     command = execute_checked(
         executor,
@@ -425,10 +426,9 @@ def restore_wrong_next_hop_v3(
 ) -> dict[str, object]:
     binding = load_phase6_scenario(scenario_path, WRONG_NEXT_HOP)
     output_directory = Path(output_directory)
-    if (output_directory / "restoration_record.json").exists():
-        raise Phase6FaultInjectionError(
-            "wrong_next_hop restoration was already recorded."
-        )
+    existing = load_confirmed_restoration(output_directory, binding)
+    if existing is not None:
+        return existing
     require_restorable_record(output_directory, binding)
     profile = binding.profile
     wrong_next_hop = str(binding.parameters["wrong_next_hop"])
@@ -464,11 +464,7 @@ def restore_wrong_next_hop_v3(
         ],
     )
     postconditions = _healthy_checks(binding, executor)
-    restored = (
-        all_checks_pass(preconditions)
-        and command["return_code"] == 0
-        and all_checks_pass(postconditions)
-    )
+    restored = command["return_code"] == 0 and all_checks_pass(postconditions)
     record = {
         "schema_version": 1,
         "scenario_id": binding.scenario["id"],

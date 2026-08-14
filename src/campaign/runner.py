@@ -4,7 +4,6 @@ import argparse
 import hashlib
 import json
 import re
-import subprocess
 from collections import Counter
 from collections.abc import Callable, Mapping, Sequence
 from datetime import datetime, timezone
@@ -13,6 +12,8 @@ from typing import Any
 from uuid import uuid4
 
 import yaml
+
+from src.runtime.subprocesses import run_capture
 
 from src.batch.plan import expand_batch_plan
 from src.batch.runner import run_batch
@@ -325,12 +326,10 @@ def run_command(
     command: Sequence[str],
     cwd: Path,
 ) -> dict[str, Any]:
-    completed = subprocess.run(
+    completed = run_capture(
         list(command),
         cwd=cwd,
-        check=False,
-        capture_output=True,
-        text=True,
+        timeout_seconds=180.0,
     )
 
     return {

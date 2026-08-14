@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Sequence
@@ -23,10 +22,14 @@ from src.evaluation.evaluator import evaluate_experiment
 from src.fault_injection.common import FaultInjectionError
 from src.fault_injection.registry import inject_fault
 from src.rules.rule_engine import run_rule_engine
+from src.runtime.subprocesses import run_capture
 
 
 class ExperimentRunnerError(RuntimeError):
     """Raised when an experiment cannot be completed safely."""
+
+
+COMMAND_TIMEOUT_SECONDS = 120.0
 
 
 def utc_now() -> str:
@@ -57,11 +60,9 @@ def write_json(path: Path, data: object) -> None:
 
 
 def run_command(command: Sequence[str]) -> dict[str, Any]:
-    process = subprocess.run(
+    process = run_capture(
         list(command),
-        capture_output=True,
-        text=True,
-        check=False,
+        timeout_seconds=COMMAND_TIMEOUT_SECONDS,
     )
 
     return {

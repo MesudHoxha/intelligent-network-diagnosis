@@ -4,7 +4,6 @@ import argparse
 import hashlib
 import json
 import re
-import subprocess
 from collections import Counter
 from collections.abc import Callable, Mapping, Sequence
 from datetime import datetime, timezone
@@ -33,6 +32,7 @@ from src.dataset.explicit_splitter_v3 import (
     write_explicit_complete_context_split_v3,
 )
 from src.orchestration.phase6_experiment_runner import run_phase6_experiment
+from src.runtime.subprocesses import run_capture
 from src.planning.fault_taxonomy import EXPECTED_SIGNATURES, FEATURE_ORDER
 
 
@@ -168,8 +168,10 @@ def write_jsonl_exclusive(path: Path, rows: Sequence[dict[str, Any]]) -> str:
 
 def run_command(command: Sequence[str], cwd: Path) -> dict[str, Any]:
     try:
-        completed = subprocess.run(
-            list(command), cwd=cwd, check=False, capture_output=True, text=True
+        completed = run_capture(
+            list(command),
+            cwd=cwd,
+            timeout_seconds=180.0,
         )
         return_code = completed.returncode
         stdout = completed.stdout

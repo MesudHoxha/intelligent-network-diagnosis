@@ -24,3 +24,7 @@ test = [
 pythonpath = ["."]
 testpaths = ["tests"]
 addopts = "-ra"
+markers = [
+    "accepted_runtime: requires the verified ignored runtime archive to be materialized",
+    "infrastructure: opt-in Docker and Containerlab end-to-end execution",
+]

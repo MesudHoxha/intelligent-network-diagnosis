@@ -146,6 +146,7 @@ def test_route_fault_injection_and_exact_restoration(
 
     restoration = restorer(SCENARIOS[fault_type], output, executor=lab)
     assert restoration["status"] == "RESTORATION_CONFIRMED"
+    assert restorer(SCENARIOS[fault_type], output, executor=lab) == restoration
     assert lab.route == (lab.expected_next_hop, "eth2")
     assert lab._destination_reachable()
 

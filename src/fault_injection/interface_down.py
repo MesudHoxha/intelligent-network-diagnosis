@@ -10,6 +10,7 @@ from src.fault_injection.phase6_common import (
     docker_exec_result,
     execute_checked,
     interface_state_check,
+    load_confirmed_restoration,
     load_phase6_scenario,
     observer_route_absent_check,
     observer_route_check,
@@ -18,6 +19,7 @@ from src.fault_injection.phase6_common import (
     require_restorable_record,
     utc_now,
     write_json_atomic,
+    write_recovery_intent,
 )
 
 
@@ -244,6 +246,7 @@ def inject_interface_down(
             "interface_down preconditions failed; no mutation was "
             "attempted."
         )
+    write_recovery_intent(output_directory, binding)
     command = execute_checked(
         executor,
         binding.profile.route_observer_container,
@@ -316,10 +319,9 @@ def restore_interface_down(
 ) -> dict[str, object]:
     binding = load_phase6_scenario(scenario_path, FAULT_TYPE)
     output_directory = Path(output_directory)
-    if (output_directory / "restoration_record.json").exists():
-        raise Phase6FaultInjectionError(
-            "interface_down restoration was already recorded."
-        )
+    existing = load_confirmed_restoration(output_directory, binding)
+    if existing is not None:
+        return existing
     require_restorable_record(output_directory, binding)
     interface = _interface(binding)
     profile = binding.profile
@@ -344,11 +346,7 @@ def restore_interface_down(
     )
     postconditions = _healthy_checks(binding, executor)
     restored = (
-        preconditions["exact_injected_interface_state_present"][
-            "passed"
-        ]
-        is True
-        and command["return_code"] == 0
+        command["return_code"] == 0
         and all(
             result["return_code"] == 0
             for result in route_restoration_commands

@@ -211,10 +211,16 @@ def test_new_injector_and_exact_restoration(
     )
 
     assert restoration["status"] == "RESTORATION_CONFIRMED"
+    assert restorer(
+        SCENARIOS[fault_type],
+        output,
+        executor=lab,
+    ) == restoration
     assert lab.default_gateway == "10.10.1.1"
     assert lab.interface_up is True
     assert lab.rule_tag is None
     assert (output / "preconditions.json").is_file()
+    assert (output / "recovery_intent.json").is_file()
     assert (output / "injection_record.json").is_file()
     assert (output / "restoration_record.json").is_file()
     assert (output / "ground_truth.json").is_file()

@@ -1280,3 +1280,22 @@ Verification passed 94/94 Phase 7, 175/175 Phase 7-through-9, 185/185
 targeted Phase 6, and 603/603 full regression tests. P9-R1 remains paused
 by explicit user request. Automated implementation acceptance is complete;
 final visual acceptance remains pending the local-browser screenshot review.
+
+H1 subsequently hardens runtime safety and reproducibility under D-097 without
+reopening any accepted result. A durable recovery intent is now written before
+each Phase 6 mutation, normal exception cleanup recognizes that intent even
+without an injection record, and a separate recovery replay can restore an
+interrupted experiment from the surviving journal. Confirmed restoration is
+idempotent and every recovery path verifies the reviewed healthy final state.
+
+All production external commands are bounded and timeout becomes a structured
+return-code-124 failure. Two P8 checks that require ignored accepted runtime
+are now an explicit acceptance tier, so a clean clone skips them rather than
+failing. An opt-in Containerlab test covers the real deploy-to-cleanup cycle but
+does not write accepted evidence and is not claimed as executed by H1.
+
+P4 user-facing Joblib verification/report paths accept only the exact D-073
+selection and model hashes and check integrity before deserialization. The
+P6-R6 fixed coordinator, large scientific modules, and phase-specific hash/JSON
+helpers remain unchanged where refactoring could invalidate frozen contracts.
+P9-R1 remains paused.

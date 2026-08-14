@@ -1,14 +1,18 @@
 from __future__ import annotations
 
 import json
-import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Sequence
 
+from src.runtime.subprocesses import run_capture
+
 
 class FaultInjectionError(RuntimeError):
     """Raised when a fault cannot be injected or validated safely."""
+
+
+COMMAND_TIMEOUT_SECONDS = 30.0
 
 
 @dataclass(frozen=True)
@@ -24,11 +28,9 @@ def run_command(
     *,
     check: bool = False,
 ) -> CommandResult:
-    process = subprocess.run(
+    process = run_capture(
         list(command),
-        capture_output=True,
-        text=True,
-        check=False,
+        timeout_seconds=COMMAND_TIMEOUT_SECONDS,
     )
 
     result = CommandResult(

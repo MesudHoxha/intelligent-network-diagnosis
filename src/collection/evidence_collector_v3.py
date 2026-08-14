@@ -5,7 +5,6 @@ import hashlib
 import json
 import os
 import shlex
-import subprocess
 import tempfile
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
@@ -24,6 +23,7 @@ from src.contracts.observation_profile_v2 import (
     ObservationProfileV2,
     validate_observation_profile_v2,
 )
+from src.runtime.subprocesses import run_capture
 
 
 CommandResult = dict[str, object]
@@ -32,6 +32,7 @@ ProbeExecutor = Callable[[str, Sequence[str]], CommandResult]
 RAW_DIRECTORY = PurePosixPath("raw/v3")
 EVIDENCE_PATH = PurePosixPath("parsed/evidence.json")
 STATUS_PATH = PurePosixPath("collector_status.json")
+DOCKER_EXEC_TIMEOUT_SECONDS = 30.0
 
 
 class EvidenceCollectorV3Error(RuntimeError):
@@ -76,11 +77,9 @@ def docker_exec_result(
 ) -> CommandResult:
     full_command = ["docker", "exec", container, *command]
     try:
-        process = subprocess.run(
+        process = run_capture(
             full_command,
-            capture_output=True,
-            text=True,
-            check=False,
+            timeout_seconds=DOCKER_EXEC_TIMEOUT_SECONDS,
         )
     except OSError as error:
         return {

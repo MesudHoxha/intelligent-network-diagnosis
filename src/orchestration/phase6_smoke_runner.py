@@ -3,7 +3,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import subprocess
 from pathlib import Path
 from typing import Any, Callable
 
@@ -15,6 +14,7 @@ from src.collection.evidence_collector_v3 import (
     load_observation_profile_v2,
 )
 from src.fault_injection.phase6_common import (
+    RECOVERY_INTENT_NAME,
     load_json_object,
     load_phase6_scenario,
     utc_now,
@@ -22,6 +22,7 @@ from src.fault_injection.phase6_common import (
 )
 from src.fault_injection.registry import inject_fault, restore_fault
 from src.rules.rule_engine_v3 import diagnose_evidence_v3
+from src.runtime.subprocesses import run_capture
 from src.verification.fault_evidence_v3 import (
     verify_fault_evidence_v3,
 )
@@ -34,6 +35,9 @@ class Phase6SmokeRunnerError(RuntimeError):
     """Raised when a P6-R4 smoke execution fails."""
 
 
+BASELINE_TIMEOUT_SECONDS = 120.0
+
+
 BaselineValidator = Callable[[Path], dict[str, object]]
 
 
@@ -42,11 +46,9 @@ def _sha256(path: Path) -> str:
 
 
 def run_baseline_validator(script_path: Path) -> dict[str, object]:
-    process = subprocess.run(
+    process = run_capture(
         ["bash", str(script_path)],
-        capture_output=True,
-        text=True,
-        check=False,
+        timeout_seconds=BASELINE_TIMEOUT_SECONDS,
     )
     result = {
         "command": ["bash", str(script_path)],
@@ -113,16 +115,18 @@ def _require_rule_match(
 
 
 def _restoration_required(mutation_directory: Path) -> bool:
+    restoration_path = mutation_directory / "restoration_record.json"
+    if restoration_path.exists():
+        restoration = load_json_object(restoration_path)
+        if restoration.get("status") == "RESTORATION_CONFIRMED":
+            return False
+    if (mutation_directory / RECOVERY_INTENT_NAME).exists():
+        return True
     injection_path = mutation_directory / "injection_record.json"
     if not injection_path.exists():
         return False
     record = load_json_object(injection_path)
-    return (
-        record.get("mutation_applied") is True
-        and not (
-            mutation_directory / "restoration_record.json"
-        ).exists()
-    )
+    return record.get("mutation_applied") is True
 
 
 def run_phase6_smoke(

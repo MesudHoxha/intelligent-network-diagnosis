@@ -2507,3 +2507,36 @@ D-096 improves comprehension of accepted controlled results. It does not
 establish new explanation fidelity, live diagnosis, production usability,
 statistical superiority, new empirical performance, or real-world
 generalization.
+
+## D-097 — Accept runtime safety and clean-checkout hardening
+
+Decision: Accept H1 as a maintenance-only hardening milestone. Every Phase 6
+fault injector must persist a scenario-bound recovery intent atomically after
+healthy preconditions and before mutation. Experiment cleanup and the explicit
+recovery replay must treat that intent as a restoration obligation even when
+`injection_record.json` was never written. Restorers must be identity-checked,
+best-effort, final-state-verified, and idempotent after confirmation.
+
+All production `subprocess.run()` calls must be bounded. Timeout is normalized
+to return code 124 with partial output retained. Clean-clone source tests and
+private accepted-runtime checks are separate pytest tiers. The optional real
+Containerlab lifecycle smoke is non-default, temporary, and cannot become
+accepted evidence without separate authorization.
+
+User-facing P4 Joblib deserialization is limited to the exact accepted D-073
+selection and estimator hashes, with integrity and cross-binding checks before
+the loader. The P6-R6 coordinator remains a fixed offline acceptance gate; its
+campaign identities and source binding are intentionally not generalized or
+rewritten.
+
+Status: Implemented on 2026-08-14. Package verification must prove six H1
+tests, unchanged Phase 6 through Phase 9 acceptance gates, a green materialized
+suite, and a green clean-clone suite. The real infrastructure smoke remains an
+explicit opt-in execution and is not claimed as passed by this decision.
+
+Limitation:
+
+D-097 changes future runtime failure handling and test organization only. It
+does not create new experimental evidence, modify an accepted artifact or
+metric, establish production crash recovery, remove the need for an external
+supervisor after host loss, or resume P9-R1.

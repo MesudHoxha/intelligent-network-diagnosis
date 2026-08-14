@@ -1518,3 +1518,22 @@ containers establish preservation for this execution. This single
 healthy context does not prove any new fault signature, injector
 restoration, campaign feasibility, six-class generalization, or method
 performance. Those claims remain prohibited until their later gates.
+
+## H1 — Runtime safety and reproducibility hardening
+Status: Implemented; commit-package verification required
+
+- D-097 maintenance-only scope: implemented
+- Durable pre-mutation recovery intent and exception-path cleanup: implemented
+- Idempotent restoration and interrupted-run recovery replay: implemented
+- All production subprocess calls bounded; timeout return code 124: implemented
+- Clean-clone and accepted-runtime pytest tiers: implemented
+- Optional real Containerlab E2E lifecycle: implemented but not executed by
+  default; operational pass remains pending local lab execution
+- P4 Joblib CLI accepted-hash trust anchor: implemented
+- Large-module and duplicated frozen-helper refactor: deliberately deferred
+- P6-R6 hard-coded coordinator binding: retained as intentional freeze
+- Expected package gate: H1 6/6; Phase 6 185/185; Phase 7–9 175/175;
+  materialized full suite 609 passed/1 skipped; clean clone 607 passed/3 skipped
+- Accepted artifacts, scientific results, P7 API/Dashboard contract, P8/P9
+  claims, and P9-R0 source gate: unchanged
+- P9-R1: remains paused by explicit user request

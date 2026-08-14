@@ -3,7 +3,6 @@ from __future__ import annotations
 import hashlib
 import json
 import os
-import subprocess
 import tempfile
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -20,6 +19,7 @@ from src.contracts.observation_profile_v2 import (
     validate_observation_profile_v2,
 )
 from src.fault_injection.common import FaultInjectionError
+from src.runtime.subprocesses import run_capture
 
 
 Phase6CommandResult = dict[str, object]
@@ -31,6 +31,10 @@ Phase6Executor = Callable[
 
 class Phase6FaultInjectionError(FaultInjectionError):
     """Raised when a Phase 6 mutation cannot be handled safely."""
+
+
+RECOVERY_INTENT_NAME = "recovery_intent.json"
+DOCKER_EXEC_TIMEOUT_SECONDS = 30.0
 
 
 @dataclass(frozen=True)
@@ -57,11 +61,9 @@ def docker_exec_result(
 ) -> Phase6CommandResult:
     full_command = ["docker", "exec", container, *command]
     try:
-        process = subprocess.run(
+        process = run_capture(
             full_command,
-            capture_output=True,
-            text=True,
-            check=False,
+            timeout_seconds=DOCKER_EXEC_TIMEOUT_SECONDS,
         )
     except OSError as error:
         return {
@@ -175,6 +177,7 @@ def load_json_object(path: Path) -> dict[str, Any]:
 def require_new_mutation_output(output_directory: Path) -> None:
     conflicts = [
         output_directory / "preconditions.json",
+        output_directory / RECOVERY_INTENT_NAME,
         output_directory / "injection_record.json",
         output_directory / "restoration_record.json",
         output_directory / "ground_truth.json",
@@ -185,6 +188,79 @@ def require_new_mutation_output(output_directory: Path) -> None:
             "Phase 6 mutation output already exists: "
             + ", ".join(existing)
         )
+
+
+def _recovery_identity(binding: Phase6Scenario) -> dict[str, object]:
+    return {
+        "scenario_id": binding.scenario["id"],
+        "scenario_sha256": binding.sha256,
+        "fault_type": binding.fault["type"],
+        "target_node": binding.fault["target_node"],
+        "target_container": binding.fault["target_container"],
+        "parameters": binding.parameters,
+    }
+
+
+def write_recovery_intent(
+    output_directory: Path,
+    binding: Phase6Scenario,
+) -> dict[str, object]:
+    """Persist recovery identity before any network mutation is attempted."""
+
+    record = {
+        "schema_version": 1,
+        **_recovery_identity(binding),
+        "status": "RECOVERY_REQUIRED_IF_MUTATION_ATTEMPTED",
+        "created_at_utc": utc_now(),
+    }
+    write_json_atomic(
+        Path(output_directory) / RECOVERY_INTENT_NAME,
+        record,
+    )
+    return record
+
+
+def _require_matching_recovery_identity(
+    record: dict[str, Any],
+    binding: Phase6Scenario,
+    *,
+    label: str,
+    allow_missing_parameters: bool = False,
+) -> None:
+    expected = _recovery_identity(binding)
+    if any(
+        not (
+            allow_missing_parameters
+            and name == "parameters"
+            and name not in record
+        )
+        and record.get(name) != value
+        for name, value in expected.items()
+    ):
+        raise Phase6FaultInjectionError(
+            f"{label} does not match the reviewed scenario."
+        )
+
+
+def load_confirmed_restoration(
+    output_directory: Path,
+    binding: Phase6Scenario,
+) -> dict[str, Any] | None:
+    """Return an already confirmed restoration so retries are idempotent."""
+
+    path = Path(output_directory) / "restoration_record.json"
+    if not path.exists():
+        return None
+    record = load_json_object(path)
+    _require_matching_recovery_identity(
+        record,
+        binding,
+        label="Restoration record",
+        allow_missing_parameters=True,
+    )
+    if record.get("status") == "RESTORATION_CONFIRMED":
+        return record
+    return None
 
 
 def load_phase6_scenario(
@@ -536,30 +612,42 @@ def require_restorable_record(
     output_directory: Path,
     binding: Phase6Scenario,
 ) -> dict[str, Any]:
-    record = load_json_object(
-        Path(output_directory) / "injection_record.json"
+    output_directory = Path(output_directory)
+    injection_path = output_directory / "injection_record.json"
+    intent_path = output_directory / RECOVERY_INTENT_NAME
+
+    if injection_path.exists():
+        record = load_json_object(injection_path)
+        _require_matching_recovery_identity(
+            record,
+            binding,
+            label="Injection record",
+        )
+        if record.get("mutation_applied") is True:
+            if record.get("status") not in {
+                "FAULT_CONFIRMED",
+                "FAULT_NOT_CONFIRMED",
+            }:
+                raise Phase6FaultInjectionError(
+                    "Injection record has an invalid restoration state."
+                )
+            return record
+
+    if intent_path.exists():
+        intent = load_json_object(intent_path)
+        _require_matching_recovery_identity(
+            intent,
+            binding,
+            label="Recovery intent",
+        )
+        if intent.get("status") != (
+            "RECOVERY_REQUIRED_IF_MUTATION_ATTEMPTED"
+        ):
+            raise Phase6FaultInjectionError(
+                "Recovery intent has an invalid state."
+            )
+        return intent
+
+    raise Phase6FaultInjectionError(
+        "No applied-mutation record or pre-mutation recovery intent exists."
     )
-    expected = {
-        "scenario_id": binding.scenario["id"],
-        "scenario_sha256": binding.sha256,
-        "fault_type": binding.fault["type"],
-        "target_node": binding.fault["target_node"],
-        "target_container": binding.fault["target_container"],
-        "parameters": binding.parameters,
-    }
-    if any(record.get(name) != value for name, value in expected.items()):
-        raise Phase6FaultInjectionError(
-            "Injection record does not match the reviewed scenario."
-        )
-    if record.get("mutation_applied") is not True:
-        raise Phase6FaultInjectionError(
-            "Injection record does not contain an applied mutation."
-        )
-    if record.get("status") not in {
-        "FAULT_CONFIRMED",
-        "FAULT_NOT_CONFIRMED",
-    }:
-        raise Phase6FaultInjectionError(
-            "Injection record has an invalid restoration state."
-        )
-    return record

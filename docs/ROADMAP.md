@@ -386,3 +386,19 @@ Status: In progress
   6: 185/185; full regression: 594/594
 - P9-R1 Thesis Skeleton and Traceability Matrix: paused by user request
 - Preserve exact P8 values, claim limitations, and blocked-claim scope
+
+## H1 — Runtime Safety and Reproducibility Hardening
+Status: Maintenance implementation complete; package verification pending
+
+H1 is inserted after P7-UX1 and P9-R0 as a non-scientific maintenance gate.
+It adds durable/idempotent Phase 6 recovery, bounded external commands,
+clean-clone-safe tests, an opt-in real infrastructure cycle, and a trusted P4
+Joblib CLI boundary. It neither changes the accepted Phase 6 result chain nor
+advances Phase 9 writing.
+
+Acceptance requires exact-preimage installation, unchanged private archive and
+P8/P9 gates, 609 passed plus one infrastructure skip in the materialized tree,
+and 607 passed plus three explicit skips in a clean clone. The real
+Containerlab smoke may be run later as operational verification only.
+
+P9-R1 remains paused by user request.

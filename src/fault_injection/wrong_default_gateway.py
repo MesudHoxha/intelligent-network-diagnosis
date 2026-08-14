@@ -11,12 +11,14 @@ from src.fault_injection.phase6_common import (
     docker_exec_result,
     effective_route_check,
     execute_checked,
+    load_confirmed_restoration,
     load_phase6_scenario,
     ping_check,
     require_new_mutation_output,
     require_restorable_record,
     utc_now,
     write_json_atomic,
+    write_recovery_intent,
 )
 
 
@@ -158,6 +160,7 @@ def inject_wrong_default_gateway(
             "was attempted."
         )
 
+    write_recovery_intent(output_directory, binding)
     command = execute_checked(
         executor,
         binding.profile.source_container,
@@ -237,10 +240,9 @@ def restore_wrong_default_gateway(
 ) -> dict[str, object]:
     binding = load_phase6_scenario(scenario_path, FAULT_TYPE)
     output_directory = Path(output_directory)
-    if (output_directory / "restoration_record.json").exists():
-        raise Phase6FaultInjectionError(
-            "wrong_default_gateway restoration was already recorded."
-        )
+    existing = load_confirmed_restoration(output_directory, binding)
+    if existing is not None:
+        return existing
     require_restorable_record(output_directory, binding)
     correct_gateway, wrong_gateway, source_interface = _parameters(binding)
     profile = binding.profile
@@ -300,11 +302,7 @@ def restore_wrong_default_gateway(
             expected=True,
         ),
     }
-    restored = (
-        all_checks_pass(preconditions)
-        and command["return_code"] == 0
-        and all_checks_pass(postconditions)
-    )
+    restored = command["return_code"] == 0 and all_checks_pass(postconditions)
     record = {
         "schema_version": 1,
         "scenario_id": binding.scenario["id"],

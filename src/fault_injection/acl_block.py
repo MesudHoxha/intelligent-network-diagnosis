@@ -15,6 +15,7 @@ from src.fault_injection.phase6_common import (
     docker_exec_result,
     execute_checked,
     interface_state_check,
+    load_confirmed_restoration,
     load_phase6_scenario,
     observer_route_check,
     ping_check,
@@ -22,6 +23,7 @@ from src.fault_injection.phase6_common import (
     require_restorable_record,
     utc_now,
     write_json_atomic,
+    write_recovery_intent,
 )
 
 
@@ -230,6 +232,7 @@ def inject_acl_block(
         raise Phase6FaultInjectionError(
             "acl_block preconditions failed; no mutation was attempted."
         )
+    write_recovery_intent(output_directory, binding)
     command = execute_checked(
         executor,
         profile.route_observer_container,
@@ -319,10 +322,9 @@ def restore_acl_block(
 ) -> dict[str, object]:
     binding = load_phase6_scenario(scenario_path, FAULT_TYPE)
     output_directory = Path(output_directory)
-    if (output_directory / "restoration_record.json").exists():
-        raise Phase6FaultInjectionError(
-            "acl_block restoration was already recorded."
-        )
+    existing = load_confirmed_restoration(output_directory, binding)
+    if existing is not None:
+        return existing
     require_restorable_record(output_directory, binding)
     profile = binding.profile
     rule_tag = _rule_tag(binding)
@@ -340,20 +342,22 @@ def restore_acl_block(
             expected=False,
         ),
     }
-    command = execute_checked(
-        executor,
-        profile.route_observer_container,
-        [
-            "iptables",
-            "-w",
-            "2",
-            "-t",
-            profile.policy_table,
-            "-D",
-            profile.policy_chain,
-            *_rule_selector(binding),
-        ],
-    )
+    command = None
+    if preconditions["exact_tagged_rule_present"]["passed"] is True:
+        command = execute_checked(
+            executor,
+            profile.route_observer_container,
+            [
+                "iptables",
+                "-w",
+                "2",
+                "-t",
+                profile.policy_table,
+                "-D",
+                profile.policy_chain,
+                *_rule_selector(binding),
+            ],
+        )
     postconditions = {
         "no_p6_tagged_rule_remains": _policy_check(
             binding,
@@ -367,8 +371,7 @@ def restore_acl_block(
         ),
     }
     restored = (
-        all_checks_pass(preconditions)
-        and command["return_code"] == 0
+        (command is None or command["return_code"] == 0)
         and all_checks_pass(postconditions)
     )
     record = {

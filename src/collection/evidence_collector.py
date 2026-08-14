@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Sequence
@@ -14,15 +13,17 @@ from src.contracts.observation_profile import (
     ObservationProfile,
     validate_observation_profile,
 )
+from src.runtime.subprocesses import run_capture
+
+
+COMMAND_TIMEOUT_SECONDS = 30.0
 
 
 def run_command(command: Sequence[str]) -> dict[str, object]:
     """Execute a command and return a structured result."""
-    process = subprocess.run(
+    process = run_capture(
         list(command),
-        capture_output=True,
-        text=True,
-        check=False,
+        timeout_seconds=COMMAND_TIMEOUT_SECONDS,
     )
 
     return {
