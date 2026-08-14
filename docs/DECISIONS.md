@@ -2582,3 +2582,38 @@ Limitation:
 D-098 freezes planned scope and compatibility rules only. It does not prove
 that any newly listed fault, topology, collector, model, robustness condition,
 or multiple-fault case has been implemented or empirically evaluated.
+
+## D-099 — Accept versioned expansion contracts before new data
+
+Decision: Accept X1 as the contract-only boundary for the append-only
+Expansion Track. X1 introduces Topology Context v1, Collector Run v1, Evidence
+v4, Feature Catalog v1, Feature Vector v2, Dataset Row v4, Diagnosis Result v2,
+and Evidence Mask Plan v2 as new contracts rather than edits to frozen Phase 6
+artifacts.
+
+Feature Catalog v1 contains the ten exact Evidence v3 feature IDs and 29
+planned typed features for addressing, Layer 2/VLAN, DHCP/DNS/service security,
+OSPF, and performance. A seven-spec registry assigns each feature to one
+collector design. The registry contains no executor and cannot authorize
+network commands. Concrete collectors remain gated by X2 through X6.
+
+The Evidence v3 compatibility adapter is read-only and requires the immutable
+source artifact hash. Dataset Row v4 and Diagnosis Result v2 remain
+single-fault contracts. Multiple-fault truth is deferred to Dataset Row v5 and
+Diagnosis Result v3. Phase 7 `/api/v1` remains frozen; any later extended
+interface belongs under `/api/v2`.
+
+Status: Accepted and implemented on 2026-08-14. Verification passed 29/29 X1
+tests, 18/18 X0 tests, 185/185 targeted Phase 6 tests, 6/6 H1 tests, 175/175
+Phase 7-through-9 tests, 656 passed with one infrastructure skip in the
+materialized suite, 654 passed with three explicit skips in a clean clone, and
+1/1 existing real Containerlab lifecycle test. Protected hashes remained
+unchanged. All ten X1 runtime authorization flags remain false, P9-R1 remains
+paused, and X2 is next.
+
+Limitation:
+
+D-099 establishes structure, feature semantics, composition planning, and
+backward-compatible projection. It does not prove a new probe, injector,
+topology, feature value, dataset row, diagnosis, model, metric, or
+generalization claim.

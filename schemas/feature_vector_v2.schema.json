@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Feature Vector v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "vector_id",
+    "catalog_id",
+    "evidence_id",
+    "values",
+    "mask_id",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {"const": 2},
+    "vector_id": {"$ref": "#/$defs/identifier"},
+    "catalog_id": {"$ref": "#/$defs/identifier"},
+    "evidence_id": {"$ref": "#/$defs/identifier"},
+    "values": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {"$ref": "#/$defs/identifier"},
+      "additionalProperties": {"$ref": "#/$defs/value"}
+    },
+    "mask_id": {
+      "type": ["string", "null"],
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_sha256", "feature_catalog_sha256"],
+      "properties": {
+        "evidence_sha256": {"$ref": "#/$defs/sha256"},
+        "feature_catalog_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:-]*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "value": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "availability"],
+      "properties": {
+        "value": {"type": ["boolean", "integer", "number", "string", "null"]},
+        "availability": {
+          "enum": [
+            "observed",
+            "structurally_unavailable",
+            "collection_unavailable",
+            "not_requested",
+            "masked_missing"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Expansion Feature Catalog v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "catalog_id", "status", "features"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "catalog_id": {"$ref": "#/$defs/identifier"},
+    "status": {"const": "ACCEPTED_CONTRACT_ONLY"},
+    "features": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/feature"}
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "feature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "feature_id",
+        "domain",
+        "value_type",
+        "lifecycle",
+        "target_phase",
+        "description",
+        "source_feature_v3"
+      ],
+      "properties": {
+        "feature_id": {"$ref": "#/$defs/identifier"},
+        "domain": {
+          "enum": [
+            "connectivity",
+            "addressing",
+            "l2_vlan",
+            "routing",
+            "services",
+            "security",
+            "performance"
+          ]
+        },
+        "value_type": {
+          "enum": ["boolean", "integer", "number", "string"]
+        },
+        "lifecycle": {
+          "enum": ["FROZEN_BASELINE", "PLANNED_EXTENSION"]
+        },
+        "target_phase": {
+          "enum": ["BASELINE", "X2", "X3", "X4", "X5", "X6"]
+        },
+        "description": {"type": "string", "minLength": 1},
+        "source_feature_v3": {
+          "type": ["string", "null"],
+          "pattern": "^[a-z][a-z0-9_]*$"
+        }
+      }
+    }
+  }
+}

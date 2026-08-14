@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Modular Evidence v4",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "evidence_id",
+    "topology_context_id",
+    "collected_at_utc",
+    "observation_path",
+    "collector_runs",
+    "observations",
+    "compatibility"
+  ],
+  "properties": {
+    "schema_version": {"const": 4},
+    "evidence_id": {"$ref": "#/$defs/identifier"},
+    "topology_context_id": {"$ref": "#/$defs/identifier"},
+    "collected_at_utc": {"type": "string", "format": "date-time"},
+    "observation_path": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["direction", "source_node", "destination_node", "observer_nodes"],
+      "properties": {
+        "direction": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_]*_to_[a-z0-9][a-z0-9_]*$"
+        },
+        "source_node": {"$ref": "#/$defs/identifier"},
+        "destination_node": {
+          "oneOf": [
+            {"$ref": "#/$defs/identifier"},
+            {"type": "null"}
+          ]
+        },
+        "observer_nodes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/identifier"}
+        }
+      }
+    },
+    "collector_runs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/collectorRun"}
+    },
+    "observations": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {"$ref": "#/$defs/featureIdentifier"},
+      "additionalProperties": {"$ref": "#/$defs/observation"}
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["origin", "source_schema_version", "source_artifact_sha256"],
+      "properties": {
+        "origin": {"enum": ["native_v4", "read_only_v3_adapter"]},
+        "source_schema_version": {"type": ["integer", "null"]},
+        "source_artifact_sha256": {
+          "oneOf": [
+            {"$ref": "#/$defs/sha256"},
+            {"type": "null"}
+          ]
+        }
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    },
+    "featureIdentifier": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "collectorRun": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "collector_id",
+        "collector_version",
+        "domain",
+        "status",
+        "started_at_utc",
+        "completed_at_utc",
+        "feature_ids",
+        "raw_artifacts",
+        "errors"
+      ],
+      "properties": {
+        "schema_version": {"const": 1},
+        "collector_id": {"$ref": "#/$defs/featureIdentifier"},
+        "collector_version": {"type": "integer", "minimum": 1},
+        "domain": {
+          "enum": [
+            "connectivity",
+            "addressing",
+            "l2_vlan",
+            "routing",
+            "services",
+            "security",
+            "performance",
+            "compatibility"
+          ]
+        },
+        "status": {
+          "enum": ["completed", "partial", "not_applicable", "failed"]
+        },
+        "started_at_utc": {"type": "string", "format": "date-time"},
+        "completed_at_utc": {"type": "string", "format": "date-time"},
+        "feature_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/featureIdentifier"}
+        },
+        "raw_artifacts": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/artifact"}
+        },
+        "errors": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "value_type",
+        "availability",
+        "collector_id",
+        "raw_artifact",
+        "raw_artifact_sha256"
+      ],
+      "properties": {
+        "value": {"type": ["boolean", "integer", "number", "string", "null"]},
+        "value_type": {"enum": ["boolean", "integer", "number", "string"]},
+        "availability": {
+          "enum": [
+            "observed",
+            "structurally_unavailable",
+            "collection_unavailable",
+            "not_requested"
+          ]
+        },
+        "collector_id": {"$ref": "#/$defs/featureIdentifier"},
+        "raw_artifact": {
+          "type": ["string", "null"],
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "raw_artifact_sha256": {
+          "oneOf": [
+            {"$ref": "#/$defs/sha256"},
+            {"type": "null"}
+          ]
+        }
+      }
+    }
+  }
+}

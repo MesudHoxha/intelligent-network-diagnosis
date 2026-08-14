@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "X1 Extended Contracts and Modular Collection Gate v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "gate_id",
+    "status",
+    "track",
+    "compatibility",
+    "contracts",
+    "feature_catalog",
+    "modular_collection",
+    "compatibility_adapter",
+    "truth_boundaries",
+    "acceptance",
+    "runtime_authorization"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "gate_id": {"const": "x1_extended_contracts_modular_collection_v1"},
+    "status": {"const": "ACCEPTED_CONTRACT_ONLY"},
+    "track": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_x0_gate", "phase9_status", "next_milestone"],
+      "properties": {
+        "source_x0_gate": {"const": "x0_scope_compatibility_freeze_v1"},
+        "phase9_status": {"const": "P9_R1_PAUSED_BY_USER"},
+        "next_milestone": {"const": "X2_ADDRESSING_VERTICAL_SLICES"}
+      }
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "extension_policy",
+        "frozen_class_order",
+        "api_v1_status",
+        "future_extended_api",
+        "protected_files"
+      ],
+      "properties": {
+        "extension_policy": {"const": "APPEND_ONLY"},
+        "frozen_class_order": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "api_v1_status": {"const": "FROZEN_BASELINE"},
+        "future_extended_api": {"const": "/api/v2"},
+        "protected_files": {
+          "type": "array",
+          "minItems": 10,
+          "items": {"$ref": "#/$defs/protectedFile"}
+        }
+      }
+    },
+    "contracts": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {"$ref": "#/$defs/contract"}
+    },
+    "feature_catalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "catalog_id",
+        "feature_count",
+        "frozen_baseline_count",
+        "planned_extension_count",
+        "domain_counts"
+      ],
+      "properties": {
+        "catalog_id": {"const": "x1_feature_catalog_v1"},
+        "feature_count": {"const": 39},
+        "frozen_baseline_count": {"const": 10},
+        "planned_extension_count": {"const": 29},
+        "domain_counts": {
+          "type": "object",
+          "additionalProperties": {"type": "integer", "minimum": 0}
+        }
+      }
+    },
+    "modular_collection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "registry_module",
+        "executor_registered",
+        "runtime_authorized",
+        "catalog_coverage_required",
+        "collector_count",
+        "collector_statuses"
+      ],
+      "properties": {
+        "registry_module": {"const": "src.collection.modular_registry"},
+        "executor_registered": {"const": false},
+        "runtime_authorized": {"const": false},
+        "catalog_coverage_required": {"const": true},
+        "collector_count": {"const": 7},
+        "collector_statuses": {
+          "const": ["ADAPTER_ONLY", "DESIGN_ONLY"]
+        }
+      }
+    },
+    "compatibility_adapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_contract",
+        "target_contract",
+        "read_only",
+        "source_write_authorized",
+        "source_hash_required",
+        "preserved_feature_count"
+      ],
+      "properties": {
+        "source_contract": {"const": "Evidence v3"},
+        "target_contract": {"const": "Evidence v4"},
+        "read_only": {"const": true},
+        "source_write_authorized": {"const": false},
+        "source_hash_required": {"const": true},
+        "preserved_feature_count": {"const": 10}
+      }
+    },
+    "truth_boundaries": {"type": "object"},
+    "acceptance": {
+      "type": "object",
+      "additionalProperties": {"type": "boolean"}
+    },
+    "runtime_authorization": {
+      "type": "object",
+      "minProperties": 10,
+      "maxProperties": 10,
+      "additionalProperties": {"const": false}
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "protectedFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_id",
+        "title",
+        "schema_path",
+        "artifact_path",
+        "truth_model"
+      ],
+      "properties": {
+        "contract_id": {"type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1},
+        "schema_path": {"type": "string", "minLength": 1},
+        "artifact_path": {"type": ["string", "null"]},
+        "truth_model": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

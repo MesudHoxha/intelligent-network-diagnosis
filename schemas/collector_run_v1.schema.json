@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Modular Collector Run v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "collector_id",
+    "collector_version",
+    "domain",
+    "status",
+    "started_at_utc",
+    "completed_at_utc",
+    "feature_ids",
+    "raw_artifacts",
+    "errors"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "collector_id": {"$ref": "#/$defs/identifier"},
+    "collector_version": {"type": "integer", "minimum": 1},
+    "domain": {
+      "enum": [
+        "connectivity",
+        "addressing",
+        "l2_vlan",
+        "routing",
+        "services",
+        "security",
+        "performance",
+        "compatibility"
+      ]
+    },
+    "status": {
+      "enum": ["completed", "partial", "not_applicable", "failed"]
+    },
+    "started_at_utc": {"type": "string", "format": "date-time"},
+    "completed_at_utc": {"type": "string", "format": "date-time"},
+    "feature_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/identifier"}
+    },
+    "raw_artifacts": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/artifact"}
+    },
+    "errors": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    }
+  }
+}

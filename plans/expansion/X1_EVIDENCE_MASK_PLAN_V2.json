@@ -1,0 +1,126 @@
+{
+  "schema_version": 2,
+  "plan_id": "x1_evidence_mask_plan_v2",
+  "catalog_id": "x1_feature_catalog_v1",
+  "status": "ACCEPTED_CONTRACT_ONLY",
+  "mask_identity_is_predictor": false,
+  "allowed_partitions": ["validation", "report_only_test"],
+  "masks": [
+    {
+      "mask_id": "mask_source_gateway_family",
+      "description": "Preserve the frozen Phase 6 source-gateway missing-evidence condition.",
+      "feature_ids": [
+        "source_expected_gateway_reachable",
+        "source_default_gateway_matches_expected"
+      ]
+    },
+    {
+      "mask_id": "mask_route_family",
+      "description": "Preserve the frozen Phase 6 route-family missing-evidence condition.",
+      "feature_ids": [
+        "route_to_destination_exists_on_observer",
+        "route_next_hop_matches_expected",
+        "route_next_hop_reachable_from_observer"
+      ]
+    },
+    {
+      "mask_id": "mask_interface_state",
+      "description": "Preserve the frozen Phase 6 interface-state missing-evidence condition.",
+      "feature_ids": ["observer_egress_interface_oper_up"]
+    },
+    {
+      "mask_id": "mask_policy_state",
+      "description": "Preserve the frozen Phase 6 policy-state missing-evidence condition.",
+      "feature_ids": ["flow_blocked_by_policy"]
+    },
+    {
+      "mask_id": "mask_address_identity_state",
+      "description": "Hide source address, prefix, and default-route identity evidence together.",
+      "feature_ids": [
+        "source_address_matches_expected",
+        "source_prefix_matches_expected",
+        "source_default_route_present"
+      ]
+    },
+    {
+      "mask_id": "mask_duplicate_address_temporal_state",
+      "description": "Hide active and temporal duplicate-address evidence together.",
+      "feature_ids": [
+        "duplicate_address_detected",
+        "duplicate_address_mac_churn_detected"
+      ]
+    },
+    {
+      "mask_id": "mask_access_vlan_state",
+      "description": "Hide access-port VLAN and local VLAN-existence evidence.",
+      "feature_ids": [
+        "access_vlan_matches_expected",
+        "vlan_exists_on_target",
+        "fdb_location_matches_expected"
+      ]
+    },
+    {
+      "mask_id": "mask_trunk_vlan_state",
+      "description": "Hide trunk allowed-VLAN and native-VLAN evidence.",
+      "feature_ids": [
+        "vlan_allowed_on_trunk",
+        "native_vlan_matches_peer"
+      ]
+    },
+    {
+      "mask_id": "mask_dhcp_state",
+      "description": "Hide DHCP reachability, exchange, and scope evidence.",
+      "feature_ids": [
+        "dhcp_server_reachable",
+        "dhcp_lease_obtained",
+        "dhcp_lease_matches_expected_scope"
+      ]
+    },
+    {
+      "mask_id": "mask_dns_state",
+      "description": "Hide DNS reachability, query, and answer evidence.",
+      "feature_ids": [
+        "dns_server_reachable",
+        "dns_query_succeeds",
+        "dns_answer_matches_expected"
+      ]
+    },
+    {
+      "mask_id": "mask_service_policy_state",
+      "description": "Hide service process, endpoint, and service-specific policy evidence.",
+      "feature_ids": [
+        "service_process_running",
+        "service_port_reachable",
+        "service_flow_blocked_by_policy"
+      ]
+    },
+    {
+      "mask_id": "mask_dynamic_routing_state",
+      "description": "Hide OSPF adjacency, advertisement, installation, and filtering evidence.",
+      "feature_ids": [
+        "ospf_adjacency_full",
+        "ospf_route_advertised",
+        "ospf_route_installed",
+        "route_filter_allows_prefix"
+      ]
+    },
+    {
+      "mask_id": "mask_active_performance_state",
+      "description": "Hide active loss, latency, and throughput measurements.",
+      "feature_ids": [
+        "packet_loss_ratio",
+        "round_trip_latency_ms_p95",
+        "throughput_mbps"
+      ]
+    },
+    {
+      "mask_id": "mask_device_performance_state",
+      "description": "Hide device utilization, queue-drop, and rate-limit evidence.",
+      "feature_ids": [
+        "interface_utilization_ratio",
+        "queue_drop_count",
+        "rate_limit_detected"
+      ]
+    }
+  ]
+}

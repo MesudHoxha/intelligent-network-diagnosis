@@ -1,0 +1,181 @@
+{
+  "schema_version": 1,
+  "gate_id": "x1_extended_contracts_modular_collection_v1",
+  "status": "ACCEPTED_CONTRACT_ONLY",
+  "track": {
+    "source_x0_gate": "x0_scope_compatibility_freeze_v1",
+    "phase9_status": "P9_R1_PAUSED_BY_USER",
+    "next_milestone": "X2_ADDRESSING_VERTICAL_SLICES"
+  },
+  "compatibility": {
+    "extension_policy": "APPEND_ONLY",
+    "frozen_class_order": [
+      "no_fault",
+      "missing_static_route",
+      "wrong_next_hop",
+      "wrong_default_gateway",
+      "interface_down",
+      "acl_block"
+    ],
+    "api_v1_status": "FROZEN_BASELINE",
+    "future_extended_api": "/api/v2",
+    "protected_files": [
+      {
+        "path": "plans/expansion/X0_SCOPE_COMPATIBILITY_FREEZE_V1.json",
+        "sha256": "99d80b1abc15c2994e41d8d4dd650e88ea235313d7f2461276d33c44f913e33b"
+      },
+      {
+        "path": "schemas/x0_scope_compatibility_freeze_v1.schema.json",
+        "sha256": "e1034b59a939b97e25e9ac8995ab824d33d25666855bb4979a6efbc767efa1a8"
+      },
+      {
+        "path": "src/expansion/scope_gate.py",
+        "sha256": "e8e5f58c049c9a8af5c2342ba4a931c7d6b229f7561dae7fd26d291913b462db"
+      },
+      {
+        "path": "plans/taxonomies/P6_EXTENDED_FAULT_TAXONOMY_V1.json",
+        "sha256": "571cc26518d81a1768261970fb2d3847587fc4bbc1a9c62678c8f97f3e524746"
+      },
+      {
+        "path": "plans/phase6/P6_R6_METHOD_PROTOCOL_V1.json",
+        "sha256": "71e5422b8cda0c65fe206e5237a86f0c0946f35bbb53f6351dbc1f2677bd13bd"
+      },
+      {
+        "path": "schemas/evidence_v3.schema.json",
+        "sha256": "a3c562a1794948d8f4cdb41415853f11d3ae9d1f0a77684edd6791cb2fe9b22a"
+      },
+      {
+        "path": "schemas/dataset_row_v3.schema.json",
+        "sha256": "696134a4d3ae6b1316d52c053a35cbad8449bc57a0b2fee0509290272b902268"
+      },
+      {
+        "path": "schemas/phase6_method_input_v1.schema.json",
+        "sha256": "7471e3e1e76b38c5b6b6a614dc02af94f97c00d4f443c7d887161e415e047e60"
+      },
+      {
+        "path": "schemas/phase6_method_prediction_v1.schema.json",
+        "sha256": "25494040fa959d7a853d0e4a2c148174c3c87d1991474e888a0d321f47dadda1"
+      },
+      {
+        "path": "schemas/phase6_method_report_v1.schema.json",
+        "sha256": "0f3f4d5d0ba753b1b4222f8fc7fff81dc748686d18a1b116ba1358441cd7dffc"
+      }
+    ]
+  },
+  "contracts": [
+    {
+      "contract_id": "topology_context_v1",
+      "title": "Topology Context v1",
+      "schema_path": "schemas/topology_context_v1.schema.json",
+      "artifact_path": null,
+      "truth_model": "context"
+    },
+    {
+      "contract_id": "collector_run_v1",
+      "title": "Collector Run v1",
+      "schema_path": "schemas/collector_run_v1.schema.json",
+      "artifact_path": null,
+      "truth_model": "collection_provenance"
+    },
+    {
+      "contract_id": "evidence_v4",
+      "title": "Evidence v4",
+      "schema_path": "schemas/evidence_v4.schema.json",
+      "artifact_path": null,
+      "truth_model": "single_fault_compatible_evidence"
+    },
+    {
+      "contract_id": "feature_catalog_v1",
+      "title": "Feature Catalog v1",
+      "schema_path": "schemas/feature_catalog_v1.schema.json",
+      "artifact_path": "plans/expansion/X1_FEATURE_CATALOG_V1.json",
+      "truth_model": "feature_semantics"
+    },
+    {
+      "contract_id": "feature_vector_v2",
+      "title": "Feature Vector v2",
+      "schema_path": "schemas/feature_vector_v2.schema.json",
+      "artifact_path": null,
+      "truth_model": "single_fault_features"
+    },
+    {
+      "contract_id": "dataset_row_v4",
+      "title": "Dataset Row v4",
+      "schema_path": "schemas/dataset_row_v4.schema.json",
+      "artifact_path": null,
+      "truth_model": "single_fault"
+    },
+    {
+      "contract_id": "diagnosis_result_v2",
+      "title": "Diagnosis Result v2",
+      "schema_path": "schemas/diagnosis_result_v2.schema.json",
+      "artifact_path": null,
+      "truth_model": "single_fault"
+    },
+    {
+      "contract_id": "evidence_mask_plan_v2",
+      "title": "Evidence Mask Plan v2",
+      "schema_path": "schemas/evidence_mask_plan_v2.schema.json",
+      "artifact_path": "plans/expansion/X1_EVIDENCE_MASK_PLAN_V2.json",
+      "truth_model": "robustness_only"
+    }
+  ],
+  "feature_catalog": {
+    "catalog_id": "x1_feature_catalog_v1",
+    "feature_count": 39,
+    "frozen_baseline_count": 10,
+    "planned_extension_count": 29,
+    "domain_counts": {
+      "connectivity": 2,
+      "addressing": 7,
+      "l2_vlan": 6,
+      "routing": 8,
+      "services": 8,
+      "security": 2,
+      "performance": 6
+    }
+  },
+  "modular_collection": {
+    "registry_module": "src.collection.modular_registry",
+    "executor_registered": false,
+    "runtime_authorized": false,
+    "catalog_coverage_required": true,
+    "collector_count": 7,
+    "collector_statuses": ["ADAPTER_ONLY", "DESIGN_ONLY"]
+  },
+  "compatibility_adapter": {
+    "source_contract": "Evidence v3",
+    "target_contract": "Evidence v4",
+    "read_only": true,
+    "source_write_authorized": false,
+    "source_hash_required": true,
+    "preserved_feature_count": 10
+  },
+  "truth_boundaries": {
+    "dataset_row_v4": "SINGLE_FAULT_ONLY",
+    "diagnosis_result_v2": "SINGLE_FAULT_ONLY",
+    "multiple_fault_dataset_contract": "DEFERRED_TO_DATASET_ROW_V5",
+    "multiple_fault_diagnosis_contract": "DEFERRED_TO_DIAGNOSIS_RESULT_V3"
+  },
+  "acceptance": {
+    "contracts_frozen_before_data_generation": true,
+    "schema_tests_required": true,
+    "read_only_adapter_tests_required": true,
+    "modular_registry_tests_required": true,
+    "phase6_regression_required": true,
+    "current_infrastructure_e2e_required": true,
+    "new_empirical_claim_created": false
+  },
+  "runtime_authorization": {
+    "containerlab_execution": false,
+    "network_mutation": false,
+    "new_evidence_collection": false,
+    "dataset_generation": false,
+    "model_fit_or_selection": false,
+    "estimator_deserialization": false,
+    "method_prediction": false,
+    "metric_calculation": false,
+    "report_only_test_access": false,
+    "multiple_fault_execution": false
+  }
+}

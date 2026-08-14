@@ -1539,7 +1539,7 @@ Status: Implemented; commit-package verification required
 - P9-R1: remains paused by explicit user request
 
 ## Expansion Track X — Ambitious technical scope
-Status: X0 complete; X1 next
+Status: X0 and X1 complete; X2 next
 
 - D-098 append-only expansion decision: accepted
 - Phase 8 interpretation: strong frozen six-class baseline, not the end of the
@@ -1563,10 +1563,26 @@ Status: X0 complete; X1 next
 - Clean-checkout full regression: 625 passed, 3 explicit skips
 - P9-R1: remains paused by explicit user request
 
+### X1 implementation
+
+- D-099 contract-only expansion boundary: implemented
+- Eight versioned schemas including Collector Run v1: implemented
+- Feature Catalog v1: 39 total, 10 frozen baseline, 29 planned extensions
+- Modular collector registry: seven specs, complete catalog ownership, no
+  executor, runtime unauthorized
+- Evidence v3 to v4 adapter: read-only and source-hash-bound
+- Dataset Row v4 and Diagnosis Result v2: single-fault only
+- Multiple-fault contracts: deferred to Dataset Row v5/Diagnosis Result v3
+- Evidence Mask Plan v2: four frozen masks plus planned domain masks;
+  validation/report-only only; mask ID excluded as predictor
+- Protected Phase 6/7/8 results and `/api/v1`: unchanged
+- P9-R1: remains paused
+- X1 tests: 29/29; X0: 18/18; Phase 6: 185/185; H1: 6/6;
+  Phase 7-through-9: 175/175
+- Full materialized: 656 passed/1 skipped; clean clone: 654 passed/3 skipped
+- Existing real Containerlab lifecycle regression: 1/1 passed
+- Protected hashes: unchanged; X1 gate: verified
+
 ### Next technical milestone
 
-X1 — Extended Contracts and Modular Collection.
-
-X1 may design and test new versioned contracts and registries. It may not
-modify accepted v3 contracts or begin a new fault runtime without its own
-explicit authorization gate.
+X2 — Addressing Vertical Slices. X1 does not authorize X2 runtime by itself.

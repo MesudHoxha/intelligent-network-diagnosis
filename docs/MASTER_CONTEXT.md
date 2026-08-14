@@ -1327,3 +1327,25 @@ decision. X0 itself authorizes no empirical runtime. P9-R1 remains paused; X1
 is the next technical milestone. Verification passed 18/18 X0 tests, 185/185
 targeted Phase 6 tests, 6/6 H1 tests, and 625 passed with three explicit skips
 in the clean-checkout full regression suite.
+
+X1 subsequently implements the contract-only expansion boundary under D-099.
+Eight new schemas cover topology context, collector-run provenance, modular
+Evidence v4, a typed feature catalog and vector, single-fault Dataset Row v4
+and Diagnosis Result v2, and Evidence Mask Plan v2. None replaces a v3 or
+Phase 6 method contract.
+
+Feature Catalog v1 contains 39 entries: ten exact frozen Evidence v3 IDs and 29
+planned X2–X6 extensions across connectivity, addressing, Layer 2/VLAN,
+routing, services, security, and performance. Seven design specifications give
+every feature exactly one collector owner. The registry plans capabilities but
+contains no executor and always reports runtime as unauthorized.
+
+The read-only v3 adapter requires the source-artifact SHA-256 and preserves all
+ten values, availability states, raw paths, and raw hashes in an in-memory v4
+projection. Multiple faults remain deferred to Dataset Row v5 and Diagnosis
+Result v3. Phase 7 `/api/v1` remains frozen, a future expansion interface is
+reserved for `/api/v2`, and P9-R1 remains paused. X2 addressing vertical slices
+are next. X1 verification passed 29/29 targeted tests, 18/18 X0, 185/185
+Phase 6, 6/6 H1, 175/175 Phase 7-through-9, 656 passed/1 skipped materialized,
+654 passed/3 skipped in a clean clone, and 1/1 existing real Containerlab
+lifecycle regression. The E2E is a baseline regression, not new X1 evidence.

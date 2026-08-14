@@ -1,0 +1,358 @@
+{
+  "schema_version": 1,
+  "catalog_id": "x1_feature_catalog_v1",
+  "status": "ACCEPTED_CONTRACT_ONLY",
+  "features": [
+    {
+      "feature_id": "source_expected_gateway_reachable",
+      "domain": "addressing",
+      "value_type": "boolean",
+      "lifecycle": "FROZEN_BASELINE",
+      "target_phase": "BASELINE",
+      "description": "Whether the configured source-side expected gateway responds.",
+      "source_feature_v3": "source_expected_gateway_reachable"
+    },
+    {
+      "feature_id": "source_default_gateway_matches_expected",
+      "domain": "addressing",
+      "value_type": "boolean",
+      "lifecycle": "FROZEN_BASELINE",
+      "target_phase": "BASELINE",
+      "description": "Whether the installed source default gateway matches the expected address.",
+      "source_feature_v3": "source_default_gateway_matches_expected"
+    },
+    {
+      "feature_id": "destination_reachable",
+      "domain": "connectivity",
+      "value_type": "boolean",
+      "lifecycle": "FROZEN_BASELINE",
+      "target_phase": "BASELINE",
+      "description": "Whether the destination is reachable from the source observation point.",
+      "source_feature_v3": "destination_reachable"
+    },
+    {
+      "feature_id": "route_to_destination_exists_on_observer",
+      "domain": "routing",
+      "value_type": "boolean",
+      "lifecycle": "FROZEN_BASELINE",
+      "target_phase": "BASELINE",
+      "description": "Whether the route observer has a route to the destination prefix.",
+      "source_feature_v3": "route_to_destination_exists_on_observer"
+    },
+    {
+      "feature_id": "route_next_hop_matches_expected",
+      "domain": "routing",
+      "value_type": "boolean",
+      "lifecycle": "FROZEN_BASELINE",
+      "target_phase": "BASELINE",
+      "description": "Whether the installed route next hop matches the expected next hop.",
+      "source_feature_v3": "route_next_hop_matches_expected"
+    },
+    {
+      "feature_id": "route_next_hop_reachable_from_observer",
+      "domain": "routing",
+      "value_type": "boolean",
+      "lifecycle": "FROZEN_BASELINE",
+      "target_phase": "BASELINE",
+      "description": "Whether the installed route next hop is reachable from the observer.",
+      "source_feature_v3": "route_next_hop_reachable_from_observer"
+    },
+    {
+      "feature_id": "expected_next_hop_reachable_from_observer",
+      "domain": "routing",
+      "value_type": "boolean",
+      "lifecycle": "FROZEN_BASELINE",
+      "target_phase": "BASELINE",
+      "description": "Whether the expected route next hop is reachable from the observer.",
+      "source_feature_v3": "expected_next_hop_reachable_from_observer"
+    },
+    {
+      "feature_id": "observer_egress_interface_oper_up",
+      "domain": "l2_vlan",
+      "value_type": "boolean",
+      "lifecycle": "FROZEN_BASELINE",
+      "target_phase": "BASELINE",
+      "description": "Whether the route observer egress interface is operationally up.",
+      "source_feature_v3": "observer_egress_interface_oper_up"
+    },
+    {
+      "feature_id": "destination_reachable_from_transit",
+      "domain": "connectivity",
+      "value_type": "boolean",
+      "lifecycle": "FROZEN_BASELINE",
+      "target_phase": "BASELINE",
+      "description": "Whether the destination is reachable from the transit observation point.",
+      "source_feature_v3": "destination_reachable_from_transit"
+    },
+    {
+      "feature_id": "flow_blocked_by_policy",
+      "domain": "security",
+      "value_type": "boolean",
+      "lifecycle": "FROZEN_BASELINE",
+      "target_phase": "BASELINE",
+      "description": "Whether the observed flow is blocked by the baseline forwarding policy.",
+      "source_feature_v3": "flow_blocked_by_policy"
+    },
+    {
+      "feature_id": "source_address_matches_expected",
+      "domain": "addressing",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X2",
+      "description": "Whether the source interface address matches its expected address.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "source_prefix_matches_expected",
+      "domain": "addressing",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X2",
+      "description": "Whether the source prefix length and network match the expected subnet.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "source_default_route_present",
+      "domain": "addressing",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X2",
+      "description": "Whether the source has an installed default route.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "duplicate_address_detected",
+      "domain": "addressing",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X2",
+      "description": "Whether active probing indicates more than one claimant for an IPv4 address.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "duplicate_address_mac_churn_detected",
+      "domain": "addressing",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X2",
+      "description": "Whether temporal neighbor observations show MAC churn for one IPv4 address.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "access_vlan_matches_expected",
+      "domain": "l2_vlan",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X3",
+      "description": "Whether an access port is assigned to the expected VLAN.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "vlan_exists_on_target",
+      "domain": "l2_vlan",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X3",
+      "description": "Whether the expected VLAN exists on the target switching node.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "vlan_allowed_on_trunk",
+      "domain": "l2_vlan",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X3",
+      "description": "Whether the expected VLAN is allowed across the observed trunk.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "native_vlan_matches_peer",
+      "domain": "l2_vlan",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X3",
+      "description": "Whether both trunk endpoints use the same expected native VLAN.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "fdb_location_matches_expected",
+      "domain": "l2_vlan",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X3",
+      "description": "Whether the forwarding database locates the endpoint MAC on the expected port and VLAN.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "dhcp_server_reachable",
+      "domain": "services",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X4",
+      "description": "Whether a DHCP server or relay path is reachable from the client segment.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "dhcp_lease_obtained",
+      "domain": "services",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X4",
+      "description": "Whether the client completes the DHCP lease exchange.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "dhcp_lease_matches_expected_scope",
+      "domain": "services",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X4",
+      "description": "Whether the obtained lease belongs to the expected pool and option set.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "dns_server_reachable",
+      "domain": "services",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X4",
+      "description": "Whether the configured DNS server is network-reachable.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "dns_query_succeeds",
+      "domain": "services",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X4",
+      "description": "Whether the expected DNS query returns a successful response.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "dns_answer_matches_expected",
+      "domain": "services",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X4",
+      "description": "Whether the DNS answer matches the expected record value.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "service_process_running",
+      "domain": "services",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X4",
+      "description": "Whether the expected service process is running on the service node.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "service_port_reachable",
+      "domain": "services",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X4",
+      "description": "Whether the expected TCP or UDP service endpoint is reachable.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "service_flow_blocked_by_policy",
+      "domain": "security",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X4",
+      "description": "Whether policy blocks the specific service flow while generic connectivity remains available.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "ospf_adjacency_full",
+      "domain": "routing",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X5",
+      "description": "Whether the expected OSPF neighbor reaches the Full state.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "ospf_route_advertised",
+      "domain": "routing",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X5",
+      "description": "Whether the expected prefix is present in the relevant OSPF advertisement state.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "ospf_route_installed",
+      "domain": "routing",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X5",
+      "description": "Whether the expected OSPF-learned route is installed in the routing table.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "route_filter_allows_prefix",
+      "domain": "routing",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X5",
+      "description": "Whether the configured route policy permits the expected prefix.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "packet_loss_ratio",
+      "domain": "performance",
+      "value_type": "number",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X6",
+      "description": "Observed packet-loss ratio over the bounded measurement window.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "round_trip_latency_ms_p95",
+      "domain": "performance",
+      "value_type": "number",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X6",
+      "description": "Observed 95th-percentile round-trip latency in milliseconds.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "throughput_mbps",
+      "domain": "performance",
+      "value_type": "number",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X6",
+      "description": "Observed application throughput in megabits per second.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "interface_utilization_ratio",
+      "domain": "performance",
+      "value_type": "number",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X6",
+      "description": "Observed interface utilization ratio over the bounded measurement window.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "queue_drop_count",
+      "domain": "performance",
+      "value_type": "integer",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X6",
+      "description": "Observed queue-drop counter delta over the bounded measurement window.",
+      "source_feature_v3": null
+    },
+    {
+      "feature_id": "rate_limit_detected",
+      "domain": "performance",
+      "value_type": "boolean",
+      "lifecycle": "PLANNED_EXTENSION",
+      "target_phase": "X6",
+      "description": "Whether measured behavior is consistent with the configured rate limit.",
+      "source_feature_v3": null
+    }
+  ]
+}

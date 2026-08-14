@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Single-Fault Dataset Row v4",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "sample_id",
+    "metadata",
+    "feature_vector",
+    "labels",
+    "quality",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {"const": 4},
+    "sample_id": {"$ref": "#/$defs/identifier"},
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "experiment_id",
+        "scenario_id",
+        "variant_id",
+        "split_group_id",
+        "topology_context_id",
+        "collected_at_utc"
+      ],
+      "properties": {
+        "experiment_id": {"$ref": "#/$defs/identifier"},
+        "scenario_id": {"$ref": "#/$defs/identifier"},
+        "variant_id": {"$ref": "#/$defs/identifier"},
+        "split_group_id": {"$ref": "#/$defs/identifier"},
+        "topology_context_id": {"$ref": "#/$defs/identifier"},
+        "collected_at_utc": {"type": "string", "format": "date-time"}
+      }
+    },
+    "feature_vector": {"$ref": "#/$defs/featureVector"},
+    "labels": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "truth_model",
+        "fault_type",
+        "fault_category",
+        "fault_location",
+        "affected_resource"
+      ],
+      "properties": {
+        "truth_model": {"const": "single_fault"},
+        "fault_type": {"$ref": "#/$defs/identifier"},
+        "fault_category": {
+          "type": ["string", "null"],
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "fault_location": {"type": ["string", "null"], "minLength": 1},
+        "affected_resource": {"type": ["string", "null"], "minLength": 1}
+      }
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "experiment_completed",
+        "collector_completed",
+        "baseline_before_valid",
+        "baseline_after_valid",
+        "observed_feature_count",
+        "unavailable_feature_count",
+        "masked_missing_count"
+      ],
+      "properties": {
+        "experiment_completed": {"type": "boolean"},
+        "collector_completed": {"type": "boolean"},
+        "baseline_before_valid": {"type": "boolean"},
+        "baseline_after_valid": {"type": "boolean"},
+        "observed_feature_count": {"type": "integer", "minimum": 0},
+        "unavailable_feature_count": {"type": "integer", "minimum": 0},
+        "masked_missing_count": {"type": "integer", "minimum": 0}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_evidence_sha256",
+        "topology_context_sha256",
+        "feature_catalog_sha256",
+        "evidence_mask_plan_id"
+      ],
+      "properties": {
+        "source_evidence_sha256": {"$ref": "#/$defs/sha256"},
+        "topology_context_sha256": {"$ref": "#/$defs/sha256"},
+        "feature_catalog_sha256": {"$ref": "#/$defs/sha256"},
+        "evidence_mask_plan_id": {
+          "type": ["string", "null"],
+          "pattern": "^[a-z][a-z0-9_]*$"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    },
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "featureValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "availability"],
+      "properties": {
+        "value": {"type": ["boolean", "integer", "number", "string", "null"]},
+        "availability": {
+          "enum": [
+            "observed",
+            "structurally_unavailable",
+            "collection_unavailable",
+            "not_requested",
+            "masked_missing"
+          ]
+        }
+      }
+    },
+    "featureVector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "vector_id",
+        "catalog_id",
+        "evidence_id",
+        "values",
+        "mask_id",
+        "provenance"
+      ],
+      "properties": {
+        "schema_version": {"const": 2},
+        "vector_id": {"$ref": "#/$defs/identifier"},
+        "catalog_id": {"$ref": "#/$defs/identifier"},
+        "evidence_id": {"$ref": "#/$defs/identifier"},
+        "values": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {"$ref": "#/$defs/featureValue"}
+        },
+        "mask_id": {"type": ["string", "null"]},
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["evidence_sha256", "feature_catalog_sha256"],
+          "properties": {
+            "evidence_sha256": {"$ref": "#/$defs/sha256"},
+            "feature_catalog_sha256": {"$ref": "#/$defs/sha256"}
+          }
+        }
+      }
+    }
+  }
+}

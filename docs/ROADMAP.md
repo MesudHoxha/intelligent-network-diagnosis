@@ -423,7 +423,7 @@ Status: Complete
   regression 625 passed/3 skipped
 
 ### X1 — Extended contracts and modular collection
-Status: Next
+Status: Complete
 
 - Topology Context v1
 - Evidence v4 and collector-run structure
@@ -431,9 +431,12 @@ Status: Next
 - Dataset Row v4 and Diagnosis Result v2
 - Evidence Mask Plan v2
 - Read-only compatibility with the frozen v3 baseline
+- Seven-spec metadata-only collector registry with complete catalog ownership
+- 39 typed features: 10 frozen baseline and 29 planned X2–X6 extensions
+- No collector executor or new empirical runtime
 
 ### X2 — Addressing
-Status: Planned
+Status: Next
 
 - Wrong IP address
 - Wrong subnet mask

@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Topology Context v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "context_id",
+    "topology_id",
+    "variant_id",
+    "nodes",
+    "links",
+    "observation_roles",
+    "capabilities"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "context_id": {"$ref": "#/$defs/identifier"},
+    "topology_id": {"$ref": "#/$defs/identifier"},
+    "variant_id": {"$ref": "#/$defs/identifier"},
+    "nodes": {
+      "type": "array",
+      "minItems": 2,
+      "items": {"$ref": "#/$defs/node"}
+    },
+    "links": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/link"}
+    },
+    "observation_roles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "destination", "observers"],
+      "properties": {
+        "source": {"$ref": "#/$defs/identifier"},
+        "destination": {"$ref": "#/$defs/identifier"},
+        "observers": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/identifier"}
+        }
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/identifier"}
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node_id", "role", "runtime_target", "capabilities"],
+      "properties": {
+        "node_id": {"$ref": "#/$defs/identifier"},
+        "role": {
+          "enum": ["host", "router", "switch", "service", "observer"]
+        },
+        "runtime_target": {
+          "type": ["string", "null"],
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "capabilities": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/identifier"}
+        }
+      }
+    },
+    "endpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node_id", "interface"],
+      "properties": {
+        "node_id": {"$ref": "#/$defs/identifier"},
+        "interface": {"$ref": "#/$defs/identifier"}
+      }
+    },
+    "link": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["link_id", "kind", "endpoints", "expected_vlans", "native_vlan"],
+      "properties": {
+        "link_id": {"$ref": "#/$defs/identifier"},
+        "kind": {"enum": ["routed", "access", "trunk", "service"]},
+        "endpoints": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {"$ref": "#/$defs/endpoint"}
+        },
+        "expected_vlans": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "integer", "minimum": 1, "maximum": 4094}
+        },
+        "native_vlan": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "maximum": 4094
+        }
+      }
+    }
+  }
+}
