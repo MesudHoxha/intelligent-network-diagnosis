@@ -1299,3 +1299,31 @@ selection and model hashes and check integrity before deserialization. The
 P6-R6 fixed coordinator, large scientific modules, and phase-specific hash/JSON
 helpers remain unchanged where refactoring could invalidate frozen contracts.
 P9-R1 remains paused.
+
+X0 subsequently opens an append-only technical expansion under D-098. The
+initial diploma document is treated as the intended vision rather than only as
+historical context. Phase 8 remains the accepted six-class baseline and is not
+reinterpreted as the end of the technical project.
+
+The canonical expansion taxonomy contains 24 detailed fault types across
+addressing, Layer 2/VLAN, routing, services, security, and performance, plus
+the frozen `no_fault` class. The source document's later 23-item prioritization
+list omitted its own detailed `vlan_missing` case; X0 explicitly retains it.
+Five fault types are frozen implemented, one has only a partial reusable
+mechanism, and eighteen are not implemented.
+
+The expansion is sequenced X0 through X10: compatibility freeze, extended
+contracts, addressing, Layer 2/VLAN, DHCP/DNS/service security, OSPF,
+performance, an extended single-fault dataset, Rule/ML/Hybrid v2 evaluation,
+missing evidence and unseen variants, then selected multiple faults and a
+versioned extended interface. Every future phase requires its own gate.
+
+Existing Evidence v3, Dataset Row v3, Phase 6 method contracts, class order,
+accepted runtime artifacts, consumed report-only test results, Phase 7
+`/api/v1`, and Phase 8 claims remain immutable. Future technical changes are
+allowed only with justification, versioning where semantics change,
+backward-compatibility assessment, tests, leakage control, and a recorded
+decision. X0 itself authorizes no empirical runtime. P9-R1 remains paused; X1
+is the next technical milestone. Verification passed 18/18 X0 tests, 185/185
+targeted Phase 6 tests, 6/6 H1 tests, and 625 passed with three explicit skips
+in the clean-checkout full regression suite.

@@ -2540,3 +2540,45 @@ D-097 changes future runtime failure handling and test organization only. It
 does not create new experimental evidence, modify an accepted artifact or
 metric, establish production crash recovery, remove the need for an external
 supervisor after host loss, or resume P9-R1.
+
+## D-098 — Reopen the ambitious technical vision as an append-only expansion track
+
+Decision: Accept X0 as the design-only scope and compatibility boundary for a
+new Expansion Track X0–X10. Phase 6 through Phase 8 remain the strong frozen
+six-class baseline; they are not reclassified as the complete implementation
+of the initial technical vision.
+
+The initial project document is controlling intended scope for the expansion.
+Its detailed taxonomy contains 24 fault types across six domains. The later
+23-item prioritization list omits the already described `vlan_missing` case;
+X0 resolves this editorial inconsistency by retaining all 24 detailed fault
+types. The current gap is five frozen implemented types, one partial reusable
+mechanism, and eighteen missing types, plus the frozen healthy class.
+
+New topology, evidence, feature, dataset, diagnosis, mask, method, and
+multiple-fault semantics require new versioned contracts. Existing Evidence
+v3, Dataset Row v3, P6 method schemas, class order, accepted artifacts,
+consumed E02/E06 results, Phase 7 `/api/v1`, and Phase 8 claims remain
+immutable. D-085 and D-091 remain correct historical boundaries for the
+accepted Bachelor baseline; this decision adds future scope without rewriting
+their meaning.
+
+Future changes are permitted when technically justified, versioned where
+semantics change, backward-compatibility assessed, tested, leakage-safe, and
+accepted through a recorded gate. Hybrid is not required to win, OSPF precedes
+any optional BGP work, automatic remediation remains prohibited, and selected
+multiple faults require a separate identifiable multi-label design rather
+than a Cartesian product.
+
+Status: Accepted and implemented on 2026-08-14 as a design-only gate. X0
+authorizes no Containerlab execution, network mutation, new evidence, dataset,
+model, prediction, metric, report-only test access, or multiple-fault runtime.
+Verification passed 18/18 X0 tests, 185/185 targeted Phase 6 tests, 6/6 H1
+safety tests, and 625 passed with three explicit clean-checkout skips in the
+full suite. P9-R1 remains paused by explicit user request. X1 is next.
+
+Limitation:
+
+D-098 freezes planned scope and compatibility rules only. It does not prove
+that any newly listed fault, topology, collector, model, robustness condition,
+or multiple-fault case has been implemented or empirically evaluated.

@@ -1,0 +1,344 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/x0_scope_compatibility_freeze_v1.schema.json",
+  "title": "X0 Expansion Scope and Compatibility Freeze v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "gate_id",
+    "status",
+    "track",
+    "vision_source",
+    "baseline_boundary",
+    "taxonomy",
+    "architecture_policy",
+    "roadmap",
+    "release_gates",
+    "runtime_authorization",
+    "change_control"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "gate_id": {"const": "x0_scope_compatibility_freeze_v1"},
+    "status": {"const": "ACCEPTED_DESIGN_ONLY"},
+    "track": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "track_id",
+        "relationship_to_phase8",
+        "phase9_status",
+        "next_milestone"
+      ],
+      "properties": {
+        "track_id": {"const": "EXPANSION_X"},
+        "relationship_to_phase8": {
+          "const": "APPEND_ONLY_EXTENSION_OF_FROZEN_BASELINE"
+        },
+        "phase9_status": {"const": "P9_R1_PAUSED_BY_USER"},
+        "next_milestone": {
+          "const": "X1_EXTENDED_CONTRACTS_AND_MODULAR_COLLECTION"
+        }
+      }
+    },
+    "vision_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "document_role",
+        "detailed_fault_type_count",
+        "prioritization_claimed_count",
+        "omitted_from_prioritization",
+        "resolution"
+      ],
+      "properties": {
+        "document_role": {
+          "const": "INTENDED_TECHNICAL_VISION_AND_SCOPE"
+        },
+        "detailed_fault_type_count": {"const": 24},
+        "prioritization_claimed_count": {"const": 23},
+        "omitted_from_prioritization": {
+          "const": ["vlan_missing"]
+        },
+        "resolution": {
+          "const": "INCLUDE_ALL_24_DETAILED_FAULT_TYPES"
+        }
+      }
+    },
+    "baseline_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "accepted_scope_id",
+        "phase8_interpretation",
+        "immutable_class_order",
+        "protected_contract_paths",
+        "accepted_artifact_mutation_allowed",
+        "consumed_test_reuse_for_selection_allowed",
+        "historical_decisions"
+      ],
+      "properties": {
+        "accepted_scope_id": {"const": "P6_R6_SIX_CLASS_BASELINE"},
+        "phase8_interpretation": {
+          "const": "STRONG_FROZEN_BASELINE_NOT_END_OF_TECHNICAL_VISION"
+        },
+        "immutable_class_order": {
+          "const": [
+            "no_fault",
+            "missing_static_route",
+            "wrong_next_hop",
+            "wrong_default_gateway",
+            "interface_down",
+            "acl_block"
+          ]
+        },
+        "protected_contract_paths": {
+          "const": [
+            "plans/taxonomies/P6_EXTENDED_FAULT_TAXONOMY_V1.json",
+            "plans/phase6/P6_R6_METHOD_PROTOCOL_V1.json",
+            "schemas/evidence_v3.schema.json",
+            "schemas/dataset_row_v3.schema.json",
+            "schemas/phase6_method_input_v1.schema.json",
+            "schemas/phase6_method_prediction_v1.schema.json",
+            "schemas/phase6_method_report_v1.schema.json"
+          ]
+        },
+        "accepted_artifact_mutation_allowed": {"const": false},
+        "consumed_test_reuse_for_selection_allowed": {"const": false},
+        "historical_decisions": {
+          "const": ["D-085", "D-091", "D-097"]
+        }
+      }
+    },
+    "taxonomy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["healthy_class", "fault_types"],
+      "properties": {
+        "healthy_class": {
+          "const": {
+            "fault_type": "no_fault",
+            "category": null,
+            "implementation_status": "FROZEN_IMPLEMENTED"
+          }
+        },
+        "fault_types": {
+          "type": "array",
+          "minItems": 24,
+          "maxItems": 24,
+          "items": {"$ref": "#/$defs/faultType"}
+        }
+      }
+    },
+    "architecture_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "incremental_extension_only",
+        "rewrite_from_zero_authorized",
+        "automatic_remediation_authorized",
+        "first_dynamic_routing_protocol",
+        "bgp_status",
+        "new_single_fault_contracts",
+        "multiple_fault_contracts",
+        "method_selection_policy",
+        "hybrid_claim_policy"
+      ],
+      "properties": {
+        "incremental_extension_only": {"const": true},
+        "rewrite_from_zero_authorized": {"const": false},
+        "automatic_remediation_authorized": {"const": false},
+        "first_dynamic_routing_protocol": {"const": "ospf"},
+        "bgp_status": {"const": "OPTIONAL_AFTER_OSPF_GATE"},
+        "new_single_fault_contracts": {
+          "const": [
+            "Topology Context v1",
+            "Evidence v4",
+            "Feature Catalog v1",
+            "Feature Vector v2",
+            "Dataset Row v4",
+            "Diagnosis Result v2",
+            "Evidence Mask Plan v2"
+          ]
+        },
+        "multiple_fault_contracts": {
+          "const": ["Dataset Row v5", "Diagnosis Result v3"]
+        },
+        "method_selection_policy": {
+          "const": "SIMPLE_BASELINES_RETAINED_COMPLEXITY_REQUIRES_VALIDATION_EVIDENCE"
+        },
+        "hybrid_claim_policy": {
+          "const": "OBJECTIVE_COMPARISON_NO_REQUIRED_WINNER"
+        }
+      }
+    },
+    "roadmap": {
+      "type": "array",
+      "minItems": 11,
+      "maxItems": 11,
+      "items": {"$ref": "#/$defs/roadmapPhase"}
+    },
+    "release_gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required_every_release",
+        "minimum_ml_ready_single_fault_groups",
+        "multiple_fault_pair_policy"
+      ],
+      "properties": {
+        "required_every_release": {
+          "const": [
+            "IMPLEMENTATION_COMPLETE",
+            "UNIT_TESTS_GREEN",
+            "INTEGRATION_TESTS_GREEN",
+            "INFRASTRUCTURE_E2E_WHEN_APPLICABLE",
+            "FULL_REGRESSION_GREEN",
+            "REAL_EVIDENCE_WHEN_RUNTIME_AUTHORIZED",
+            "BASELINE_BEFORE_AND_AFTER_VALID",
+            "CLEANUP_CONFIRMED",
+            "FROZEN_ARTIFACT_BYTES_UNCHANGED",
+            "EXPLICIT_ACCEPTANCE_GATE"
+          ]
+        },
+        "minimum_ml_ready_single_fault_groups": {
+          "const": {
+            "train": 3,
+            "validation": 1,
+            "report_only_test": 2,
+            "repetitions_per_group": 2
+          }
+        },
+        "multiple_fault_pair_policy": {
+          "const": {
+            "cartesian_product_allowed": false,
+            "minimum_selected_pairs": 6,
+            "maximum_selected_pairs": 10,
+            "initial_pilot_pairs": 2,
+            "identifiability_gate_required": true
+          }
+        }
+      }
+    },
+    "runtime_authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "containerlab_execution",
+        "network_mutation",
+        "new_evidence_collection",
+        "dataset_generation",
+        "model_fit_or_selection",
+        "estimator_deserialization",
+        "method_prediction",
+        "metric_calculation",
+        "report_only_test_access",
+        "multiple_fault_execution"
+      ],
+      "properties": {
+        "containerlab_execution": {"const": false},
+        "network_mutation": {"const": false},
+        "new_evidence_collection": {"const": false},
+        "dataset_generation": {"const": false},
+        "model_fit_or_selection": {"const": false},
+        "estimator_deserialization": {"const": false},
+        "method_prediction": {"const": false},
+        "metric_calculation": {"const": false},
+        "report_only_test_access": {"const": false},
+        "multiple_fault_execution": {"const": false}
+      }
+    },
+    "change_control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "future_technical_changes_allowed",
+        "frozen_baseline_changes_allowed",
+        "scientific_result_changes_allowed",
+        "required_conditions"
+      ],
+      "properties": {
+        "future_technical_changes_allowed": {"const": true},
+        "frozen_baseline_changes_allowed": {"const": false},
+        "scientific_result_changes_allowed": {"const": false},
+        "required_conditions": {
+          "const": [
+            "TECHNICAL_JUSTIFICATION",
+            "VERSIONED_CONTRACT_WHEN_SEMANTICS_CHANGE",
+            "BACKWARD_COMPATIBILITY_ASSESSMENT",
+            "TEST_COVERAGE",
+            "NO_REPORT_ONLY_TEST_LEAKAGE",
+            "RECORDED_DECISION_AND_GATE"
+          ]
+        }
+      }
+    }
+  },
+  "$defs": {
+    "faultType": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "fault_type",
+        "category",
+        "implementation_status",
+        "target_phase"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[A-F][1-5]$"
+        },
+        "fault_type": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]+$"
+        },
+        "category": {
+          "enum": [
+            "addressing",
+            "l2_vlan",
+            "routing",
+            "services",
+            "security",
+            "performance"
+          ]
+        },
+        "implementation_status": {
+          "enum": [
+            "FROZEN_IMPLEMENTED",
+            "PARTIAL_MECHANISM_ONLY",
+            "MISSING"
+          ]
+        },
+        "target_phase": {
+          "enum": ["BASELINE", "X2", "X3", "X4", "X5", "X6"]
+        }
+      }
+    },
+    "roadmapPhase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "phase_id",
+        "title",
+        "status",
+        "objective",
+        "runtime_authorized_now",
+        "future_runtime_requires_separate_gate"
+      ],
+      "properties": {
+        "phase_id": {
+          "type": "string",
+          "pattern": "^X(?:[0-9]|10)$"
+        },
+        "title": {"type": "string", "minLength": 1},
+        "status": {"enum": ["ACCEPTED_DESIGN_ONLY", "PLANNED"]},
+        "objective": {"type": "string", "minLength": 1},
+        "runtime_authorized_now": {"const": false},
+        "future_runtime_requires_separate_gate": {"const": true}
+      }
+    }
+  }
+}

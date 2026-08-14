@@ -402,3 +402,100 @@ and 607 passed plus three explicit skips in a clean clone. The real
 Containerlab smoke may be run later as operational verification only.
 
 P9-R1 remains paused by user request.
+
+## Expansion Track X — Original ambitious technical vision
+Status: X0 complete; X1 planned
+
+This track extends the frozen Phase 6/7/8 baseline append-only. It does not
+reopen accepted results or resume the separately paused P9-R1 thesis milestone.
+
+### X0 — Scope and compatibility freeze
+Status: Complete
+
+- Canonical 24-fault, six-domain target taxonomy frozen
+- Source-document 23/24 inconsistency resolved by retaining `vlan_missing`
+- Five implemented, one partial-mechanism, and eighteen missing fault types
+  recorded
+- Existing six-class order and v3/method contracts protected
+- X0–X10 sequence and release gates frozen
+- All ten runtime authorization flags false
+- Verification: X0 18/18, Phase 6 185/185, H1 6/6, full clean-checkout
+  regression 625 passed/3 skipped
+
+### X1 — Extended contracts and modular collection
+Status: Next
+
+- Topology Context v1
+- Evidence v4 and collector-run structure
+- Feature Catalog v1 and Feature Vector v2
+- Dataset Row v4 and Diagnosis Result v2
+- Evidence Mask Plan v2
+- Read-only compatibility with the frozen v3 baseline
+
+### X2 — Addressing
+Status: Planned
+
+- Wrong IP address
+- Wrong subnet mask
+- Missing default route
+- Duplicate IP with temporal ARP/MAC evidence
+
+### X3 — Layer 2 and VLAN
+Status: Planned
+
+- Wrong access VLAN
+- VLAN missing
+- VLAN not allowed on trunk
+- Native VLAN mismatch
+
+### X4 — DHCP, DNS, and service security
+Status: Planned
+
+- DHCP server unavailable and pool misconfiguration
+- DNS service down and wrong DNS record
+- Service-specific firewall block
+
+### X5 — Dynamic routing with OSPF
+Status: Planned
+
+- Adjacency root causes
+- Route filtering and advertisement
+- BGP only if a later OSPF gate establishes additional value
+
+### X6 — Performance faults
+Status: Planned
+
+- Packet loss
+- High latency
+- Congestion
+- Bandwidth/rate limiting
+
+### X7 — Extended grouped single-fault dataset
+Status: Planned
+
+- Whole-group train/validation/report-only split
+- Frozen feature and class catalogs
+- No early report-only test access
+
+### X8 — Rule, ML, and Hybrid v2 evaluation
+Status: Planned
+
+- Hierarchical category/type/location evaluation
+- Simple ML baselines retained
+- Added model complexity only with validation evidence
+- Objective Hybrid comparison with no required winner
+
+### X9 — Missing evidence and unseen variants
+Status: Planned
+
+- Real collection failures reported separately from masks
+- Unseen configuration variants
+- Unseen topology instances of known fault domains
+
+### X10 — Selected multiple faults and extended interface
+Status: Planned
+
+- Two pilot pairs before the bounded six-to-ten-pair study
+- Injected, effective, and diagnosable truth sets
+- Dataset Row v5 and Diagnosis Result v3
+- Versioned interface separate from frozen Phase 7 `/api/v1`

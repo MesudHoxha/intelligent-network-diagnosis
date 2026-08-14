@@ -1,0 +1,389 @@
+{
+  "schema_version": 1,
+  "gate_id": "x0_scope_compatibility_freeze_v1",
+  "status": "ACCEPTED_DESIGN_ONLY",
+  "track": {
+    "track_id": "EXPANSION_X",
+    "relationship_to_phase8": "APPEND_ONLY_EXTENSION_OF_FROZEN_BASELINE",
+    "phase9_status": "P9_R1_PAUSED_BY_USER",
+    "next_milestone": "X1_EXTENDED_CONTRACTS_AND_MODULAR_COLLECTION"
+  },
+  "vision_source": {
+    "document_role": "INTENDED_TECHNICAL_VISION_AND_SCOPE",
+    "detailed_fault_type_count": 24,
+    "prioritization_claimed_count": 23,
+    "omitted_from_prioritization": [
+      "vlan_missing"
+    ],
+    "resolution": "INCLUDE_ALL_24_DETAILED_FAULT_TYPES"
+  },
+  "baseline_boundary": {
+    "accepted_scope_id": "P6_R6_SIX_CLASS_BASELINE",
+    "phase8_interpretation": "STRONG_FROZEN_BASELINE_NOT_END_OF_TECHNICAL_VISION",
+    "immutable_class_order": [
+      "no_fault",
+      "missing_static_route",
+      "wrong_next_hop",
+      "wrong_default_gateway",
+      "interface_down",
+      "acl_block"
+    ],
+    "protected_contract_paths": [
+      "plans/taxonomies/P6_EXTENDED_FAULT_TAXONOMY_V1.json",
+      "plans/phase6/P6_R6_METHOD_PROTOCOL_V1.json",
+      "schemas/evidence_v3.schema.json",
+      "schemas/dataset_row_v3.schema.json",
+      "schemas/phase6_method_input_v1.schema.json",
+      "schemas/phase6_method_prediction_v1.schema.json",
+      "schemas/phase6_method_report_v1.schema.json"
+    ],
+    "accepted_artifact_mutation_allowed": false,
+    "consumed_test_reuse_for_selection_allowed": false,
+    "historical_decisions": [
+      "D-085",
+      "D-091",
+      "D-097"
+    ]
+  },
+  "taxonomy": {
+    "healthy_class": {
+      "fault_type": "no_fault",
+      "category": null,
+      "implementation_status": "FROZEN_IMPLEMENTED"
+    },
+    "fault_types": [
+      {
+        "code": "A1",
+        "fault_type": "wrong_ip_address",
+        "category": "addressing",
+        "implementation_status": "MISSING",
+        "target_phase": "X2"
+      },
+      {
+        "code": "A2",
+        "fault_type": "wrong_subnet_mask",
+        "category": "addressing",
+        "implementation_status": "MISSING",
+        "target_phase": "X2"
+      },
+      {
+        "code": "A3",
+        "fault_type": "wrong_default_gateway",
+        "category": "addressing",
+        "implementation_status": "FROZEN_IMPLEMENTED",
+        "target_phase": "BASELINE"
+      },
+      {
+        "code": "A4",
+        "fault_type": "duplicate_ip",
+        "category": "addressing",
+        "implementation_status": "MISSING",
+        "target_phase": "X2"
+      },
+      {
+        "code": "B1",
+        "fault_type": "interface_down",
+        "category": "l2_vlan",
+        "implementation_status": "FROZEN_IMPLEMENTED",
+        "target_phase": "BASELINE"
+      },
+      {
+        "code": "B2",
+        "fault_type": "wrong_access_vlan",
+        "category": "l2_vlan",
+        "implementation_status": "MISSING",
+        "target_phase": "X3"
+      },
+      {
+        "code": "B3",
+        "fault_type": "vlan_missing",
+        "category": "l2_vlan",
+        "implementation_status": "MISSING",
+        "target_phase": "X3"
+      },
+      {
+        "code": "B4",
+        "fault_type": "vlan_not_allowed_on_trunk",
+        "category": "l2_vlan",
+        "implementation_status": "MISSING",
+        "target_phase": "X3"
+      },
+      {
+        "code": "B5",
+        "fault_type": "native_vlan_mismatch",
+        "category": "l2_vlan",
+        "implementation_status": "MISSING",
+        "target_phase": "X3"
+      },
+      {
+        "code": "C1",
+        "fault_type": "missing_static_route",
+        "category": "routing",
+        "implementation_status": "FROZEN_IMPLEMENTED",
+        "target_phase": "BASELINE"
+      },
+      {
+        "code": "C2",
+        "fault_type": "wrong_next_hop",
+        "category": "routing",
+        "implementation_status": "FROZEN_IMPLEMENTED",
+        "target_phase": "BASELINE"
+      },
+      {
+        "code": "C3",
+        "fault_type": "missing_default_route",
+        "category": "routing",
+        "implementation_status": "MISSING",
+        "target_phase": "X2"
+      },
+      {
+        "code": "C4",
+        "fault_type": "dynamic_routing_adjacency_failure",
+        "category": "routing",
+        "implementation_status": "MISSING",
+        "target_phase": "X5"
+      },
+      {
+        "code": "C5",
+        "fault_type": "route_filtering_or_advertisement_problem",
+        "category": "routing",
+        "implementation_status": "MISSING",
+        "target_phase": "X5"
+      },
+      {
+        "code": "D1",
+        "fault_type": "dhcp_server_unavailable",
+        "category": "services",
+        "implementation_status": "MISSING",
+        "target_phase": "X4"
+      },
+      {
+        "code": "D2",
+        "fault_type": "dhcp_pool_misconfiguration",
+        "category": "services",
+        "implementation_status": "MISSING",
+        "target_phase": "X4"
+      },
+      {
+        "code": "D3",
+        "fault_type": "dns_service_down",
+        "category": "services",
+        "implementation_status": "MISSING",
+        "target_phase": "X4"
+      },
+      {
+        "code": "D4",
+        "fault_type": "wrong_dns_record",
+        "category": "services",
+        "implementation_status": "MISSING",
+        "target_phase": "X4"
+      },
+      {
+        "code": "E1",
+        "fault_type": "acl_block",
+        "category": "security",
+        "implementation_status": "FROZEN_IMPLEMENTED",
+        "target_phase": "BASELINE"
+      },
+      {
+        "code": "E2",
+        "fault_type": "firewall_service_block",
+        "category": "security",
+        "implementation_status": "PARTIAL_MECHANISM_ONLY",
+        "target_phase": "X4"
+      },
+      {
+        "code": "F1",
+        "fault_type": "packet_loss",
+        "category": "performance",
+        "implementation_status": "MISSING",
+        "target_phase": "X6"
+      },
+      {
+        "code": "F2",
+        "fault_type": "high_latency",
+        "category": "performance",
+        "implementation_status": "MISSING",
+        "target_phase": "X6"
+      },
+      {
+        "code": "F3",
+        "fault_type": "congestion",
+        "category": "performance",
+        "implementation_status": "MISSING",
+        "target_phase": "X6"
+      },
+      {
+        "code": "F4",
+        "fault_type": "bandwidth_rate_limiting",
+        "category": "performance",
+        "implementation_status": "MISSING",
+        "target_phase": "X6"
+      }
+    ]
+  },
+  "architecture_policy": {
+    "incremental_extension_only": true,
+    "rewrite_from_zero_authorized": false,
+    "automatic_remediation_authorized": false,
+    "first_dynamic_routing_protocol": "ospf",
+    "bgp_status": "OPTIONAL_AFTER_OSPF_GATE",
+    "new_single_fault_contracts": [
+      "Topology Context v1",
+      "Evidence v4",
+      "Feature Catalog v1",
+      "Feature Vector v2",
+      "Dataset Row v4",
+      "Diagnosis Result v2",
+      "Evidence Mask Plan v2"
+    ],
+    "multiple_fault_contracts": [
+      "Dataset Row v5",
+      "Diagnosis Result v3"
+    ],
+    "method_selection_policy": "SIMPLE_BASELINES_RETAINED_COMPLEXITY_REQUIRES_VALIDATION_EVIDENCE",
+    "hybrid_claim_policy": "OBJECTIVE_COMPARISON_NO_REQUIRED_WINNER"
+  },
+  "roadmap": [
+    {
+      "phase_id": "X0",
+      "title": "Scope and compatibility freeze",
+      "status": "ACCEPTED_DESIGN_ONLY",
+      "objective": "Freeze the ambitious target scope and the append-only compatibility boundary.",
+      "runtime_authorized_now": false,
+      "future_runtime_requires_separate_gate": true
+    },
+    {
+      "phase_id": "X1",
+      "title": "Extended contracts and modular collection",
+      "status": "PLANNED",
+      "objective": "Version the topology, evidence, feature, dataset, diagnosis, and mask contracts before new data.",
+      "runtime_authorized_now": false,
+      "future_runtime_requires_separate_gate": true
+    },
+    {
+      "phase_id": "X2",
+      "title": "Addressing",
+      "status": "PLANNED",
+      "objective": "Add wrong IP, wrong mask, missing default route, and duplicate IP as safe vertical slices.",
+      "runtime_authorized_now": false,
+      "future_runtime_requires_separate_gate": true
+    },
+    {
+      "phase_id": "X3",
+      "title": "Layer 2 and VLAN",
+      "status": "PLANNED",
+      "objective": "Add the VLAN topology and four missing VLAN fault types.",
+      "runtime_authorized_now": false,
+      "future_runtime_requires_separate_gate": true
+    },
+    {
+      "phase_id": "X4",
+      "title": "DHCP, DNS, and service security",
+      "status": "PLANNED",
+      "objective": "Add the service topology, DHCP and DNS diagnosis, and service-specific firewall blocking.",
+      "runtime_authorized_now": false,
+      "future_runtime_requires_separate_gate": true
+    },
+    {
+      "phase_id": "X5",
+      "title": "Dynamic routing with OSPF",
+      "status": "PLANNED",
+      "objective": "Add OSPF adjacency and route advertisement or filtering diagnosis before considering BGP.",
+      "runtime_authorized_now": false,
+      "future_runtime_requires_separate_gate": true
+    },
+    {
+      "phase_id": "X6",
+      "title": "Performance faults",
+      "status": "PLANNED",
+      "objective": "Add controlled loss, delay, congestion, and rate-limiting experiments.",
+      "runtime_authorized_now": false,
+      "future_runtime_requires_separate_gate": true
+    },
+    {
+      "phase_id": "X7",
+      "title": "Extended single-fault dataset",
+      "status": "PLANNED",
+      "objective": "Freeze and execute a grouped multi-domain single-fault campaign without opening its report-only test early.",
+      "runtime_authorized_now": false,
+      "future_runtime_requires_separate_gate": true
+    },
+    {
+      "phase_id": "X8",
+      "title": "Rule, ML, and Hybrid v2 evaluation",
+      "status": "PLANNED",
+      "objective": "Compare hierarchical Rule, ML, and Hybrid methods without requiring Hybrid to win.",
+      "runtime_authorized_now": false,
+      "future_runtime_requires_separate_gate": true
+    },
+    {
+      "phase_id": "X9",
+      "title": "Missing evidence and unseen variants",
+      "status": "PLANNED",
+      "objective": "Evaluate real collection failures, deterministic masks, unseen configurations, and unseen topology instances separately.",
+      "runtime_authorized_now": false,
+      "future_runtime_requires_separate_gate": true
+    },
+    {
+      "phase_id": "X10",
+      "title": "Selected multiple faults and extended interface",
+      "status": "PLANNED",
+      "objective": "Evaluate a bounded identifiable pair set and expose new results through a separate versioned interface.",
+      "runtime_authorized_now": false,
+      "future_runtime_requires_separate_gate": true
+    }
+  ],
+  "release_gates": {
+    "required_every_release": [
+      "IMPLEMENTATION_COMPLETE",
+      "UNIT_TESTS_GREEN",
+      "INTEGRATION_TESTS_GREEN",
+      "INFRASTRUCTURE_E2E_WHEN_APPLICABLE",
+      "FULL_REGRESSION_GREEN",
+      "REAL_EVIDENCE_WHEN_RUNTIME_AUTHORIZED",
+      "BASELINE_BEFORE_AND_AFTER_VALID",
+      "CLEANUP_CONFIRMED",
+      "FROZEN_ARTIFACT_BYTES_UNCHANGED",
+      "EXPLICIT_ACCEPTANCE_GATE"
+    ],
+    "minimum_ml_ready_single_fault_groups": {
+      "train": 3,
+      "validation": 1,
+      "report_only_test": 2,
+      "repetitions_per_group": 2
+    },
+    "multiple_fault_pair_policy": {
+      "cartesian_product_allowed": false,
+      "minimum_selected_pairs": 6,
+      "maximum_selected_pairs": 10,
+      "initial_pilot_pairs": 2,
+      "identifiability_gate_required": true
+    }
+  },
+  "runtime_authorization": {
+    "containerlab_execution": false,
+    "network_mutation": false,
+    "new_evidence_collection": false,
+    "dataset_generation": false,
+    "model_fit_or_selection": false,
+    "estimator_deserialization": false,
+    "method_prediction": false,
+    "metric_calculation": false,
+    "report_only_test_access": false,
+    "multiple_fault_execution": false
+  },
+  "change_control": {
+    "future_technical_changes_allowed": true,
+    "frozen_baseline_changes_allowed": false,
+    "scientific_result_changes_allowed": false,
+    "required_conditions": [
+      "TECHNICAL_JUSTIFICATION",
+      "VERSIONED_CONTRACT_WHEN_SEMANTICS_CHANGE",
+      "BACKWARD_COMPATIBILITY_ASSESSMENT",
+      "TEST_COVERAGE",
+      "NO_REPORT_ONLY_TEST_LEAKAGE",
+      "RECORDED_DECISION_AND_GATE"
+    ]
+  }
+}

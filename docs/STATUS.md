@@ -1537,3 +1537,36 @@ Status: Implemented; commit-package verification required
 - Accepted artifacts, scientific results, P7 API/Dashboard contract, P8/P9
   claims, and P9-R0 source gate: unchanged
 - P9-R1: remains paused by explicit user request
+
+## Expansion Track X — Ambitious technical scope
+Status: X0 complete; X1 next
+
+- D-098 append-only expansion decision: accepted
+- Phase 8 interpretation: strong frozen six-class baseline, not the end of the
+  original technical vision
+- Canonical detailed scope: 24 fault types across six domains plus `no_fault`
+- Document 23/24 discrepancy: resolved by retaining detailed B3
+  `vlan_missing`
+- Current functional gap: 5 frozen implemented, 1 partial mechanism, 18
+  missing
+- Immutable P6 class order and protected v3/method contracts: frozen
+- Existing accepted artifacts, hashes, metrics, E02/E06 results, and P7
+  `/api/v1`: unchanged
+- Expansion order: X0–X10 frozen at design level
+- OSPF first; BGP optional only after a later OSPF gate
+- Multiple faults: bounded selected pairs with separate multi-label truth and
+  identifiability gates
+- X0 runtime authorization: 10/10 flags false
+- X0 tests: 18/18 passed
+- Targeted Phase 6: 185/185 passed
+- H1 safety: 6/6 passed
+- Clean-checkout full regression: 625 passed, 3 explicit skips
+- P9-R1: remains paused by explicit user request
+
+### Next technical milestone
+
+X1 — Extended Contracts and Modular Collection.
+
+X1 may design and test new versioned contracts and registries. It may not
+modify accepted v3 contracts or begin a new fault runtime without its own
+explicit authorization gate.
