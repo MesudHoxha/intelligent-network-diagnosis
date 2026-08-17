@@ -1417,3 +1417,10 @@ topology. HostA remains `10.20.1.10/24`; only its exact default route is
 removed. Evidence v4 and `R_X2_ADDRESSING_003` distinguish this fault from
 wrong IP and wrong subnet mask. Frozen Phase 6/7/8 artifacts and API v1 remain
 unchanged. X2-R4 Duplicate IP is next after transactional acceptance.
+
+## X2-R4 Duplicate IP expansion (2026-08-17)
+
+X2-R4 preserves HostA's address, prefix and route while creating a temporary
+second L2 claimant with a distinct MAC. Evidence v4 requires both an active
+duplicate response and temporal MAC churn. Frozen science and API v1 remain
+unchanged; X2-R5 closeout is next only after real transactional acceptance.

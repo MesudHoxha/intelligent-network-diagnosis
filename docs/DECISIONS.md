@@ -2742,3 +2742,16 @@ evidence and all unreviewed combinations cause abstention.
 Reason: loss of remote reachability alone is ambiguous. The explicit routing
 state is the direct evidence that separates this root cause from addressing,
 duplicate-IP and policy faults.
+
+## D-X2-R4 — Duplicate IP requires active and temporal L2 evidence
+
+Date: 2026-08-17
+
+Decision: `R_X2_ADDRESSING_004` may diagnose `duplicate_ip` only when the
+source identity and default route remain correct, an active duplicate response
+is observed, and temporal sampling contains at least two responder MACs with a
+transition. One signal alone abstains; unavailable evidence is insufficient.
+
+Reason: a single ARP reply or a stale neighbor entry cannot reliably establish
+two simultaneous claimants. Combining active and temporal evidence makes the
+rule explicit and testable.

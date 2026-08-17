@@ -1648,3 +1648,10 @@ only the expected default route is removed. Crash-safe restoration, native
 Evidence v4, `R_X2_ADDRESSING_003`, gate composition and 15 targeted tests are
 implemented. Full transactional regression and real Containerlab acceptance
 remain required before publication. Next: X2-R4 Duplicate IP.
+
+## X2-R4 — Duplicate IP
+
+Implemented locally on 2026-08-17. HostA remains unchanged; a temporary
+macvlan claimant and isolated observer produce active and temporal MAC
+evidence for `R_X2_ADDRESSING_004`. Transactional regression and real
+Containerlab acceptance remain required. Next after acceptance: X2-R5.

@@ -1,0 +1,49 @@
+schema_version: 1
+scenario:
+  id: X2_R4_DUPLICATE_IP
+  name: X2-R4 duplicate IP
+  kind: fault
+  truth_model: single_fault
+  variant_id: x2_r4_duplicate_ip_v1
+  category: controlled_fault
+  description: Preserve HostA networking while creating a second claimant for 10.20.1.10 with a distinct MAC.
+  topology:
+    id: X2_TOP_01_ADDRESSING
+    file: labs/topologies/x2_r1_addressing/topology.clab.yml
+    context_id: x2_top_01_addressing_context_v1
+    context_file: labs/topologies/x2_r1_addressing/topology_context_v1.json
+  observation:
+    direction: hosta_to_hostb
+    source_node: hosta
+    source_container: clab-x2r1-hosta
+    source_interface: eth1
+    expected_address: 10.20.1.10
+    expected_prefix: 10.20.1.0/24
+    expected_prefix_length: 24
+    expected_gateway: 10.20.1.1
+    destination_node: hostb
+    destination_address: 10.20.2.10
+    duplicate_observer_node: r1
+    duplicate_observer_container: clab-x2r1-r1
+    duplicate_observer_interface: eth1
+  fault:
+    type: duplicate_ip
+    injector: create_isolated_duplicate_claimant
+    target_node: r1
+    target_container: clab-x2r1-r1
+    parameters:
+      duplicate_address: 10.20.1.10/24
+      parent_interface: eth1
+      duplicate_interface: x2r4dup0
+      duplicate_mac: 02:42:0a:14:01:ee
+      observer_namespace: x2r4obs
+      observer_interface: x2r4obs0
+      observer_address: 10.20.1.250/24
+  ground_truth:
+    fault_category: addressing
+    fault_type: duplicate_ip
+    fault_location: r1
+    affected_resource: eth1
+    root_cause: A second L2 claimant advertises HostA's 10.20.1.10 address using a distinct MAC.
+  restoration:
+    method: remove_isolated_duplicate_claimant

@@ -513,3 +513,8 @@ Status: Planned
 
 Implemented; transactional acceptance pending. Next release: X2-R4 Duplicate
 IP with active duplicate detection plus temporal MAC-churn evidence.
+
+### X2-R4 — Duplicate IP
+
+Implemented; transactional acceptance pending. Requires active duplicate
+response plus temporal MAC churn. X2-R5 closes the addressing group next.

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "X2-R4 Duplicate IP Runtime Gate v1",
+  "type": "object",
+  "required": ["schema_version", "gate_id", "status", "track", "source_boundary", "source_bindings", "compatibility", "slice", "collector_activation", "safety", "acceptance", "runtime_authorization"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "gate_id": {"const": "x2_r4_duplicate_ip_runtime_gate_v1"},
+    "status": {"const": "IMPLEMENTED_RUNTIME_SLICE"},
+    "source_bindings": {"type": "array", "minItems": 10},
+    "runtime_authorization": {"type": "object"}
+  }
+}

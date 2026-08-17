@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "gate_id": "x2_r4_duplicate_ip_runtime_gate_v1",
+  "status": "IMPLEMENTED_RUNTIME_SLICE",
+  "track": {
+    "parent_gate": "x2_r3_missing_default_route_runtime_gate_v1",
+    "current_release": "X2_R4_DUPLICATE_IP",
+    "next_release": "X2_R5_ADDRESSING_CLOSEOUT",
+    "phase9_status": "P9_R1_PAUSED_BY_USER"
+  },
+  "source_boundary": {
+    "parent_commit": "21ad0e3b47cfe12527c1907b6c7ea415d62d3efd",
+    "extension_policy": "APPEND_ONLY",
+    "runtime_inherited": true
+  },
+  "source_bindings": [
+    {"binding_id": "x2_r3_parent_gate", "path": "plans/expansion/X2_R3_MISSING_DEFAULT_ROUTE_V1.json", "sha256": "346a9717c90b8188d4528b757ab37e7246b2ab8cbdcba8292932e560ad09bd12"},
+    {"binding_id": "feature_catalog", "path": "plans/expansion/X1_FEATURE_CATALOG_V1.json", "sha256": "3dba72e83d7e17767ab0851a24541aa7d2d8b789dcf04a5aeb726ff48e9518e4"},
+    {"binding_id": "evidence_v4", "path": "schemas/evidence_v4.schema.json", "sha256": "dcc61966246a03a03d060714a67b5cf14aa48f6925c262c267d07408b77f8315"},
+    {"binding_id": "scenario", "path": "scenarios/expansion/X2_R4_DUPLICATE_IP.yml", "sha256": "5d8c03c4d594c6e7c6b60b8cfe06b0bb0a0361f12b41855f6a0d315d5739763b"},
+    {"binding_id": "runtime_contract", "path": "src/expansion/x2_duplicate_ip.py", "sha256": "53dd3707ee9b628aedeceb3d0175d1a69a847b040a20ebf6660741a396b7d0af"},
+    {"binding_id": "injector_restorer", "path": "src/fault_injection/duplicate_ip.py", "sha256": "9926a8d7777e5626d6d3cf7115350459b4d6fbcc917eaa814823579759d5816a"},
+    {"binding_id": "collector", "path": "src/collection/duplicate_ip_state_collector.py", "sha256": "a850403c6d6190004a2cb6469f72ac7325b9a77293a19e20237279903b382226"},
+    {"binding_id": "rule_engine", "path": "src/rules/addressing_rule_engine_x2_r4.py", "sha256": "6328490f485c3472ed7206c94e27d0b022248c9de32f01d18e1aa9a7995ffff0"},
+    {"binding_id": "orchestrator", "path": "src/orchestration/x2_duplicate_ip_experiment_runner.py", "sha256": "dc6c05973c47f1e59e718ea5d60902f3e9c049680c48f108ddf987eae90f8d3d"},
+    {"binding_id": "real_e2e", "path": "tests/e2e/test_x2_r4_duplicate_ip_containerlab.py", "sha256": "01289f7e54ff22e96c7ce6a23f29376b2127dd6beb9b07df640f76d0bccc3ff5"}
+  ],
+  "compatibility": {
+    "phase6_evidence_v3": "UNCHANGED",
+    "accepted_results": "UNCHANGED",
+    "api_v1": "UNCHANGED",
+    "x2_r1_r2_r3_gates": "UNCHANGED_AND_VERIFIED",
+    "p9_r1": "PAUSED"
+  },
+  "slice": {
+    "fault_code": "A3",
+    "fault_type": "duplicate_ip",
+    "fault_category": "addressing",
+    "truth_model": "single_fault",
+    "rule_id": "R_X2_ADDRESSING_004",
+    "signature": {
+      "source_address_matches_expected": true,
+      "source_prefix_matches_expected": true,
+      "source_default_route_present": true,
+      "duplicate_address_detected": true,
+      "duplicate_address_mac_churn_detected": true
+    }
+  },
+  "collector_activation": {
+    "collector_id": "addressing_state_collector",
+    "collector_version": 3,
+    "evidence_contract": "Evidence v4",
+    "active_duplicate_check_required": true,
+    "temporal_mac_churn_required": true
+  },
+  "safety": {
+    "invariants": ["DURABLE_RECOVERY_INTENT_BEFORE_MUTATION", "IDEMPOTENT_CONFIRMED_RESTORATION", "BASELINE_BEFORE_AND_AFTER", "REAL_CONTAINERLAB_LIFECYCLE", "CLEANUP_ZERO_CONTAINERS"]
+  },
+  "acceptance": {
+    "real_evidence_required": true,
+    "real_infrastructure_e2e_required": true,
+    "full_regression_required": true,
+    "dataset_row_created": false,
+    "model_operation_performed": false,
+    "metric_created": false
+  },
+  "runtime_authorization": {
+    "containerlab_execution": true,
+    "network_mutation": true,
+    "new_evidence_collection": true,
+    "dataset_generation": false,
+    "model_fit_or_selection": false,
+    "estimator_deserialization": false,
+    "method_prediction": true,
+    "metric_calculation": false,
+    "report_only_test_access": false,
+    "multiple_fault_execution": false
+  }
+}
