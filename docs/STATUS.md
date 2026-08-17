@@ -1539,7 +1539,7 @@ Status: Complete
 - P9-R1: remains paused by explicit user request
 
 ## Expansion Track X — Ambitious technical scope
-Status: X0, X1, X2-R0, X2-R1, and X2-R2 complete; X2-R3 next
+Status: X0 through X2 and X3-R0 complete; X3-R1 next
 
 - D-098 append-only expansion decision: accepted
 - Phase 8 interpretation: strong frozen six-class baseline, not the end of the
@@ -1638,9 +1638,11 @@ Status: X0, X1, X2-R0, X2-R1, and X2-R2 complete; X2-R3 next
   lifecycles must pass before commit
 - Frozen Phase 6/7/8/X2-R1 artifacts and P9-R1 pause: unchanged
 
-### Next technical milestone
+### Historical checkpoint after X2-R2
 
-X2-R3 — Missing Default Route, as a separately authorized runtime slice.
+At that checkpoint, X2-R3 Missing Default Route was the next separately
+authorized runtime slice. The current milestone is recorded above and in the
+X3-R0 section below.
 ## X2-R3 — Missing Default Route
 
 Implemented locally on 2026-08-17. The exact address/prefix is preserved and
@@ -1665,6 +1667,15 @@ to four controlled variants. The committed evidence receipt binds all four
 runs and a private archive is retained locally. X2 is closed. Next: X3-R0
 design-only gate.
 
+Post-closeout semantic audit: `addressing_state_collector:v3` derives
+`duplicate_address_detected` from a non-empty responder sequence, while the X1
+Feature Catalog defines it as more than one claimant. The accepted X2-R4
+diagnosis remains valid because its mandatory temporal-churn signal proves at
+least two distinct responder MACs with a transition. Do not rewrite the
+hash-bound v3 collector or accepted evidence in place. Any future reuse must
+introduce an append-only collector version, make one responder negative, and
+cover that healthy case explicitly before new runtime acceptance.
+
 ## X3-R0 — Layer 2 and VLAN Design Gate
 
 - Parent boundary: public X2-R5 commit `7949418`, source and receipt bound
@@ -1678,6 +1689,10 @@ design-only gate.
   forbidden
 - Recovery: durable intent, exact VLAN memberships, both trunk endpoints,
   idempotent restoration and final baseline required per runtime slice
+- Observation-role provenance: the current context roles bind the tagged
+  HostA-to-HostB flow. Before X3-R4 runtime or Evidence v4 collection, add an
+  append-only Topology Context v1 variant whose source/destination are
+  HostC/HostD; do not reuse the current context ID for the native flow
 - Runtime/scientific authorization: 10/10 false
 - New X3 runtime, evidence, prediction, dataset, model or metric: absent
 - Frozen Phase 6/7/8, API v1, accepted X2 and P9-R1 pause: unchanged
