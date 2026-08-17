@@ -1,0 +1,393 @@
+{
+  "schema_version": 1,
+  "gate_id": "x3_r0_layer2_vlan_design_runtime_gate_v1",
+  "status": "ACCEPTED_DESIGN_ONLY",
+  "track": {
+    "parent_gate": "x2_r5_addressing_closeout_v1",
+    "phase9_status": "P9_R1_PAUSED_BY_USER",
+    "current_release": "X3_R0_LAYER2_VLAN_DESIGN_GATE",
+    "next_release": "X3_R1_WRONG_ACCESS_VLAN"
+  },
+  "source_boundary": {
+    "parent_commit": "7949418dca284a064165f77e2e40f626ea54daba",
+    "extension_policy": "APPEND_ONLY",
+    "runtime_inherited": false
+  },
+  "compatibility": {
+    "frozen_baseline_mutation_allowed": false,
+    "accepted_x2_mutation_allowed": false,
+    "accepted_result_mutation_allowed": false,
+    "api_v1_status": "FROZEN_BASELINE",
+    "future_extended_api": "/api/v2",
+    "truth_model": "SINGLE_FAULT_ONLY"
+  },
+  "source_bindings": [
+    {
+      "binding_id": "x0_scope_gate",
+      "path": "plans/expansion/X0_SCOPE_COMPATIBILITY_FREEZE_V1.json",
+      "sha256": "99d80b1abc15c2994e41d8d4dd650e88ea235313d7f2461276d33c44f913e33b"
+    },
+    {
+      "binding_id": "x1_contract_gate",
+      "path": "plans/expansion/X1_EXTENDED_CONTRACTS_MODULAR_COLLECTION_V1.json",
+      "sha256": "934e6c52e42e0d1f48b04611b502373252ce3c99041ebd750d387c99e1fe85ec"
+    },
+    {
+      "binding_id": "x1_feature_catalog",
+      "path": "plans/expansion/X1_FEATURE_CATALOG_V1.json",
+      "sha256": "3dba72e83d7e17767ab0851a24541aa7d2d8b789dcf04a5aeb726ff48e9518e4"
+    },
+    {
+      "binding_id": "x1_evidence_mask_plan",
+      "path": "plans/expansion/X1_EVIDENCE_MASK_PLAN_V2.json",
+      "sha256": "29e4df034936d34165dcd22e86bbc0cae54301f48139ef62ecbd0ce4f0485c22"
+    },
+    {
+      "binding_id": "topology_context_schema",
+      "path": "schemas/topology_context_v1.schema.json",
+      "sha256": "aa47595f5d112eb86eeee07e8fd8dd82f6ea660c7d6a5452faa93a156dd9028e"
+    },
+    {
+      "binding_id": "evidence_v4_schema",
+      "path": "schemas/evidence_v4.schema.json",
+      "sha256": "dcc61966246a03a03d060714a67b5cf14aa48f6925c262c267d07408b77f8315"
+    },
+    {
+      "binding_id": "modular_collector_registry",
+      "path": "src/collection/modular_registry.py",
+      "sha256": "4dbec2f96d7cc64eb96c5aee19bef99c8bd55c17623401ba531661256ae321fd"
+    },
+    {
+      "binding_id": "x1_gate_implementation",
+      "path": "src/expansion/x1_gate.py",
+      "sha256": "5c5f4a686c5846627b7baef623b2a910e9e48f549d003c988fc0d4b0b3865fed"
+    },
+    {
+      "binding_id": "x2_r5_closeout_plan",
+      "path": "plans/expansion/X2_R5_ADDRESSING_CLOSEOUT_V1.json",
+      "sha256": "cf3905d7c806474de469cb0e693979bc47beaac91b94cc8247f3c4d0b4aabfc3"
+    },
+    {
+      "binding_id": "x2_r5_evidence_receipt",
+      "path": "plans/expansion/X2_R5_ADDRESSING_EVIDENCE_RECEIPT_V1.json",
+      "sha256": "1c7a8f3a5e3ff8f28370c4b90da955a7f0dcbbbdd65fce8bc2f69b0086d6aa14"
+    },
+    {
+      "binding_id": "x2_r5_gate_implementation",
+      "path": "src/expansion/x2_r5_gate.py",
+      "sha256": "ac5959cb2a860bcc4c9620c1f5bc0ab6f4fa3206e121efe1d781c24bc6eae7cc"
+    }
+  ],
+  "topology_design": {
+    "context_path": "labs/topologies/x3_r1_l2_vlan/topology_context_v1.json",
+    "topology_id": "X3_TOP_01_L2_VLAN",
+    "status": "DESIGN_ONLY",
+    "switch_plane": "LINUX_BRIDGE_VLAN_FILTERING",
+    "container_image": "ind-linux:0.1",
+    "node_count": 6,
+    "link_count": 5,
+    "baseline_vlans": [10, 99],
+    "controlled_vlan_values": {
+      "wrong_access_vlan": 20,
+      "mismatched_native_vlan": 98
+    },
+    "flow_roles": [
+      {
+        "flow_id": "tagged_vlan_10_flow",
+        "source": "hosta",
+        "destination": "hostb",
+        "vlan_id": 10,
+        "trunk_encoding": "TAGGED"
+      },
+      {
+        "flow_id": "native_vlan_99_flow",
+        "source": "hostc",
+        "destination": "hostd",
+        "vlan_id": 99,
+        "trunk_encoding": "UNTAGGED_NATIVE"
+      }
+    ],
+    "required_raw_observations": [
+      "BRIDGE_VLAN_JSON_BOTH_SWITCHES",
+      "BRIDGE_FDB_JSON_BOTH_SWITCHES",
+      "INTERFACE_STATE_JSON",
+      "ACTIVE_FLOW_PROBE"
+    ]
+  },
+  "baseline_signature": {
+    "access_vlan_matches_expected": true,
+    "vlan_exists_on_target": true,
+    "vlan_allowed_on_trunk": true,
+    "native_vlan_matches_peer": true,
+    "fdb_location_matches_expected": true
+  },
+  "l2_vlan_scope": [
+    {
+      "order": 1,
+      "fault_code": "B2",
+      "fault_type": "wrong_access_vlan",
+      "category": "l2_vlan",
+      "implementation_release": "X3_R1_WRONG_ACCESS_VLAN",
+      "planned_rule_id": "R_X3_L2_VLAN_001",
+      "injector_mechanism": "replace_expected_access_pvid_with_controlled_wrong_vlan",
+      "restoration_mechanism": "restore_exact_access_pvid_and_untagged_membership",
+      "required_feature_ids": [
+        "access_vlan_matches_expected",
+        "vlan_exists_on_target",
+        "vlan_allowed_on_trunk",
+        "native_vlan_matches_peer",
+        "fdb_location_matches_expected"
+      ],
+      "fault_signature": {
+        "access_vlan_matches_expected": false,
+        "vlan_exists_on_target": true,
+        "vlan_allowed_on_trunk": true,
+        "native_vlan_matches_peer": true,
+        "fdb_location_matches_expected": false
+      },
+      "required_evidence_modes": [
+        "BRIDGE_VLAN_JSON",
+        "BRIDGE_FDB_JSON",
+        "ACTIVE_L2_REACHABILITY"
+      ],
+      "excluded_confounders": [
+        "interface_down",
+        "vlan_missing",
+        "vlan_not_allowed_on_trunk",
+        "native_vlan_mismatch"
+      ],
+      "recovery_intent_required": true,
+      "idempotent_restoration_required": true,
+      "real_e2e_required": true
+    },
+    {
+      "order": 2,
+      "fault_code": "B3",
+      "fault_type": "vlan_missing",
+      "category": "l2_vlan",
+      "implementation_release": "X3_R2_VLAN_MISSING",
+      "planned_rule_id": "R_X3_L2_VLAN_002",
+      "injector_mechanism": "remove_expected_vlan_from_target_switch_memberships",
+      "restoration_mechanism": "restore_exact_bridge_access_and_trunk_vlan_memberships",
+      "required_feature_ids": [
+        "access_vlan_matches_expected",
+        "vlan_exists_on_target",
+        "vlan_allowed_on_trunk",
+        "native_vlan_matches_peer",
+        "fdb_location_matches_expected"
+      ],
+      "fault_signature": {
+        "access_vlan_matches_expected": false,
+        "vlan_exists_on_target": false,
+        "vlan_allowed_on_trunk": false,
+        "native_vlan_matches_peer": true,
+        "fdb_location_matches_expected": false
+      },
+      "required_evidence_modes": [
+        "BRIDGE_VLAN_JSON",
+        "BRIDGE_FDB_JSON",
+        "ACTIVE_L2_REACHABILITY"
+      ],
+      "excluded_confounders": [
+        "interface_down",
+        "wrong_access_vlan",
+        "vlan_not_allowed_on_trunk",
+        "native_vlan_mismatch"
+      ],
+      "recovery_intent_required": true,
+      "idempotent_restoration_required": true,
+      "real_e2e_required": true
+    },
+    {
+      "order": 3,
+      "fault_code": "B4",
+      "fault_type": "vlan_not_allowed_on_trunk",
+      "category": "l2_vlan",
+      "implementation_release": "X3_R3_VLAN_NOT_ALLOWED_ON_TRUNK",
+      "planned_rule_id": "R_X3_L2_VLAN_003",
+      "injector_mechanism": "remove_expected_tagged_vlan_from_one_trunk_endpoint",
+      "restoration_mechanism": "restore_exact_trunk_allowed_vlan_set",
+      "required_feature_ids": [
+        "access_vlan_matches_expected",
+        "vlan_exists_on_target",
+        "vlan_allowed_on_trunk",
+        "native_vlan_matches_peer",
+        "fdb_location_matches_expected"
+      ],
+      "fault_signature": {
+        "access_vlan_matches_expected": true,
+        "vlan_exists_on_target": true,
+        "vlan_allowed_on_trunk": false,
+        "native_vlan_matches_peer": true,
+        "fdb_location_matches_expected": true
+      },
+      "required_evidence_modes": [
+        "BRIDGE_VLAN_JSON_BOTH_SWITCHES",
+        "BRIDGE_FDB_JSON",
+        "ACTIVE_L2_REACHABILITY"
+      ],
+      "excluded_confounders": [
+        "interface_down",
+        "wrong_access_vlan",
+        "vlan_missing",
+        "native_vlan_mismatch"
+      ],
+      "recovery_intent_required": true,
+      "idempotent_restoration_required": true,
+      "real_e2e_required": true
+    },
+    {
+      "order": 4,
+      "fault_code": "B5",
+      "fault_type": "native_vlan_mismatch",
+      "category": "l2_vlan",
+      "implementation_release": "X3_R4_NATIVE_VLAN_MISMATCH",
+      "planned_rule_id": "R_X3_L2_VLAN_004",
+      "injector_mechanism": "replace_native_pvid_on_one_trunk_endpoint_with_controlled_mismatch",
+      "restoration_mechanism": "restore_exact_peer_native_pvid_and_tagging",
+      "required_feature_ids": [
+        "access_vlan_matches_expected",
+        "vlan_exists_on_target",
+        "vlan_allowed_on_trunk",
+        "native_vlan_matches_peer",
+        "fdb_location_matches_expected"
+      ],
+      "fault_signature": {
+        "access_vlan_matches_expected": true,
+        "vlan_exists_on_target": true,
+        "vlan_allowed_on_trunk": true,
+        "native_vlan_matches_peer": false,
+        "fdb_location_matches_expected": true
+      },
+      "required_evidence_modes": [
+        "BRIDGE_VLAN_JSON_BOTH_SWITCHES",
+        "PEER_NATIVE_VLAN_COMPARISON",
+        "BRIDGE_FDB_JSON",
+        "ACTIVE_NATIVE_FLOW_PROBE"
+      ],
+      "excluded_confounders": [
+        "interface_down",
+        "wrong_access_vlan",
+        "vlan_missing",
+        "vlan_not_allowed_on_trunk"
+      ],
+      "recovery_intent_required": true,
+      "idempotent_restoration_required": true,
+      "real_e2e_required": true
+    }
+  ],
+  "feature_boundary": {
+    "catalog_id": "x1_feature_catalog_v1",
+    "collector_id": "l2_vlan_state_collector",
+    "collector_version": 1,
+    "collector_status": "DESIGN_ONLY",
+    "required_feature_ids": [
+      "access_vlan_matches_expected",
+      "vlan_exists_on_target",
+      "vlan_allowed_on_trunk",
+      "native_vlan_matches_peer",
+      "fdb_location_matches_expected"
+    ]
+  },
+  "release_sequence": [
+    {
+      "release_id": "X3_R0_LAYER2_VLAN_DESIGN_GATE",
+      "objective": "Freeze the topology, disjoint signatures, evidence, safety, and runtime boundaries.",
+      "status": "ACCEPTED_DESIGN_ONLY",
+      "runtime_inherited": false
+    },
+    {
+      "release_id": "X3_R1_WRONG_ACCESS_VLAN",
+      "objective": "Implement the real Linux-bridge topology and Wrong Access VLAN slice.",
+      "status": "PLANNED",
+      "runtime_inherited": false
+    },
+    {
+      "release_id": "X3_R2_VLAN_MISSING",
+      "objective": "Implement VLAN Missing injection, evidence, rule, restoration, and E2E.",
+      "status": "PLANNED",
+      "runtime_inherited": false
+    },
+    {
+      "release_id": "X3_R3_VLAN_NOT_ALLOWED_ON_TRUNK",
+      "objective": "Implement trunk allow-list injection, evidence, rule, restoration, and E2E.",
+      "status": "PLANNED",
+      "runtime_inherited": false
+    },
+    {
+      "release_id": "X3_R4_NATIVE_VLAN_MISMATCH",
+      "objective": "Implement peer native-VLAN mismatch, evidence, rule, restoration, and E2E.",
+      "status": "PLANNED",
+      "runtime_inherited": false
+    },
+    {
+      "release_id": "X3_R5_LAYER2_VLAN_CLOSEOUT",
+      "objective": "Freeze accepted Layer 2/VLAN evidence and hand off to X4 without dataset or ML execution.",
+      "status": "PLANNED",
+      "runtime_inherited": false
+    }
+  ],
+  "safety_invariants": [
+    "DURABLE_RECOVERY_INTENT_BEFORE_MUTATION",
+    "ATOMIC_MUTATION_JOURNAL",
+    "BEST_EFFORT_RESTORATION",
+    "IDEMPOTENT_CONFIRMED_RESTORATION",
+    "FINAL_HEALTHY_STATE_VERIFIED",
+    "SINGLE_FAULT_ISOLATION",
+    "BASELINE_BEFORE_AND_AFTER",
+    "CLEANUP_ZERO_CONTAINERS",
+    "EXACT_VLAN_MEMBERSHIP_RESTORATION",
+    "BOTH_TRUNK_ENDPOINTS_OBSERVED"
+  ],
+  "evidence_policy": {
+    "evidence_contract": "Evidence v4",
+    "raw_artifact_hash_required": true,
+    "collector_provenance_required": true,
+    "real_evidence_required_per_runtime_slice": true,
+    "connectivity_only_classification_forbidden": true,
+    "r0_creates_empirical_evidence": false,
+    "accepted_x2_evidence_read_only": true,
+    "report_only_test_access_allowed": false
+  },
+  "acceptance": {
+    "new_runtime_executed": false,
+    "new_empirical_claim_created": false,
+    "topology_context_validated": true,
+    "unit_tests_required": true,
+    "integration_tests_required": true,
+    "infrastructure_e2e_required_for_r0": false,
+    "existing_infrastructure_regression_required": true,
+    "frozen_artifacts_unchanged": true,
+    "explicit_gate_before_each_runtime_release": true
+  },
+  "claim_boundary": {
+    "proves": [
+      "the four planned Layer 2/VLAN fault signatures are explicit and disjoint",
+      "the design is bound to the X0 taxonomy and X1 feature contracts",
+      "the two-switch topology context satisfies Topology Context v1",
+      "all X3 runtime and scientific operations remain unauthorized"
+    ],
+    "does_not_prove": [
+      "that the X3 topology has executed",
+      "that any Layer 2/VLAN fault is effective or diagnosable",
+      "that Evidence v4 has been collected for X3",
+      "Rule-Based accuracy for Layer 2/VLAN faults",
+      "extended dataset coverage",
+      "ML or Hybrid performance",
+      "multiple-fault diagnosis",
+      "production deployment"
+    ]
+  },
+  "runtime_authorization": {
+    "containerlab_execution": false,
+    "network_mutation": false,
+    "new_evidence_collection": false,
+    "dataset_generation": false,
+    "model_fit_or_selection": false,
+    "estimator_deserialization": false,
+    "method_prediction": false,
+    "metric_calculation": false,
+    "report_only_test_access": false,
+    "multiple_fault_execution": false
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "context_id": "x3_top_01_l2_vlan_context_v1",
+  "topology_id": "X3_TOP_01_L2_VLAN",
+  "variant_id": "x3_r0_design_only_v1",
+  "nodes": [
+    {
+      "node_id": "hosta",
+      "role": "host",
+      "runtime_target": "clab-x3r1-hosta",
+      "capabilities": ["active_l2_probe"]
+    },
+    {
+      "node_id": "hostb",
+      "role": "host",
+      "runtime_target": "clab-x3r1-hostb",
+      "capabilities": ["active_l2_probe"]
+    },
+    {
+      "node_id": "hostc",
+      "role": "host",
+      "runtime_target": "clab-x3r1-hostc",
+      "capabilities": ["active_l2_probe"]
+    },
+    {
+      "node_id": "hostd",
+      "role": "host",
+      "runtime_target": "clab-x3r1-hostd",
+      "capabilities": ["active_l2_probe"]
+    },
+    {
+      "node_id": "sw1",
+      "role": "switch",
+      "runtime_target": "clab-x3r1-sw1",
+      "capabilities": [
+        "l2_vlan",
+        "bridge_vlan_json",
+        "bridge_fdb_json"
+      ]
+    },
+    {
+      "node_id": "sw2",
+      "role": "switch",
+      "runtime_target": "clab-x3r1-sw2",
+      "capabilities": [
+        "l2_vlan",
+        "bridge_vlan_json",
+        "bridge_fdb_json"
+      ]
+    }
+  ],
+  "links": [
+    {
+      "link_id": "hosta_sw1",
+      "kind": "access",
+      "endpoints": [
+        {"node_id": "hosta", "interface": "eth1"},
+        {"node_id": "sw1", "interface": "eth1"}
+      ],
+      "expected_vlans": [10],
+      "native_vlan": 10
+    },
+    {
+      "link_id": "hostc_sw1",
+      "kind": "access",
+      "endpoints": [
+        {"node_id": "hostc", "interface": "eth1"},
+        {"node_id": "sw1", "interface": "eth2"}
+      ],
+      "expected_vlans": [99],
+      "native_vlan": 99
+    },
+    {
+      "link_id": "sw1_sw2",
+      "kind": "trunk",
+      "endpoints": [
+        {"node_id": "sw1", "interface": "eth3"},
+        {"node_id": "sw2", "interface": "eth3"}
+      ],
+      "expected_vlans": [10, 99],
+      "native_vlan": 99
+    },
+    {
+      "link_id": "sw2_hostb",
+      "kind": "access",
+      "endpoints": [
+        {"node_id": "sw2", "interface": "eth1"},
+        {"node_id": "hostb", "interface": "eth1"}
+      ],
+      "expected_vlans": [10],
+      "native_vlan": 10
+    },
+    {
+      "link_id": "sw2_hostd",
+      "kind": "access",
+      "endpoints": [
+        {"node_id": "sw2", "interface": "eth2"},
+        {"node_id": "hostd", "interface": "eth1"}
+      ],
+      "expected_vlans": [99],
+      "native_vlan": 99
+    }
+  ],
+  "observation_roles": {
+    "source": "hosta",
+    "destination": "hostb",
+    "observers": ["sw1", "sw2"]
+  },
+  "capabilities": [
+    "l2_vlan",
+    "bridge_vlan_json",
+    "bridge_fdb_json",
+    "active_l2_probe"
+  ]
+}

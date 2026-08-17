@@ -1432,3 +1432,27 @@ disjoint rules. X2-R5 binds their source gates and accepted Evidence v4 runs,
 authorizes 0/10 runtime operations and freezes the claim to four controlled
 variants on one known topology. It creates no dataset, ML/Hybrid result,
 metric, API change or multiple-fault claim. X3-R0 is the next design-only gate.
+
+## X3-R0 Layer 2/VLAN design gate (2026-08-17)
+
+X3-R0 binds the public X2-R5 closeout and its four-run receipt, the X0 taxonomy,
+the X1 feature catalog, Evidence v4, Topology Context v1 and the metadata-only
+collector registry. The exact X3 scope is Wrong Access VLAN, VLAN Missing,
+VLAN Not Allowed on Trunk and Native VLAN Mismatch.
+
+The design introduces `X3_TOP_01_L2_VLAN`: four hosts and two Linux bridges
+with VLAN filtering. HostA/HostB exercise tagged VLAN 10; HostC/HostD exercise
+native VLAN 99. VLAN 20 and VLAN 98 are reserved controlled wrong values. This
+two-flow design prevents the native mismatch intervention from being conflated
+with the tagged trunk allow-list intervention.
+
+Five X1 features form four explicit disjoint signatures: access membership,
+VLAN existence, trunk allowance, peer native-VLAN agreement and FDB location.
+Runtime evidence must come from both switches plus an active effectiveness
+probe; connectivity failure alone is forbidden as a diagnosis.
+
+X3-R0 remains design-only with all ten authorization flags false. No topology
+is deployed, no fault is injected, no X3 evidence or prediction is created,
+and no claim of diagnostic accuracy is made. Frozen Phase 6/7/8 and API v1,
+the accepted X2 boundary, and the P9-R1 pause remain unchanged. X3-R1 Wrong
+Access VLAN is the next separately gated runtime release.

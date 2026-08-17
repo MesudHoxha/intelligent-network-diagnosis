@@ -2768,3 +2768,29 @@ Reason: the addressing objective is satisfied by four controlled, disjoint
 single-fault slices. Repeating runtime during closeout adds risk but no new
 scientific variable. The receipt preserves reproducibility, while the claim
 boundary prevents controlled variants from being presented as generalization.
+
+## D-X3-R0 — Separate tagged and native flows before Layer 2 runtime
+
+Date: 2026-08-17
+
+Decision: freeze X3 as four append-only, single-fault Layer 2/VLAN slices on a
+new two-switch Linux-bridge topology. Use HostA-to-HostB on tagged VLAN 10 for
+Wrong Access VLAN, VLAN Missing and VLAN Not Allowed on Trunk. Use a separate
+HostC-to-HostD flow on untagged native VLAN 99 for Native VLAN Mismatch. VLAN
+20 and VLAN 98 are the only controlled wrong values.
+
+Each rule signature uses the exact X1 features for access membership, VLAN
+existence, trunk allowance, peer native-VLAN agreement and local FDB location.
+Connectivity is an effectiveness check, not a root-cause classifier. Both
+trunk endpoints must be observed. Runtime slices require durable recovery
+intent, exact VLAN membership restoration, real Evidence v4, baseline
+recovery and zero-container cleanup.
+
+Reason: a single host pair cannot make both tagged allow-list faults and a
+native-VLAN mismatch independently effective without adding ambiguity. Two
+flows keep the causal interventions explicit while reusing one small topology.
+
+X3-R0 authorizes none of the ten runtime/scientific operations and creates no
+empirical result. Frozen Phase 6/7/8, API v1, the accepted X2 receipt and the
+P9-R1 pause remain unchanged. X3-R1 must separately implement and prove the
+Wrong Access VLAN runtime slice.

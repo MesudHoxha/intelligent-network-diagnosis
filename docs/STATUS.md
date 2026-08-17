@@ -1664,3 +1664,21 @@ four disjoint signatures, authorizes 0/10 runtime operations and limits claims
 to four controlled variants. The committed evidence receipt binds all four
 runs and a private archive is retained locally. X2 is closed. Next: X3-R0
 design-only gate.
+
+## X3-R0 — Layer 2 and VLAN Design Gate
+
+- Parent boundary: public X2-R5 commit `7949418`, source and receipt bound
+- X0 scope: B2 Wrong Access VLAN, B3 VLAN Missing, B4 VLAN Not Allowed on
+  Trunk, B5 Native VLAN Mismatch
+- Topology Context v1: 6 nodes, 5 links, 2 Linux bridge switches
+- Test flows: tagged VLAN 10 HostA/HostB; native VLAN 99 HostC/HostD
+- Controlled wrong values: access VLAN 20; native VLAN 98
+- X1 Layer 2/VLAN feature ownership: exact 5/5, design-only collector
+- Signatures: 4/4 explicit and disjoint; connectivity-only classification
+  forbidden
+- Recovery: durable intent, exact VLAN memberships, both trunk endpoints,
+  idempotent restoration and final baseline required per runtime slice
+- Runtime/scientific authorization: 10/10 false
+- New X3 runtime, evidence, prediction, dataset, model or metric: absent
+- Frozen Phase 6/7/8, API v1, accepted X2 and P9-R1 pause: unchanged
+- Next: X3-R1 Wrong Access VLAN as a separately authorized real slice

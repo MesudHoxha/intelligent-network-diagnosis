@@ -404,7 +404,7 @@ and infrastructure cycle without changing accepted results.
 P9-R1 remains paused by user request.
 
 ## Expansion Track X — Original ambitious technical vision
-Status: X0, X1, X2-R0, X2-R1, and X2-R2 complete; X2-R3 next
+Status: X2 closed; X3-R0 design gate complete; X3-R1 next
 
 This track extends the frozen Phase 6/7/8 baseline append-only. It does not
 reopen accepted results or resume the separately paused P9-R1 thesis milestone.
@@ -451,12 +451,15 @@ Status: Complete — X2-R0 through X2-R5 accepted
 - X2-R5: source/evidence closeout and hash-bound receipt accepted
 
 ### X3 — Layer 2 and VLAN
-Status: Planned
+Status: X3-R0 design gate complete; X3-R1 next
 
 - Wrong access VLAN
 - VLAN missing
 - VLAN not allowed on trunk
 - Native VLAN mismatch
+- X3-R0: two-switch Linux-bridge design, tagged VLAN 10 flow, native VLAN 99
+  flow, five-feature disjoint signatures and 0/10 runtime authorization
+- X3-R1 next: implement the topology and Wrong Access VLAN runtime slice
 
 ### X4 — DHCP, DNS, and service security
 Status: Planned
@@ -522,3 +525,9 @@ restoration and cleanup. X2-R5 closes the addressing group.
 
 Accepted. Four real runs are bound by the committed receipt and retained in a
 private local archive. Next: X3-R0 design gate.
+
+### X3-R0 — Layer 2/VLAN Design Gate
+
+Accepted design-only. The six-node, five-link context and four disjoint fault
+signatures are frozen without deploying Containerlab or collecting evidence.
+Next: X3-R1 Wrong Access VLAN.
