@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "context_id": "x2_top_01_addressing_context_v1",
+  "topology_id": "X2_TOP_01_ADDRESSING",
+  "variant_id": "x2_r1_addressing_v1",
+  "nodes": [
+    {
+      "node_id": "hosta",
+      "role": "host",
+      "runtime_target": "clab-x2r1-hosta",
+      "capabilities": ["ipv4_addressing"]
+    },
+    {
+      "node_id": "r1",
+      "role": "router",
+      "runtime_target": "clab-x2r1-r1",
+      "capabilities": ["ipv4_addressing", "active_neighbor_probe"]
+    },
+    {
+      "node_id": "hostb",
+      "role": "host",
+      "runtime_target": "clab-x2r1-hostb",
+      "capabilities": ["ipv4_addressing"]
+    }
+  ],
+  "links": [
+    {
+      "link_id": "hosta_r1",
+      "kind": "routed",
+      "endpoints": [
+        {"node_id": "hosta", "interface": "eth1"},
+        {"node_id": "r1", "interface": "eth1"}
+      ],
+      "expected_vlans": [],
+      "native_vlan": null
+    },
+    {
+      "link_id": "r1_hostb",
+      "kind": "routed",
+      "endpoints": [
+        {"node_id": "r1", "interface": "eth2"},
+        {"node_id": "hostb", "interface": "eth1"}
+      ],
+      "expected_vlans": [],
+      "native_vlan": null
+    }
+  ],
+  "observation_roles": {
+    "source": "hosta",
+    "destination": "hostb",
+    "observers": ["r1"]
+  },
+  "capabilities": ["ipv4_addressing", "active_neighbor_probe"]
+}
+

@@ -1367,3 +1367,24 @@ Evidence v4, real E2E, restored baseline, and cleanup.
 X2-R0 executes no Containerlab command, network mutation, new collection,
 dataset generation, model operation, prediction, metric, report-only access,
 or multiple-fault run. P9-R1 remains paused; X2-R1 is next.
+
+X2-R1 subsequently implements the first isolated addressing runtime under
+D-101. A new three-node Containerlab topology changes HostA from
+`10.20.1.10/24` to `10.20.1.11/24` while preserving the expected /24 and the
+default route through `10.20.1.1`. This makes address identity, not generic
+connectivity failure, the decisive signal.
+
+The injector persists a scenario-hash-bound recovery intent before mutation.
+Every exception path attempts exact restoration, a surviving intent is enough
+to recover when no injection record was written, confirmed restoration is
+idempotent, and both the exact address/route state and the healthy baseline are
+revalidated. The new collector produces native Evidence v4 with raw artifact
+hashes and collector provenance. An active three-sample neighbor refresh
+excludes duplicate IP in this controlled slice; temporal MAC churn is not
+requested until X2-R4.
+
+The exact four-feature vector feeds only Rule `R_X2_ADDRESSING_001` through
+Feature Vector v2 and Diagnosis Result v2. X2-R1 creates no dataset row, model
+fit, estimator load, ML/Hybrid output, metric, report-only access,
+multiple-fault execution, or API change. The accepted Phase 6/7/8 baseline
+remains immutable, P9-R1 stays paused, and X2-R2 wrong subnet mask is next.

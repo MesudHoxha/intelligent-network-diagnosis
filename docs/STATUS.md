@@ -1539,7 +1539,7 @@ Status: Complete
 - P9-R1: remains paused by explicit user request
 
 ## Expansion Track X — Ambitious technical scope
-Status: X0, X1, and X2-R0 complete; X2-R1 next
+Status: X0, X1, X2-R0, and X2-R1 complete; X2-R2 next
 
 - D-098 append-only expansion decision: accepted
 - Phase 8 interpretation: strong frozen six-class baseline, not the end of the
@@ -1598,6 +1598,28 @@ Status: X0, X1, and X2-R0 complete; X2-R1 next
   access: absent
 - Frozen Phase 6/7/8 baseline and P9-R1 pause: unchanged
 
+### X2-R1 Wrong IP Address runtime slice
+
+- D-101 isolated single-fault runtime: implemented
+- New X2 addressing topology and Topology Context v1: implemented
+- Exact address-identity mutation with prefix/default-route preservation:
+  implemented
+- Durable pre-mutation intent and atomic mutation/restoration records:
+  implemented
+- Exception-path best-effort restoration and confirmed idempotence: implemented
+- Native Evidence v4 with three hash-bound raw artifacts: implemented
+- Active duplicate-address confounder check: implemented
+- Temporal MAC churn feature: explicitly `not_requested` until X2-R4
+- Feature Vector v2 and exact Rule-Based Diagnosis Result v2: implemented
+- Wrong-mask, missing-default, and duplicate-IP signatures: excluded
+- Dataset, ML/Hybrid, metrics, report-only access, multiple faults, `/api/v2`:
+  absent
+- Local verification: X2-R1 15/15; combined X0-through-X2 90/90;
+  Phase 6 plus H1 191/191; clean-checkout full suite 697 passed/4 skipped
+- Transactional acceptance: materialized suite and both real Containerlab
+  lifecycles must pass before commit
+- Frozen Phase 6/7/8 artifacts and P9-R1 pause: unchanged
+
 ### Next technical milestone
 
-X2-R1 — Wrong IP Address and the isolated addressing runtime foundation.
+X2-R2 — Wrong Subnet Mask, as a separately authorized runtime slice.

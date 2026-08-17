@@ -2650,3 +2650,38 @@ Limitation:
 D-100 does not prove an addressing topology, command availability, injector,
 collector value, rule diagnosis, restoration, E2E execution, dataset row,
 model, metric, or generalization claim.
+
+## D-101 — Implement Wrong IP as the first isolated X2 runtime slice
+
+Decision: Implement X2-R1 as one append-only, single-fault vertical slice for
+`wrong_ip_address`. The controlled mutation replaces only HostA's exact IPv4
+address identity inside the same expected /24. The expected prefix and default
+route remain installed, while an active three-sample neighbor refresh excludes
+the duplicate-IP confounder for this controlled topology.
+
+The mutation writes a scenario- and hash-bound recovery intent before the
+first address command. Restoration is best-effort on every exception path,
+accepts the surviving intent even when no injection record exists, is
+idempotent after confirmation, and verifies the exact healthy address, route,
+and reachability state. All Docker and baseline commands remain bounded by the
+existing H1 subprocess boundary.
+
+The activated `addressing_state_collector:v1` produces native Evidence v4 with
+raw-byte SHA-256 provenance. Feature Vector v2 and Diagnosis Result v2 are
+used only for the exact `R_X2_ADDRESSING_001` rule. The collector records
+`duplicate_address_mac_churn_detected` as `not_requested`; temporal churn
+remains reserved for X2-R4. Dataset generation, ML, Hybrid, metrics,
+report-only access, multiple-fault execution, and `/api/v2` remain absent.
+
+Acceptance requires the transactional package to pass 15/15 X2-R1 tests,
+90/90 combined X0-through-X2 tests, 191/191 Phase 6 plus H1 tests, the full
+clean and materialized regressions, both the existing Phase 6 and new X2-R1
+real Containerlab lifecycles, restored baseline, zero containers, and
+unchanged protected artifacts. P9-R1 remains paused. X2-R2 is next.
+
+Limitation:
+
+D-101 proves one controlled topology and one selected wrong-IP variant only.
+It does not create an extended dataset, estimate generalization, prove unseen
+addressing variants, implement wrong mask/missing default/duplicate IP, or
+compare Rule-Based, ML, and Hybrid methods.
