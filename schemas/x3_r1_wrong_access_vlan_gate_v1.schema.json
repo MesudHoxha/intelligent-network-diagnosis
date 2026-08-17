@@ -1,0 +1,243 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "X3-R1 Wrong Access VLAN Runtime Gate v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "gate_id",
+    "status",
+    "track",
+    "source_boundary",
+    "source_bindings",
+    "compatibility",
+    "slice",
+    "topology_runtime",
+    "collector_activation",
+    "safety",
+    "acceptance",
+    "runtime_authorization"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "gate_id": {"const": "x3_r1_wrong_access_vlan_runtime_gate_v1"},
+    "status": {"const": "IMPLEMENTED_RUNTIME_SLICE"},
+    "track": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["parent_gate", "current_release", "next_release", "phase9_status"],
+      "properties": {
+        "parent_gate": {"const": "x3_r0_layer2_vlan_design_runtime_gate_v1"},
+        "current_release": {"const": "X3_R1_WRONG_ACCESS_VLAN"},
+        "next_release": {"const": "X3_R2_VLAN_MISSING"},
+        "phase9_status": {"const": "P9_R1_PAUSED_BY_USER"}
+      }
+    },
+    "source_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["parent_commit", "extension_policy", "runtime_inherited"],
+      "properties": {
+        "parent_commit": {"const": "f59af55caadea6591195fd09512b73f23d78135a"},
+        "extension_policy": {"const": "APPEND_ONLY"},
+        "runtime_inherited": {"const": false}
+      }
+    },
+    "source_bindings": {
+      "type": "array",
+      "minItems": 14,
+      "maxItems": 14,
+      "items": {"$ref": "#/$defs/sourceBinding"}
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "phase6_evidence_v3",
+        "phase6_dataset_row_v3",
+        "accepted_results",
+        "accepted_x2",
+        "api_v1",
+        "extended_api",
+        "p9_r1"
+      ],
+      "properties": {
+        "phase6_evidence_v3": {"const": "UNCHANGED"},
+        "phase6_dataset_row_v3": {"const": "UNCHANGED"},
+        "accepted_results": {"const": "UNCHANGED"},
+        "accepted_x2": {"const": "UNCHANGED"},
+        "api_v1": {"const": "UNCHANGED"},
+        "extended_api": {"const": "NOT_CREATED"},
+        "p9_r1": {"const": "PAUSED"}
+      }
+    },
+    "slice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fault_code",
+        "fault_type",
+        "fault_category",
+        "truth_model",
+        "rule_id",
+        "scenario_path",
+        "topology_context_path",
+        "signature",
+        "excluded_confounders"
+      ],
+      "properties": {
+        "fault_code": {"const": "B2"},
+        "fault_type": {"const": "wrong_access_vlan"},
+        "fault_category": {"const": "l2_vlan"},
+        "truth_model": {"const": "single_fault"},
+        "rule_id": {"const": "R_X3_L2_VLAN_001"},
+        "scenario_path": {"const": "scenarios/expansion/X3_R1_WRONG_ACCESS_VLAN.yml"},
+        "topology_context_path": {"const": "labs/topologies/x3_r1_l2_vlan/topology_context_v1.json"},
+        "signature": {"$ref": "#/$defs/signature"},
+        "excluded_confounders": {
+          "const": [
+            "interface_down",
+            "vlan_missing",
+            "vlan_not_allowed_on_trunk",
+            "native_vlan_mismatch"
+          ]
+        }
+      }
+    },
+    "topology_runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "topology_id",
+        "status",
+        "switch_plane",
+        "tagged_flow",
+        "native_flow_preserved",
+        "wrong_vlan"
+      ],
+      "properties": {
+        "topology_id": {"const": "X3_TOP_01_L2_VLAN"},
+        "status": {"const": "IMPLEMENTED"},
+        "switch_plane": {"const": "LINUX_BRIDGE_VLAN_FILTERING"},
+        "tagged_flow": {"const": "hosta_to_hostb_vlan_10"},
+        "native_flow_preserved": {"const": "hostc_to_hostd_vlan_99"},
+        "wrong_vlan": {"const": 20}
+      }
+    },
+    "collector_activation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "collector_id",
+        "collector_version",
+        "evidence_contract",
+        "raw_artifact_hash_required",
+        "both_switches_observed",
+        "active_effectiveness_probe_required"
+      ],
+      "properties": {
+        "collector_id": {"const": "l2_vlan_state_collector"},
+        "collector_version": {"const": 1},
+        "evidence_contract": {"const": "Evidence v4"},
+        "raw_artifact_hash_required": {"const": true},
+        "both_switches_observed": {"const": true},
+        "active_effectiveness_probe_required": {"const": true}
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["invariants"],
+      "properties": {
+        "invariants": {
+          "type": "array",
+          "minItems": 10,
+          "maxItems": 10,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "acceptance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "real_evidence_required",
+        "real_infrastructure_e2e_required",
+        "full_regression_required",
+        "frozen_artifacts_unchanged",
+        "dataset_row_created",
+        "model_operation_performed",
+        "metric_created"
+      ],
+      "properties": {
+        "real_evidence_required": {"const": true},
+        "real_infrastructure_e2e_required": {"const": true},
+        "full_regression_required": {"const": true},
+        "frozen_artifacts_unchanged": {"const": true},
+        "dataset_row_created": {"const": false},
+        "model_operation_performed": {"const": false},
+        "metric_created": {"const": false}
+      }
+    },
+    "runtime_authorization": {"$ref": "#/$defs/runtimeAuthorization"}
+  },
+  "$defs": {
+    "sourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding_id", "path", "sha256"],
+      "properties": {
+        "binding_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+        "path": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "access_vlan_matches_expected",
+        "vlan_exists_on_target",
+        "vlan_allowed_on_trunk",
+        "native_vlan_matches_peer",
+        "fdb_location_matches_expected"
+      ],
+      "properties": {
+        "access_vlan_matches_expected": {"const": false},
+        "vlan_exists_on_target": {"const": true},
+        "vlan_allowed_on_trunk": {"const": true},
+        "native_vlan_matches_peer": {"const": true},
+        "fdb_location_matches_expected": {"const": false}
+      }
+    },
+    "runtimeAuthorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "containerlab_execution",
+        "network_mutation",
+        "new_evidence_collection",
+        "dataset_generation",
+        "model_fit_or_selection",
+        "estimator_deserialization",
+        "method_prediction",
+        "metric_calculation",
+        "report_only_test_access",
+        "multiple_fault_execution"
+      ],
+      "properties": {
+        "containerlab_execution": {"const": true},
+        "network_mutation": {"const": true},
+        "new_evidence_collection": {"const": true},
+        "dataset_generation": {"const": false},
+        "model_fit_or_selection": {"const": false},
+        "estimator_deserialization": {"const": false},
+        "method_prediction": {"const": true},
+        "metric_calculation": {"const": false},
+        "report_only_test_access": {"const": false},
+        "multiple_fault_execution": {"const": false}
+      }
+    }
+  }
+}

@@ -1539,7 +1539,7 @@ Status: Complete
 - P9-R1: remains paused by explicit user request
 
 ## Expansion Track X — Ambitious technical scope
-Status: X0 through X2 and X3-R0 complete; X3-R1 next
+Status: X0 through X2 and X3-R0 complete; X3-R1 implemented locally, acceptance pending
 
 - D-098 append-only expansion decision: accepted
 - Phase 8 interpretation: strong frozen six-class baseline, not the end of the
@@ -1697,3 +1697,20 @@ cover that healthy case explicitly before new runtime acceptance.
 - New X3 runtime, evidence, prediction, dataset, model or metric: absent
 - Frozen Phase 6/7/8, API v1, accepted X2 and P9-R1 pause: unchanged
 - Next: X3-R1 Wrong Access VLAN as a separately authorized real slice
+
+## X3-R1 — Wrong Access VLAN
+
+- Parent boundary: public audit commit `f59af55`, append-only and runtime not inherited
+- Real topology: four hosts, two VLAN-filtering Linux bridges, five links
+- Tagged flow: HostA/HostB on VLAN 10; controlled wrong access VLAN: 20
+- Native control flow: HostC/HostD on VLAN 99, required to remain healthy
+- Mutation/restoration: exact SW1 `eth1` PVID and untagged membership
+- Recovery: durable intent, crash-path restoration and confirmed idempotence
+- Evidence v4: both-switch VLAN/FDB state, link state and active flow probes
+- Rule `R_X3_L2_VLAN_001`: exact false/true/true/true/false signature
+- Connectivity-only classification: forbidden; ping is effectiveness evidence
+- Runtime authorization: 4/10; dataset, ML/Hybrid, metric and multiple faults absent
+- Local X3-R0 plus X3-R1 verification: 60/60 passed
+- Transactional acceptance: full regressions, real X3-R1 Containerlab lifecycle,
+  baseline restoration and zero-container cleanup required before publication
+- Next after acceptance: X3-R2 VLAN Missing

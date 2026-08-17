@@ -404,7 +404,7 @@ and infrastructure cycle without changing accepted results.
 P9-R1 remains paused by user request.
 
 ## Expansion Track X — Original ambitious technical vision
-Status: X2 closed; X3-R0 design gate complete; X3-R1 next
+Status: X2 closed; X3-R0 complete; X3-R1 implemented locally, acceptance pending
 
 This track extends the frozen Phase 6/7/8 baseline append-only. It does not
 reopen accepted results or resume the separately paused P9-R1 thesis milestone.
@@ -451,7 +451,7 @@ Status: Complete — X2-R0 through X2-R5 accepted
 - X2-R5: source/evidence closeout and hash-bound receipt accepted
 
 ### X3 — Layer 2 and VLAN
-Status: X3-R0 design gate complete; X3-R1 next
+Status: X3-R0 complete; X3-R1 implemented locally, transactional acceptance pending
 
 - Wrong access VLAN
 - VLAN missing
@@ -459,7 +459,9 @@ Status: X3-R0 design gate complete; X3-R1 next
 - Native VLAN mismatch
 - X3-R0: two-switch Linux-bridge design, tagged VLAN 10 flow, native VLAN 99
   flow, five-feature disjoint signatures and 0/10 runtime authorization
-- X3-R1 next: implement the topology and Wrong Access VLAN runtime slice
+- X3-R1: topology, Wrong Access VLAN mutation/restoration, Evidence v4,
+  `R_X3_L2_VLAN_001` and opt-in real E2E implemented
+- X3-R2 next only after X3-R1 real runtime and regression acceptance
 
 ### X4 — DHCP, DNS, and service security
 Status: Planned
@@ -531,3 +533,10 @@ private local archive. Next: X3-R0 design gate.
 Accepted design-only. The six-node, five-link context and four disjoint fault
 signatures are frozen without deploying Containerlab or collecting evidence.
 Next: X3-R1 Wrong Access VLAN.
+
+### X3-R1 — Wrong Access VLAN
+
+Implemented locally. SW1 moves only HostA's access PVID from VLAN 10 to VLAN
+20; the tagged flow fails while native VLAN 99 remains healthy. Direct VLAN
+and FDB evidence drives the rule. Real Containerlab execution, full regression,
+restoration and zero-container acceptance remain pending before X3-R2.

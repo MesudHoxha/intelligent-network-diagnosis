@@ -2794,3 +2794,25 @@ X3-R0 authorizes none of the ten runtime/scientific operations and creates no
 empirical result. Frozen Phase 6/7/8, API v1, the accepted X2 receipt and the
 P9-R1 pause remain unchanged. X3-R1 must separately implement and prove the
 Wrong Access VLAN runtime slice.
+
+## D-X3-R1 — Wrong Access VLAN requires direct VLAN and FDB evidence
+
+Date: 2026-08-17
+
+Decision: implement the first X3 runtime slice by moving only the SW1
+HostA-facing access port from expected VLAN 10 to controlled VLAN 20. Preserve
+the VLAN 10 trunk allow-list, native VLAN 99 on both trunk endpoints and the
+separate HostC-to-HostD native flow. The fault is effective only when the
+tagged HostA-to-HostB flow fails while the native flow remains healthy.
+
+Rule `R_X3_L2_VLAN_001` requires the exact five-feature signature from the X3-R0
+gate: access membership false, expected VLAN existence true, trunk allowance
+true, native peer agreement true and expected FDB location false. Ping is an
+effectiveness check only; it cannot select the diagnosis. Evidence v4 binds
+both switches' VLAN and FDB state, interface state and both active flow probes.
+
+Recovery intent must exist before the first `bridge vlan` mutation. Every
+exception path attempts exact VLAN 10 PVID/untagged restoration, confirmed
+restoration is idempotent, and the complete tagged/native baseline is checked
+before and after. Dataset, ML/Hybrid, metric, API and multiple-fault operations
+remain outside the slice. X3-R2 is next only after real transactional acceptance.

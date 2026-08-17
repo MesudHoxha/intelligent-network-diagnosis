@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "gate_id": "x3_r1_wrong_access_vlan_runtime_gate_v1",
+  "status": "IMPLEMENTED_RUNTIME_SLICE",
+  "track": {
+    "parent_gate": "x3_r0_layer2_vlan_design_runtime_gate_v1",
+    "current_release": "X3_R1_WRONG_ACCESS_VLAN",
+    "next_release": "X3_R2_VLAN_MISSING",
+    "phase9_status": "P9_R1_PAUSED_BY_USER"
+  },
+  "source_boundary": {
+    "parent_commit": "f59af55caadea6591195fd09512b73f23d78135a",
+    "extension_policy": "APPEND_ONLY",
+    "runtime_inherited": false
+  },
+  "source_bindings": [
+    {
+      "binding_id": "x3_r0_parent_gate",
+      "path": "plans/expansion/X3_R0_LAYER2_VLAN_RUNTIME_GATE_V1.json",
+      "sha256": "8b409b3f2d580f22ceb1544fbd6bf6dbdca2231184b9f1c2970e112cd6a66213"
+    },
+    {
+      "binding_id": "x1_feature_catalog",
+      "path": "plans/expansion/X1_FEATURE_CATALOG_V1.json",
+      "sha256": "3dba72e83d7e17767ab0851a24541aa7d2d8b789dcf04a5aeb726ff48e9518e4"
+    },
+    {
+      "binding_id": "evidence_v4_schema",
+      "path": "schemas/evidence_v4.schema.json",
+      "sha256": "dcc61966246a03a03d060714a67b5cf14aa48f6925c262c267d07408b77f8315"
+    },
+    {
+      "binding_id": "topology_context_schema",
+      "path": "schemas/topology_context_v1.schema.json",
+      "sha256": "aa47595f5d112eb86eeee07e8fd8dd82f6ea660c7d6a5452faa93a156dd9028e"
+    },
+    {
+      "binding_id": "x3_r1_topology",
+      "path": "labs/topologies/x3_r1_l2_vlan/topology.clab.yml",
+      "sha256": "3cf4cd2c1e30e17af26c9a6057ae03fbb66c75863c76994194d42323efd21bba"
+    },
+    {
+      "binding_id": "x3_r1_topology_context",
+      "path": "labs/topologies/x3_r1_l2_vlan/topology_context_v1.json",
+      "sha256": "3a6aa566a12b8b12cbb848c3d302889d065cc5ac65295871ad7905823dc535b6"
+    },
+    {
+      "binding_id": "x3_r1_baseline_validator",
+      "path": "labs/topologies/x3_r1_l2_vlan/scripts/validate_baseline.sh",
+      "sha256": "bcd6ae8b03854aea000e1bf5fcd65f6987ac365ea1f88c06494400eedf0cfd62"
+    },
+    {
+      "binding_id": "x3_r1_scenario",
+      "path": "scenarios/expansion/X3_R1_WRONG_ACCESS_VLAN.yml",
+      "sha256": "dd6c783d8778222d3f2a4641f12925e0d73e127ec8ef9e3b5e087f3faf8f431b"
+    },
+    {
+      "binding_id": "x3_r1_runtime_contract",
+      "path": "src/expansion/x3_wrong_access_vlan.py",
+      "sha256": "c38f4efa9e7c9ff66316e1c91c5432240e2f9028211f1063f9979e9cb593128f"
+    },
+    {
+      "binding_id": "wrong_access_vlan_injector_restorer",
+      "path": "src/fault_injection/wrong_access_vlan.py",
+      "sha256": "d9301eae715e9fe806680e939b9114ded65fa6f251ce63cdd613214641b2c224"
+    },
+    {
+      "binding_id": "l2_vlan_state_collector",
+      "path": "src/collection/l2_vlan_state_collector.py",
+      "sha256": "7b9b84df65475d7de92f74df954b9f08316a20e49203208cb3cd48a51abc1b08"
+    },
+    {
+      "binding_id": "l2_vlan_rule_engine",
+      "path": "src/rules/l2_vlan_rule_engine_v2.py",
+      "sha256": "d258a66106309734c8cd3fac7f40dc3fba13844b788cde0d5300c14bfbb0c4b8"
+    },
+    {
+      "binding_id": "x3_r1_orchestrator",
+      "path": "src/orchestration/x3_wrong_access_vlan_experiment_runner.py",
+      "sha256": "1ae4c750624b5518803190ddf3f50bdede1ca991af2af07459df46e5f936a790"
+    },
+    {
+      "binding_id": "x3_r1_real_e2e",
+      "path": "tests/e2e/test_x3_r1_wrong_access_vlan_containerlab.py",
+      "sha256": "96cbdfcdd502309dc46904eb96bb233a7b34036c75eeef451d37407e9ea5a036"
+    }
+  ],
+  "compatibility": {
+    "phase6_evidence_v3": "UNCHANGED",
+    "phase6_dataset_row_v3": "UNCHANGED",
+    "accepted_results": "UNCHANGED",
+    "accepted_x2": "UNCHANGED",
+    "api_v1": "UNCHANGED",
+    "extended_api": "NOT_CREATED",
+    "p9_r1": "PAUSED"
+  },
+  "slice": {
+    "fault_code": "B2",
+    "fault_type": "wrong_access_vlan",
+    "fault_category": "l2_vlan",
+    "truth_model": "single_fault",
+    "rule_id": "R_X3_L2_VLAN_001",
+    "scenario_path": "scenarios/expansion/X3_R1_WRONG_ACCESS_VLAN.yml",
+    "topology_context_path": "labs/topologies/x3_r1_l2_vlan/topology_context_v1.json",
+    "signature": {
+      "access_vlan_matches_expected": false,
+      "vlan_exists_on_target": true,
+      "vlan_allowed_on_trunk": true,
+      "native_vlan_matches_peer": true,
+      "fdb_location_matches_expected": false
+    },
+    "excluded_confounders": [
+      "interface_down",
+      "vlan_missing",
+      "vlan_not_allowed_on_trunk",
+      "native_vlan_mismatch"
+    ]
+  },
+  "topology_runtime": {
+    "topology_id": "X3_TOP_01_L2_VLAN",
+    "status": "IMPLEMENTED",
+    "switch_plane": "LINUX_BRIDGE_VLAN_FILTERING",
+    "tagged_flow": "hosta_to_hostb_vlan_10",
+    "native_flow_preserved": "hostc_to_hostd_vlan_99",
+    "wrong_vlan": 20
+  },
+  "collector_activation": {
+    "collector_id": "l2_vlan_state_collector",
+    "collector_version": 1,
+    "evidence_contract": "Evidence v4",
+    "raw_artifact_hash_required": true,
+    "both_switches_observed": true,
+    "active_effectiveness_probe_required": true
+  },
+  "safety": {
+    "invariants": [
+      "DURABLE_RECOVERY_INTENT_BEFORE_MUTATION",
+      "ATOMIC_MUTATION_JOURNAL",
+      "BEST_EFFORT_RESTORATION_ON_PARTIAL_FAILURE",
+      "IDEMPOTENT_CONFIRMED_RESTORATION",
+      "FINAL_HEALTHY_STATE_VERIFIED",
+      "BASELINE_BEFORE_AND_AFTER",
+      "REAL_CONTAINERLAB_LIFECYCLE",
+      "CLEANUP_ZERO_CONTAINERS",
+      "EXACT_VLAN_MEMBERSHIP_RESTORATION",
+      "NATIVE_FLOW_PRESERVED"
+    ]
+  },
+  "acceptance": {
+    "real_evidence_required": true,
+    "real_infrastructure_e2e_required": true,
+    "full_regression_required": true,
+    "frozen_artifacts_unchanged": true,
+    "dataset_row_created": false,
+    "model_operation_performed": false,
+    "metric_created": false
+  },
+  "runtime_authorization": {
+    "containerlab_execution": true,
+    "network_mutation": true,
+    "new_evidence_collection": true,
+    "dataset_generation": false,
+    "model_fit_or_selection": false,
+    "estimator_deserialization": false,
+    "method_prediction": true,
+    "metric_calculation": false,
+    "report_only_test_access": false,
+    "multiple_fault_execution": false
+  }
+}

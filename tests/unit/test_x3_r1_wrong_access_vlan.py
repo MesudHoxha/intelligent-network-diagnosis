@@ -1,0 +1,304 @@
+from __future__ import annotations
+
+import copy
+import hashlib
+import json
+from pathlib import Path
+from typing import Sequence
+
+import pytest
+
+from src.collection.l2_vlan_state_collector import (
+    build_l2_vlan_feature_vector_v2,
+    collect_wrong_access_vlan_evidence_v4,
+)
+from src.expansion.x3_wrong_access_vlan import (
+    X3WrongAccessVlanError,
+    is_tagged,
+    load_wrong_access_vlan_scenario,
+)
+from src.fault_injection.phase6_common import utc_now
+from src.fault_injection.wrong_access_vlan import (
+    inject_wrong_access_vlan,
+    restore_wrong_access_vlan,
+)
+from src.orchestration.x3_wrong_access_vlan_experiment_runner import (
+    recover_x3_r1_experiment,
+    run_x3_r1_experiment,
+)
+from src.rules.l2_vlan_rule_engine_v2 import diagnose_wrong_access_vlan_v2
+
+
+ROOT = Path(__file__).resolve().parents[2]
+SCENARIO = ROOT / "scenarios/expansion/X3_R1_WRONG_ACCESS_VLAN.yml"
+HOSTA_MAC = "02:42:0a:1e:0a:0a"
+
+
+class FakeNetwork:
+    def __init__(self) -> None:
+        self.faulted = False
+        self.raise_after_mutation = False
+
+    def result(
+        self,
+        container: str,
+        command: Sequence[str],
+        *,
+        return_code: int = 0,
+        stdout: str = "",
+        stderr: str = "",
+    ) -> dict[str, object]:
+        return {
+            "command": ["docker", "exec", container, *command],
+            "return_code": return_code,
+            "stdout": stdout,
+            "stderr": stderr,
+            "timestamp_utc": utc_now(),
+        }
+
+    def vlan_rows(self, container: str) -> list[dict[str, object]]:
+        access_vlan = 20 if self.faulted and container.endswith("sw1") else 10
+        return [
+            {
+                "ifname": "eth1",
+                "vlans": [
+                    {"vlan": access_vlan, "flags": ["PVID", "Egress Untagged"]}
+                ],
+            },
+            {
+                "ifname": "eth2",
+                "vlans": [
+                    {"vlan": 99, "flags": ["PVID", "Egress Untagged"]}
+                ],
+            },
+            {
+                "ifname": "eth3",
+                "vlans": [
+                    {"vlan": 10, "flags": []},
+                    {"vlan": 99, "flags": ["PVID", "Egress Untagged"]},
+                ],
+            },
+        ]
+
+    def __call__(self, container: str, command: Sequence[str]) -> dict[str, object]:
+        parts = list(command)
+        if parts[:4] == ["bridge", "-j", "vlan", "show"]:
+            rows = self.vlan_rows(container)
+            if parts[4:5] == ["dev"]:
+                rows = [row for row in rows if row["ifname"] == parts[5]]
+            return self.result(container, command, stdout=json.dumps(rows))
+        if parts[:4] == ["bridge", "-j", "fdb", "show"]:
+            rows = (
+                [
+                    {
+                        "mac": HOSTA_MAC,
+                        "dev": "eth1",
+                        "vlan": 20 if self.faulted else 10,
+                        "state": "reachable",
+                    }
+                ]
+                if container.endswith("sw1")
+                else []
+            )
+            return self.result(container, command, stdout=json.dumps(rows))
+        if parts[:5] == ["ip", "-j", "link", "show", "dev"]:
+            interface = parts[5]
+            address = HOSTA_MAC if container.endswith("hosta") else "02:42:00:00:00:01"
+            rows = [
+                {
+                    "ifname": interface,
+                    "address": address,
+                    "flags": ["BROADCAST", "MULTICAST", "UP", "LOWER_UP"],
+                }
+            ]
+            return self.result(container, command, stdout=json.dumps(rows))
+        if parts[:1] == ["ping"]:
+            reachable = not (container.endswith("hosta") and self.faulted)
+            return self.result(container, command, return_code=0 if reachable else 1)
+        if parts[:3] == ["sh", "-eu", "-c"]:
+            shell = parts[3]
+            if "vid 20 pvid untagged" in shell:
+                self.faulted = True
+                if self.raise_after_mutation:
+                    self.raise_after_mutation = False
+                    raise RuntimeError("simulated crash after VLAN mutation")
+            elif "vid 10 pvid untagged" in shell:
+                self.faulted = False
+            return self.result(container, command)
+        raise AssertionError(f"Unexpected command: {container} {parts}")
+
+
+class MissingFdbNetwork(FakeNetwork):
+    def __call__(self, container: str, command: Sequence[str]) -> dict[str, object]:
+        if list(command)[:4] == ["bridge", "-j", "fdb", "show"]:
+            return self.result(container, command, return_code=127, stderr="bridge unavailable")
+        return super().__call__(container, command)
+
+
+def _fault_evidence(tmp_path: Path, network: FakeNetwork) -> dict[str, object]:
+    inject_wrong_access_vlan(SCENARIO, tmp_path / "mutation", executor=network)
+    return collect_wrong_access_vlan_evidence_v4(tmp_path, SCENARIO, executor=network)
+
+
+def test_scenario_binds_exact_tagged_flow_and_vlan_identity() -> None:
+    binding = load_wrong_access_vlan_scenario(SCENARIO)
+    assert binding.topology_id == "X3_TOP_01_L2_VLAN"
+    assert binding.topology_context_id == "x3_top_01_l2_vlan_context_v1"
+    assert (binding.source_node, binding.destination_node) == ("hosta", "hostb")
+    assert (binding.expected_vlan, binding.wrong_vlan, binding.native_vlan) == (10, 20, 99)
+
+
+def test_tagged_membership_rejects_pvid_or_untagged_flags() -> None:
+    assert is_tagged({"vlan": 10, "flags": []}) is True
+    assert is_tagged({"vlan": 10, "flags": ["PVID"]}) is False
+    assert is_tagged({"vlan": 10, "flags": ["Egress Untagged"]}) is False
+    assert is_tagged(None) is False
+
+
+def test_injection_is_effective_and_restoration_is_idempotent(tmp_path: Path) -> None:
+    network = FakeNetwork()
+    mutation = tmp_path / "mutation"
+    injection = inject_wrong_access_vlan(SCENARIO, mutation, executor=network)
+    assert injection["status"] == "FAULT_CONFIRMED"
+    assert network.faulted is True
+    assert injection["postconditions"]["tagged_flow_is_broken"]["passed"] is True
+    assert injection["postconditions"]["native_flow_remains_healthy"]["passed"] is True
+    restoration = restore_wrong_access_vlan(SCENARIO, mutation, executor=network)
+    assert restoration["status"] == "RESTORATION_CONFIRMED"
+    assert network.faulted is False
+    assert restore_wrong_access_vlan(SCENARIO, mutation, executor=network) == restoration
+
+
+def test_crash_after_mutation_restores_from_durable_intent(tmp_path: Path) -> None:
+    network = FakeNetwork()
+    network.raise_after_mutation = True
+    mutation = tmp_path / "mutation"
+    with pytest.raises(Exception, match="executor raised an exception"):
+        inject_wrong_access_vlan(SCENARIO, mutation, executor=network)
+    assert network.faulted is False
+    assert (mutation / "recovery_intent.json").is_file()
+    assert json.loads((mutation / "restoration_record.json").read_text())["status"] == (
+        "RESTORATION_CONFIRMED"
+    )
+
+
+def test_unjournaled_restoration_is_rejected(tmp_path: Path) -> None:
+    with pytest.raises(X3WrongAccessVlanError, match="durable recovery intent"):
+        restore_wrong_access_vlan(SCENARIO, tmp_path / "mutation", executor=FakeNetwork())
+
+
+def test_evidence_has_exact_wrong_access_signature_and_hashes(tmp_path: Path) -> None:
+    network = FakeNetwork()
+    evidence = _fault_evidence(tmp_path, network)
+    values = evidence["observations"]
+    assert {name: row["value"] for name, row in values.items()} == {
+        "access_vlan_matches_expected": False,
+        "vlan_exists_on_target": True,
+        "vlan_allowed_on_trunk": True,
+        "native_vlan_matches_peer": True,
+        "fdb_location_matches_expected": False,
+    }
+    assert evidence["observation_path"] == {
+        "direction": "hosta_to_hostb",
+        "source_node": "hosta",
+        "destination_node": "hostb",
+        "observer_nodes": ["sw1", "sw2"],
+    }
+    assert evidence["collector_runs"][0]["collector_version"] == 1
+    for artifact in evidence["collector_runs"][0]["raw_artifacts"]:
+        path = tmp_path / artifact["path"]
+        assert hashlib.sha256(path.read_bytes()).hexdigest() == artifact["sha256"]
+    active = json.loads(
+        (tmp_path / "raw/v4/l2_vlan_state_collector/active_flow_probe.json").read_text()
+    )
+    assert active["tagged_flow"]["reachable"] is False
+    assert active["native_flow"]["reachable"] is True
+    restore_wrong_access_vlan(SCENARIO, tmp_path / "mutation", executor=network)
+
+
+def test_vector_and_rule_diagnose_only_exact_signature(tmp_path: Path) -> None:
+    network = FakeNetwork()
+    evidence = _fault_evidence(tmp_path, network)
+    vector = build_l2_vlan_feature_vector_v2(tmp_path, evidence)
+    diagnosis = diagnose_wrong_access_vlan_v2(
+        vector, location_node="sw1", affected_resource="eth1"
+    )
+    assert diagnosis["status"] == "diagnosed"
+    assert diagnosis["prediction"] == {
+        "fault_type": "wrong_access_vlan",
+        "score": 1.0,
+        "location": "sw1",
+        "affected_resource": "eth1",
+    }
+    assert diagnosis["explanation_refs"] == ["rule:R_X3_L2_VLAN_001"]
+    changed = copy.deepcopy(vector)
+    changed["values"]["vlan_allowed_on_trunk"]["value"] = False
+    assert diagnose_wrong_access_vlan_v2(
+        changed, location_node="sw1", affected_resource="eth1"
+    )["status"] == "abstained"
+    restore_wrong_access_vlan(SCENARIO, tmp_path / "mutation", executor=network)
+
+
+def test_missing_fdb_is_insufficient_evidence(tmp_path: Path) -> None:
+    network = MissingFdbNetwork()
+    evidence = _fault_evidence(tmp_path, network)
+    row = evidence["observations"]["fdb_location_matches_expected"]
+    assert row["value"] is None
+    assert row["availability"] == "collection_unavailable"
+    vector = build_l2_vlan_feature_vector_v2(tmp_path, evidence)
+    assert diagnose_wrong_access_vlan_v2(
+        vector, location_node="sw1", affected_resource="eth1"
+    )["status"] == "insufficient_evidence"
+    restore_wrong_access_vlan(SCENARIO, tmp_path / "mutation", executor=network)
+
+
+def test_orchestrator_completes_restores_and_can_replay_recovery(tmp_path: Path) -> None:
+    network = FakeNetwork()
+
+    def baseline(_: Path) -> dict[str, object]:
+        return {
+            "command": ["bash", "fake"],
+            "return_code": 0 if not network.faulted else 1,
+            "stdout": "",
+            "stderr": "",
+            "timestamp_utc": utc_now(),
+        }
+
+    result = run_x3_r1_experiment(
+        SCENARIO,
+        tmp_path / "runs",
+        ROOT / "unused.sh",
+        baseline_validator=baseline,
+        fault_injector=lambda scenario, output: inject_wrong_access_vlan(
+            scenario, output, executor=network
+        ),
+        fault_restorer=lambda scenario, output: restore_wrong_access_vlan(
+            scenario, output, executor=network
+        ),
+        evidence_collector=lambda output, scenario: collect_wrong_access_vlan_evidence_v4(
+            output, scenario, executor=network
+        ),
+        experiment_id="x3-r1-unit-cycle",
+    )
+    assert result["status"] == "COMPLETED"
+    assert result["restoration_confirmed"] is True
+    assert result["baseline_valid_after"] is True
+    assert network.faulted is False
+    recovered = recover_x3_r1_experiment(
+        SCENARIO,
+        Path(str(result["experiment_directory"])),
+        ROOT / "unused.sh",
+        baseline_validator=baseline,
+        fault_restorer=lambda scenario, output: restore_wrong_access_vlan(
+            scenario, output, executor=network
+        ),
+    )
+    assert recovered["status"] == "RECOVERY_CONFIRMED"
+
+
+def test_existing_mutation_output_is_rejected(tmp_path: Path) -> None:
+    mutation = tmp_path / "mutation"
+    mutation.mkdir()
+    (mutation / "preconditions.json").write_text("{}", encoding="utf-8")
+    with pytest.raises(X3WrongAccessVlanError, match="already exists"):
+        inject_wrong_access_vlan(SCENARIO, mutation, executor=FakeNetwork())

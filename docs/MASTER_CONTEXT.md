@@ -1456,3 +1456,22 @@ is deployed, no fault is injected, no X3 evidence or prediction is created,
 and no claim of diagnostic accuracy is made. Frozen Phase 6/7/8 and API v1,
 the accepted X2 boundary, and the P9-R1 pause remain unchanged. X3-R1 Wrong
 Access VLAN is the next separately gated runtime release.
+
+## X3-R1 Wrong Access VLAN runtime (2026-08-17)
+
+X3-R1 implements the six-node X3 topology as two VLAN-filtering Linux bridges.
+HostA/HostB use tagged VLAN 10 across the trunk; HostC/HostD use native VLAN
+99. The isolated mutation changes only SW1 `eth1` from VLAN 10 to VLAN 20,
+breaks the tagged flow and preserves the native flow.
+
+The crash-safe injector writes recovery intent before mutation and restores
+the exact VLAN 10 PVID/untagged membership on every failure path. Native
+Evidence v4 records both switches' VLAN and FDB inventories, link state and
+active tagged/native probes. `R_X3_L2_VLAN_001` diagnoses only the exact
+false/true/true/true/false signature; connectivity is never the classifier.
+
+The slice authorizes only Containerlab execution, network mutation, Evidence
+v4 collection and Rule-Based v2 prediction. It creates no dataset row,
+ML/Hybrid output, metric, API change or multiple-fault claim. Real Containerlab
+acceptance, complete regressions, restored baseline and zero containers remain
+required before publication; X3-R2 follows only after that gate passes.
