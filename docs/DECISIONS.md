@@ -2729,3 +2729,16 @@ D-102 proves one controlled `/24` to `/25` variant on one known topology. It
 does not prove arbitrary subnet-mask errors, unseen topologies, an extended
 dataset, ML/Hybrid performance, generalization, missing default route,
 duplicate IP, or multiple-fault diagnosis.
+## D-X2-R3 — Missing default route requires an exact negative route observation
+
+Date: 2026-08-17
+
+Decision: diagnose `missing_default_route` only when the source address and
+prefix match, the expected default route is observed absent, and duplicate-IP
+evidence is observed negative. Preserve `R_X2_ADDRESSING_001/002`; assign
+`R_X2_ADDRESSING_003` to this slice. Missing evidence causes insufficient
+evidence and all unreviewed combinations cause abstention.
+
+Reason: loss of remote reachability alone is ambiguous. The explicit routing
+state is the direct evidence that separates this root cause from addressing,
+duplicate-IP and policy faults.

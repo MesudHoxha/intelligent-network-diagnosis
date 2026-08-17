@@ -1410,3 +1410,10 @@ result, metric, report-only access, multiple-fault run, or API change. The
 accepted Phase 6/7/8 and X2-R1 boundaries remain immutable, P9-R1 stays
 paused, and X2-R3 Missing Default Route is next after transactional
 acceptance.
+## X2-R3 Missing Default Route expansion (2026-08-17)
+
+X2-R3 adds an isolated default-route-only runtime slice on the verified X2
+topology. HostA remains `10.20.1.10/24`; only its exact default route is
+removed. Evidence v4 and `R_X2_ADDRESSING_003` distinguish this fault from
+wrong IP and wrong subnet mask. Frozen Phase 6/7/8 artifacts and API v1 remain
+unchanged. X2-R4 Duplicate IP is next after transactional acceptance.

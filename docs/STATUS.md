@@ -1641,3 +1641,10 @@ Status: X0, X1, X2-R0, X2-R1, and X2-R2 complete; X2-R3 next
 ### Next technical milestone
 
 X2-R3 — Missing Default Route, as a separately authorized runtime slice.
+## X2-R3 — Missing Default Route
+
+Implemented locally on 2026-08-17. The exact address/prefix is preserved and
+only the expected default route is removed. Crash-safe restoration, native
+Evidence v4, `R_X2_ADDRESSING_003`, gate composition and 15 targeted tests are
+implemented. Full transactional regression and real Containerlab acceptance
+remain required before publication. Next: X2-R4 Duplicate IP.

@@ -509,3 +509,7 @@ Status: Planned
 - Injected, effective, and diagnosable truth sets
 - Dataset Row v5 and Diagnosis Result v3
 - Versioned interface separate from frozen Phase 7 `/api/v1`
+### X2-R3 — Missing Default Route
+
+Implemented; transactional acceptance pending. Next release: X2-R4 Duplicate
+IP with active duplicate detection plus temporal MAC-churn evidence.

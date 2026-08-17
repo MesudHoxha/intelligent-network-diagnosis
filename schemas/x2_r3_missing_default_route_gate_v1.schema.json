@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "X2-R3 Missing Default Route Runtime Gate v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "gate_id",
+    "status",
+    "track",
+    "source_boundary",
+    "source_bindings",
+    "compatibility",
+    "slice",
+    "collector_activation",
+    "safety",
+    "acceptance",
+    "runtime_authorization"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "gate_id": {"const": "x2_r3_missing_default_route_runtime_gate_v1"},
+    "status": {"const": "IMPLEMENTED_RUNTIME_SLICE"},
+    "track": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["parent_gate", "current_release", "next_release", "phase9_status"],
+      "properties": {
+        "parent_gate": {"const": "x2_r2_wrong_subnet_mask_runtime_gate_v1"},
+        "current_release": {"const": "X2_R3_MISSING_DEFAULT_ROUTE"},
+        "next_release": {"const": "X2_R4_DUPLICATE_IP"},
+        "phase9_status": {"const": "P9_R1_PAUSED_BY_USER"}
+      }
+    },
+    "source_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["parent_commit", "extension_policy", "runtime_inherited"],
+      "properties": {
+        "parent_commit": {"const": "f6d19e21257cd24fa38a0e7eca42b186ff9c4aec"},
+        "extension_policy": {"const": "APPEND_ONLY"},
+        "runtime_inherited": {"const": true}
+      }
+    },
+    "source_bindings": {
+      "type": "array",
+      "minItems": 9,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["binding_id", "path", "sha256"],
+        "properties": {
+          "binding_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+          "path": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "compatibility": {"type": "object"},
+    "slice": {"type": "object"},
+    "collector_activation": {"type": "object"},
+    "safety": {"type": "object"},
+    "acceptance": {"type": "object"},
+    "runtime_authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "containerlab_execution",
+        "network_mutation",
+        "new_evidence_collection",
+        "dataset_generation",
+        "model_fit_or_selection",
+        "estimator_deserialization",
+        "method_prediction",
+        "metric_calculation",
+        "report_only_test_access",
+        "multiple_fault_execution"
+      ],
+      "properties": {
+        "containerlab_execution": {"type": "boolean"},
+        "network_mutation": {"type": "boolean"},
+        "new_evidence_collection": {"type": "boolean"},
+        "dataset_generation": {"type": "boolean"},
+        "model_fit_or_selection": {"type": "boolean"},
+        "estimator_deserialization": {"type": "boolean"},
+        "method_prediction": {"type": "boolean"},
+        "metric_calculation": {"type": "boolean"},
+        "report_only_test_access": {"type": "boolean"},
+        "multiple_fault_execution": {"type": "boolean"}
+      }
+    }
+  }
+}

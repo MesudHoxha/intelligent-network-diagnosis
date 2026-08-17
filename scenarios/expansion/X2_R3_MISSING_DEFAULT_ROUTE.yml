@@ -1,0 +1,44 @@
+schema_version: 1
+scenario:
+  id: X2_R3_MISSING_DEFAULT_ROUTE
+  name: X2-R3 missing default route
+  kind: fault
+  truth_model: single_fault
+  variant_id: x2_r3_missing_default_route_v1
+  category: controlled_fault
+  description: Preserve HostA's exact IPv4 address and /24 prefix while removing only its default route.
+  topology:
+    id: X2_TOP_01_ADDRESSING
+    file: labs/topologies/x2_r1_addressing/topology.clab.yml
+    context_id: x2_top_01_addressing_context_v1
+    context_file: labs/topologies/x2_r1_addressing/topology_context_v1.json
+  observation:
+    direction: hosta_to_hostb
+    source_node: hosta
+    source_container: clab-x2r1-hosta
+    source_interface: eth1
+    expected_address: 10.20.1.10
+    expected_prefix: 10.20.1.0/24
+    expected_prefix_length: 24
+    expected_gateway: 10.20.1.1
+    destination_node: hostb
+    destination_address: 10.20.2.10
+    duplicate_observer_node: r1
+    duplicate_observer_container: clab-x2r1-r1
+    duplicate_observer_interface: eth1
+  fault:
+    type: missing_default_route
+    injector: remove_exact_default_route
+    target_node: hosta
+    target_container: clab-x2r1-hosta
+    parameters:
+      expected_gateway: 10.20.1.1
+      source_interface: eth1
+  ground_truth:
+    fault_category: addressing
+    fault_type: missing_default_route
+    fault_location: hosta
+    affected_resource: eth1
+    root_cause: HostA keeps the correct IPv4 address and /24 prefix but has no default route via 10.20.1.1.
+  restoration:
+    method: restore_exact_default_route
