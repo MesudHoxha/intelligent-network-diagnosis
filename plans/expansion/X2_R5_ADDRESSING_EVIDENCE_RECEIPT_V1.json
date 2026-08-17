@@ -1,0 +1,352 @@
+{
+  "created_at_utc": "2026-08-17T12:11:18.346152+00:00",
+  "receipt_id": "x2_r5_addressing_evidence_receipt_v1",
+  "runs": [
+    {
+      "artifacts": [
+        {
+          "path": "diagnosis/diagnosis_result_v2.json",
+          "sha256": "bd7b97d388c57ce573bec00f83db2e1e6935884eac306381fe0a628f6677570a",
+          "size_bytes": 739
+        },
+        {
+          "path": "ground_truth.json",
+          "sha256": "df6e195bf19dd92f60280e9e1a97cde9ef5d11111b6aaffadadf9364392b9dec",
+          "size_bytes": 230
+        },
+        {
+          "path": "manifest.json",
+          "sha256": "92b0929be2ca16c32aa3d2bd20e908d5cabdef803412ba475e34b35d6153006a",
+          "size_bytes": 1426
+        },
+        {
+          "path": "mutation/ground_truth.json",
+          "sha256": "df6e195bf19dd92f60280e9e1a97cde9ef5d11111b6aaffadadf9364392b9dec",
+          "size_bytes": 230
+        },
+        {
+          "path": "mutation/injection_record.json",
+          "sha256": "92ac43fe56c42e2f799ab4d22a1e2b8d497eb8a9cdee701e6baa9d19cc134b61",
+          "size_bytes": 8062
+        },
+        {
+          "path": "mutation/preconditions.json",
+          "sha256": "f40e34dc7c45f9c9165c5c26597aeefc554be3b601e546d1ce8c0dcb665aff57",
+          "size_bytes": 2757
+        },
+        {
+          "path": "mutation/recovery_intent.json",
+          "sha256": "b9a10f9ab93d257ae97cc50805a3d7e5dc5eac4894e0beeb2967a30a3e2bf0ab",
+          "size_bytes": 516
+        },
+        {
+          "path": "mutation/restoration_record.json",
+          "sha256": "c5454d0b30ad8977a79e2c3b9c22d0c42d6333891ab19abdba3e9e79491fb8dc",
+          "size_bytes": 4307
+        },
+        {
+          "path": "parsed/evidence_v4.json",
+          "sha256": "ec3ce3d54ae300a658a2a6cee21e756a41a5b81ac0fed07e3d0dbfdd0779e90f",
+          "size_bytes": 3437
+        },
+        {
+          "path": "parsed/feature_vector_v2.json",
+          "sha256": "1c22f268e1b671d0af9074cdf53ae8c9174f6306549fdc610000de5beba9cc65",
+          "size_bytes": 946
+        },
+        {
+          "path": "raw/v4/addressing_state_collector/active_duplicate_check.json",
+          "sha256": "dbbb0e23e56202db0cef98be3ce1939ba093d2edb594aca0294d32353f4c55b7",
+          "size_bytes": 1750
+        },
+        {
+          "path": "raw/v4/addressing_state_collector/source_address_state.json",
+          "sha256": "7096272cafab36efe8269dd931eb9acf8b9cd759fbdacea4382dff9f3adcbddf",
+          "size_bytes": 794
+        },
+        {
+          "path": "raw/v4/addressing_state_collector/source_default_route_state.json",
+          "sha256": "969da20e6522c6c07b1446cff26f6f75fca440700f724cbc18e2ded7ed3fffe8",
+          "size_bytes": 420
+        },
+        {
+          "path": "validation/baseline_after.json",
+          "sha256": "5d0a3d2372788066101b9c14de2fd7a5d41c95e3b74e846ea6d90d8422d1663a",
+          "size_bytes": 832
+        },
+        {
+          "path": "validation/baseline_before.json",
+          "sha256": "a313ffb05c824b806ec82b7e37cb9e137a3da3505510e421f1272062434ac8e2",
+          "size_bytes": 832
+        }
+      ],
+      "fault_type": "wrong_ip_address",
+      "relative_run_path": "data/raw/x2_r1_acceptance.IBPnyc/x2-r1-real-wrong-ip",
+      "release_id": "X2_R1_WRONG_IP_ADDRESS",
+      "rule_id": "R_X2_ADDRESSING_001",
+      "run_tree_sha256": "9b4d4bd7a3f4884fe3dee81502772ff8e7191f942a25f1012bac6a21555115c5"
+    },
+    {
+      "artifacts": [
+        {
+          "path": "diagnosis/diagnosis_result_v2.json",
+          "sha256": "102ef40154cd353939b48607930a49bdb878e8dc304159649ca374b4cb4d221b",
+          "size_bytes": 743
+        },
+        {
+          "path": "ground_truth.json",
+          "sha256": "3571361d16f8047a5bcea66027055d9d36f8a99b7f8ccb3195fc75723686803b",
+          "size_bytes": 232
+        },
+        {
+          "path": "manifest.json",
+          "sha256": "beeaac29e8c950642f0d7f8cd154e7ec011765c14dd103b55b21e1337aaa22fe",
+          "size_bytes": 1437
+        },
+        {
+          "path": "mutation/ground_truth.json",
+          "sha256": "3571361d16f8047a5bcea66027055d9d36f8a99b7f8ccb3195fc75723686803b",
+          "size_bytes": 232
+        },
+        {
+          "path": "mutation/injection_record.json",
+          "sha256": "30ced869b5cd9952980880471a4fd43c8c210c5ecd2d96a2fc92cd6a7f288013",
+          "size_bytes": 7274
+        },
+        {
+          "path": "mutation/preconditions.json",
+          "sha256": "02cbc79f98d028afc99f2070cd04dc96f504db8bdfc00fe98c9fb10206f4ba3e",
+          "size_bytes": 2906
+        },
+        {
+          "path": "mutation/recovery_intent.json",
+          "sha256": "ba4e0cf608ed3630a7bd17db64c10ff3647b4acf2af49c98060724ef63e18081",
+          "size_bytes": 518
+        },
+        {
+          "path": "mutation/restoration_record.json",
+          "sha256": "817d743cb18d0d665af378a73fd68af1fd97969c966d4f0a63e05e5794d93cae",
+          "size_bytes": 4137
+        },
+        {
+          "path": "parsed/evidence_v4.json",
+          "sha256": "d6124d644384234b94d0da4af825fd3c37196d8900e0f6c19be29ff1c616d7e0",
+          "size_bytes": 3459
+        },
+        {
+          "path": "parsed/feature_vector_v2.json",
+          "sha256": "105a8ebf0be529d59ddac7c82c5b0720f1f7e912b0afa38b06f951c31c2fcd33",
+          "size_bytes": 948
+        },
+        {
+          "path": "raw/v4/addressing_state_collector_v2/active_duplicate_check.json",
+          "sha256": "6d651da6bef41353088ff6d3f02cbc7e25c11559093687ee76891f4441bb7553",
+          "size_bytes": 1750
+        },
+        {
+          "path": "raw/v4/addressing_state_collector_v2/source_address_state.json",
+          "sha256": "bee56cf9e0f2fa94ac75d64cf1370621873dc56cfe895c89d7ffa947fffc6584",
+          "size_bytes": 796
+        },
+        {
+          "path": "raw/v4/addressing_state_collector_v2/source_default_route_state.json",
+          "sha256": "1324006c4ab084835973d18ae32fa9619ea49d1c6e204e4dc456229301dff482",
+          "size_bytes": 420
+        },
+        {
+          "path": "validation/baseline_after.json",
+          "sha256": "e2e29eaf0be15818c7d7d531e47972641f8c45817a62dee0b4127ed85e76f43b",
+          "size_bytes": 832
+        },
+        {
+          "path": "validation/baseline_before.json",
+          "sha256": "1609822b2ca3d121088de8a731433d4d6c80ef662b802d68c7abb709cbc93ecc",
+          "size_bytes": 832
+        }
+      ],
+      "fault_type": "wrong_subnet_mask",
+      "relative_run_path": "data/raw/x2_r2_acceptance.cYjlmN/x2-r2-real-wrong-subnet-mask",
+      "release_id": "X2_R2_WRONG_SUBNET_MASK",
+      "rule_id": "R_X2_ADDRESSING_002",
+      "run_tree_sha256": "fd94cd8c95296bd8be0d7f506d8b4ddf6e2a66035a8f6a95cf5e372934642668"
+    },
+    {
+      "artifacts": [
+        {
+          "path": "diagnosis/diagnosis_result_v2.json",
+          "sha256": "9684a8bf4b785c4033a15a384aea83caa0692ef81a5758c6101437c87f38b51e",
+          "size_bytes": 759
+        },
+        {
+          "path": "ground_truth.json",
+          "sha256": "6d3a7e6b77aac8720232bf89d572f900aa1f21724eae014723d8b08f0b731e20",
+          "size_bytes": 249
+        },
+        {
+          "path": "manifest.json",
+          "sha256": "82b9c2272c67644f07d7f7be6459bfa9f497ec2241d4d03f1ca636a4b55cacf7",
+          "size_bytes": 1449
+        },
+        {
+          "path": "mutation/ground_truth.json",
+          "sha256": "6d3a7e6b77aac8720232bf89d572f900aa1f21724eae014723d8b08f0b731e20",
+          "size_bytes": 249
+        },
+        {
+          "path": "mutation/injection_record.json",
+          "sha256": "9f0d3084c7bb78b9dbcfc697b54fb0009d4b1f00d4ca7fc0132d28258380bc57",
+          "size_bytes": 6719
+        },
+        {
+          "path": "mutation/preconditions.json",
+          "sha256": "68ff8eeb133a004ae5988a97b2e7dbae81fe197968558c19e45e920c7842920e",
+          "size_bytes": 2906
+        },
+        {
+          "path": "mutation/recovery_intent.json",
+          "sha256": "b687c1a7de085dd1e649556155a34de59d95c9969e0431a0eaf56c28016524f4",
+          "size_bytes": 488
+        },
+        {
+          "path": "mutation/restoration_record.json",
+          "sha256": "ba830ff48f39968becb1b41e8f136e15c1332dd8bfd7752c948b5945bd522874",
+          "size_bytes": 4051
+        },
+        {
+          "path": "parsed/evidence_v4.json",
+          "sha256": "84b94618857b71a70b48c7fa160913ae06e94c09e0d1fe287e1e0ff6b9b39048",
+          "size_bytes": 3463
+        },
+        {
+          "path": "parsed/feature_vector_v2.json",
+          "sha256": "9d9d8f75d855707c2d964f7950f4b0dc159f3f086c949ee092b58ad7a5e19578",
+          "size_bytes": 956
+        },
+        {
+          "path": "raw/v4/addressing_state_collector_v2/active_duplicate_check.json",
+          "sha256": "8b735ace95441d762f94a9f9384ce08a72010a6e40ee2219bdfe7ffd3b10c371",
+          "size_bytes": 1750
+        },
+        {
+          "path": "raw/v4/addressing_state_collector_v2/source_address_state.json",
+          "sha256": "5ce12696e94bf9a09c79d4cf506974dccd7110a26500beac35416ef4fc3e475d",
+          "size_bytes": 796
+        },
+        {
+          "path": "raw/v4/addressing_state_collector_v2/source_default_route_state.json",
+          "sha256": "99cd570c650348dad842431c9d0828c4b6f53518416bc207086bf51bfb8cdee4",
+          "size_bytes": 343
+        },
+        {
+          "path": "validation/baseline_after.json",
+          "sha256": "baacc5c5cb43a38408323a2ccc3f83ab57184b182d652027a0011dc7b68f9b31",
+          "size_bytes": 832
+        },
+        {
+          "path": "validation/baseline_before.json",
+          "sha256": "008e4d55df804cd4e9c15b2074eefb9680f8335c45691c6a09609ce5ee36dcdc",
+          "size_bytes": 832
+        }
+      ],
+      "fault_type": "missing_default_route",
+      "relative_run_path": "data/raw/x2_r3_acceptance.HWXmWb/x2-r3-real-missing-default-route",
+      "release_id": "X2_R3_MISSING_DEFAULT_ROUTE",
+      "rule_id": "R_X2_ADDRESSING_003",
+      "run_tree_sha256": "7a28c54f4d7fce3ec3fe85e4472d42dd4e665c50ee31a8388e5f033f5fb911ed"
+    },
+    {
+      "artifacts": [
+        {
+          "path": "diagnosis/diagnosis_result_v2.json",
+          "sha256": "659bf6aff85c069ad9c40318e2b7f26d5fad7721ffdfcd055df3832d4e41332b",
+          "size_bytes": 723
+        },
+        {
+          "path": "ground_truth.json",
+          "sha256": "da221c449d4bf5e9a63696c7bf5a1baffd13d135689dcf801de2a207bbb4324e",
+          "size_bytes": 226
+        },
+        {
+          "path": "manifest.json",
+          "sha256": "bf32edadd5c5688681c7dbd2672c05c13ab564437fda0d6d9bbd0621eb829118",
+          "size_bytes": 1422
+        },
+        {
+          "path": "mutation/ground_truth.json",
+          "sha256": "da221c449d4bf5e9a63696c7bf5a1baffd13d135689dcf801de2a207bbb4324e",
+          "size_bytes": 226
+        },
+        {
+          "path": "mutation/injection_record.json",
+          "sha256": "01bcaa5c615002470865d5a944b8e664953f37f4ad4ff4d353c2a08928c31bf3",
+          "size_bytes": 3456
+        },
+        {
+          "path": "mutation/preconditions.json",
+          "sha256": "58e19821946b67b50d322fef689ef31a708854c0c18e5f3a2a7ee669e9760635",
+          "size_bytes": 1213
+        },
+        {
+          "path": "mutation/recovery_intent.json",
+          "sha256": "ada6eb0266a9030ce0c6e3f72865ba52348fa9673acd005c6ef68dff29a95608",
+          "size_bytes": 407
+        },
+        {
+          "path": "mutation/restoration_record.json",
+          "sha256": "b833730889a993b4e72ae992d043dcc3578f0f8b4f66802752ea530316a8fb31",
+          "size_bytes": 2341
+        },
+        {
+          "path": "parsed/evidence_v4.json",
+          "sha256": "c0a727cfa95a8005d4f4d042824548894212198cf1ce8b15df02c937bb509db2",
+          "size_bytes": 3607
+        },
+        {
+          "path": "parsed/feature_vector_v2.json",
+          "sha256": "0e73fc0d374b6580baa849c358f87e27bdb412af2472eac990c947e515989720",
+          "size_bytes": 931
+        },
+        {
+          "path": "raw/v4/addressing_state_collector_v3/duplicate_ip_active_temporal_probe.json",
+          "sha256": "bc124ae44c3d21eea650e437e99b35c48aec024fc9e1166040ea929d821f945f",
+          "size_bytes": 9778
+        },
+        {
+          "path": "raw/v4/addressing_state_collector_v3/source_address_state.json",
+          "sha256": "ba941b641579f520ab8cc655dffc6cb23dcbefe60a93afc45fba94fba33269e3",
+          "size_bytes": 796
+        },
+        {
+          "path": "raw/v4/addressing_state_collector_v3/source_default_route_state.json",
+          "sha256": "5db27490c06655d29adbaf5ac8082fe5b59a7cacd165e62589c735632368783d",
+          "size_bytes": 420
+        },
+        {
+          "path": "validation/baseline_after.json",
+          "sha256": "34f87ce4cd7271a731164d446ee3b530fa237b4b527a2e2f7a061466eb5b6105",
+          "size_bytes": 832
+        },
+        {
+          "path": "validation/baseline_before.json",
+          "sha256": "d4c89f94ad32403c3d8f9008aeab7688e85e78320e5ccd6654f6b6304eacab20",
+          "size_bytes": 832
+        }
+      ],
+      "fault_type": "duplicate_ip",
+      "relative_run_path": "data/raw/x2_r4_acceptance.hub3ro/x2-r4-real-duplicate-ip",
+      "release_id": "X2_R4_DUPLICATE_IP",
+      "rule_id": "R_X2_ADDRESSING_004",
+      "run_tree_sha256": "220ba63f915d23bc6147e240f36cae4b38d7ca68bc1115ef4112e83113442c17"
+    }
+  ],
+  "schema_version": 1,
+  "source_commit": "cb8a9feaccc8a040a3a1f7fe472cbc9c0d70ecb1",
+  "summary": {
+    "all_baselines_valid": true,
+    "all_completed": true,
+    "all_diagnosed": true,
+    "all_raw_hashes_verified": true,
+    "all_restored": true,
+    "run_count": 4
+  }
+}

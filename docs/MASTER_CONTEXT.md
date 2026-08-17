@@ -1424,3 +1424,11 @@ X2-R4 preserves HostA's address, prefix and route while creating a temporary
 second L2 claimant with a distinct MAC. Evidence v4 requires both an active
 duplicate response and temporal MAC churn. Frozen science and API v1 remain
 unchanged; X2-R5 closeout is next only after real transactional acceptance.
+
+## X2-R5 Addressing Closeout (2026-08-17)
+
+X2-R1 through X2-R4 are accepted real single-fault addressing slices with four
+disjoint rules. X2-R5 binds their source gates and accepted Evidence v4 runs,
+authorizes 0/10 runtime operations and freezes the claim to four controlled
+variants on one known topology. It creates no dataset, ML/Hybrid result,
+metric, API change or multiple-fault claim. X3-R0 is the next design-only gate.

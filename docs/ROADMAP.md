@@ -436,7 +436,7 @@ Status: Complete
 - No collector executor or new empirical runtime
 
 ### X2 — Addressing
-Status: In progress — X2-R0 through X2-R2 complete; X2-R3 next
+Status: Complete — X2-R0 through X2-R5 accepted
 
 - Wrong IP address
 - Wrong subnet mask
@@ -446,9 +446,9 @@ Status: In progress — X2-R0 through X2-R2 complete; X2-R3 next
   non-inherited runtime gate complete
 - X2-R1: wrong IP plus isolated addressing runtime foundation complete
 - X2-R2: wrong subnet mask runtime slice complete
-- X2-R3: missing default route planned
-- X2-R4: duplicate IP with active and temporal evidence planned
-- X2-R5: addressing closeout planned
+- X2-R3: missing default route runtime slice accepted
+- X2-R4: duplicate IP with active and temporal evidence accepted
+- X2-R5: source/evidence closeout and hash-bound receipt accepted
 
 ### X3 — Layer 2 and VLAN
 Status: Planned
@@ -511,10 +511,14 @@ Status: Planned
 - Versioned interface separate from frozen Phase 7 `/api/v1`
 ### X2-R3 — Missing Default Route
 
-Implemented; transactional acceptance pending. Next release: X2-R4 Duplicate
-IP with active duplicate detection plus temporal MAC-churn evidence.
+Accepted with real Evidence v4, exact diagnosis, restoration and cleanup.
 
 ### X2-R4 — Duplicate IP
 
-Implemented; transactional acceptance pending. Requires active duplicate
-response plus temporal MAC churn. X2-R5 closes the addressing group next.
+Accepted with active duplicate response, temporal MAC churn, exact diagnosis,
+restoration and cleanup. X2-R5 closes the addressing group.
+
+### X2-R5 — Addressing Closeout
+
+Accepted. Four real runs are bound by the committed receipt and retained in a
+private local archive. Next: X3-R0 design gate.

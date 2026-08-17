@@ -1651,7 +1651,16 @@ remain required before publication. Next: X2-R4 Duplicate IP.
 
 ## X2-R4 — Duplicate IP
 
-Implemented locally on 2026-08-17. HostA remains unchanged; a temporary
-macvlan claimant and isolated observer produce active and temporal MAC
-evidence for `R_X2_ADDRESSING_004`. Transactional regression and real
-Containerlab acceptance remain required. Next after acceptance: X2-R5.
+Accepted on 2026-08-17. HostA remains unchanged; a temporary macvlan claimant
+and isolated observer produced active and temporal MAC evidence for
+`R_X2_ADDRESSING_004`. Full regression, real Containerlab lifecycle,
+restoration and zero-container cleanup passed. Next: X2-R5.
+
+## X2-R5 — Addressing Closeout
+
+X2-R1 through X2-R4 passed real Containerlab acceptance and restoration. The
+closeout source gate binds 18 parent plans/gates/rules/verifiers, preserves
+four disjoint signatures, authorizes 0/10 runtime operations and limits claims
+to four controlled variants. The committed evidence receipt binds all four
+runs and a private archive is retained locally. X2 is closed. Next: X3-R0
+design-only gate.

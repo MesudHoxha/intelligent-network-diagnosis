@@ -2755,3 +2755,16 @@ transition. One signal alone abstains; unavailable evidence is insufficient.
 Reason: a single ARP reply or a stale neighbor entry cannot reliably establish
 two simultaneous claimants. Combining active and temporal evidence makes the
 rule explicit and testable.
+
+## D-X2-R5 — Close addressing without new runtime or broader claims
+
+Date: 2026-08-17
+
+Decision: close X2 by hash-binding the R0–R4 source boundaries and the four
+already accepted real evidence runs. X2-R5 authorizes no Containerlab command,
+mutation, new collection, dataset/model operation, prediction or metric.
+
+Reason: the addressing objective is satisfied by four controlled, disjoint
+single-fault slices. Repeating runtime during closeout adds risk but no new
+scientific variable. The receipt preserves reproducibility, while the claim
+boundary prevents controlled variants from being presented as generalization.

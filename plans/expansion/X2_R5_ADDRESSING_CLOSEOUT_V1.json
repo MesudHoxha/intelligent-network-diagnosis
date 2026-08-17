@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "gate_id": "x2_r5_addressing_closeout_v1",
+  "status": "ACCEPTED_SOURCE_CLOSEOUT",
+  "track": {
+    "parent_gate": "x2_r4_duplicate_ip_runtime_gate_v1",
+    "current_release": "X2_R5_ADDRESSING_CLOSEOUT",
+    "next_release": "X3_R0_LAYER2_VLAN_DESIGN_GATE",
+    "phase9_status": "P9_R1_PAUSED_BY_USER"
+  },
+  "source_boundary": {
+    "parent_commit": "cb8a9feaccc8a040a3a1f7fe472cbc9c0d70ecb1",
+    "extension_policy": "APPEND_ONLY",
+    "runtime_inherited": false
+  },
+  "source_bindings": [
+    {"binding_id": "x2_r0_plan", "path": "plans/expansion/X2_R0_ADDRESSING_RUNTIME_GATE_V1.json", "sha256": "fd8f5cce2a5f87bb14e81cf08fea56e788a8f932c87282c90eaea7224eef070a"},
+    {"binding_id": "x2_r1_plan", "path": "plans/expansion/X2_R1_WRONG_IP_ADDRESS_V1.json", "sha256": "0e53f50e2a2cb4e1c11f479ac66a15a4f4a589a3d29bf88d3c0a4127007620c1"},
+    {"binding_id": "x2_r2_plan", "path": "plans/expansion/X2_R2_WRONG_SUBNET_MASK_V1.json", "sha256": "4f0b3526d17b2baf8718792b054b07937be3dd65038af9be33e93009e6ded35d"},
+    {"binding_id": "x2_r3_plan", "path": "plans/expansion/X2_R3_MISSING_DEFAULT_ROUTE_V1.json", "sha256": "346a9717c90b8188d4528b757ab37e7246b2ab8cbdcba8292932e560ad09bd12"},
+    {"binding_id": "x2_r4_plan", "path": "plans/expansion/X2_R4_DUPLICATE_IP_V1.json", "sha256": "cfd6e16d195246117f42a6fccf885413917ffe8c6d5d8db358c5d2d15acc6a30"},
+    {"binding_id": "x2_r0_gate", "path": "src/expansion/x2_gate.py", "sha256": "46c8e0205b9f80082ff359f02729d8539a47ea3e4269ae7c7eac1e732873a9d7"},
+    {"binding_id": "x2_r1_gate", "path": "src/expansion/x2_r1_gate.py", "sha256": "f756d92e9610ef05833359940a1626d62ab72769bae4e921c2c4e52508c8a5a6"},
+    {"binding_id": "x2_r2_gate", "path": "src/expansion/x2_r2_gate.py", "sha256": "fbc22c8d482598b3939ac2ed9999515540c0e1602f3c8f15431c0c75f1d68937"},
+    {"binding_id": "x2_r3_gate", "path": "src/expansion/x2_r3_gate.py", "sha256": "9cfc281dd9290e7eb67e5da876d110dab79ca7b29fd9889f793edce4a8e08cb5"},
+    {"binding_id": "x2_r4_gate", "path": "src/expansion/x2_r4_gate.py", "sha256": "ae38c978e74398931dd5f15fb66bd095a4a45cbb54012a4a7215edabcf849628"},
+    {"binding_id": "rule_001", "path": "src/rules/addressing_rule_engine_v2.py", "sha256": "e7d04edca6f7913821c6e10cba5bcd3485b87aaf03190f526b50220c4eb6b22f"},
+    {"binding_id": "rule_002", "path": "src/rules/addressing_rule_engine_x2_r2.py", "sha256": "5d6d1ecf2a8c4240eff9e8207a3bba0ff47a4a6779b3c4ace7e13306ed1c1d66"},
+    {"binding_id": "rule_003", "path": "src/rules/addressing_rule_engine_x2_r3.py", "sha256": "40267f02bad5a4382c5025274ca34dae6fc425d83069e5ad427eb42808292c88"},
+    {"binding_id": "rule_004", "path": "src/rules/addressing_rule_engine_x2_r4.py", "sha256": "6328490f485c3472ed7206c94e27d0b022248c9de32f01d18e1aa9a7995ffff0"},
+    {"binding_id": "evidence_v4", "path": "schemas/evidence_v4.schema.json", "sha256": "dcc61966246a03a03d060714a67b5cf14aa48f6925c262c267d07408b77f8315"},
+    {"binding_id": "diagnosis_result_v2", "path": "schemas/diagnosis_result_v2.schema.json", "sha256": "40699655b2eece5d80e009993398d1ee5eb028ec88b6edf18e6849659ccc3556"},
+    {"binding_id": "x2_r5_gate", "path": "src/expansion/x2_r5_gate.py", "sha256": "ac5959cb2a860bcc4c9620c1f5bc0ab6f4fa3206e121efe1d781c24bc6eae7cc"},
+    {"binding_id": "x2_r5_receipt_builder", "path": "src/expansion/x2_r5_receipt.py", "sha256": "f8f7df58e731d15210432f52a482600d1550d60a1477380b653fef6d84edb0a6"}
+  ],
+  "accepted_slices": [
+    {"release_id": "X2_R1_WRONG_IP_ADDRESS", "fault_type": "wrong_ip_address", "rule_id": "R_X2_ADDRESSING_001", "expected_signature": {"source_address_matches_expected": false, "source_prefix_matches_expected": true, "source_default_route_present": true, "duplicate_address_detected": false}},
+    {"release_id": "X2_R2_WRONG_SUBNET_MASK", "fault_type": "wrong_subnet_mask", "rule_id": "R_X2_ADDRESSING_002", "expected_signature": {"source_address_matches_expected": true, "source_prefix_matches_expected": false, "source_default_route_present": true, "duplicate_address_detected": false}},
+    {"release_id": "X2_R3_MISSING_DEFAULT_ROUTE", "fault_type": "missing_default_route", "rule_id": "R_X2_ADDRESSING_003", "expected_signature": {"source_address_matches_expected": true, "source_prefix_matches_expected": true, "source_default_route_present": false, "duplicate_address_detected": false}},
+    {"release_id": "X2_R4_DUPLICATE_IP", "fault_type": "duplicate_ip", "rule_id": "R_X2_ADDRESSING_004", "expected_signature": {"source_address_matches_expected": true, "source_prefix_matches_expected": true, "source_default_route_present": true, "duplicate_address_detected": true, "duplicate_address_mac_churn_detected": true}}
+  ],
+  "evidence_receipt": {
+    "path": "plans/expansion/X2_R5_ADDRESSING_EVIDENCE_RECEIPT_V1.json",
+    "required": true,
+    "run_count": 4,
+    "artifact_hashes_required": true,
+    "restoration_required": true,
+    "baseline_before_after_required": true
+  },
+  "compatibility": {
+    "phase6_evidence_v3": "UNCHANGED",
+    "phase6_dataset_row_v3": "UNCHANGED",
+    "accepted_phase8_results": "UNCHANGED",
+    "api_v1": "UNCHANGED",
+    "p9_r1": "PAUSED"
+  },
+  "claim_boundary": {
+    "proves": ["four controlled single-fault addressing variants", "exact rule discrimination on one verified topology", "real Evidence v4 collection", "confirmed restoration and baseline recovery"],
+    "does_not_prove": ["arbitrary addressing faults", "unseen topology generalization", "extended dataset coverage", "ML or Hybrid performance", "multiple-fault diagnosis", "production deployment"]
+  },
+  "runtime_authorization": {
+    "containerlab_execution": false,
+    "network_mutation": false,
+    "new_evidence_collection": false,
+    "dataset_generation": false,
+    "model_fit_or_selection": false,
+    "estimator_deserialization": false,
+    "method_prediction": false,
+    "metric_calculation": false,
+    "report_only_test_access": false,
+    "multiple_fault_execution": false
+  }
+}

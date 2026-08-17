@@ -2,7 +2,7 @@
 
 Date: 2026-08-17
 
-Status: IMPLEMENTED — REAL ACCEPTANCE REQUIRED
+Status: ACCEPTED — REAL CONTAINERLAB LIFECYCLE VERIFIED
 
 ## 1. Completed
 
@@ -24,8 +24,9 @@ tests, gate, schema, plan and central documentation are added or updated.
 
 ## 4. Open issues
 
-The WSL transaction must prove `arping` availability, the real two-MAC trace,
-restoration, full regressions and zero remaining Containerlab containers.
+No X2-R4 runtime issue remains. Final acceptance used the existing `tcpdump`,
+`ping` and neighbor-cache tools to prove the two-MAC temporal trace, followed
+by confirmed restoration and zero-container cleanup.
 
 ## 5. Next step
 
