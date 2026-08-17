@@ -1,0 +1,46 @@
+schema_version: 1
+scenario:
+  id: X2_R2_WRONG_SUBNET_MASK
+  name: X2-R2 wrong subnet mask
+  kind: fault
+  truth_model: single_fault
+  variant_id: x2_r2_wrong_mask_v1
+  category: controlled_fault
+  description: Preserve HostA's exact IPv4 address while replacing only its /24 prefix length with /25.
+  topology:
+    id: X2_TOP_01_ADDRESSING
+    file: labs/topologies/x2_r1_addressing/topology.clab.yml
+    context_id: x2_top_01_addressing_context_v1
+    context_file: labs/topologies/x2_r1_addressing/topology_context_v1.json
+  observation:
+    direction: hosta_to_hostb
+    source_node: hosta
+    source_container: clab-x2r1-hosta
+    source_interface: eth1
+    expected_address: 10.20.1.10
+    expected_prefix: 10.20.1.0/24
+    expected_prefix_length: 24
+    expected_gateway: 10.20.1.1
+    destination_node: hostb
+    destination_address: 10.20.2.10
+    duplicate_observer_node: r1
+    duplicate_observer_container: clab-x2r1-r1
+    duplicate_observer_interface: eth1
+  fault:
+    type: wrong_subnet_mask
+    injector: replace_exact_source_prefix_length
+    target_node: hosta
+    target_container: clab-x2r1-hosta
+    parameters:
+      source_address: 10.20.1.10
+      correct_prefix_length: 24
+      wrong_prefix_length: 25
+      source_interface: eth1
+  ground_truth:
+    fault_category: addressing
+    fault_type: wrong_subnet_mask
+    fault_location: hosta
+    affected_resource: eth1
+    root_cause: HostA keeps the correct IPv4 address but uses /25 instead of the expected /24.
+  restoration:
+    method: restore_exact_source_ipv4_address_and_routes

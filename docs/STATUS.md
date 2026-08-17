@@ -1539,7 +1539,7 @@ Status: Complete
 - P9-R1: remains paused by explicit user request
 
 ## Expansion Track X — Ambitious technical scope
-Status: X0, X1, X2-R0, and X2-R1 complete; X2-R2 next
+Status: X0, X1, X2-R0, X2-R1, and X2-R2 complete; X2-R3 next
 
 - D-098 append-only expansion decision: accepted
 - Phase 8 interpretation: strong frozen six-class baseline, not the end of the
@@ -1620,6 +1620,24 @@ Status: X0, X1, X2-R0, and X2-R1 complete; X2-R2 next
   lifecycles must pass before commit
 - Frozen Phase 6/7/8 artifacts and P9-R1 pause: unchanged
 
+### X2-R2 Wrong Subnet Mask runtime slice
+
+- D-102 isolated single-fault runtime: implemented
+- Verified X2-R1 topology and baseline: reused unchanged
+- Exact prefix-only `10.20.1.10/24` to `10.20.1.10/25` mutation: implemented
+- Durable pre-mutation intent and crash-path exact restoration: implemented
+- Native Evidence v4 from `addressing_state_collector:v2`: implemented
+- Wrong Mask Rule `R_X2_ADDRESSING_002`: implemented
+- Wrong IP Rule `R_X2_ADDRESSING_001`: preserved and regression-tested
+- Missing/unreviewed evidence handling: insufficient evidence or abstention
+- Dataset, ML/Hybrid, metrics, report-only access, multiple faults, `/api/v2`:
+  absent
+- Local verification: X2-R2 15/15; X2-R1 plus X2-R2 30/30; X2-R2 gate
+  verified; clean-checkout full suite 712 passed/5 explicit skips
+- Transactional acceptance: full regressions and all three real Containerlab
+  lifecycles must pass before commit
+- Frozen Phase 6/7/8/X2-R1 artifacts and P9-R1 pause: unchanged
+
 ### Next technical milestone
 
-X2-R2 — Wrong Subnet Mask, as a separately authorized runtime slice.
+X2-R3 — Missing Default Route, as a separately authorized runtime slice.

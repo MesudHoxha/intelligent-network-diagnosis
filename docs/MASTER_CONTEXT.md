@@ -1388,3 +1388,25 @@ Feature Vector v2 and Diagnosis Result v2. X2-R1 creates no dataset row, model
 fit, estimator load, ML/Hybrid output, metric, report-only access,
 multiple-fault execution, or API change. The accepted Phase 6/7/8 baseline
 remains immutable, P9-R1 stays paused, and X2-R2 wrong subnet mask is next.
+
+X2-R2 subsequently implements Wrong Subnet Mask under D-102 without modifying
+any X2-R1 hash-bound file. It reuses the verified three-node addressing
+topology and changes HostA only from `10.20.1.10/24` to
+`10.20.1.10/25`; the address identity and installed default route remain
+unchanged.
+
+The new durable recovery intent precedes mutation and is sufficient for exact
+restoration even when no injection record exists. Restoration is idempotent
+after confirmation and revalidates the healthy address, prefix, route,
+gateway/destination reachability, and baseline. Native Evidence v4 from
+`addressing_state_collector:v2` binds address, route, and active duplicate
+artifacts by SHA-256.
+
+The combined Rule-Based v2 engine retains X2-R1
+`R_X2_ADDRESSING_001` and adds `R_X2_ADDRESSING_002` only for address true,
+prefix false, default true, duplicate false. It fails closed on missing or
+unreviewed signatures. X2-R2 creates no dataset, model operation, ML/Hybrid
+result, metric, report-only access, multiple-fault run, or API change. The
+accepted Phase 6/7/8 and X2-R1 boundaries remain immutable, P9-R1 stays
+paused, and X2-R3 Missing Default Route is next after transactional
+acceptance.

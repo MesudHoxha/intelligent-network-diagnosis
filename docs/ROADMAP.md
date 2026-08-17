@@ -404,7 +404,7 @@ and infrastructure cycle without changing accepted results.
 P9-R1 remains paused by user request.
 
 ## Expansion Track X — Original ambitious technical vision
-Status: X0, X1, X2-R0, and X2-R1 complete; X2-R2 next
+Status: X0, X1, X2-R0, X2-R1, and X2-R2 complete; X2-R3 next
 
 This track extends the frozen Phase 6/7/8 baseline append-only. It does not
 reopen accepted results or resume the separately paused P9-R1 thesis milestone.
@@ -436,7 +436,7 @@ Status: Complete
 - No collector executor or new empirical runtime
 
 ### X2 — Addressing
-Status: In progress — X2-R0 and X2-R1 complete; X2-R2 next
+Status: In progress — X2-R0 through X2-R2 complete; X2-R3 next
 
 - Wrong IP address
 - Wrong subnet mask
@@ -445,7 +445,7 @@ Status: In progress — X2-R0 and X2-R1 complete; X2-R2 next
 - X2-R0: disjoint signatures, X1 feature binding, safety invariants, and
   non-inherited runtime gate complete
 - X2-R1: wrong IP plus isolated addressing runtime foundation complete
-- X2-R2: wrong subnet mask planned
+- X2-R2: wrong subnet mask runtime slice complete
 - X2-R3: missing default route planned
 - X2-R4: duplicate IP with active and temporal evidence planned
 - X2-R5: addressing closeout planned

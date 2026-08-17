@@ -2685,3 +2685,47 @@ D-101 proves one controlled topology and one selected wrong-IP variant only.
 It does not create an extended dataset, estimate generalization, prove unseen
 addressing variants, implement wrong mask/missing default/duplicate IP, or
 compare Rule-Based, ML, and Hybrid methods.
+
+## D-102 — Implement Wrong Subnet Mask without reopening X2-R1
+
+Decision: Implement X2-R2 as an append-only, single-fault vertical slice for
+`wrong_subnet_mask`. Reuse the verified X2-R1 three-node addressing topology
+and baseline because they already isolate the required source, gateway, and
+destination path. Add a new scenario, runtime contract, injector/restorer,
+collector implementation, combined rule engine, orchestrator, and E2E test;
+do not modify any X2-R1 hash-bound file.
+
+The mutation preserves HostA's exact address `10.20.1.10` and installed
+default route while replacing only `/24` with `/25`. The decisive signature is
+address match true, prefix match false, default-route presence true, and
+active duplicate detection false. Rule `R_X2_ADDRESSING_002` accepts only that
+signature. The combined engine must also preserve the exact X2-R1 Wrong IP
+signature and `R_X2_ADDRESSING_001`; unavailable evidence fails as
+`insufficient_evidence`, and other complete signatures abstain.
+
+The injector writes the scenario-hash-bound recovery intent before mutation.
+Restoration remains best-effort on every exception path, works when the
+injection record was never written, is idempotent after confirmation, and
+verifies the exact address/prefix, route, gateway reachability, destination
+reachability, and baseline. `addressing_state_collector:v2` produces native
+Evidence v4 with three raw SHA-256 bindings. Temporal MAC churn remains
+reserved for X2-R4.
+
+Dataset generation, ML/Hybrid execution, estimator loading, metrics,
+report-only access, multiple-fault execution, `/api/v2`, and P9-R1 remain
+outside X2-R2. Evidence v3, Dataset Row v3, the accepted Phase 6/7/8 result
+chain, Phase 7 `/api/v1`, and the complete X2-R1 gate remain unchanged.
+
+Status: Implemented locally on 2026-08-17. Acceptance requires 15/15 X2-R2
+tests, the complete X0-through-X2-R2 regression, green clean and materialized
+suites, Phase 6/H1 and Phase 7-through-9 regressions, all three opt-in real
+Containerlab lifecycles, preserved real Evidence v4, exact frozen hashes, and
+zero remaining containers. X2-R3 Missing Default Route is next only after that
+transactional gate passes.
+
+Limitation:
+
+D-102 proves one controlled `/24` to `/25` variant on one known topology. It
+does not prove arbitrary subnet-mask errors, unseen topologies, an extended
+dataset, ML/Hybrid performance, generalization, missing default route,
+duplicate IP, or multiple-fault diagnosis.
