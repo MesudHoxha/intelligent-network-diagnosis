@@ -1475,3 +1475,27 @@ v4 collection and Rule-Based v2 prediction. It creates no dataset row,
 ML/Hybrid output, metric, API change or multiple-fault claim. Real Containerlab
 acceptance, complete regressions, restored baseline and zero containers remain
 required before publication; X3-R2 follows only after that gate passes.
+
+X3-R1 subsequently passed the full transactional WSL gate. The real topology,
+exact false/true/true/true/false signature, tagged-flow fault, preserved native
+flow, diagnosis, restoration and zero-container cleanup were confirmed before
+publication at `0563fcd`.
+
+## X3-R2 VLAN Missing runtime (2026-08-17)
+
+X3-R2 reuses the accepted X3 topology and HostA-to-HostB observation roles
+without changing any X3-R1 hash-bound source. Its single switch-level mutation
+removes VLAN 10 from both SW1 `eth1` and SW1 `eth3`, making the expected VLAN
+absent from the target switch while leaving SW2 and native VLAN 99 unchanged.
+
+`l2_vlan_state_collector:v2` derives the exact
+false/false/false/true/false signature from both-switch VLAN/FDB state and the
+tagged/native probes. The combined X3-R2 engine adds `R_X3_L2_VLAN_002` and
+regression-preserves `R_X3_L2_VLAN_001`; missing evidence remains insufficient
+and unreviewed signatures abstain.
+
+Recovery intent precedes deletion, partial mutations are restored, and exact
+access PVID/untagged plus tagged trunk memberships are revalidated through the
+complete baseline. The slice authorizes the same 4/10 runtime operations as
+X3-R1 and creates no dataset, ML/Hybrid output, metric, API change or
+multiple-fault claim. Real acceptance remains required before X3-R3.

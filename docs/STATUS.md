@@ -1539,7 +1539,7 @@ Status: Complete
 - P9-R1: remains paused by explicit user request
 
 ## Expansion Track X — Ambitious technical scope
-Status: X0 through X2 and X3-R0 complete; X3-R1 implemented locally, acceptance pending
+Status: X0 through X2 and X3-R0/X3-R1 accepted; X3-R2 implemented locally, acceptance pending
 
 - D-098 append-only expansion decision: accepted
 - Phase 8 interpretation: strong frozen six-class baseline, not the end of the
@@ -1547,8 +1547,9 @@ Status: X0 through X2 and X3-R0 complete; X3-R1 implemented locally, acceptance 
 - Canonical detailed scope: 24 fault types across six domains plus `no_fault`
 - Document 23/24 discrepancy: resolved by retaining detailed B3
   `vlan_missing`
-- Current functional gap: 5 frozen implemented, 1 partial mechanism, 18
-  missing
+- X0 starting gap: 5 frozen implemented, 1 partial mechanism, 18 missing
+- Current accepted expansion: X2 adds four types and X3-R1 adds one; X3-R2
+  remains local until real acceptance
 - Immutable P6 class order and protected v3/method contracts: frozen
 - Existing accepted artifacts, hashes, metrics, E02/E06 results, and P7
   `/api/v1`: unchanged
@@ -1711,6 +1712,26 @@ cover that healthy case explicitly before new runtime acceptance.
 - Connectivity-only classification: forbidden; ping is effectiveness evidence
 - Runtime authorization: 4/10; dataset, ML/Hybrid, metric and multiple faults absent
 - Local X3-R0 plus X3-R1 verification: 60/60 passed
-- Transactional acceptance: full regressions, real X3-R1 Containerlab lifecycle,
+- Transactional acceptance: clean checkout 784/7, materialized 813/6, all
+  prior real lifecycles plus X3-R1 passed
+- Real signature: false/true/true/true/false; tagged flow failed, native flow
+  remained healthy, restoration confirmed and cleanup left zero containers
+- Public accepted boundary: `0563fcd`
+- Next: X3-R2 VLAN Missing
+
+## X3-R2 — VLAN Missing
+
+- Parent boundary: public X3-R1 commit `0563fcd`, append-only and runtime not inherited
+- Reused unchanged: X3 topology, tagged/native flows, Topology Context v1 and baseline
+- Mutation: remove VLAN 10 from SW1 `eth1` access and `eth3` trunk memberships
+- Restoration: exact VLAN 10 access PVID/untagged plus tagged trunk membership
+- Evidence v4: `l2_vlan_state_collector:v2`, both switches and raw hashes
+- Rule `R_X3_L2_VLAN_002`: exact false/false/false/true/false signature
+- `R_X3_L2_VLAN_001`: preserved in the combined X3-R2 engine
+- Connectivity-only classification: forbidden; tagged/native probes are effectiveness checks
+- Runtime authorization: 4/10; dataset, ML/Hybrid, metric and multiple faults absent
+- Local X3-R2 verification: 27/27 passed
+- Local full regression: 838 passed, 9 explicit skips
+- Transactional acceptance: full regressions, real X3-R2 Containerlab lifecycle,
   baseline restoration and zero-container cleanup required before publication
-- Next after acceptance: X3-R2 VLAN Missing
+- Next after acceptance: X3-R3 VLAN Not Allowed on Trunk

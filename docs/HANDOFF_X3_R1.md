@@ -2,7 +2,7 @@
 
 Date: 2026-08-17
 
-Status: IMPLEMENTED — REAL ACCEPTANCE PENDING
+Status: ACCEPTED — REAL RUNTIME VERIFIED
 
 ## Completed locally
 
@@ -15,11 +15,12 @@ Status: IMPLEMENTED — REAL ACCEPTANCE PENDING
 - exact `R_X3_L2_VLAN_001` Diagnosis Result v2;
 - unit, integration and opt-in real E2E coverage.
 
-## Acceptance still required
+## Acceptance completed
 
-Run the full transactional package in the reviewed WSL environment. Acceptance
-requires all regressions, the real X3-R1 lifecycle, exact diagnosis, preserved
-native flow, restored baseline and zero active Containerlab containers.
+The transactional WSL run passed clean and materialized regressions, all prior
+real lifecycles and the real X3-R1 lifecycle. Exact diagnosis, preserved native
+flow, restored baseline and zero active Containerlab containers were confirmed.
+The accepted public boundary is `0563fcd`.
 
 ## Scientific boundary
 
@@ -28,5 +29,4 @@ is created. Frozen Phase 6/7/8, accepted X2, API v1 and P9-R1 remain unchanged.
 
 ## Next step
 
-X3-R2 VLAN Missing begins only after X3-R1 is committed and published from a
-fully passing real acceptance run.
+X3-R2 VLAN Missing is the next separately authorized runtime slice.

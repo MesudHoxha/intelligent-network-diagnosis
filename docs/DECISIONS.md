@@ -2816,3 +2816,24 @@ exception path attempts exact VLAN 10 PVID/untagged restoration, confirmed
 restoration is idempotent, and the complete tagged/native baseline is checked
 before and after. Dataset, ML/Hybrid, metric, API and multiple-fault operations
 remain outside the slice. X3-R2 is next only after real transactional acceptance.
+
+## D-X3-R2 — VLAN Missing is absence across target-switch memberships
+
+Date: 2026-08-17
+
+Decision: implement `vlan_missing` by removing expected VLAN 10 from both SW1
+memberships that instantiate that VLAN: HostA-facing access `eth1` and tagged
+trunk `eth3`. Treat this as one switch-level configuration fault, not two
+independent faults. Preserve the SW2 VLAN 10 memberships, both native VLAN 99
+trunk memberships and the HostC-to-HostD native control flow.
+
+Rule `R_X3_L2_VLAN_002` requires the exact false/false/false/true/false
+signature frozen by X3-R0. Removing only the trunk membership is reserved for
+X3-R3 and must not be diagnosed as VLAN Missing. The X3-R2 combined rule engine
+also retains the accepted X3-R1 false/true/true/true/false signature.
+
+Recovery intent precedes either deletion. Any partial mutation triggers
+best-effort restoration of exact VLAN 10 PVID/untagged access membership and
+exact tagged trunk membership. The complete tagged/native baseline is checked
+before and after. Dataset, ML/Hybrid, metrics, API changes and multiple faults
+remain outside the slice. X3-R3 follows only after real transactional acceptance.

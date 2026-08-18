@@ -1,0 +1,56 @@
+schema_version: 1
+scenario:
+  id: X3_R2_VLAN_MISSING
+  name: X3-R2 VLAN missing
+  kind: fault
+  truth_model: single_fault
+  variant_id: x3_r2_vlan_missing_v1
+  category: controlled_fault
+  description: Remove expected VLAN 10 from all SW1 bridge memberships while preserving native VLAN 99.
+  topology:
+    id: X3_TOP_01_L2_VLAN
+    file: labs/topologies/x3_r1_l2_vlan/topology.clab.yml
+    context_id: x3_top_01_l2_vlan_context_v1
+    context_file: labs/topologies/x3_r1_l2_vlan/topology_context_v1.json
+  observation:
+    direction: hosta_to_hostb
+    source_node: hosta
+    source_container: clab-x3r1-hosta
+    source_interface: eth1
+    source_address: 10.30.10.10
+    destination_node: hostb
+    destination_container: clab-x3r1-hostb
+    destination_interface: eth1
+    destination_address: 10.30.10.20
+    native_source_node: hostc
+    native_source_container: clab-x3r1-hostc
+    native_destination_node: hostd
+    native_destination_address: 10.30.99.20
+    target_switch_node: sw1
+    target_switch_container: clab-x3r1-sw1
+    peer_switch_node: sw2
+    peer_switch_container: clab-x3r1-sw2
+    bridge: br0
+    target_access_interface: eth1
+    peer_access_interface: eth1
+    trunk_interface: eth3
+    expected_vlan: 10
+    native_vlan: 99
+  fault:
+    type: vlan_missing
+    injector: remove_expected_vlan_from_target_switch_memberships
+    target_node: sw1
+    target_container: clab-x3r1-sw1
+    parameters:
+      bridge: br0
+      access_interface: eth1
+      trunk_interface: eth3
+      expected_vlan: 10
+  ground_truth:
+    fault_category: l2_vlan
+    fault_type: vlan_missing
+    fault_location: sw1
+    affected_resource: br0:vlan10
+    root_cause: Expected VLAN 10 is absent from the SW1 access and trunk memberships.
+  restoration:
+    method: restore_exact_bridge_access_and_trunk_vlan_memberships
