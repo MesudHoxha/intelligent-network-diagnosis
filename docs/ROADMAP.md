@@ -404,7 +404,7 @@ and infrastructure cycle without changing accepted results.
 P9-R1 remains paused by user request.
 
 ## Expansion Track X — Original ambitious technical vision
-Status: X2 closed; X3-R0/X3-R1 accepted; X3-R2 implemented locally, acceptance pending
+Status: X2 closed; X3-R0 through X3-R2 accepted; X3-R3 implemented locally, acceptance pending
 
 This track extends the frozen Phase 6/7/8 baseline append-only. It does not
 reopen accepted results or resume the separately paused P9-R1 thesis milestone.
@@ -451,7 +451,7 @@ Status: Complete — X2-R0 through X2-R5 accepted
 - X2-R5: source/evidence closeout and hash-bound receipt accepted
 
 ### X3 — Layer 2 and VLAN
-Status: X3-R0/X3-R1 accepted; X3-R2 implemented locally, transactional acceptance pending
+Status: X3-R0 through X3-R2 accepted; X3-R3 implemented locally, transactional acceptance pending
 
 - Wrong access VLAN
 - VLAN missing
@@ -461,9 +461,11 @@ Status: X3-R0/X3-R1 accepted; X3-R2 implemented locally, transactional acceptanc
   flow, five-feature disjoint signatures and 0/10 runtime authorization
 - X3-R1: real Wrong Access VLAN lifecycle, exact diagnosis, restoration and
   zero-container acceptance complete at public `0563fcd`
-- X3-R2: VLAN 10 removal from SW1 access/trunk memberships, collector v2,
-  `R_X3_L2_VLAN_002` and opt-in real E2E implemented locally
-- X3-R3 next only after X3-R2 real runtime and regression acceptance
+- X3-R2: real VLAN Missing lifecycle, exact diagnosis, restoration and
+  zero-container acceptance complete at public `36c9747`
+- X3-R3: isolated SW1 trunk allow-list mutation, collector v3,
+  `R_X3_L2_VLAN_003` and opt-in real E2E implemented locally
+- X3-R4 next only after X3-R3 real runtime and regression acceptance
 
 ### X4 — DHCP, DNS, and service security
 Status: Planned
@@ -545,7 +547,14 @@ cleanup passed. Public boundary: `0563fcd`.
 
 ### X3-R2 — VLAN Missing
 
-Implemented locally. VLAN 10 is removed from the SW1 access and trunk
-memberships as one controlled switch-level fault. The exact
-false/false/false/true/false signature is collected by version 2 of the L2/VLAN
-collector, while the X3-R1 rule remains preserved. Real acceptance is pending.
+Accepted. VLAN 10 was removed from the SW1 access and trunk memberships as one
+controlled switch-level fault. The real false/false/false/true/false
+signature, exact diagnosis, restoration and zero-container cleanup passed.
+Public boundary: `36c9747`.
+
+### X3-R3 — VLAN Not Allowed on Trunk
+
+Implemented locally. Tagged VLAN 10 is removed only from SW1 `eth3`; access
+membership, SW2 and native VLAN 99 remain unchanged. Collector v3 derives the
+exact true/true/false/true/true signature, and the combined rule engine
+preserves X3-R1/X3-R2. Real transactional acceptance is pending.

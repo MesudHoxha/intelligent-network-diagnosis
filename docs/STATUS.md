@@ -1539,7 +1539,7 @@ Status: Complete
 - P9-R1: remains paused by explicit user request
 
 ## Expansion Track X — Ambitious technical scope
-Status: X0 through X2 and X3-R0/X3-R1 accepted; X3-R2 implemented locally, acceptance pending
+Status: X0 through X2 and X3-R0 through X3-R2 accepted; X3-R3 implemented locally, acceptance pending
 
 - D-098 append-only expansion decision: accepted
 - Phase 8 interpretation: strong frozen six-class baseline, not the end of the
@@ -1731,7 +1731,27 @@ cover that healthy case explicitly before new runtime acceptance.
 - Connectivity-only classification: forbidden; tagged/native probes are effectiveness checks
 - Runtime authorization: 4/10; dataset, ML/Hybrid, metric and multiple faults absent
 - Local X3-R2 verification: 27/27 passed
-- Local full regression: 838 passed, 9 explicit skips
-- Transactional acceptance: full regressions, real X3-R2 Containerlab lifecycle,
+- Transactional acceptance: clean checkout 811/8, materialized 840/7, all
+  prior real lifecycles plus X3-R2 passed
+- Real signature: false/false/false/true/false; tagged flow failed, native flow
+  remained healthy, restoration confirmed and cleanup left zero containers
+- Public accepted boundary: `36c9747`
+- Next: X3-R3 VLAN Not Allowed on Trunk
+
+## X3-R3 — VLAN Not Allowed on Trunk
+
+- Parent boundary: public X3-R2 commit `36c9747`, append-only and runtime not inherited
+- Reused unchanged: X3 topology, tagged/native flows, Topology Context v1 and baseline
+- Mutation: remove VLAN 10 only from SW1 `eth3` tagged trunk membership
+- Preserved: SW1 access VLAN 10, SW2 trunk endpoint and native VLAN 99
+- Restoration: exact tagged VLAN 10 membership on SW1 `eth3`
+- Evidence v4: `l2_vlan_state_collector:v3`, both switches and raw hashes
+- Rule `R_X3_L2_VLAN_003`: exact true/true/false/true/true signature
+- `R_X3_L2_VLAN_001/002`: preserved in the combined X3-R3 engine
+- Connectivity-only classification: forbidden; tagged/native probes are effectiveness checks
+- Runtime authorization: 4/10; dataset, ML/Hybrid, metric and multiple faults absent
+- Unit, integration and opt-in real E2E coverage: implemented
+- Transactional acceptance: full regressions, real X3-R3 Containerlab lifecycle,
   baseline restoration and zero-container cleanup required before publication
-- Next after acceptance: X3-R3 VLAN Not Allowed on Trunk
+- Next after acceptance: X3-R4 Native VLAN Mismatch with a new append-only
+  HostC-to-HostD Topology Context v1 variant

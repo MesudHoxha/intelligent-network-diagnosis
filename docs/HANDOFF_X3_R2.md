@@ -2,7 +2,7 @@
 
 Date: 2026-08-17
 
-Status: IMPLEMENTED — REAL ACCEPTANCE PENDING
+Status: ACCEPTED — REAL RUNTIME VERIFIED
 
 ## Completed locally
 
@@ -16,11 +16,13 @@ Status: IMPLEMENTED — REAL ACCEPTANCE PENDING
 - unit, integration and opt-in real E2E coverage;
 - local full regression: 838 passed with 9 explicit skips.
 
-## Acceptance still required
+## Acceptance completed
 
-Run the transactional package in the reviewed WSL environment. Acceptance
-requires all regressions, the real X3-R2 lifecycle, exact diagnosis, preserved
-native flow, restored baseline and zero active Containerlab containers.
+The transactional WSL run passed clean and materialized regressions, all prior
+real lifecycles and the real X3-R2 lifecycle. The exact
+false/false/false/true/false signature, diagnosis, preserved native flow,
+restored baseline and zero active Containerlab containers were confirmed.
+The accepted public boundary is `36c9747`.
 
 ## Scientific boundary
 
@@ -30,5 +32,5 @@ unchanged.
 
 ## Next step
 
-X3-R3 VLAN Not Allowed on Trunk begins only after X3-R2 is committed and
-published from a fully passing real acceptance run.
+X3-R3 VLAN Not Allowed on Trunk is the next separately authorized runtime
+slice.

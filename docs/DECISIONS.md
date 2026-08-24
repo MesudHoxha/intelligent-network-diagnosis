@@ -2837,3 +2837,25 @@ best-effort restoration of exact VLAN 10 PVID/untagged access membership and
 exact tagged trunk membership. The complete tagged/native baseline is checked
 before and after. Dataset, ML/Hybrid, metrics, API changes and multiple faults
 remain outside the slice. X3-R3 follows only after real transactional acceptance.
+
+## D-X3-R3 — Trunk allow-list failure changes only one trunk endpoint
+
+Date: 2026-08-18
+
+Decision: implement `vlan_not_allowed_on_trunk` by removing expected tagged
+VLAN 10 only from SW1 `eth3`. Preserve the HostA-facing VLAN 10
+PVID/untagged membership, SW2 `eth3` VLAN 10 membership, both native VLAN 99
+memberships and the HostC-to-HostD native control flow.
+
+Rule `R_X3_L2_VLAN_003` requires the exact true/true/false/true/true
+signature frozen by X3-R0. The expected VLAN still exists on SW1 through the
+access membership and HostA's FDB location remains correct; these two direct
+signals distinguish the fault from X3-R2 VLAN Missing. The combined X3-R3
+engine preserves `R_X3_L2_VLAN_001/002`.
+
+Recovery intent precedes the single deletion. Every error path attempts exact
+tagged VLAN 10 restoration on SW1 `eth3`, confirmed restoration is
+idempotent and the full tagged/native baseline is revalidated. Dataset,
+ML/Hybrid, metrics, API changes and multiple faults remain outside the slice.
+X3-R4 follows only after real transactional acceptance and must use the
+planned append-only HostC-to-HostD context variant.

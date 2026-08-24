@@ -2,7 +2,7 @@
 
 Date: 2026-08-17
 
-Status: IMPLEMENTED — TRANSACTIONAL ACCEPTANCE PENDING
+Status: ACCEPTED — REAL CONTAINERLAB VERIFIED
 
 ## Scope
 
@@ -25,3 +25,11 @@ error, idempotent after confirmation and restores exact VLAN 10 PVID/untagged
 access plus tagged trunk membership before the full baseline is rerun. The
 slice creates Evidence v4 and a Rule-Based v2 result only. Dataset, ML/Hybrid,
 metrics, multiple faults, API v2 and P9-R1 remain outside scope.
+
+## Acceptance
+
+The real lifecycle produced the exact false/false/false/true/false signature,
+diagnosed `vlan_missing`, preserved native VLAN 99, restored both exact VLAN
+10 memberships and the complete baseline, and left zero active Containerlab
+containers. Clean and materialized regressions passed before public commit
+`36c9747`.

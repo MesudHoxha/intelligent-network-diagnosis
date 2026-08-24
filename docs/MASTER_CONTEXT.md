@@ -1498,4 +1498,30 @@ Recovery intent precedes deletion, partial mutations are restored, and exact
 access PVID/untagged plus tagged trunk memberships are revalidated through the
 complete baseline. The slice authorizes the same 4/10 runtime operations as
 X3-R1 and creates no dataset, ML/Hybrid output, metric, API change or
-multiple-fault claim. Real acceptance remains required before X3-R3.
+multiple-fault claim.
+
+X3-R2 subsequently passed the full transactional WSL gate. The real
+false/false/false/true/false signature, exact diagnosis, preserved native
+flow, restoration and zero-container cleanup were confirmed before
+publication at `36c9747`.
+
+## X3-R3 VLAN Not Allowed on Trunk runtime (2026-08-18)
+
+X3-R3 reuses the accepted X3 topology and HostA-to-HostB context without
+changing X3-R1/X3-R2 hash-bound sources. Its single mutation removes tagged
+VLAN 10 only from SW1 `eth3`; SW1 access membership, the SW2 trunk endpoint,
+both native VLAN 99 memberships and the HostC-to-HostD control flow remain
+unchanged.
+
+`l2_vlan_state_collector:v3` derives the exact
+true/true/false/true/true signature from both-switch VLAN/FDB state and the
+tagged/native probes. The combined engine adds `R_X3_L2_VLAN_003` while
+preserving `R_X3_L2_VLAN_001/002`; unavailable evidence remains insufficient
+and unreviewed signatures abstain.
+
+Durable recovery intent precedes the mutation, every failure path attempts
+exact tagged VLAN 10 restoration and the full baseline is checked before and
+after. The slice authorizes 4/10 runtime operations and creates no dataset,
+ML/Hybrid output, metric, API change or multiple-fault claim. Real acceptance
+is required before X3-R4, where the planned HostC-to-HostD context variant must
+be added before native-flow evidence collection.
