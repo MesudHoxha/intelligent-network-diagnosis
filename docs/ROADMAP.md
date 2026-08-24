@@ -468,11 +468,14 @@ Status: X3-R0 through X3-R2 accepted; X3-R3 implemented locally, transactional a
 - X3-R4 next only after X3-R3 real runtime and regression acceptance
 
 ### X4 — DHCP, DNS, and service security
-Status: Planned
+Status: X4-R0 design gate accepted; X4-R1 DHCP Server Unavailable is next
 
 - DHCP server unavailable and pool misconfiguration
 - DNS service down and wrong DNS record
 - Service-specific firewall block
+- X4-R0: six-node service topology, nine X1-owned features, five disjoint
+  signatures, safety boundary and 0/10 runtime authorization are frozen;
+  no deployment or empirical work occurred
 
 ### X5 — Dynamic routing with OSPF
 Status: Planned

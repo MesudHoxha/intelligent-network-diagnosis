@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "context_id": "x4_top_01_dhcp_dns_service_security_context_v1",
+  "topology_id": "X4_TOP_01_DHCP_DNS_SERVICE_SECURITY",
+  "variant_id": "x4_r0_design_only_v1",
+  "nodes": [
+    {"node_id": "client", "role": "host", "runtime_target": "client", "capabilities": ["dhcp_client", "dns_client", "service_client"]},
+    {"node_id": "svc_switch", "role": "switch", "runtime_target": "svc_switch", "capabilities": ["service_segment"]},
+    {"node_id": "dhcp_server", "role": "service", "runtime_target": "dhcp_server", "capabilities": ["dhcp_service"]},
+    {"node_id": "dns_server", "role": "service", "runtime_target": "dns_server", "capabilities": ["dns_service"]},
+    {"node_id": "app_server", "role": "service", "runtime_target": "app_server", "capabilities": ["tcp_service"]},
+    {"node_id": "observer", "role": "observer", "runtime_target": "observer", "capabilities": ["service_observation", "service_policy"]}
+  ],
+  "links": [
+    {"link_id": "client_svc_switch", "kind": "service", "endpoints": [{"node_id": "client", "interface": "eth1"}, {"node_id": "svc_switch", "interface": "eth1"}], "expected_vlans": [], "native_vlan": null},
+    {"link_id": "dhcp_server_svc_switch", "kind": "service", "endpoints": [{"node_id": "dhcp_server", "interface": "eth1"}, {"node_id": "svc_switch", "interface": "eth2"}], "expected_vlans": [], "native_vlan": null},
+    {"link_id": "dns_server_svc_switch", "kind": "service", "endpoints": [{"node_id": "dns_server", "interface": "eth1"}, {"node_id": "svc_switch", "interface": "eth3"}], "expected_vlans": [], "native_vlan": null},
+    {"link_id": "app_server_svc_switch", "kind": "service", "endpoints": [{"node_id": "app_server", "interface": "eth1"}, {"node_id": "svc_switch", "interface": "eth4"}], "expected_vlans": [], "native_vlan": null},
+    {"link_id": "observer_svc_switch", "kind": "service", "endpoints": [{"node_id": "observer", "interface": "eth1"}, {"node_id": "svc_switch", "interface": "eth5"}], "expected_vlans": [], "native_vlan": null}
+  ],
+  "observation_roles": {"source": "client", "destination": "app_server", "observers": ["observer"]},
+  "capabilities": ["service_observation", "service_policy", "dhcp_lease_exchange", "dns_query", "service_process_inspection", "service_port_probe", "service_policy_inspection"]
+}
