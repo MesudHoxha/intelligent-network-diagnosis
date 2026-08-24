@@ -1536,6 +1536,6 @@ X3 is closed at public commit 2a763c6c6cd44f984ce08331e20d3e03445a0037.
 
 X4-R0 is accepted design-only at public commit
 f23f08cd6ef019b3cc0b4fd2c16f3a2609370cb7; all ten authorization flags are
-false. X4-R1 DHCP Server Unavailable is accepted locally after its official Containerlab E2E; the next release is X4-R2 DHCP Pool Misconfiguration. This status summary
+false. X4-R1 and X4-R2 are accepted at public commits 00219ffd947cf4a7c8723c0341d6efdce9654ed4 and 980488cebfc0000fb8bd6e19b5b7e043bf163887. The current D3 release is canonically X4_R3_DNS_SERVICE_DOWN; X4_R3_DNS_SERVICE_UNAVAILABLE is its one-to-one X4-R2 compatibility alias, not a second slice. This status summary
 does not alter historical X3 decisions, accepted evidence or frozen Phase 6-9
 boundaries.

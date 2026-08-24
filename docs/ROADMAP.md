@@ -472,7 +472,7 @@ Status: Complete — X3-R0 through X3-R5 accepted
   2a763c6
 
 ### X4 — DHCP, DNS, and service security
-Status: X4-R0 design gate accepted; X4-R1 accepted locally after official E2E, publication pending
+Status: X4-R0 design gate and X4-R1/R2 runtime slices accepted; current D3 is canonically X4_R3_DNS_SERVICE_DOWN (X4_R3_DNS_SERVICE_UNAVAILABLE is its one-to-one compatibility alias)
 
 - DHCP server unavailable and pool misconfiguration
 - DNS service down and wrong DNS record

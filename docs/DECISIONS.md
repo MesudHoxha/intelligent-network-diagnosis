@@ -2869,4 +2869,4 @@ variants with a hash-bound receipt at public commit
 2a763c6c6cd44f984ce08331e20d3e03445a0037. X4-R0 is accepted design-only at
 f23f08cd6ef019b3cc0b4fd2c16f3a2609370cb7; it preserves Phase 6-9, API v1,
 X2/X3 and P9-R1 boundaries and authorizes 0/10 runtime/scientific actions.
-X4-R1 DHCP Server Unavailable is accepted locally after its official Containerlab E2E; publication remains pending.
+X4-R1 and X4-R2 are accepted at public commits 00219ffd947cf4a7c8723c0341d6efdce9654ed4 and 980488cebfc0000fb8bd6e19b5b7e043bf163887. D3 is canonically X4_R3_DNS_SERVICE_DOWN; X4_R3_DNS_SERVICE_UNAVAILABLE is the one-to-one compatibility alias introduced by X4-R2, not a distinct release.

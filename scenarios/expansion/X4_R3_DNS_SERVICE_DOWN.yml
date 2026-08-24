@@ -1,0 +1,40 @@
+schema_version: 1
+scenario:
+  id: X4_R3_DNS_SERVICE_DOWN
+  compatibility_alias: X4_R3_DNS_SERVICE_UNAVAILABLE
+  kind: fault
+  truth_model: single_fault
+  variant_id: x4_r3_dns_service_down_v1
+  topology:
+    id: X4_TOP_01_DNS_SERVICE_DOWN
+    file: labs/topologies/x4_r3_dns_service_unavailable/topology.clab.yml
+    context_id: x4_top_01_dhcp_dns_service_security_dns_flow_context_v1
+    context_file: labs/topologies/x4_r3_dns_service_unavailable/topology_context_dns_flow_v1.json
+  observation:
+    direction: client_to_dns_server
+    source_node: client
+    source_container: clab-x4r3-client
+    source_interface: eth1
+    destination_node: dns_server
+    destination_container: clab-x4r3-dns_server
+    observer_nodes: [observer]
+    observer_container: clab-x4r3-observer
+    dns_container: clab-x4r3-dns_server
+    dhcp_container: clab-x4r3-dhcp_server
+    app_container: clab-x4r3-app_server
+    dns_server_address: 10.40.0.3
+    expected_dns_name: app.x4.test
+    expected_dns_answer: 10.40.0.4
+    expected_scope_prefix: 10.40.0.
+  fault:
+    type: dns_service_down
+    injector: stop_dns_service_on_dns_server_only
+    target_node: dns_server
+    target_container: clab-x4r3-dns_server
+  ground_truth:
+    fault_category: services
+    fault_type: dns_service_down
+    fault_location: dns_server
+    affected_resource: dns_service_endpoint_udp_53
+  restoration:
+    method: restore_exact_dns_process_and_zone_state
