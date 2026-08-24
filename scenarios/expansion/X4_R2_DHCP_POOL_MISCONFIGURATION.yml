@@ -1,0 +1,37 @@
+schema_version: 1
+scenario:
+  id: X4_R2_DHCP_POOL_MISCONFIGURATION
+  kind: fault
+  truth_model: single_fault
+  variant_id: x4_r2_dhcp_pool_misconfiguration_v1
+  topology:
+    id: X4_TOP_01_DHCP_SERVER_UNAVAILABLE
+    file: labs/topologies/x4_r1_dhcp_server_unavailable/topology.clab.yml
+    context_id: x4_top_01_dhcp_dns_service_security_dhcp_flow_context_v1
+    context_file: labs/topologies/x4_r1_dhcp_server_unavailable/topology_context_dhcp_flow_v1.json
+  observation:
+    direction: client_to_dhcp_server
+    source_node: client
+    source_container: clab-x4r1-client
+    source_interface: eth1
+    destination_node: dhcp_server
+    destination_container: clab-x4r1-dhcp_server
+    observer_nodes: [observer]
+    observer_container: clab-x4r1-observer
+    dns_container: clab-x4r1-dns_server
+    app_container: clab-x4r1-app_server
+    expected_scope_prefix: 10.40.0.
+    expected_pool_line: dhcp-range=10.40.0.100,10.40.0.150,255.255.255.0,1h
+    controlled_empty_pool_line: dhcp-range=10.40.0.0,static
+  fault:
+    type: dhcp_pool_misconfiguration
+    injector: replace_expected_dhcp_scope_with_controlled_empty_pool
+    target_node: dhcp_server
+    target_container: clab-x4r1-dhcp_server
+  ground_truth:
+    fault_category: services
+    fault_type: dhcp_pool_misconfiguration
+    fault_location: dhcp_server
+    affected_resource: dhcp_pool_scope
+  restoration:
+    method: restore_exact_dhcp_scope_and_lease_database
