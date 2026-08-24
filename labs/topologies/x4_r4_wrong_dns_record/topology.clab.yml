@@ -1,0 +1,26 @@
+name: x4r4
+
+topology:
+  defaults:
+    kind: linux
+    image: ind-x4-dhcp:0.2
+    image-pull-policy: Never
+  nodes:
+    client:
+      exec: ["ip link set eth1 up"]
+    svc_switch:
+      exec: ["ip link add br0 type bridge", "ip link set br0 up", "ip link set eth1 master br0", "ip link set eth2 master br0", "ip link set eth3 master br0", "ip link set eth4 master br0", "ip link set eth5 master br0", "ip link set eth1 up", "ip link set eth2 up", "ip link set eth3 up", "ip link set eth4 up", "ip link set eth5 up"]
+    dhcp_server:
+      exec: ["ip addr flush dev eth1", "ip addr add 10.40.0.2/24 dev eth1", "ip link set eth1 up", "mkdir -p /etc/x4-dhcp", "sh -c 'printf \"interface=eth1\\nbind-interfaces\\ndhcp-range=10.40.0.100,10.40.0.150,255.255.255.0,1h\\ndhcp-option=3,10.40.0.2\\ndhcp-option=6,10.40.0.3\\ndhcp-leasefile=/tmp/x4-dhcp.leases\\nlog-dhcp\\nno-resolv\\n\" > /etc/x4-dhcp/dnsmasq.conf'", "x4-dhcp-service start"]
+    dns_server:
+      exec: ["ip addr flush dev eth1", "ip addr add 10.40.0.3/24 dev eth1", "ip link set eth1 up", "mkdir -p /etc/x4-dns", "sh -c 'printf \"interface=eth1\\nbind-interfaces\\nlisten-address=10.40.0.3\\naddress=/app.x4.test/10.40.0.4\\nno-resolv\\n\" > /etc/x4-dns/dnsmasq.conf'", "dnsmasq --conf-file=/etc/x4-dns/dnsmasq.conf --pid-file=/run/x4-dns.pid"]
+    app_server:
+      exec: ["ip addr flush dev eth1", "ip addr add 10.40.0.4/24 dev eth1", "ip link set eth1 up", "sh -c 'python3 -m http.server 8080 --bind 10.40.0.4 >/tmp/x4-http.log 2>&1 &'"]
+    observer:
+      exec: ["ip addr flush dev eth1", "ip addr add 10.40.0.10/24 dev eth1", "ip link set eth1 up"]
+  links:
+    - endpoints: ["client:eth1", "svc_switch:eth1"]
+    - endpoints: ["dhcp_server:eth1", "svc_switch:eth2"]
+    - endpoints: ["dns_server:eth1", "svc_switch:eth3"]
+    - endpoints: ["app_server:eth1", "svc_switch:eth4"]
+    - endpoints: ["observer:eth1", "svc_switch:eth5"]
