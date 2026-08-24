@@ -404,7 +404,7 @@ and infrastructure cycle without changing accepted results.
 P9-R1 remains paused by user request.
 
 ## Expansion Track X — Original ambitious technical vision
-Status: X2 closed; X3-R0 through X3-R2 accepted; X3-R3 implemented locally, acceptance pending
+Status: X2 and X3 closed; X4-R0 accepted design-only; X4-R1 accepted locally after official E2E, publication pending
 
 This track extends the frozen Phase 6/7/8 baseline append-only. It does not
 reopen accepted results or resume the separately paused P9-R1 thesis milestone.
@@ -451,7 +451,7 @@ Status: Complete — X2-R0 through X2-R5 accepted
 - X2-R5: source/evidence closeout and hash-bound receipt accepted
 
 ### X3 — Layer 2 and VLAN
-Status: X3-R0 through X3-R2 accepted; X3-R3 implemented locally, transactional acceptance pending
+Status: Complete — X3-R0 through X3-R5 accepted
 
 - Wrong access VLAN
 - VLAN missing
@@ -463,12 +463,16 @@ Status: X3-R0 through X3-R2 accepted; X3-R3 implemented locally, transactional a
   zero-container acceptance complete at public `0563fcd`
 - X3-R2: real VLAN Missing lifecycle, exact diagnosis, restoration and
   zero-container acceptance complete at public `36c9747`
-- X3-R3: isolated SW1 trunk allow-list mutation, collector v3,
-  `R_X3_L2_VLAN_003` and opt-in real E2E implemented locally
-- X3-R4 next only after X3-R3 real runtime and regression acceptance
+- X3-R3: real trunk allow-list lifecycle, exact diagnosis, restoration and
+  zero-container cleanup accepted at public d75b5ab
+- X3-R4: real native-VLAN mismatch lifecycle with the HostC-to-HostD context,
+  exact diagnosis, restoration and zero-container cleanup accepted at public
+  7bddd3a
+- X3-R5: four-run hash-bound source/evidence closeout accepted at public
+  2a763c6
 
 ### X4 — DHCP, DNS, and service security
-Status: X4-R0 design gate accepted; X4-R1 DHCP Server Unavailable is next
+Status: X4-R0 design gate accepted; X4-R1 accepted locally after official E2E, publication pending
 
 - DHCP server unavailable and pool misconfiguration
 - DNS service down and wrong DNS record

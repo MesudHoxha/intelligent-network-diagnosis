@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "image": "ind-x4-dhcp:0.2",
+  "base_image": "ind-linux:0.1",
+  "base_image_id": "sha256:66392daabae6054416fba5043f312bfc464bcc18246956867870e4953847ff5c",
+  "build_policy": "docker_build_local_no_pull",
+  "build_command": ["docker", "build", "--pull=false", "--tag", "ind-x4-dhcp:0.2", "labs/images/ind-x4-dhcp"],
+  "required_binaries": ["dnsmasq", "dhclient", "dig", "nc", "python3"],
+  "service_supervision": "x4-dhcp-service pid-file wrapper; no systemd",
+  "deterministic_inputs": ["Dockerfile", "x4-dhcp-service", "IMAGE_PROVENANCE_V1.json"],
+  "built_image_id": "sha256:9ebcd1100168f10419d66ab157e82195b88aefdcad97dff33408db3ed72f0ebf",
+  "accepted_base_image_modified": false
+}

@@ -1525,3 +1525,17 @@ after. The slice authorizes 4/10 runtime operations and creates no dataset,
 ML/Hybrid output, metric, API change or multiple-fault claim. Real acceptance
 is required before X3-R4, where the planned HostC-to-HostD context variant must
 be added before native-flow evidence collection.
+
+
+## Current expansion status (2026-08-24)
+
+The preceding X3-R3 text records its then-current acceptance condition. X3-R3
+and X3-R4 subsequently passed real transactional acceptance, and X3-R5 closed
+the four controlled Layer 2/VLAN slices with a hash-bound evidence receipt.
+X3 is closed at public commit 2a763c6c6cd44f984ce08331e20d3e03445a0037.
+
+X4-R0 is accepted design-only at public commit
+f23f08cd6ef019b3cc0b4fd2c16f3a2609370cb7; all ten authorization flags are
+false. X4-R1 DHCP Server Unavailable is accepted locally after its official Containerlab E2E; the next release is X4-R2 DHCP Pool Misconfiguration. This status summary
+does not alter historical X3 decisions, accepted evidence or frozen Phase 6-9
+boundaries.
