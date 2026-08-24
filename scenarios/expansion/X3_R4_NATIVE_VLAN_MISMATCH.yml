@@ -1,0 +1,55 @@
+schema_version: 1
+scenario:
+  id: X3_R4_NATIVE_VLAN_MISMATCH
+  name: X3-R4 Native VLAN Mismatch
+  kind: fault
+  truth_model: single_fault
+  variant_id: x3_r4_native_vlan_mismatch_v1
+  category: controlled_fault
+  description: Replace only SW1 trunk native PVID 99 with controlled VLAN 98 while retaining tagged VLAN 10 and VLAN 99 carriage.
+  topology:
+    id: X3_TOP_01_L2_VLAN
+    file: labs/topologies/x3_r1_l2_vlan/topology.clab.yml
+    context_id: x3_top_01_l2_vlan_native_flow_context_v1
+    context_file: labs/topologies/x3_r1_l2_vlan/topology_context_native_flow_v1.json
+  observation:
+    direction: hostc_to_hostd
+    source_node: hostc
+    source_container: clab-x3r1-hostc
+    source_interface: eth1
+    source_address: 10.30.99.10
+    destination_node: hostd
+    destination_container: clab-x3r1-hostd
+    destination_address: 10.30.99.20
+    tagged_source_node: hosta
+    tagged_source_container: clab-x3r1-hosta
+    tagged_destination_node: hostb
+    tagged_destination_address: 10.30.10.20
+    target_switch_node: sw1
+    target_switch_container: clab-x3r1-sw1
+    peer_switch_node: sw2
+    peer_switch_container: clab-x3r1-sw2
+    bridge: br0
+    target_access_interface: eth2
+    trunk_interface: eth3
+    expected_vlan: 99
+    tagged_control_vlan: 10
+    mismatched_native_vlan: 98
+  fault:
+    type: native_vlan_mismatch
+    injector: replace_native_pvid_on_one_trunk_endpoint_with_controlled_mismatch
+    target_node: sw1
+    target_container: clab-x3r1-sw1
+    parameters:
+      bridge: br0
+      trunk_interface: eth3
+      expected_vlan: 99
+      mismatched_native_vlan: 98
+  ground_truth:
+    fault_category: l2_vlan
+    fault_type: native_vlan_mismatch
+    fault_location: sw1
+    affected_resource: eth3:native-vlan
+    root_cause: SW1 trunk native PVID is VLAN 98 while its peer remains VLAN 99.
+  restoration:
+    method: restore_exact_peer_native_pvid_and_tagging

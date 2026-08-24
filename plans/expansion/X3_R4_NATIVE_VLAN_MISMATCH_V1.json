@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "gate_id": "x3_r4_native_vlan_mismatch_runtime_gate_v1",
+  "status": "IMPLEMENTED_RUNTIME_SLICE",
+  "track": {"parent_gate": "x3_r3_vlan_not_allowed_on_trunk_runtime_gate_v1", "current_release": "X3_R4_NATIVE_VLAN_MISMATCH", "next_release": "X3_R5_LAYER2_VLAN_CLOSEOUT", "phase9_status": "P9_R1_PAUSED_BY_USER"},
+  "source_boundary": {"parent_commit": "d75b5abd1c570afccb842914f169561e87bb5fb1", "extension_policy": "APPEND_ONLY", "runtime_inherited": false},
+  "source_bindings": [
+    {"binding_id": "x3_r3_parent_gate", "path": "plans/expansion/X3_R3_VLAN_NOT_ALLOWED_ON_TRUNK_V1.json", "sha256": "e275d28f4a1a3551ac1d8101249b136e3776f00d3c95af5a6064a81d28edd0bf"},
+    {"binding_id": "x1_feature_catalog", "path": "plans/expansion/X1_FEATURE_CATALOG_V1.json", "sha256": "3dba72e83d7e17767ab0851a24541aa7d2d8b789dcf04a5aeb726ff48e9518e4"},
+    {"binding_id": "evidence_v4_schema", "path": "schemas/evidence_v4.schema.json", "sha256": "dcc61966246a03a03d060714a67b5cf14aa48f6925c262c267d07408b77f8315"},
+    {"binding_id": "topology_context_schema", "path": "schemas/topology_context_v1.schema.json", "sha256": "aa47595f5d112eb86eeee07e8fd8dd82f6ea660c7d6a5452faa93a156dd9028e"},
+    {"binding_id": "x3_topology", "path": "labs/topologies/x3_r1_l2_vlan/topology.clab.yml", "sha256": "3cf4cd2c1e30e17af26c9a6057ae03fbb66c75863c76994194d42323efd21bba"},
+    {"binding_id": "x3_native_flow_context", "path": "labs/topologies/x3_r1_l2_vlan/topology_context_native_flow_v1.json", "sha256": "7a7b89eaf94b5644d967669f0b6cd5434c1f453e21252332eccdcbda194cd4c0"},
+    {"binding_id": "x3_baseline_validator", "path": "labs/topologies/x3_r1_l2_vlan/scripts/validate_baseline.sh", "sha256": "bcd6ae8b03854aea000e1bf5fcd65f6987ac365ea1f88c06494400eedf0cfd62"},
+    {"binding_id": "x3_r4_runtime_contract", "path": "docs/X3_R4_NATIVE_VLAN_MISMATCH_RUNTIME.md", "sha256": "a409d3349ff1814b39b6baa24bd45cbad67e89fcd6b037e30ce91e1dc82c9b79"},
+    {"binding_id": "x3_r4_scenario", "path": "scenarios/expansion/X3_R4_NATIVE_VLAN_MISMATCH.yml", "sha256": "e4ed9be07791fb084eea0dad63041ab77c54c050021ff2879f3388ac0690c335"},
+    {"binding_id": "native_vlan_mismatch_runtime", "path": "src/expansion/x3_native_vlan_mismatch.py", "sha256": "0d00009791ccccb3b2e4eb472d94dee4586ace0c478348a2e2e894b7b6460653"},
+    {"binding_id": "native_vlan_mismatch_injector_restorer", "path": "src/fault_injection/native_vlan_mismatch.py", "sha256": "a8fb12fafdd33373b7d683e452649f5a9b2c345dec989df518827c33f84b3891"},
+    {"binding_id": "l2_vlan_state_collector_v4", "path": "src/collection/l2_vlan_state_collector_v4.py", "sha256": "651dd54e0e0327d31c74e7cb8edd50ce14b089b0dd609f2933af1947af3b1429"},
+    {"binding_id": "l2_vlan_rule_engine_x3_r4", "path": "src/rules/l2_vlan_rule_engine_x3_r4.py", "sha256": "35d0765e08edbf79426cfb7c2b4fe2efc3365a7c9a723759842d4fa1fc7a5f14"},
+    {"binding_id": "x3_r4_orchestrator", "path": "src/orchestration/x3_native_vlan_mismatch_experiment_runner.py", "sha256": "bbaf4e4df668d442794b95f2c943bd7b87d3a03713a4a85e3bb0ef5d43fc66bc"},
+    {"binding_id": "x3_r4_real_e2e", "path": "tests/e2e/test_x3_r4_native_vlan_mismatch_containerlab.py", "sha256": "44d5a8a0e0ca6575e4e1ada95775c4c99070f8d497e5cad2b2dd413189cb92bf"}
+  ],
+  "compatibility": {"phase6_evidence_v3": "UNCHANGED", "phase6_dataset_row_v3": "UNCHANGED", "accepted_results": "UNCHANGED", "accepted_x2": "UNCHANGED", "accepted_x3_r3": "UNCHANGED", "api_v1": "UNCHANGED", "extended_api": "NOT_CREATED", "p9_r1": "PAUSED"},
+  "slice": {"fault_code": "B5", "fault_type": "native_vlan_mismatch", "fault_category": "l2_vlan", "truth_model": "single_fault", "rule_id": "R_X3_L2_VLAN_004", "scenario_path": "scenarios/expansion/X3_R4_NATIVE_VLAN_MISMATCH.yml", "topology_context_path": "labs/topologies/x3_r1_l2_vlan/topology_context_native_flow_v1.json", "signature": {"access_vlan_matches_expected": true, "vlan_exists_on_target": true, "vlan_allowed_on_trunk": true, "native_vlan_matches_peer": false, "fdb_location_matches_expected": true}, "excluded_confounders": ["interface_down", "wrong_access_vlan", "vlan_missing", "vlan_not_allowed_on_trunk"]},
+  "topology_runtime": {"topology_id": "X3_TOP_01_L2_VLAN", "status": "REUSED_ACCEPTED_X3_R1", "switch_plane": "LINUX_BRIDGE_VLAN_FILTERING", "native_flow": "hostc_to_hostd_vlan_99", "tagged_flow_preserved": "hosta_to_hostb_vlan_10", "expected_native_vlan": 99, "mismatched_native_vlan": 98, "target_trunk_endpoint": "sw1:eth3:native"},
+  "collector_activation": {"collector_id": "l2_vlan_state_collector", "collector_version": 4, "evidence_contract": "Evidence v4", "raw_artifact_hash_required": true, "both_switches_observed": true, "active_effectiveness_probe_required": true},
+  "safety": {"invariants": ["DURABLE_RECOVERY_INTENT_BEFORE_MUTATION", "ATOMIC_MUTATION_JOURNAL", "BEST_EFFORT_RESTORATION_ON_PARTIAL_FAILURE", "IDEMPOTENT_CONFIRMED_RESTORATION", "FINAL_HEALTHY_STATE_VERIFIED", "BASELINE_BEFORE_AND_AFTER", "REAL_CONTAINERLAB_LIFECYCLE", "CLEANUP_ZERO_CONTAINERS", "EXACT_NATIVE_PVID_AND_TAGGING_RESTORATION", "TAGGED_CONTROL_FLOW_PRESERVED"]},
+  "acceptance": {"real_evidence_required": true, "real_infrastructure_e2e_required": true, "full_regression_required": true, "frozen_artifacts_unchanged": true, "dataset_row_created": false, "model_operation_performed": false, "metric_created": false},
+  "runtime_authorization": {"containerlab_execution": true, "network_mutation": true, "new_evidence_collection": true, "dataset_generation": false, "model_fit_or_selection": false, "estimator_deserialization": false, "method_prediction": true, "metric_calculation": false, "report_only_test_access": false, "multiple_fault_execution": false}
+}
