@@ -487,7 +487,7 @@ Status: X4-R0 design gate and X4-R1/R2 runtime slices accepted; current D3 is ca
   no deployment or empirical work occurred
 
 ### X5 — Dynamic routing with OSPF
-Status: X5-R0 accepted design-only; runtime not authorized
+Status: X5-R3 closed by a two-run hash-bound accepted-evidence receipt
 
 - Adjacency root causes
 - Route filtering and advertisement
@@ -496,12 +496,13 @@ Status: X5-R0 accepted design-only; runtime not authorized
   signatures, X1 collector ownership, direct-state exclusion controls and the
   release sequence X5-R0 through X5-R3; all ten runtime/scientific flags are
   false
-- X5-R1 OSPF adjacency failure is the next separately authorized runtime
-  release; X5-R2 is controlled route filtering/advertisement; X5-R3 is a
-  hash-binding closeout
+- X5-R1 C4 adjacency failure and X5-R2 C5 route suppression are accepted;
+  X5-R3 binds only their existing Evidence v4 trees and does not generalize
+  beyond the accepted topology or add ML/Hybrid, dataset, metric, API,
+  performance, or multiple-fault scope
 
 ### X6 — Performance faults
-Status: Planned
+Status: Next design track — `X6_R0_PERFORMANCE_FAULT_DESIGN_GATE`
 
 - Packet loss
 - High latency

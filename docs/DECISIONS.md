@@ -2903,3 +2903,18 @@ Limitation:
 X5-R0 does not deploy the topology, observe OSPF, prove either fault,
 collection, diagnosis, restoration, accuracy, ML/Hybrid behavior, BGP support,
 generalization or production readiness.
+
+## D-X5-R3 — Close only the two accepted controlled OSPF variants
+
+Decision: accept X5-R3 as a zero-runtime append-only closeout from published
+X5-R2 commit `258022fd5d4148889d3b581f16e3e1eb380c14fd`. Bind exactly the
+accepted C4 and C5 durable run trees with a materialized hash receipt. Require
+raw provenance, Evidence v4, exact diagnoses, mutation/restoration records,
+and baseline before/after to verify; never regenerate, replace, or describe
+the accepted evidence as recovered historical acceptance archives.
+
+The resulting scope is only two controlled single-fault OSPF variants on the
+accepted topology. No generalized OSPF, ML/Hybrid, dataset, metric, API,
+unseen-topology, performance, or multiple-fault claim is authorized. P9-R2
+remains intentionally paused. The next milestone is
+`X6_R0_PERFORMANCE_FAULT_DESIGN_GATE`.

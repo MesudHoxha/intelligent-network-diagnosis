@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "gate_id": "x5_r3_ospf_dynamic_routing_closeout_v1",
+  "status": "ACCEPTED_SOURCE_CLOSEOUT",
+  "track": {"parent_gate": "x5_r2_route_filtering_or_advertisement_runtime_gate_v1", "current_release": "X5_R3_OSPF_DYNAMIC_ROUTING_CLOSEOUT", "next_release": "X6_R0_PERFORMANCE_FAULT_DESIGN_GATE", "phase9_status": "P9_R1_ACCEPTED_P9_R2_PAUSED_BY_USER"},
+  "source_boundary": {"parent_commit": "258022fd5d4148889d3b581f16e3e1eb380c14fd", "extension_policy": "APPEND_ONLY", "runtime_inherited": false},
+  "source_bindings": [
+    {"path": "plans/expansion/X5_R0_OSPF_DYNAMIC_ROUTING_RUNTIME_GATE_V1.json", "sha256": "a754955f72c6eddd1900ecb40a56910ecda2cf2fb517ebfeb82966f6f01cff75"},
+    {"path": "plans/expansion/X5_R1_OSPF_ADJACENCY_FAILURE_V1.json", "sha256": "0365f11c2be94bc2f8668079bbdeb75cc4f7c13d82231bf65f3bc6aee44fafea"},
+    {"path": "plans/expansion/X5_R2_ROUTE_FILTERING_OR_ADVERTISEMENT_PROBLEM_V1.json", "sha256": "174102418b06cbcfb4f4483c147a9cf9b3c689694eb6e64d0c59a9ddc2926643"},
+    {"path": "src/expansion/x5_gate.py", "sha256": "94717b5ab50ece4ed0c0e8f163c90d5a5294426d6b9d3b70f5668238f14906cb"},
+    {"path": "src/expansion/x5_r1_gate.py", "sha256": "765166fc2dbdffdc694b251c611a38911efc07229a7fffc85ddcaefe061473d9"},
+    {"path": "src/expansion/x5_r2_gate.py", "sha256": "d388b1c083343570cf16c542cc4edf9fa61a5fb9a1093d06e6c8155007c5af6b"},
+    {"path": "src/collection/ospf_state_collector_v1.py", "sha256": "dc45e12a68537689e1f3a1dcb932254595e22539938032ac180d5ef65949e951"},
+    {"path": "src/collection/ospf_state_collector_x5_r2.py", "sha256": "b4949e8b13b4db13b34de914e55f8e509927150a56172487037d30eafafce592"},
+    {"path": "src/rules/ospf_rule_engine_x5_r1.py", "sha256": "4a2d08a12228d76dc0ef9778a3960e94fdc915b1924786ae151ba788d40d895a"},
+    {"path": "src/rules/ospf_rule_engine_x5_r2.py", "sha256": "d8f20e4144e2e0dd672b45eb511c7bfe1777a19955289db653419c82dfeffaf9"},
+    {"path": "labs/topologies/x5_r1_ospf_adjacency_failure/topology.clab.yml", "sha256": "3c89f5f4c0bee7d0efa25e89ff03d43ca4ee101d3b366e1f00256fd7a8b1a21b"},
+    {"path": "schemas/evidence_v4.schema.json", "sha256": "dcc61966246a03a03d060714a67b5cf14aa48f6925c262c267d07408b77f8315"},
+    {"path": "schemas/diagnosis_result_v2.schema.json", "sha256": "40699655b2eece5d80e009993398d1ee5eb028ec88b6edf18e6849659ccc3556"}
+  ],
+  "accepted_slices": [
+    {"release_id": "X5_R1_OSPF_ADJACENCY_FAILURE", "fault_code": "C4", "fault_type": "dynamic_routing_adjacency_failure", "rule_id": "R_X5_OSPF_001", "topology_context_id": "x5_top_01_ospf_dynamic_routing_context_v1", "expected_signature": {"ospf_adjacency_full": false, "ospf_route_advertised": false, "ospf_route_installed": false, "route_filter_allows_prefix": true}},
+    {"release_id": "X5_R2_ROUTE_FILTERING_OR_ADVERTISEMENT_PROBLEM", "fault_code": "C5", "fault_type": "route_filtering_or_advertisement_problem", "rule_id": "R_X5_OSPF_002", "topology_context_id": "x5_top_01_ospf_dynamic_routing_context_v1", "expected_signature": {"ospf_adjacency_full": true, "ospf_route_advertised": false, "ospf_route_installed": false, "route_filter_allows_prefix": false}}
+  ],
+  "evidence_receipt": {"path": "plans/expansion/X5_R3_OSPF_DYNAMIC_ROUTING_EVIDENCE_RECEIPT_V1.json", "required": true, "run_count": 2, "kind": "ACCEPTED_RUNTIME_EVIDENCE_NOT_RECOVERED_OR_REPLACED", "raw_artifact_hashes_required": true, "evidence_v4_required": true, "diagnosis_required": true, "mutation_restoration_baseline_required": true},
+  "compatibility": {"frozen_x0_p6_p9": "UNCHANGED", "accepted_x2_x4": "UNCHANGED", "api_v1": "UNCHANGED", "p9_r2": "INTENTIONALLY_PAUSED"},
+  "claim_boundary": {"proves": ["two controlled single-fault OSPF variants on the accepted five-node FRRouting OSPFv2 topology", "hash verification of the two accepted durable Evidence v4 run trees", "exact Rule-Based diagnoses, mutation/restoration records, and baseline recovery for those runs"], "does_not_prove": ["general OSPF behavior or arbitrary dynamic-routing faults", "ML or Hybrid performance", "datasets or metrics", "API changes", "unseen-topology generalization", "performance faults", "multiple-fault diagnosis", "recovered or replaced evidence"]},
+  "runtime_authorization": {"containerlab_execution": false, "network_mutation": false, "new_evidence_collection": false, "dataset_generation": false, "model_fit_or_selection": false, "estimator_deserialization": false, "method_prediction": false, "metric_calculation": false, "report_only_test_access": false, "multiple_fault_execution": false}
+}

@@ -1567,3 +1567,17 @@ change, BGP work or multiple-fault work is created. Frozen Phase 6–8 results,
 API v1, X2–X4 evidence and hashes remain unchanged. X7/X8 will be a separate
 extended scientific track. The next release is separately authorized
 `X5_R1_OSPF_ADJACENCY_FAILURE`.
+
+## X5-R3 OSPF dynamic-routing closeout (2026-08-25)
+
+X5-R3 append-only binds the accepted X5-R1 C4 and X5-R2 C5 source boundaries
+and their durable runtime trees. Its receipt hash-verifies raw provenance,
+Evidence v4, exact Rule-Based diagnoses, mutation/restoration records, and
+baseline-before/baseline-after records. The preserved disjoint signatures are
+C4 `false,false,false,true` and C5 `true,false,false,false`.
+
+The claim remains limited to two controlled single-fault OSPF variants on the
+accepted five-node FRRouting topology. X5-R3 creates no runtime material and
+makes no generalized OSPF, ML/Hybrid, dataset, metric, API, unseen-topology,
+performance, or multiple-fault claim. P9-R2 remains intentionally paused;
+next is `X6_R0_PERFORMANCE_FAULT_DESIGN_GATE`.

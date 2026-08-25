@@ -1441,6 +1441,15 @@ not reopen its traceability boundary.
 - X7/X8 remain separate future extended-scientific tracks
 - Next: X5-R1 OSPF Adjacency Failure only, after separate authorization
 
+## X5-R3 — OSPF Dynamic-Routing Closeout
+
+- X5 is closed by a two-run hash-bound receipt for accepted C4/C5 Evidence v4
+  trees; raw provenance, diagnoses, mutation/restoration and baselines verify.
+- Claim scope remains two controlled single-fault OSPF variants on the accepted
+  topology only; no generalized OSPF, ML/Hybrid, dataset, metric, API,
+  unseen-topology, performance, or multiple-fault claim is added.
+- P9-R2 remains intentionally paused. Next: `X6_R0_PERFORMANCE_FAULT_DESIGN_GATE`.
+
 ## Important limitation
 
 The accepted P1 JSONL file contains 12 rows from three classes,
