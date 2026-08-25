@@ -1581,3 +1581,17 @@ accepted five-node FRRouting topology. X5-R3 creates no runtime material and
 makes no generalized OSPF, ML/Hybrid, dataset, metric, API, unseen-topology,
 performance, or multiple-fault claim. P9-R2 remains intentionally paused;
 next is `X6_R0_PERFORMANCE_FAULT_DESIGN_GATE`.
+
+## X5-R4 targeted OSPF correction and revalidation (2026-08-25)
+
+X5-R4 is the append-only authoritative successor to X5-R3. It retains the
+original X5-R1 C4 tree unchanged as historical evidence, but it is not
+authoritative for targeted-C4 scientific use after the later audit. The new C4
+lifecycle establishes exact R2--R3 identity, a separate healthy R1--R2
+control, separate command acceptance/effectiveness records, and a bounded
+state-based postcondition before collection. Its receipt binds corrected C4 to
+unchanged accepted C5. C5's suppression marker is provenance metadata and the
+accepted mechanism is OSPF network-statement withdrawal. X4 audit observations
+are non-blocking bounded limitations for a later robustness track. P9-R2 and
+X6 remain paused; frozen Phase 6--8, X0--X4, API v1, datasets, ML/Hybrid,
+metrics, and scientific claims remain unchanged.

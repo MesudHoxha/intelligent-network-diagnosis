@@ -487,7 +487,7 @@ Status: X4-R0 design gate and X4-R1/R2 runtime slices accepted; current D3 is ca
   no deployment or empirical work occurred
 
 ### X5 — Dynamic routing with OSPF
-Status: X5-R3 closed by a two-run hash-bound accepted-evidence receipt
+Status: X5-R4 corrected successor is the authoritative X5 boundary; X5-R1 is retained historically but superseded for targeted-C4 scientific use
 
 - Adjacency root causes
 - Route filtering and advertisement
@@ -496,9 +496,11 @@ Status: X5-R3 closed by a two-run hash-bound accepted-evidence receipt
   signatures, X1 collector ownership, direct-state exclusion controls and the
   release sequence X5-R0 through X5-R3; all ten runtime/scientific flags are
   false
-- X5-R1 C4 adjacency failure and X5-R2 C5 route suppression are accepted;
-  X5-R3 binds only their existing Evidence v4 trees and does not generalize
-  beyond the accepted topology or add ML/Hybrid, dataset, metric, API,
+- X5-R4 revalidates C4 with target-specific R2--R3 identity, a healthy R1--R2
+  control, and a bounded state-based mutation-effectiveness condition; its
+  receipt binds that new C4 tree with unchanged accepted C5 evidence
+- X5 remains limited to two controlled single-fault OSPF variants on the
+  accepted topology and does not add ML/Hybrid, dataset, metric, API,
   performance, or multiple-fault scope
 
 ### X6 — Performance faults

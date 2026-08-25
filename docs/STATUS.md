@@ -1798,3 +1798,17 @@ receipt at 2a763c6c6cd44f984ce08331e20d3e03445a0037. X3 is closed.
 X4-R0 is accepted design-only at
 f23f08cd6ef019b3cc0b4fd2c16f3a2609370cb7. Its five planned signatures are
 disjoint and all ten runtime/scientific authorization flags are false. X4-R1 and X4-R2 are accepted at public commits 00219ffd947cf4a7c8723c0341d6efdce9654ed4 and 980488cebfc0000fb8bd6e19b5b7e043bf163887. The current D3 release is canonically X4_R3_DNS_SERVICE_DOWN; X4_R3_DNS_SERVICE_UNAVAILABLE is its one-to-one X4-R2 compatibility alias, not a second slice.
+
+## X5-R4 targeted OSPF correction and revalidation (2026-08-25)
+
+X5-R4 is an append-only corrective successor to X5-R3. The original X5-R1 C4
+tree is retained unchanged as historical evidence but is superseded for
+targeted-C4 scientific use. A new official C4 lifecycle uses exact R2--R3
+router ID/address/interface identity, separately proves R1--R2 remains
+`Full`, and uses a bounded state-based effectiveness postcondition. The
+corrected C4 signature remains `false,false,false,true` with `R_X5_OSPF_001`.
+The successor receipt binds that new C4 tree to unchanged accepted C5 evidence,
+which remains `true,false,false,false` with `R_X5_OSPF_002`. The C5 marker is
+provenance metadata; the mechanism is OSPF network-statement withdrawal.
+X4 exit-code and observer-policy observations remain non-blocking limitations
+for a later robustness track. X5-R4 is authoritative; X6 and P9-R2 are paused.

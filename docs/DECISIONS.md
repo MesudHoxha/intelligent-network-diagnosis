@@ -2918,3 +2918,23 @@ accepted topology. No generalized OSPF, ML/Hybrid, dataset, metric, API,
 unseen-topology, performance, or multiple-fault claim is authorized. P9-R2
 remains intentionally paused. The next milestone is
 `X6_R0_PERFORMANCE_FAULT_DESIGN_GATE`.
+
+## D-X5-R4 — Correct targeted C4 evidence append-only
+
+Decision: retain original X5-R1 C4 runtime evidence unchanged as historical
+evidence, but do not use it as authoritative targeted-C4 scientific evidence
+after the aggregate-neighbor and immediate-collection audit. Add a new X5-R4
+C4 tree. Bind R2--R3 by router ID, address, and interface; separately require
+R1--R2 `Full`. After `passive-interface eth2`, require a bounded state-based
+postcondition: target non-Full/absent, control Full, passive configuration,
+target-route withdrawal, and target-LSA withdrawal. Record command acceptance
+and observed effectiveness separately.
+
+The accepted X5-R2 C5 tree remains unchanged. `X5-R2-SUPPRESS` is provenance
+metadata rather than an attached OSPF filter; the controlled mechanism is
+removal of R3's `network 10.51.3.0/24 area 0` statement. Corrected append-only
+C5 compatibility handling returns insufficient evidence for any unavailable
+required feature. X4 audit observations are non-blocking bounded limitations
+deferred to a later robustness track. X5-R4 is the authoritative boundary,
+limited to two controlled single-fault OSPF variants; X6 and P9-R2 remain
+paused.
