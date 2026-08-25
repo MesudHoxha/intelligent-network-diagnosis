@@ -1,0 +1,10 @@
+schema_version: 1
+scenario:
+  id: X5_R1_OSPF_ADJACENCY_FAILURE
+  kind: fault
+  truth_model: single_fault
+  topology: {id: X5_TOP_01_OSPF_DYNAMIC_ROUTING, file: labs/topologies/x5_r1_ospf_adjacency_failure/topology.clab.yml, context_id: x5_top_01_ospf_dynamic_routing_context_v1}
+  observation: {source_container: clab-x5r1-hosta, observer_container: clab-x5r1-r1, mutation_container: clab-x5r1-r2, destination_container: clab-x5r1-hostb, destination_prefix: 10.51.3.0/24}
+  fault: {type: dynamic_routing_adjacency_failure, injector: disable_ospf_on_r2_r3_adjacency_only, target_node: r2, target_interface: eth2}
+  ground_truth: {fault_category: routing, fault_type: dynamic_routing_adjacency_failure, fault_location: r2:eth2, affected_resource: ospf_adjacency_r2_r3}
+  restoration: {method: restore_exact_ospf_interface_and_neighbor_configuration}

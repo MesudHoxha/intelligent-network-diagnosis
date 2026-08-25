@@ -1,0 +1,85 @@
+{
+    "schema_version": 1,
+    "gate_id": "x5_r1_ospf_adjacency_failure_runtime_gate_v1",
+    "status": "IMPLEMENTED_RUNTIME_SLICE",
+    "track": {
+        "parent_gate": "x5_r0_ospf_dynamic_routing_design_runtime_gate_v1",
+        "current_release": "X5_R1_OSPF_ADJACENCY_FAILURE",
+        "next_release": "X5_R2_ROUTE_FILTERING_OR_ADVERTISEMENT_PROBLEM"
+    },
+    "source_boundary": {
+        "parent_commit": "4b610bf057ee7f3f6017243b207e3fe9a73a2b35",
+        "extension_policy": "APPEND_ONLY",
+        "runtime_inherited": false
+    },
+    "slice": {
+        "fault_code": "C4",
+        "fault_type": "dynamic_routing_adjacency_failure",
+        "rule_id": "R_X5_OSPF_001",
+        "scenario_path": "scenarios/expansion/X5_R1_OSPF_ADJACENCY_FAILURE.yml",
+        "signature": {
+            "ospf_adjacency_full": false,
+            "ospf_route_advertised": false,
+            "ospf_route_installed": false,
+            "route_filter_allows_prefix": true
+        },
+        "excluded_confounders": [
+            "interface_down",
+            "addressing_fault",
+            "static_routing_fault",
+            "acl_or_policy_block",
+            "general_reachability_fault",
+            "route_filtering_or_advertisement_problem"
+        ]
+    },
+    "source_bindings": [
+        {
+            "path": "plans/expansion/X5_R0_OSPF_DYNAMIC_ROUTING_RUNTIME_GATE_V1.json",
+            "sha256": "a754955f72c6eddd1900ecb40a56910ecda2cf2fb517ebfeb82966f6f01cff75"
+        },
+        {
+            "path": "labs/topologies/x5_r1_ospf_adjacency_failure/topology.clab.yml",
+            "sha256": "3c89f5f4c0bee7d0efa25e89ff03d43ca4ee101d3b366e1f00256fd7a8b1a21b"
+        },
+        {
+            "path": "labs/topologies/x5_r1_ospf_adjacency_failure/scripts/validate_baseline.sh",
+            "sha256": "c56456b54ef4dc3649e1112040cb3de9ee03af5713072c0149569a95f1c1a365"
+        },
+        {
+            "path": "scenarios/expansion/X5_R1_OSPF_ADJACENCY_FAILURE.yml",
+            "sha256": "a6809ed2101e5d9ef0373291d816eb53ffb4232c928fe510c1b137f8f6a382aa"
+        },
+        {
+            "path": "src/collection/ospf_state_collector_v1.py",
+            "sha256": "dc45e12a68537689e1f3a1dcb932254595e22539938032ac180d5ef65949e951"
+        },
+        {
+            "path": "src/rules/ospf_rule_engine_x5_r1.py",
+            "sha256": "4a2d08a12228d76dc0ef9778a3960e94fdc915b1924786ae151ba788d40d895a"
+        },
+        {
+            "path": "src/orchestration/x5_ospf_adjacency_failure_experiment_runner.py",
+            "sha256": "54af31bb19c4f5ac8745659206779990f004ad6782f8933cde831f892fc25598"
+        },
+        {
+            "path": "tests/e2e/test_x5_r1_ospf_adjacency_failure_containerlab.py",
+            "sha256": "7b9bee5efa5b5f74b002b6ee8e710fb9de262d30443e792ce5b5f74a8e01d63e"
+        }
+    ],
+    "runtime_authorization": {
+        "containerlab_execution": true,
+        "network_mutation": true,
+        "new_evidence_collection": true,
+        "dataset_generation": false,
+        "model_fit_or_selection": false,
+        "estimator_deserialization": false,
+        "method_prediction": true,
+        "metric_calculation": false,
+        "report_only_test_access": false,
+        "multiple_fault_execution": false
+    },
+    "claim_boundary": {
+        "controlled_single_fault_only": true,
+        "no_ml_hybrid_metrics_api_or_generalization": true
+    }
+}
