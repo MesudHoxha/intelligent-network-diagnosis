@@ -7,6 +7,7 @@ from pathlib import Path
 import pytest
 
 from src.expansion.x3_r5_gate import X3R5CloseoutError, verify_x3_r5_receipt, verify_x3_r5_source_gate
+from tests.accepted_runtime import require_materialized_receipts
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -27,7 +28,9 @@ def test_closeout_authorizes_no_runtime_or_scientific_operation() -> None:
     assert len(runtime) == 10 and all(value is False for value in runtime.values())
 
 
+@pytest.mark.accepted_runtime
 def test_receipt_reverifies_all_materialized_accepted_runs() -> None:
+    require_materialized_receipts(ROOT, RECEIPT)
     receipt = verify_x3_r5_receipt(RECEIPT, repository_root=ROOT, verify_materialized=True)
     assert receipt["summary"]["run_count"] == 4
     assert receipt["summary"]["all_raw_hashes_verified"] is True

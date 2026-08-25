@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "release_id": "X5_R5_C5_OPERATIONAL_POLICY_CORRECTION_DESIGN_GATE",
+  "status": "ACCEPTED_SOURCE_ONLY_CORRECTION_DESIGN",
+  "source_boundary": {
+    "parent_commit": "671ce01fcf5ee48e3cbd65aa1182d1e54a509792",
+    "extension_policy": "APPEND_ONLY",
+    "runtime_inherited": false
+  },
+  "track": {
+    "current_release": "X5_R5_C5_OPERATIONAL_POLICY_CORRECTION_DESIGN_GATE",
+    "next_release": "X5_R6_C5_OPERATIONAL_POLICY_RUNTIME_REVALIDATION",
+    "following_release": "X5_R7_C5_CORRECTED_SUCCESSOR_CLOSEOUT",
+    "x6_status": "PAUSED_PENDING_X5_C5_CORRECTION",
+    "p9_r2_status": "PAUSED_BY_USER"
+  },
+  "historical_evidence": {
+    "x5_r4_c4": "AUTHORITATIVE_UNCHANGED",
+    "x5_r2_c5": "RETAINED_HISTORICAL_NON_AUTHORITATIVE_FOR_POLICY_FEATURE_SCIENTIFIC_USE",
+    "x5_r3_and_x5_r4_receipts": "RETAINED_HISTORICAL_NOT_REWRITTEN"
+  },
+  "topology_context": {
+    "context_id": "X5_TOP_01_C5_OPERATIONAL_POLICY_VARIANT",
+    "topology": "labs/topologies/x5_r5_c5_operational_policy/topology.clab.yml",
+    "protocol": "OSPFv2",
+    "frr_image": "frrouting/frr:v8.4.1",
+    "accepted_image_digest_to_record_at_runtime": "frrouting/frr@sha256:0f8c174d95add7916101077d4716822552c758b8ff3d2dcb55104f6534202e3e",
+    "expected_prefix": "10.51.3.0/24",
+    "target_adjacency": {"local_router": "r2", "local_interface": "eth2", "local_address": "10.51.23.1", "peer_router": "r3", "peer_router_id": "3.3.3.3", "peer_address": "10.51.23.2"},
+    "control_adjacency": {"local_router": "r2", "local_interface": "eth1", "local_address": "10.51.12.2", "peer_router": "r1", "peer_router_id": "1.1.1.1", "peer_address": "10.51.12.1"}
+  },
+  "operational_policy": {
+    "baseline_attachment": "redistribute connected route-map X5-R5-C5-EXPORT",
+    "baseline_prefix_list": "ip prefix-list X5-R5-C5-TARGET seq 5 permit 10.51.3.0/24",
+    "baseline_route_map": "route-map X5-R5-C5-EXPORT permit 10 / match ip address prefix-list X5-R5-C5-TARGET",
+    "forbidden_direct_origination": "network 10.51.3.0/24 area 0",
+    "future_mutation": "Change only the attached X5-R5-C5-TARGET criterion so the exact expected prefix is denied; preserve the redistribute connected route-map attachment and do not remove any OSPF network statement.",
+    "direct_raw_proof": ["running configuration contains the exact redistribute connected route-map attachment", "running configuration contains the exact route-map match", "running configuration contains the exact active deny for 10.51.3.0/24", "running configuration proves direct expected-prefix OSPF network origination is absent"]
+  },
+  "frozen_feature_contract": {
+    "feature_order": ["ospf_adjacency_full", "ospf_route_advertised", "ospf_route_installed", "route_filter_allows_prefix"],
+    "conditional_runtime_signature": [true, false, false, false],
+    "rule": {"rule_id": "R_X5_OSPF_002", "fault_type": "route_filtering_or_advertisement_problem"},
+    "truthfulness": "The signature is permitted only after every feature has observed availability and direct evidence satisfying X1 Feature Catalog v1; the fourth feature is the active attached policy result, never provenance metadata."
+  },
+  "future_runtime_contract": {
+    "preconditions": ["Use structured neighbor JSON to prove both exact target and control adjacencies are Full before mutation.", "Validate structured LSDB and route JSON syntax and semantic target identity before treating absence as observed.", "Validate Feature Vector v2 at each corrected rule-engine entry point before matching a signature."],
+    "effectiveness_postcondition": ["target R2--R3 adjacency remains Full", "control R1--R2 adjacency remains Full", "attached redistribution route-map and exact deny criterion are present", "direct expected-prefix OSPF network statement remains absent", "validated LSDB shows expected-prefix advertisement absent", "validated R1 route output shows expected-prefix route absent"],
+    "observation_contract": ["Poll the complete state set with a bounded state-based loop; no arbitrary sleep is an effectiveness condition.", "Any command, JSON parse, semantic identity, or raw-hash failure produces collection_unavailable rather than an observed false.", "Store direct raw command records, return status, canonical path, SHA-256, parsed provenance, Evidence v4, and the complete observation-to-hash chain."],
+    "mutation_and_recovery": ["Record COMMAND_ACCEPTED separately from MUTATION_EFFECTIVE.", "Write recovery intent and an action journal before each mutation action.", "Provide idempotent recovery/replay from a partial mutation and prove double recovery and baseline before/after.", "Restore the baseline attached permit policy, not direct OSPF network origination, and prove zero-container cleanup."],
+    "successor_receipt": ["Bind unchanged authoritative X5-R4 C4 and a new corrected C5 tree; retain X5-R2 C5 and X5-R3/X5-R4 receipts as non-rewritten history.", "Revalidate Evidence v4 semantics, Feature Vector v2 validation, exact diagnosis, mutation acceptance/effectiveness, restoration, baselines, every raw hash, and every observation-to-hash reference."]
+  },
+  "exclusion_controls": ["target and control adjacencies", "interface state", "addressing identity", "absence of static override", "absence of ACL/policy packet block", "scoped reachability"],
+  "scientific_claim_limit": "No claim is made by this source-only release. A future successor may remain limited to two controlled single-fault OSPF variants on the accepted topology; no generalized OSPF, ML/Hybrid, dataset, metric, API, unseen-topology, performance, or multi-fault claim is authorized.",
+  "runtime_authorization": {"containerlab_execution": false, "network_mutation": false, "new_evidence_collection": false, "dataset_generation": false, "model_training": false, "ml_or_hybrid_evaluation": false, "metric_calculation": false, "api_change": false, "multi_fault_experiment": false, "method_prediction": false},
+  "source_bindings": [
+    {"path": "plans/expansion/X5_R4_OSPF_CORRECTION_AND_REVALIDATION_V1.json", "sha256": "81798767804525f556dd961319686d2893aebbbb05272293d427d8afe7e8d94d"},
+    {"path": "plans/expansion/X5_R4_OSPF_CORRECTED_SUCCESSOR_RECEIPT_V1.json", "sha256": "895692a86d26766adc6a923e1a9dab8111c56ac8f825263983813f412b899ece"},
+    {"path": "plans/expansion/X1_FEATURE_CATALOG_V1.json", "sha256": "3dba72e83d7e17767ab0851a24541aa7d2d8b789dcf04a5aeb726ff48e9518e4"},
+    {"path": "labs/topologies/x5_r5_c5_operational_policy/topology.clab.yml", "sha256": "e3354f7d8a58740776aea1825a1e2a4cfae7a875fda98da436f73f679f1d5e92"},
+    {"path": "labs/topologies/x5_r5_c5_operational_policy/configs/r3.conf", "sha256": "b7cf3bd4b3456d5eee770e6a4aa943f67ce691f788da5b71ec191ba6c0706e5a"},
+    {"path": "docs/HANDOFF_X5_R5.md", "sha256": "ef182c4d7f6c6ddafb74494add9fe4dba47cb2b61ead4a32a7257f014708abfa"}
+  ]
+}

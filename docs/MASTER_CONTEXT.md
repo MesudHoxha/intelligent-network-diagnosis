@@ -1595,3 +1595,15 @@ accepted mechanism is OSPF network-statement withdrawal. X4 audit observations
 are non-blocking bounded limitations for a later robustness track. P9-R2 and
 X6 remain paused; frozen Phase 6--8, X0--X4, API v1, datasets, ML/Hybrid,
 metrics, and scientific claims remain unchanged.
+
+## X5-R5 C5 operational-policy correction design (2026-08-25)
+
+X5-R5 is source-only and append-only from X5-R4. It preserves the X5-R4 C4
+tree as authoritative and the X5-R2 C5 tree/older receipts as immutable
+history, while marking the latter non-authoritative for the C5 policy feature.
+Future C5 evidence must use FRR `redistribute connected route-map` with an
+attached prefix-list criterion, not a marker or a removed direct OSPF network
+statement. The planned runtime mutation denies the expected prefix only through
+that attached criterion. No runtime evidence, scientific result, dataset,
+model, metric, API change or broad OSPF claim exists in X5-R5. X6 and P9-R2
+remain paused; next is `X5_R6_C5_OPERATIONAL_POLICY_RUNTIME_REVALIDATION`.

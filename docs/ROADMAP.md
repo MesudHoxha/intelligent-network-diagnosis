@@ -582,3 +582,20 @@ Implemented locally. Tagged VLAN 10 is removed only from SW1 `eth3`; access
 membership, SW2 and native VLAN 99 remain unchanged. Collector v3 derives the
 exact true/true/false/true/true signature, and the combined rule engine
 preserves X3-R1/X3-R2. Real transactional acceptance is pending.
+
+## X5-R5 C5 operational-policy correction design (2026-08-25)
+
+X5-R5 is a new append-only source/design gate after published X5-R4, not a
+rewrite of C4/C5 evidence. It makes corrected C5 policy evidence operational:
+the R3 baseline redistributes the connected expected prefix through an attached
+route map and permit prefix list; the future mutation changes only the active
+prefix-list criterion to deny that prefix. The plan requires direct running
+configuration proof, structured LSDB/route validation, bounded state-based
+effectiveness, Feature Vector v2 validation at rule entry, separate acceptance
+and effectiveness records, and idempotent partial-mutation recovery.
+
+X5-R2 C5 remains historical/non-authoritative for the policy feature; X5-R4 C4
+remains authoritative. X5-R6 is the future C5 runtime revalidation and X5-R7
+the future corrected successor closeout. X6 and P9-R2 remain intentionally
+paused; Phase 6--8, API v1, datasets, ML/Hybrid, metrics, and old archives stay
+frozen.

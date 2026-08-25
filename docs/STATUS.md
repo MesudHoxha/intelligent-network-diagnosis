@@ -1812,3 +1812,19 @@ which remains `true,false,false,false` with `R_X5_OSPF_002`. The C5 marker is
 provenance metadata; the mechanism is OSPF network-statement withdrawal.
 X4 exit-code and observer-policy observations remain non-blocking limitations
 for a later robustness track. X5-R4 is authoritative; X6 and P9-R2 are paused.
+
+## X5-R5 C5 operational-policy correction design (2026-08-25)
+
+X5-R5 is an append-only source-only correction from published X5-R4. It does
+not alter any accepted evidence, receipt, hash, or historical decision. The
+unchanged X5-R4 C4 tree remains authoritative. The original X5-R2 C5 tree is
+retained historically but is non-authoritative for C5 policy-feature scientific
+use: its suppression marker was provenance metadata while the observed prefix
+withdrawal came from direct OSPF network-statement removal.
+
+The future C5 variant uses an operational FRRouting attachment: R3 redistributes
+the connected expected prefix through `route-map X5-R5-C5-EXPORT`, which matches
+the `X5-R5-C5-TARGET` prefix list. The future mutation may change only that
+attached criterion to deny `10.51.3.0/24`; direct expected-prefix OSPF network
+origination remains absent. X5-R5 creates no runtime material or scientific
+claim. X6 and P9-R2 remain paused. Next: `X5_R6_C5_OPERATIONAL_POLICY_RUNTIME_REVALIDATION`.

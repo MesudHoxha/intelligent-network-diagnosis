@@ -1,0 +1,28 @@
+name: x5r5c5
+topology:
+  nodes:
+    hosta:
+      kind: linux
+      image: ind-linux:0.1
+      exec: ["ip addr add 10.51.1.2/24 dev eth1", "ip route add default via 10.51.1.1"]
+    r1:
+      kind: linux
+      image: frrouting/frr:v8.4.1
+      binds: ["configs/r1.conf:/etc/frr/frr.conf", "configs/daemons:/etc/frr/daemons", "configs/vtysh.conf:/etc/frr/vtysh.conf"]
+    r2:
+      kind: linux
+      image: frrouting/frr:v8.4.1
+      binds: ["configs/r2.conf:/etc/frr/frr.conf", "configs/daemons:/etc/frr/daemons", "configs/vtysh.conf:/etc/frr/vtysh.conf"]
+    r3:
+      kind: linux
+      image: frrouting/frr:v8.4.1
+      binds: ["configs/r3.conf:/etc/frr/frr.conf", "configs/daemons:/etc/frr/daemons", "configs/vtysh.conf:/etc/frr/vtysh.conf"]
+    hostb:
+      kind: linux
+      image: ind-linux:0.1
+      exec: ["ip addr add 10.51.3.2/24 dev eth1", "ip route add default via 10.51.3.1"]
+  links:
+    - endpoints: ["hosta:eth1", "r1:eth1"]
+    - endpoints: ["r1:eth2", "r2:eth1"]
+    - endpoints: ["r2:eth2", "r3:eth1"]
+    - endpoints: ["r3:eth2", "hostb:eth1"]

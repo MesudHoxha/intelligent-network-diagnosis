@@ -7,6 +7,7 @@ from pathlib import Path
 import pytest
 
 from src.expansion.x4_r6_gate import X4R6CloseoutError, verify_x4_r6_receipt, verify_x4_r6_source_gate
+from tests.accepted_runtime import require_materialized_receipts
 
 ROOT = Path(__file__).resolve().parents[2]
 PLAN = ROOT / "plans/expansion/X4_R6_DHCP_DNS_SERVICE_SECURITY_CLOSEOUT_V1.json"
@@ -24,7 +25,9 @@ def test_closeout_authorizes_no_runtime_or_scientific_operation() -> None:
     runtime = verify_x4_r6_source_gate(ROOT)["runtime_authorization"]
     assert len(runtime) == 10 and all(value is False for value in runtime.values())
 
+@pytest.mark.accepted_runtime
 def test_receipt_reverifies_five_materialized_revalidation_runs() -> None:
+    require_materialized_receipts(ROOT, RECEIPT)
     receipt = verify_x4_r6_receipt(RECEIPT, repository_root=ROOT, verify_materialized=True)
     assert receipt["evidence_kind"] == "REPRODUCIBILITY_REVALIDATION_NOT_ORIGINAL_ACCEPTANCE_ARCHIVE"
     assert receipt["summary"]["run_count"] == 5

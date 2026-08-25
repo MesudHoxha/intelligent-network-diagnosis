@@ -2938,3 +2938,26 @@ required feature. X4 audit observations are non-blocking bounded limitations
 deferred to a later robustness track. X5-R4 is the authoritative boundary,
 limited to two controlled single-fault OSPF variants; X6 and P9-R2 remain
 paused.
+
+## D-X5-R5 — Correct C5 policy evidence operationally, without rewriting history
+
+Decision: retain X5-R2 C5, X5-R3 and X5-R4 artifacts unchanged, but mark the
+original C5 evidence non-authoritative for scientific use of
+`route_filter_allows_prefix`. Its `X5-R2-SUPPRESS` value was provenance
+metadata and the actual mechanism was direct OSPF network-statement withdrawal,
+not an attached filter. X5-R4 C4 remains authoritative.
+
+The future C5 baseline must originate `10.51.3.0/24` by `redistribute connected
+route-map X5-R5-C5-EXPORT`, matched by an active permit prefix-list; direct
+expected-prefix OSPF `network` origination is forbidden. The future fault may
+only deny the prefix through that attached policy. It must prove the attachment
+and denial in raw configuration, retain both OSPF adjacencies, validate
+structured LSDB/route absence before observing it, validate Feature Vector v2
+at rule entry, use bounded state-based effectiveness, and separate command
+acceptance from physical effectiveness. Partial mutation recovery and replay
+must be idempotent.
+
+Status: source-only gate. No runtime lifecycle, evidence, scientific claim,
+dataset, model, metric or API change is authorized. X6 and P9-R2 remain paused;
+the next authorized technical milestone is
+`X5_R6_C5_OPERATIONAL_POLICY_RUNTIME_REVALIDATION`.
