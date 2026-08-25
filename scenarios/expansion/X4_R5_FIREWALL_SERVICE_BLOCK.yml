@@ -1,0 +1,43 @@
+schema_version: 1
+scenario:
+  id: X4_R5_FIREWALL_SERVICE_BLOCK
+  kind: fault
+  truth_model: single_fault
+  variant_id: x4_r5_firewall_service_block_v1
+  topology:
+    id: X4_TOP_01_FIREWALL_SERVICE_BLOCK
+    file: labs/topologies/x4_r5_firewall_service_block/topology.clab.yml
+    context_id: x4_top_01_dhcp_dns_service_security_context_v1
+    context_file: labs/topologies/x4_r1_dhcp_dns_service/topology_context_v1.json
+  observation:
+    direction: client_to_app_server
+    source_node: client
+    source_container: clab-x4r5-client
+    source_interface: eth1
+    destination_node: app_server
+    destination_container: clab-x4r5-app_server
+    observer_nodes: [observer]
+    observer_container: clab-x4r5-observer
+    dhcp_container: clab-x4r5-dhcp_server
+    dns_container: clab-x4r5-dns_server
+    dns_server_address: 10.40.0.3
+    expected_dns_name: app.x4.test
+    expected_dns_answer: 10.40.0.4
+    expected_scope_prefix: 10.40.0.
+    app_server_address: 10.40.0.4
+    service_protocol: tcp
+    service_port: 8080
+    firewall_chain: INPUT
+    firewall_comment: X4-R5-SERVICE-BLOCK
+  fault:
+    type: firewall_service_block
+    injector: insert_controlled_service_specific_firewall_rule
+    target_node: app_server
+    target_container: clab-x4r5-app_server
+  ground_truth:
+    fault_category: security
+    fault_type: firewall_service_block
+    fault_location: app_server
+    affected_resource: app_server_tcp_8080_policy
+  restoration:
+    method: remove_exact_injected_firewall_rule_and_verify_policy

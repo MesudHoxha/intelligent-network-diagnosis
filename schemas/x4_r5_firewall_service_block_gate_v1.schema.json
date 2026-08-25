@@ -1,0 +1,1 @@
+{"type":"object","required":["schema_version","gate_id","status","source_boundary","slice","runtime_authorization"],"properties":{"schema_version":{"const":1},"gate_id":{"const":"x4_r5_firewall_service_block_runtime_gate_v1"},"status":{"const":"IMPLEMENTED_RUNTIME_SLICE"}}}
