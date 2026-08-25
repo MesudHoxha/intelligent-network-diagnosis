@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "X4-R6 DHCP/DNS/Service Security Closeout v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "gate_id", "status", "track", "source_boundary", "source_bindings", "accepted_slices", "evidence_receipt", "compatibility", "claim_boundary", "runtime_authorization"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "gate_id": {"const": "x4_r6_dhcp_dns_service_security_closeout_v1"},
+    "status": {"const": "ACCEPTED_SOURCE_CLOSEOUT"},
+    "track": {"type": "object"}, "source_boundary": {"type": "object"},
+    "source_bindings": {"type": "array", "minItems": 24, "maxItems": 24},
+    "accepted_slices": {"type": "array", "minItems": 5, "maxItems": 5},
+    "evidence_receipt": {"type": "object"}, "d3_release_alias": {"type": "object"}, "image_boundary": {"type": "object"}, "compatibility": {"type": "object"}, "claim_boundary": {"type": "object"},
+    "runtime_authorization": {"type": "object", "additionalProperties": {"const": false}, "minProperties": 10, "maxProperties": 10}
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "X4-R6 DHCP/DNS/Service Security Evidence Receipt v1",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "receipt_id", "source_commit", "created_at_utc", "evidence_kind", "runs", "summary"],
+  "properties": {
+    "schema_version": {"const": 1}, "receipt_id": {"const": "x4_r6_dhcp_dns_service_security_evidence_receipt_v1"},
+    "source_commit": {"const": "4df8d3ed62fcff0c860d46a7109f3ae09314acac"}, "created_at_utc": {"type": "string", "format": "date-time"}, "evidence_kind": {"const": "REPRODUCIBILITY_REVALIDATION_NOT_ORIGINAL_ACCEPTANCE_ARCHIVE"},
+    "runs": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"type": "object", "additionalProperties": false, "required": ["release_id", "fault_type", "rule_id", "topology_context_id", "relative_run_path", "run_tree_sha256", "artifacts"], "properties": {"release_id": {"type": "string"}, "fault_type": {"type": "string"}, "rule_id": {"type": "string"}, "topology_context_id": {"type": "string"}, "relative_run_path": {"type": "string", "pattern": "^data/raw/"}, "run_tree_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "artifacts": {"type": "array", "minItems": 8, "items": {"type": "object", "additionalProperties": false, "required": ["path", "sha256", "size_bytes"], "properties": {"path": {"type": "string"}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "size_bytes": {"type": "integer", "minimum": 1}}}}}}},
+    "summary": {"type": "object", "additionalProperties": false, "required": ["run_count", "all_completed", "all_diagnosed", "all_restored", "all_baselines_valid", "all_raw_hashes_verified"], "properties": {"run_count": {"const": 5}, "all_completed": {"const": true}, "all_diagnosed": {"const": true}, "all_restored": {"const": true}, "all_baselines_valid": {"const": true}, "all_raw_hashes_verified": {"const": true}}}
+  }
+}

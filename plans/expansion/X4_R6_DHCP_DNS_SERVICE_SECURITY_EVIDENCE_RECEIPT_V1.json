@@ -1,0 +1,507 @@
+{
+  "created_at_utc": "2026-08-25T08:08:21.539039+00:00",
+  "evidence_kind": "REPRODUCIBILITY_REVALIDATION_NOT_ORIGINAL_ACCEPTANCE_ARCHIVE",
+  "receipt_id": "x4_r6_dhcp_dns_service_security_evidence_receipt_v1",
+  "runs": [
+    {
+      "artifacts": [
+        {
+          "path": "diagnosis/diagnosis_result_v2.json",
+          "sha256": "81139f1aef32451bcc4881733854d3567ecbf5517b00f651ac7f65db71660fff",
+          "size_bytes": 833
+        },
+        {
+          "path": "manifest.json",
+          "sha256": "7db31bcfec540217321c8ca7e301e5b9e51b6d6ebd14019f173655aee92dd0a7",
+          "size_bytes": 512
+        },
+        {
+          "path": "mutation/injection_record.json",
+          "sha256": "5a3642a97a686bc4f400ff8e5a63086858b479bacf73f12b0328cf4483d1f56a",
+          "size_bytes": 2324
+        },
+        {
+          "path": "mutation/preconditions.json",
+          "sha256": "dd7e51eaf91529536c2464ce7999381128d6d5fea37faf08acc5d6af14a7ea89",
+          "size_bytes": 1693
+        },
+        {
+          "path": "mutation/recovery_intent.json",
+          "sha256": "e8bc465cf03f07ad958cbd36145bc43a164cbfd96930437def614a757285acb4",
+          "size_bytes": 398
+        },
+        {
+          "path": "mutation/restoration_record.json",
+          "sha256": "069f66378cd741578903ccaa2cbbab41fd4edcce0c2275369fe6b4c63baf1de7",
+          "size_bytes": 2438
+        },
+        {
+          "path": "parsed/evidence_v4.json",
+          "sha256": "a8eb5380da88830ebbf29663815484c42240b6a8197900c3edfeb4233c7b65b0",
+          "size_bytes": 5909
+        },
+        {
+          "path": "parsed/feature_vector_v2.json",
+          "sha256": "4d1ab4b665b515f5541acae6098610d6bfd3b444d8c530e93ca584b7243bea35",
+          "size_bytes": 1303
+        },
+        {
+          "path": "raw/v4/service_state_collector/dhcp_lease_exchange.json",
+          "sha256": "e53e6754697d129c040833daa301836e4790fad3798d75f98ec15d9822eb331a",
+          "size_bytes": 1221
+        },
+        {
+          "path": "raw/v4/service_state_collector/dns_network_probe.json",
+          "sha256": "7448f2c8cc224def3ededc763b2d8c820aa7fdde24a9ed364182e6d2d803abf1",
+          "size_bytes": 584
+        },
+        {
+          "path": "raw/v4/service_state_collector/dns_query.json",
+          "sha256": "239485db8f810ca61d239bb72957b45768a217e13f89ae0ba1228021c2de83f7",
+          "size_bytes": 345
+        },
+        {
+          "path": "raw/v4/service_state_collector/service_policy.json",
+          "sha256": "b1a91082f716b2510af77128a5f1e73e44c40ea9ce2d71b14ca31e570ddb707f",
+          "size_bytes": 332
+        },
+        {
+          "path": "raw/v4/service_state_collector/service_port.json",
+          "sha256": "2eada5efe85edc2ad9218b76762c1c84a1039d6ee74d01b324f39177f8fe3b64",
+          "size_bytes": 389
+        },
+        {
+          "path": "raw/v4/service_state_collector/service_process.json",
+          "sha256": "3f80fb53fb753fd85e583e49883765db1eaf9b335aa98e49fef13586475f38ab",
+          "size_bytes": 319
+        },
+        {
+          "path": "validation/baseline_after.json",
+          "sha256": "904bffe0dc67d5fbf43f8ca1a8331fce72fa984b7eabb4d2d8e783e673c10ba5",
+          "size_bytes": 1055
+        },
+        {
+          "path": "validation/baseline_before.json",
+          "sha256": "687595b8b1327b3c68586c595121b67d66177cb8feab8117c3ce8cb5d54c869b",
+          "size_bytes": 1055
+        }
+      ],
+      "fault_type": "dhcp_server_unavailable",
+      "relative_run_path": "data/raw/x4_revalidation.MHRrrP/x4_r1/x4-r1-real-dhcp-server-unavailable",
+      "release_id": "X4_R1_DHCP_SERVER_UNAVAILABLE",
+      "rule_id": "R_X4_SERVICE_SECURITY_001",
+      "run_tree_sha256": "48a297b89a313cc4471e5f34529b3bdabfba621bca375786111c32338f28e296",
+      "topology_context_id": "x4_top_01_dhcp_dns_service_security_dhcp_flow_context_v1"
+    },
+    {
+      "artifacts": [
+        {
+          "path": "diagnosis/diagnosis_result_v2.json",
+          "sha256": "dd8dc5e808a4e5070b2f573873736983253c4d5d37a155abd9b414625616ad4a",
+          "size_bytes": 819
+        },
+        {
+          "path": "manifest.json",
+          "sha256": "626abeb445fb739dc4cdfc44a64411259f4e1e399e93dc65add3c7281c89ae8b",
+          "size_bytes": 521
+        },
+        {
+          "path": "mutation/injection_record.json",
+          "sha256": "1cd66f52c437875b1a9a84f2a278b4ae972339f0ee24fc88020fb7692761ba3d",
+          "size_bytes": 4338
+        },
+        {
+          "path": "mutation/preconditions.json",
+          "sha256": "491fe0aa3d1d945b543a1868d246f5a5c89b58ac23fb1015e47529bdd1e3e2f5",
+          "size_bytes": 3055
+        },
+        {
+          "path": "mutation/recovery_intent.json",
+          "sha256": "4ce214efd9f8fce40dea4f8326cb7154bdda207cc8a180ec01dcc4288bbb12e1",
+          "size_bytes": 751
+        },
+        {
+          "path": "mutation/restoration_record.json",
+          "sha256": "6f0a51f8cda570b8b614666a0f902dae8faffdc74be6ccc3be01b650fa79a3f0",
+          "size_bytes": 4319
+        },
+        {
+          "path": "parsed/evidence_v4.json",
+          "sha256": "a8717f527a3964967f3f73b032b1307420f37057b7fc8fbbec07a0ee9dfe6dd7",
+          "size_bytes": 6399
+        },
+        {
+          "path": "parsed/feature_vector_v2.json",
+          "sha256": "369dd98efe11497a584b1e8576fd6692a0cd9f18228a9da3656210578d9882de",
+          "size_bytes": 1308
+        },
+        {
+          "path": "raw/v4/service_state_collector_v2/dhcp_endpoint_protocol_state.json",
+          "sha256": "aa17258941e514ed774eb0fa1868c347d07b5f94982f33e7b4bb955e101e558b",
+          "size_bytes": 977
+        },
+        {
+          "path": "raw/v4/service_state_collector_v2/dhcp_fresh_lease_exchange.json",
+          "sha256": "183d302eb351b66b8b11f5ef7d9711526659e70499cd30334cebf2505f8d5f41",
+          "size_bytes": 1282
+        },
+        {
+          "path": "raw/v4/service_state_collector_v2/dhcp_pool_configuration.json",
+          "sha256": "daf82ea8533e8fcb74d4b88f232a163c0b20111b84405c89d74c76bf95cdc592",
+          "size_bytes": 610
+        },
+        {
+          "path": "raw/v4/service_state_collector_v2/dns_network_probe.json",
+          "sha256": "9804833fa72eb458683bb6b34512dd0e0077b6cadd2237aa766a52ec845d5dbb",
+          "size_bytes": 584
+        },
+        {
+          "path": "raw/v4/service_state_collector_v2/dns_query.json",
+          "sha256": "31e815ea18cd8dce467b3036d8a65e345cda9e541029edbb5890b492f9c5754c",
+          "size_bytes": 345
+        },
+        {
+          "path": "raw/v4/service_state_collector_v2/service_policy.json",
+          "sha256": "95a9d3b2d8772564c197a59fa82878d0661cd72ae548685fca4e2a4bf3da3089",
+          "size_bytes": 332
+        },
+        {
+          "path": "raw/v4/service_state_collector_v2/service_port.json",
+          "sha256": "b03407ffb7055c289a63ac1fbe49d47d26813f157b385b48a3224f010cf3a9bb",
+          "size_bytes": 389
+        },
+        {
+          "path": "raw/v4/service_state_collector_v2/service_process.json",
+          "sha256": "de2ee080ee8b7757881b4d955d9aa9dffe49454dda8079ad5993d2a80ddce099",
+          "size_bytes": 319
+        },
+        {
+          "path": "validation/baseline_after.json",
+          "sha256": "412b6618b197dffa6dcc084371ae21262b1361dbaab9705e0115d39e9b9e3900",
+          "size_bytes": 1055
+        },
+        {
+          "path": "validation/baseline_before.json",
+          "sha256": "7a5275e8fda91e3cd46b5127819aa5ce2423c79264b4c5d52c0f250dfff0fd3c",
+          "size_bytes": 1055
+        }
+      ],
+      "fault_type": "dhcp_pool_misconfiguration",
+      "relative_run_path": "data/raw/x4_revalidation.MHRrrP/x4_r2/x4-r2-real-dhcp-pool-misconfiguration",
+      "release_id": "X4_R2_DHCP_POOL_MISCONFIGURATION",
+      "rule_id": "R_X4_SERVICE_SECURITY_002",
+      "run_tree_sha256": "923350ada7ec00b6751da49d8859dd2c589fa5d50c7155a3603ad312ecc6efaf",
+      "topology_context_id": "x4_top_01_dhcp_dns_service_security_dhcp_flow_context_v1"
+    },
+    {
+      "artifacts": [
+        {
+          "path": "diagnosis/diagnosis_result_v2.json",
+          "sha256": "c1b57d82213265259f3e328d69e2e41a2d494fe2fd3933c9f745d5b4247eefd0",
+          "size_bytes": 801
+        },
+        {
+          "path": "manifest.json",
+          "sha256": "a27494d121aadd754e5bac3271072bb61e4f5b54ea1efe879efa4e19d0a0c50c",
+          "size_bytes": 548
+        },
+        {
+          "path": "mutation/injection_record.json",
+          "sha256": "d4833337083b20228ce1adbcd92dc9c4aa719899b97dab2249203d2383ae9dab",
+          "size_bytes": 5938
+        },
+        {
+          "path": "mutation/preconditions.json",
+          "sha256": "b5f03bc5a53140c706534b284ba575ed99f38c678a334bf6f481277050a3770d",
+          "size_bytes": 4471
+        },
+        {
+          "path": "mutation/recovery_intent.json",
+          "sha256": "154504303721cce1cecd731f378917afbecdc796bd6329130f5daff00adc57eb",
+          "size_bytes": 993
+        },
+        {
+          "path": "mutation/restoration_record.json",
+          "sha256": "b934cbd4f8e6b9b57138d512d4d2dcf20cdde83871eb8694ae00e95011587a6c",
+          "size_bytes": 5931
+        },
+        {
+          "path": "parsed/evidence_v4.json",
+          "sha256": "df2fe6fa1b9bac51b0d3ae7f0a10221b493921838a1f957058d432e52987529d",
+          "size_bytes": 6428
+        },
+        {
+          "path": "parsed/feature_vector_v2.json",
+          "sha256": "20de33ee7da4e110e514b3284f3953af03b7ba4332960ae16cb5f468970e6fc9",
+          "size_bytes": 1290
+        },
+        {
+          "path": "raw/v4/service_state_collector_v3/application_port.json",
+          "sha256": "a1d2b5f80a95c1125ef5c63e23155a361547d1d92fee56220d7cf949012d25c4",
+          "size_bytes": 389
+        },
+        {
+          "path": "raw/v4/service_state_collector_v3/application_process.json",
+          "sha256": "92c3edd20cc3a928dab832d2a9c1e734145d113c8383b3379752ee184b3a21b0",
+          "size_bytes": 319
+        },
+        {
+          "path": "raw/v4/service_state_collector_v3/dhcp_fresh_lease_exchange.json",
+          "sha256": "6697170f294a8f6b61252aa22551b7b3a2b0309b03a24c5f2b7b6379ca0cddeb",
+          "size_bytes": 1317
+        },
+        {
+          "path": "raw/v4/service_state_collector_v3/dns_network_reachability.json",
+          "sha256": "19bf18aabd17ffcc1b0418e483af52c2dbd608adcd68eca2830776e13e6cfd46",
+          "size_bytes": 646
+        },
+        {
+          "path": "raw/v4/service_state_collector_v3/dns_process_state.json",
+          "sha256": "49f1949337808f1e9040ba7e4aa82d3f67e69adaa499f81bd669e89854b961a8",
+          "size_bytes": 358
+        },
+        {
+          "path": "raw/v4/service_state_collector_v3/dns_query_response.json",
+          "sha256": "e82a6d34a13b3328b5a33d3faabe3f0ae46e6e0afea03b3d586db3494b261d6b",
+          "size_bytes": 628
+        },
+        {
+          "path": "raw/v4/service_state_collector_v3/dns_udp_53_listener.json",
+          "sha256": "ac45e4cea5666616b69be38805be5206a822d93841ebd0e00dc3d3576a97a28a",
+          "size_bytes": 320
+        },
+        {
+          "path": "raw/v4/service_state_collector_v3/service_policy.json",
+          "sha256": "6cd9a228d20b796a99cfcb9c91bf1425c7341c2c20f345ed78ccb6a6fca3d260",
+          "size_bytes": 332
+        },
+        {
+          "path": "validation/baseline_after.json",
+          "sha256": "3a62efc136d2caa60115462d1c3eda7668ba06b461e8c8e89081c5fade8604ba",
+          "size_bytes": 1048
+        },
+        {
+          "path": "validation/baseline_before.json",
+          "sha256": "7afd96f8d92214af6387c655da33e5835444e539dfc507ca96891e6526006e80",
+          "size_bytes": 1048
+        }
+      ],
+      "fault_type": "dns_service_down",
+      "relative_run_path": "data/raw/x4_revalidation.MHRrrP/x4_r3/x4-r3-real-dns-service-down",
+      "release_id": "X4_R3_DNS_SERVICE_DOWN",
+      "rule_id": "R_X4_SERVICE_SECURITY_003",
+      "run_tree_sha256": "7111cb1ef5b399e329de213f832fa8fd686e97a9b5ccda8d2631040688d76846",
+      "topology_context_id": "x4_top_01_dhcp_dns_service_security_dns_flow_context_v1"
+    },
+    {
+      "artifacts": [
+        {
+          "path": "diagnosis/diagnosis_result_v2.json",
+          "sha256": "7221a43d727e58c8179db117016023893505cd3964bedb432ac711396c4175e7",
+          "size_bytes": 791
+        },
+        {
+          "path": "manifest.json",
+          "sha256": "216312cf1ac1c7f0517fac549b7e97957278c1558673f973df6008d0a10ab5e1",
+          "size_bytes": 490
+        },
+        {
+          "path": "mutation/injection_record.json",
+          "sha256": "2175b04bbf0a09793df21500fff2db772e73f2fc05d1565b63c65898f96c15e5",
+          "size_bytes": 6754
+        },
+        {
+          "path": "mutation/preconditions.json",
+          "sha256": "6179ef1f479a7a596c1b48fb02f2c6375812f08b2d9345e1cd3151858953b5b7",
+          "size_bytes": 5138
+        },
+        {
+          "path": "mutation/recovery_intent.json",
+          "sha256": "1eba98e22aeba11aec19cef6e6d6a504eab06b6ac1a29d52bc0fd08398c3e280",
+          "size_bytes": 645
+        },
+        {
+          "path": "mutation/restoration_record.json",
+          "sha256": "f8f56649fc8ae9db54d842d3a235cd6b6a17a4ad38aca320ea9aad6a5a02538d",
+          "size_bytes": 6699
+        },
+        {
+          "path": "parsed/evidence_v4.json",
+          "sha256": "ac87b00edf8cb6898fa32066f7f1530955674591c0b5da508f735322ac7e094c",
+          "size_bytes": 6639
+        },
+        {
+          "path": "parsed/feature_vector_v2.json",
+          "sha256": "4fc1cd1321261f4a2f1f8156cfbefd6ac5757b965cf1ee2b2a9f1cd7a91a54db",
+          "size_bytes": 1287
+        },
+        {
+          "path": "raw/v4/service_state_collector_v4/application_port.json",
+          "sha256": "c2ac6ecd2279598add7345dbf4fc1124fc563b431ca05c2e8dd84b26f11ec72a",
+          "size_bytes": 389
+        },
+        {
+          "path": "raw/v4/service_state_collector_v4/application_process.json",
+          "sha256": "b0efc58f0cd6828a48897320809f0e1da01142298a760f91707c7dffe1168bde",
+          "size_bytes": 319
+        },
+        {
+          "path": "raw/v4/service_state_collector_v4/dhcp_fresh_lease_exchange.json",
+          "sha256": "665c2042178a128a6698994acf724baa343943330387fbd56eae750fe5905b18",
+          "size_bytes": 1317
+        },
+        {
+          "path": "raw/v4/service_state_collector_v4/dns_direct_query_response.json",
+          "sha256": "5c727694fea9178f2765251236d5931e45718b6eb2d8da4f26c89f4a56357739",
+          "size_bytes": 509
+        },
+        {
+          "path": "raw/v4/service_state_collector_v4/dns_network_reachability.json",
+          "sha256": "65073fb503c8523b20262bcc6d762c1d1efdc77d4fbd50539dbf832a840e99b8",
+          "size_bytes": 644
+        },
+        {
+          "path": "raw/v4/service_state_collector_v4/dns_process_state.json",
+          "sha256": "63734e31eadd3f7cc82124f0071ca5b58c89a4d7ebd126d03492b6f6a48e59fa",
+          "size_bytes": 358
+        },
+        {
+          "path": "raw/v4/service_state_collector_v4/dns_record_configuration.json",
+          "sha256": "d1d21d775fa7e245aaa2d1e48d2d959986bed126fe448414cfa54f8c3f00755c",
+          "size_bytes": 626
+        },
+        {
+          "path": "raw/v4/service_state_collector_v4/dns_udp_53_listener.json",
+          "sha256": "509afe992bd68ef43af186a304b2c608cdf1b64c3d49c22ee9a843fef954f315",
+          "size_bytes": 320
+        },
+        {
+          "path": "raw/v4/service_state_collector_v4/service_policy.json",
+          "sha256": "60f7fd0eed0f14c426e5dd1878916948d487a18ad591c2d1fd933bdb1ec0878a",
+          "size_bytes": 332
+        },
+        {
+          "path": "validation/baseline_after.json",
+          "sha256": "998bcf9c2acc91436444c1ca790b45c72088e9426787b93da25ed5bddfd7eb24",
+          "size_bytes": 1118
+        },
+        {
+          "path": "validation/baseline_before.json",
+          "sha256": "0468a89a232872ab37de3f28a9b31ddf1027c7f75d83f1ee486a3b5ab014903e",
+          "size_bytes": 1118
+        }
+      ],
+      "fault_type": "wrong_dns_record",
+      "relative_run_path": "data/raw/x4_revalidation.MHRrrP/x4_r4/x4-r4-real-wrong-dns-record",
+      "release_id": "X4_R4_WRONG_DNS_RECORD",
+      "rule_id": "R_X4_SERVICE_SECURITY_004",
+      "run_tree_sha256": "a4149e8449ad399681bf4749466e2a896bb36376bba16465d090af163c6cc9f9",
+      "topology_context_id": "x4_top_01_dhcp_dns_service_security_dns_flow_context_v1"
+    },
+    {
+      "artifacts": [
+        {
+          "path": "diagnosis/diagnosis_result_v2.json",
+          "sha256": "cb1d40b08e0b44ac7473fdf6777b6141844822f4605026a9ac9f723dd2f2318b",
+          "size_bytes": 823
+        },
+        {
+          "path": "manifest.json",
+          "sha256": "9d9f963281f3f15137657fad82e49163a06dc32ea3e0353628c958ac1814b171",
+          "size_bytes": 499
+        },
+        {
+          "path": "mutation/injection_record.json",
+          "sha256": "c84c1cdac7852256a44eb83af7058cf466b00e6d82459293ad507b068068f1fb",
+          "size_bytes": 5674
+        },
+        {
+          "path": "mutation/preconditions.json",
+          "sha256": "0ea0da891f3979d82a38c29d731678e9ee6e4d880e7949c8a005f49d705fe10a",
+          "size_bytes": 4174
+        },
+        {
+          "path": "mutation/recovery_intent.json",
+          "sha256": "01704b9357d93d8fd8efe10805067af517279644a9ffaa08e8b6f91b45e35c50",
+          "size_bytes": 659
+        },
+        {
+          "path": "mutation/restoration_record.json",
+          "sha256": "15817e6be4c0378e0a3b7c2c1afe3f95ee28dd59ba09c79bd719d2dc7329e111",
+          "size_bytes": 5548
+        },
+        {
+          "path": "parsed/evidence_v4.json",
+          "sha256": "2be9d329c040f8ebad1c49009f9fa8aff14ac330c86d4d14bde687aaed05804c",
+          "size_bytes": 6275
+        },
+        {
+          "path": "parsed/feature_vector_v2.json",
+          "sha256": "a1fff794ebcfa08f7bd5b5a2f1fcba9f179b043950ee61955ed12a36f1f5adac",
+          "size_bytes": 1298
+        },
+        {
+          "path": "raw/v4/service_state_collector_v5/application_host_connectivity.json",
+          "sha256": "baaa6db1d2db4a65c17c033c13075e581dce2e0fe9e2c36c135d85f91a8ddd0c",
+          "size_bytes": 616
+        },
+        {
+          "path": "raw/v4/service_state_collector_v5/application_process.json",
+          "sha256": "127a4721c4d73b91503ba3305039e2d76b38211ce3e6b807d77a0e33bb58946b",
+          "size_bytes": 303
+        },
+        {
+          "path": "raw/v4/service_state_collector_v5/client_service_probe.json",
+          "sha256": "8ce65c9d889e191ab042ed198905b0566deae716e369da1c429fc041135e3f15",
+          "size_bytes": 350
+        },
+        {
+          "path": "raw/v4/service_state_collector_v5/dhcp_fresh_lease_exchange.json",
+          "sha256": "7ab7882f50860ec33ba7cf4b71b105b657d955b7b91c9fd41f0cdcc6a906e1b9",
+          "size_bytes": 1294
+        },
+        {
+          "path": "raw/v4/service_state_collector_v5/dns_direct_query_response.json",
+          "sha256": "80ce15bb7775eed4e29615921afbf3ef187e0e72af4c7e9754f83cc1934eb47a",
+          "size_bytes": 394
+        },
+        {
+          "path": "raw/v4/service_state_collector_v5/dns_network_reachability.json",
+          "sha256": "1cdb5bbb6e463e6e9e133025353ca546595e85bf844f763e01b80cb315a27365",
+          "size_bytes": 601
+        },
+        {
+          "path": "raw/v4/service_state_collector_v5/firewall_policy.json",
+          "sha256": "96fae763ed0a32127e8771bb833427a2c19f7491d4490996ae2b7e9241004a13",
+          "size_bytes": 474
+        },
+        {
+          "path": "validation/baseline_after.json",
+          "sha256": "652e6220ded6e3e66fe88e1aa977853124f9dea5d1af7f9f1478bbceb5656c2f",
+          "size_bytes": 1130
+        },
+        {
+          "path": "validation/baseline_before.json",
+          "sha256": "276047c7528556c562dc5cf1f386b6886ddf6ba6d649436f5d526a6846e66ac7",
+          "size_bytes": 1130
+        }
+      ],
+      "fault_type": "firewall_service_block",
+      "relative_run_path": "data/raw/x4_revalidation.MHRrrP/x4_r5/x4-r5-real-firewall-service-block",
+      "release_id": "X4_R5_FIREWALL_SERVICE_BLOCK",
+      "rule_id": "R_X4_SERVICE_SECURITY_005",
+      "run_tree_sha256": "be9e49b3bdd47205241dae356335d92f732460c28c96073cacc39bb700571bf1",
+      "topology_context_id": "x4_top_01_dhcp_dns_service_security_context_v1"
+    }
+  ],
+  "schema_version": 1,
+  "source_commit": "4df8d3ed62fcff0c860d46a7109f3ae09314acac",
+  "summary": {
+    "all_baselines_valid": true,
+    "all_completed": true,
+    "all_diagnosed": true,
+    "all_raw_hashes_verified": true,
+    "all_restored": true,
+    "run_count": 5
+  }
+}
