@@ -1424,6 +1424,23 @@ population-level or real-world generalization.
 P9-R2 — Controlled Chapter Drafting (not started; separate authorization
 required).
 
+P9-R2 is intentionally paused while the separately authorized X5–X10
+technical-expansion sequence proceeds. P9-R1 remains accepted; this pause does
+not reopen its traceability boundary.
+
+## X5-R0 — OSPF Dynamic-Routing Design Gate
+
+- Newly authorized append-only technical expansion from accepted X4-R6
+  `50f0624679d7b1577d88d66ba87eb1c7390e80f0`; P9-R1 remains accepted
+- Five-node FRRouting OSPFv2 topology context, C4/C5 direct-state signatures,
+  X1 OSPF collector ownership and exclusion controls: design-only
+- Runtime/scientific authorization: 10/10 false; no Containerlab, evidence,
+  dataset, model, metric, API or multiple-fault action
+- Frozen Phase 6–8 study, P8 claim limits, API v1 and X2–X4 sources/evidence:
+  unchanged
+- X7/X8 remain separate future extended-scientific tracks
+- Next: X5-R1 OSPF Adjacency Failure only, after separate authorization
+
 ## Important limitation
 
 The accepted P1 JSONL file contains 12 rows from three classes,

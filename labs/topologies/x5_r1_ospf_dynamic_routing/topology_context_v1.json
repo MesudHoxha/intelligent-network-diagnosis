@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "context_id": "x5_top_01_ospf_dynamic_routing_context_v1",
+  "topology_id": "X5_TOP_01_OSPF_DYNAMIC_ROUTING",
+  "variant_id": "x5_r0_design_only_v1",
+  "nodes": [
+    {"node_id": "hosta", "role": "host", "runtime_target": "hosta", "capabilities": ["traffic_source"]},
+    {"node_id": "r1", "role": "router", "runtime_target": "r1", "capabilities": ["ospf_observer", "ospf_router"]},
+    {"node_id": "r2", "role": "router", "runtime_target": "r2", "capabilities": ["ospf_router", "route_policy_control"]},
+    {"node_id": "r3", "role": "router", "runtime_target": "r3", "capabilities": ["ospf_router", "prefix_origin"]},
+    {"node_id": "hostb", "role": "host", "runtime_target": "hostb", "capabilities": ["traffic_destination"]}
+  ],
+  "links": [
+    {"link_id": "hosta_r1", "kind": "routed", "endpoints": [{"node_id": "hosta", "interface": "eth1"}, {"node_id": "r1", "interface": "eth1"}], "expected_vlans": [], "native_vlan": null},
+    {"link_id": "r1_r2", "kind": "routed", "endpoints": [{"node_id": "r1", "interface": "eth2"}, {"node_id": "r2", "interface": "eth1"}], "expected_vlans": [], "native_vlan": null},
+    {"link_id": "r2_r3", "kind": "routed", "endpoints": [{"node_id": "r2", "interface": "eth2"}, {"node_id": "r3", "interface": "eth1"}], "expected_vlans": [], "native_vlan": null},
+    {"link_id": "r3_hostb", "kind": "routed", "endpoints": [{"node_id": "r3", "interface": "eth2"}, {"node_id": "hostb", "interface": "eth1"}], "expected_vlans": [], "native_vlan": null}
+  ],
+  "observation_roles": {"source": "hosta", "destination": "hostb", "observers": ["r1", "r2"]},
+  "capabilities": ["ospf", "ospf_neighbor_inspection", "ospf_database_inspection", "ospf_route_inspection", "route_policy_inspection", "interface_state_inspection", "connectivity_control"]
+}

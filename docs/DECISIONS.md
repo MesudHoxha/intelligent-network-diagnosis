@@ -2870,3 +2870,36 @@ variants with a hash-bound receipt at public commit
 f23f08cd6ef019b3cc0b4fd2c16f3a2609370cb7; it preserves Phase 6-9, API v1,
 X2/X3 and P9-R1 boundaries and authorizes 0/10 runtime/scientific actions.
 X4-R1 and X4-R2 are accepted at public commits 00219ffd947cf4a7c8723c0341d6efdce9654ed4 and 980488cebfc0000fb8bd6e19b5b7e043bf163887. D3 is canonically X4_R3_DNS_SERVICE_DOWN; X4_R3_DNS_SERVICE_UNAVAILABLE is the one-to-one compatibility alias introduced by X4-R2, not a distinct release.
+
+## D-X5-R0 — Freeze direct OSPF state before dynamic-routing runtime
+
+Decision: accept X5-R0 as an append-only design-only gate from accepted X4-R6
+commit `50f0624679d7b1577d88d66ba87eb1c7390e80f0`. Use OSPF as the first
+dynamic-routing protocol, as already fixed in D-034 and X0; BGP remains
+optional only after a later OSPF gate establishes value.
+
+The two canonical X0 faults are C4 `dynamic_routing_adjacency_failure` and C5
+`route_filtering_or_advertisement_problem`. C4 requires adjacency false,
+advertisement false, route not installed and policy allowance true. C5 requires
+adjacency true, advertisement false, route not installed and policy allowance
+false. The exact four X1 OSPF features have one design-only owner,
+`ospf_state_collector:v1`. Neighbor, database, route-table, route-policy and
+interface observations are direct evidence; static-route-override, policy-block
+and connectivity observations are exclusion controls, not classifiers.
+
+The release sequence is X5-R0 design-only, X5-R1 adjacency failure, X5-R2
+route filtering/advertisement problem, and X5-R3 closeout. Every runtime slice
+requires separate authorization, recovery intent, atomic journal, exact OSPF
+and policy restoration, Evidence v4 raw hashes and provenance, baseline
+before/after, zero-container cleanup and a real E2E. Runtime is never inherited.
+
+Status: implemented as source-only contracts and tests. All ten runtime flags
+are false. P9-R1 remains accepted; P9-R2 is intentionally paused. Frozen Phase
+6–8, P8 claims, API v1 and X2–X4 evidence remain immutable. X7/X8 are separate
+future extended-scientific tracks.
+
+Limitation:
+
+X5-R0 does not deploy the topology, observe OSPF, prove either fault,
+collection, diagnosis, restoration, accuracy, ML/Hybrid behavior, BGP support,
+generalization or production readiness.

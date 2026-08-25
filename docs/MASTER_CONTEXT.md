@@ -1544,3 +1544,26 @@ f23f08cd6ef019b3cc0b4fd2c16f3a2609370cb7; all ten authorization flags are
 false. X4-R1 and X4-R2 are accepted at public commits 00219ffd947cf4a7c8723c0341d6efdce9654ed4 and 980488cebfc0000fb8bd6e19b5b7e043bf163887. The current D3 release is canonically X4_R3_DNS_SERVICE_DOWN; X4_R3_DNS_SERVICE_UNAVAILABLE is its one-to-one X4-R2 compatibility alias, not a second slice. This status summary
 does not alter historical X3 decisions, accepted evidence or frozen Phase 6-9
 boundaries.
+
+## X5-R0 OSPF dynamic-routing design gate (2026-08-25)
+
+X5-R0 is an append-only, design-only expansion from accepted X4-R6 commit
+`50f0624679d7b1577d88d66ba87eb1c7390e80f0`. It hash-binds X0/X1, X4-R6 and
+the accepted P9-R1 traceability plan without changing them. P9-R1 remains
+accepted and P9-R2 is intentionally paused while the technical expansion
+proceeds.
+
+The planned `X5_TOP_01_OSPF_DYNAMIC_ROUTING` context is a five-node FRRouting
+OSPFv2 path. C4 Dynamic Routing Adjacency Failure and C5 Route
+Filtering/Advertisement Problem have two direct-state, disjoint signatures
+over the four X1 OSPF features. Neighbor, advertisement, route-table, policy,
+interface, static-override and policy-block observations prevent interface,
+addressing, static-routing, ACL/policy and generic-reachability faults from
+being inferred solely from an end-to-end probe.
+
+All ten X5-R0 runtime/scientific flags remain false. No topology deployment,
+mutation, Evidence v4, prediction, dataset, ML/Hybrid operation, metric, API
+change, BGP work or multiple-fault work is created. Frozen Phase 6–8 results,
+API v1, X2–X4 evidence and hashes remain unchanged. X7/X8 will be a separate
+extended scientific track. The next release is separately authorized
+`X5_R1_OSPF_ADJACENCY_FAILURE`.

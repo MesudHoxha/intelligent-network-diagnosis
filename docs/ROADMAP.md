@@ -487,11 +487,18 @@ Status: X4-R0 design gate and X4-R1/R2 runtime slices accepted; current D3 is ca
   no deployment or empirical work occurred
 
 ### X5 — Dynamic routing with OSPF
-Status: Planned
+Status: X5-R0 accepted design-only; runtime not authorized
 
 - Adjacency root causes
 - Route filtering and advertisement
 - BGP only if a later OSPF gate establishes additional value
+- X5-R0 freezes a five-node FRRouting OSPFv2 context, two disjoint C4/C5
+  signatures, X1 collector ownership, direct-state exclusion controls and the
+  release sequence X5-R0 through X5-R3; all ten runtime/scientific flags are
+  false
+- X5-R1 OSPF adjacency failure is the next separately authorized runtime
+  release; X5-R2 is controlled route filtering/advertisement; X5-R3 is a
+  hash-binding closeout
 
 ### X6 — Performance faults
 Status: Planned
@@ -515,6 +522,8 @@ Status: Planned
 - Simple ML baselines retained
 - Added model complexity only with validation evidence
 - Objective Hybrid comparison with no required winner
+- X7/X8 form a separate extended scientific track and do not modify Phase 6–8
+  results or inherit X2–X6 runtime evidence as an ML dataset.
 
 ### X9 — Missing evidence and unseen variants
 Status: Planned

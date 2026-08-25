@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "X5-R0 OSPF Dynamic Routing Design and Runtime Gate v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "gate_id", "status", "track", "source_boundary", "compatibility", "source_bindings", "topology_design", "baseline_signature", "ospf_dynamic_routing_scope", "feature_boundary", "release_sequence", "safety_invariants", "evidence_policy", "acceptance", "claim_boundary", "runtime_authorization"],
+  "properties": {
+    "schema_version": {"const": 1}, "gate_id": {"const": "x5_r0_ospf_dynamic_routing_design_runtime_gate_v1"}, "status": {"const": "ACCEPTED_DESIGN_ONLY"},
+    "track": {"$ref": "#/$defs/object"}, "source_boundary": {"$ref": "#/$defs/object"}, "compatibility": {"$ref": "#/$defs/object"},
+    "source_bindings": {"type": "array", "minItems": 13, "maxItems": 13, "items": {"$ref": "#/$defs/binding"}},
+    "topology_design": {"$ref": "#/$defs/object"}, "baseline_signature": {"$ref": "#/$defs/signature"},
+    "ospf_dynamic_routing_scope": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/fault"}},
+    "feature_boundary": {"$ref": "#/$defs/object"}, "release_sequence": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"$ref": "#/$defs/release"}},
+    "safety_invariants": {"type": "array", "minItems": 10, "maxItems": 10, "uniqueItems": true, "items": {"$ref": "#/$defs/upper"}},
+    "evidence_policy": {"$ref": "#/$defs/object"}, "acceptance": {"$ref": "#/$defs/object"}, "claim_boundary": {"$ref": "#/$defs/object"}, "runtime_authorization": {"$ref": "#/$defs/object"}
+  },
+  "$defs": {
+    "lower": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"}, "upper": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"}, "sha": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "object": {"type": "object"}, "binding": {"type": "object", "additionalProperties": false, "required": ["binding_id", "path", "sha256"], "properties": {"binding_id": {"$ref": "#/$defs/lower"}, "path": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"}, "sha256": {"$ref": "#/$defs/sha"}}},
+    "signature": {"type": "object", "additionalProperties": false, "required": ["ospf_adjacency_full", "ospf_route_advertised", "ospf_route_installed", "route_filter_allows_prefix"], "properties": {"ospf_adjacency_full": {"type": "boolean"}, "ospf_route_advertised": {"type": "boolean"}, "ospf_route_installed": {"type": "boolean"}, "route_filter_allows_prefix": {"type": "boolean"}}},
+    "fault": {"type": "object", "additionalProperties": false, "required": ["order", "fault_code", "fault_type", "category", "implementation_release", "planned_rule_id", "injector_mechanism", "restoration_mechanism", "required_feature_ids", "fault_signature", "required_evidence_modes", "excluded_confounders", "recovery_intent_required", "idempotent_restoration_required", "real_e2e_required"], "properties": {"order": {"type": "integer", "minimum": 1, "maximum": 2}, "fault_code": {"enum": ["C4", "C5"]}, "fault_type": {"$ref": "#/$defs/lower"}, "category": {"const": "routing"}, "implementation_release": {"$ref": "#/$defs/upper"}, "planned_rule_id": {"$ref": "#/$defs/upper"}, "injector_mechanism": {"$ref": "#/$defs/lower"}, "restoration_mechanism": {"$ref": "#/$defs/lower"}, "required_feature_ids": {"type": "array", "minItems": 4, "maxItems": 4, "uniqueItems": true, "items": {"$ref": "#/$defs/lower"}}, "fault_signature": {"$ref": "#/$defs/signature"}, "required_evidence_modes": {"type": "array", "minItems": 6, "uniqueItems": true, "items": {"$ref": "#/$defs/upper"}}, "excluded_confounders": {"type": "array", "minItems": 6, "uniqueItems": true, "items": {"$ref": "#/$defs/lower"}}, "recovery_intent_required": {"const": true}, "idempotent_restoration_required": {"const": true}, "real_e2e_required": {"const": true}}},
+    "release": {"type": "object", "additionalProperties": false, "required": ["release_id", "objective", "status", "runtime_inherited"], "properties": {"release_id": {"$ref": "#/$defs/upper"}, "objective": {"type": "string", "minLength": 1}, "status": {"enum": ["ACCEPTED_DESIGN_ONLY", "PLANNED"]}, "runtime_inherited": {"const": false}}}
+  }
+}
