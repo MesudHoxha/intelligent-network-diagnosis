@@ -1,0 +1,19 @@
+scenario_id: X5_R2_ROUTE_FILTERING_OR_ADVERTISEMENT_PROBLEM
+fault_code: C5
+fault_type: route_filtering_or_advertisement_problem
+topology_context_id: x5_top_01_ospf_dynamic_routing_context_v1
+single_fault_only: true
+mutation:
+  node: r3
+  action: suppress_ospf_advertisement_of_10.51.3.0_24
+  command: no network 10.51.3.0/24 area 0
+  policy_marker: X5-R2-SUPPRESS
+restoration:
+  command: network 10.51.3.0/24 area 0
+  remove_policy_marker: X5-R2-SUPPRESS
+signature:
+  ospf_adjacency_full: true
+  ospf_route_advertised: false
+  ospf_route_installed: false
+  route_filter_allows_prefix: false
+rule_id: R_X5_OSPF_002

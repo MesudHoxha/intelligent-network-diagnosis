@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "gate_id": "x5_r2_route_filtering_or_advertisement_runtime_gate_v1",
+  "status": "IMPLEMENTED_RUNTIME_SLICE",
+  "track": {"parent_gate": "x5_r1_ospf_adjacency_failure_runtime_gate_v1", "current_release": "X5_R2_ROUTE_FILTERING_OR_ADVERTISEMENT_PROBLEM", "next_release": "X5_R3_CLOSEOUT"},
+  "source_boundary": {"parent_commit": "6a969dc22b3fc332c0f4d44baa9cc13354ed4c00", "extension_policy": "APPEND_ONLY", "runtime_inherited": false},
+  "slice": {
+    "fault_code": "C5",
+    "fault_type": "route_filtering_or_advertisement_problem",
+    "rule_id": "R_X5_OSPF_002",
+    "scenario_path": "scenarios/expansion/X5_R2_ROUTE_FILTERING_OR_ADVERTISEMENT_PROBLEM.yml",
+    "approved_mutation": "r3 removes the 10.51.3.0/24 OSPF network advertisement and records X5-R2-SUPPRESS as the controlled policy marker",
+    "signature": {"ospf_adjacency_full": true, "ospf_route_advertised": false, "ospf_route_installed": false, "route_filter_allows_prefix": false},
+    "excluded_confounders": ["dynamic_routing_adjacency_failure", "interface_down", "addressing_fault", "static_routing_fault", "acl_or_policy_block", "general_reachability_fault"]
+  },
+  "source_bindings": [
+    {"path": "plans/expansion/X5_R1_OSPF_ADJACENCY_FAILURE_V1.json", "sha256": "0365f11c2be94bc2f8668079bbdeb75cc4f7c13d82231bf65f3bc6aee44fafea"},
+    {"path": "labs/topologies/x5_r1_ospf_adjacency_failure/topology.clab.yml", "sha256": "3c89f5f4c0bee7d0efa25e89ff03d43ca4ee101d3b366e1f00256fd7a8b1a21b"},
+    {"path": "labs/topologies/x5_r1_ospf_adjacency_failure/scripts/validate_baseline.sh", "sha256": "c56456b54ef4dc3649e1112040cb3de9ee03af5713072c0149569a95f1c1a365"},
+    {"path": "scenarios/expansion/X5_R2_ROUTE_FILTERING_OR_ADVERTISEMENT_PROBLEM.yml", "sha256": "b2f2fbb31bf906fbda83397dc4e0739b88d99ae5ac6982f24f24ce57a627db0b"},
+    {"path": "src/collection/ospf_state_collector_x5_r2.py", "sha256": "b4949e8b13b4db13b34de914e55f8e509927150a56172487037d30eafafce592"},
+    {"path": "src/rules/ospf_rule_engine_x5_r2.py", "sha256": "d8f20e4144e2e0dd672b45eb511c7bfe1777a19955289db653419c82dfeffaf9"},
+    {"path": "src/orchestration/x5_route_filtering_experiment_runner.py", "sha256": "ad8c3b5daf48884d8141c3cfd8e4f5f539e193e05bd3cc0490b1fe60854884a4"},
+    {"path": "tests/e2e/test_x5_r2_route_filtering_containerlab.py", "sha256": "826361f773de9f30f691b1729b586a499978d5084a02555561c66659b9fc9c5e"}
+  ],
+  "runtime_authorization": {"containerlab_execution": true, "network_mutation": true, "new_evidence_collection": true, "dataset_generation": false, "model_fit_or_selection": false, "estimator_deserialization": false, "method_prediction": true, "metric_calculation": false, "report_only_test_access": false, "multiple_fault_execution": false},
+  "claim_boundary": {"controlled_single_fault_only": true, "no_ml_hybrid_metrics_api_or_generalization": true, "not_a_recovered_original_acceptance_archive": true}
+}
