@@ -1254,8 +1254,13 @@ cannot enlarge internal empirical claims.
 
 No separate public FIEK chapter-format guide was located as of 2026-08-12.
 Any later documented FIEK or mentor formatting instruction may be applied
-without changing the evidence or claim boundary. P9-R1 is next: Thesis
-Skeleton and Traceability Matrix.
+without changing the evidence or claim boundary. P9-R1 then created only the
+University-aligned structural skeleton: front-matter placeholders, seven
+chapter/subsection maps, the verified source-to-section matrix, the
+claim-to-paragraph plan, blocked-claim guards, and five accepted Phase 8 asset
+locations. It does not draft thesis prose, recalculate an accepted value,
+reopen test data, or extend an empirical claim. P9-R2 Controlled Chapter
+Drafting requires separate authorization.
 
 P7-UX1 subsequently applies a controlled presentation-only amendment to
 the already closed Phase 7 Dashboard under D-096. The six-route API,

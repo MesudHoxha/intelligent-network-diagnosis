@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "P9-R1 Thesis Skeleton and Traceability v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "gate_id", "status", "track", "source_boundary", "source_bindings", "phase8_boundary", "authorization", "thesis_skeleton", "traceability_assets", "claim_boundary"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "gate_id": {"const": "p9_r1_thesis_skeleton_traceability_v1"},
+    "status": {"const": "ACCEPTED_TRACEABILITY_ONLY"},
+    "track": {"type": "object", "additionalProperties": false, "required": ["parent_gate", "current_release", "next_milestone"], "properties": {"parent_gate": {"const": "p9_r0_thesis_structure_source_citation_gate_v1"}, "current_release": {"const": "P9_R1_THESIS_SKELETON_AND_TRACEABILITY_MATRIX"}, "next_milestone": {"const": "P9_R2_CONTROLLED_CHAPTER_DRAFTING"}}},
+    "source_boundary": {"type": "object", "additionalProperties": false, "required": ["parent_commit", "extension_policy", "runtime_inherited"], "properties": {"parent_commit": {"pattern": "^[0-9a-f]{40}$"}, "extension_policy": {"const": "APPEND_ONLY"}, "runtime_inherited": {"const": false}}},
+    "source_bindings": {"type": "array", "minItems": 9, "maxItems": 9, "items": {"type": "object", "additionalProperties": false, "required": ["path", "sha256"], "properties": {"path": {"pattern": "^[A-Za-z0-9_./-]+$"}, "sha256": {"pattern": "^[0-9a-f]{64}$"}}}},
+    "phase8_boundary": {"type": "object", "additionalProperties": false, "required": ["supported_claim_ids", "blocked_claim_ids", "hybrid_interpretation", "masked_inputs"], "properties": {"supported_claim_ids": {"type": "array", "minItems": 8, "maxItems": 8}, "blocked_claim_ids": {"type": "array", "minItems": 8, "maxItems": 8}, "hybrid_interpretation": {"const": "OPERATIONALLY_DISTINCT_NUMERICALLY_EQUAL_TO_ML"}, "masked_inputs": {"const": "TRANSFORMATIONS_NOT_INDEPENDENT_EXPERIMENTS"}}},
+    "authorization": {"type": "object", "additionalProperties": false, "required": ["chapter_skeleton", "front_matter_placeholders", "traceability_matrix", "new_thesis_prose", "containerlab", "network_mutation", "new_evidence", "dataset_generation", "model_operation", "metric_recalculation", "test_partition_access", "claim_broadening"], "properties": {"chapter_skeleton": {"const": true}, "front_matter_placeholders": {"const": true}, "traceability_matrix": {"const": true}, "new_thesis_prose": {"const": false}, "containerlab": {"const": false}, "network_mutation": {"const": false}, "new_evidence": {"const": false}, "dataset_generation": {"const": false}, "model_operation": {"const": false}, "metric_recalculation": {"const": false}, "test_partition_access": {"const": false}, "claim_broadening": {"const": false}}},
+    "thesis_skeleton": {"type": "object", "additionalProperties": false, "required": ["path", "front_matter_count", "chapter_ids", "body_word_range", "accepted_asset_locations"], "properties": {"path": {"const": "docs/P9_R1_THESIS_SKELETON_AND_TRACEABILITY_MATRIX.md"}, "front_matter_count": {"const": 5}, "chapter_ids": {"type": "array", "minItems": 7, "maxItems": 7}, "body_word_range": {"type": "object"}, "accepted_asset_locations": {"const": 5}}},
+    "traceability_assets": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "object", "additionalProperties": false, "required": ["asset_id", "path", "row_count", "size_bytes", "sha256"], "properties": {"asset_id": {"pattern": "^P9R1T0[1-4]$"}, "path": {"pattern": "^docs/thesis_assets/phase9/P9_R1_[A-Z0-9_]+\\.csv$"}, "row_count": {"minimum": 1}, "size_bytes": {"minimum": 1}, "sha256": {"pattern": "^[0-9a-f]{64}$"}}}},
+    "claim_boundary": {"type": "object", "additionalProperties": false, "required": ["supported_claims_retained", "blocked_claims_retained", "limitations_required"], "properties": {"supported_claims_retained": {"const": true}, "blocked_claims_retained": {"const": true}, "limitations_required": {"const": true}}}
+  }
+}

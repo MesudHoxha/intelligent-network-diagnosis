@@ -384,8 +384,13 @@ Status: In progress
   mentor formatting override remains guarded
 - P9-R0 tests: 21/21; Phase 7 through Phase 9: 166/166; targeted Phase
   6: 185/185; full regression: 594/594
-- P9-R1 Thesis Skeleton and Traceability Matrix: paused by user request
+- P9-R1 Thesis Skeleton and Traceability Matrix: complete
+- P9-R1 adds only front-matter placeholders, seven chapter/subsection maps,
+  a 16-row verified source-to-section matrix, C01–C08 paragraph plan,
+  B01–B08 non-draftable guards, and five accepted Phase 8 asset locations
 - Preserve exact P8 values, claim limitations, and blocked-claim scope
+- P9-R2 Controlled Chapter Drafting: not started; separate authorization
+  required
 
 ## H1 — Runtime Safety and Reproducibility Hardening
 Status: Complete

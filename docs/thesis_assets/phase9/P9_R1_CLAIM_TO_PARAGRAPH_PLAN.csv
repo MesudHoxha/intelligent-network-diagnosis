@@ -1,0 +1,9 @@
+claim_id,section_id,evidence_ids,required_limit
+C01,CH03.1,E01;E02;E04,The claim is limited to the implemented local Containerlab contexts and approved single-fault taxonomy.
+C02,CH03.2,E04,"Rows are controlled laboratory observations, not a representative sample of production networks."
+C03,CH05.1,E03;E05,The comparison is descriptive and contains no statistical-superiority test.
+C04,CH05.1,E05,Perfect clean-set results do not establish performance outside E02/E06 or beyond the controlled taxonomy.
+C05,CH05.2,E05,"The 96 masked inputs are transformations of 24 clean inputs, not independent network experiments."
+C06,CH04.3,E03;E05,Its final aggregate metrics equal the Machine Learning method; no Hybrid performance advantage is claimed.
+C07,CH04.4,E05;E06,"The interface is not a live diagnosis service, production NMS, or remote deployment."
+C08,CH06.2,E05,"This establishes protocol integrity for the accepted run, not independent external replication."

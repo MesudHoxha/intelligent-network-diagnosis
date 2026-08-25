@@ -1,0 +1,17 @@
+source_id,section_id,use
+INST01,CH01.3,format_and_integrity_requirements_only
+INST02,FRONT.1,administrative_form_only
+ACAD01,CH02.1,fault_localization_background_only
+ACAD02,CH02.2,machine_learning_networking_background_only
+ACAD03,CH02.2,fault_management_background_only
+ACAD04,CH03.2,structured_split_rationale_only
+ACAD05,CH03.2,model_selection_separation_rationale_only
+ACAD06,CH03.3,metric_terminology_only
+ACAD07,CH02.3,explainability_terminology_only
+ACAD08,CH04.1,library_provenance_only
+ACAD09,CH03.1,controlled_fault_injection_methodology_only
+STD01,CH02.1,icmp_protocol_background_only
+STD02,CH02.1,ipv4_router_background_only
+TECH01,CH04.1,topology_tool_description_only
+TECH02,CH04.1,artifact_contract_format_only
+TECH03,CH04.4,api_contract_vocabulary_only

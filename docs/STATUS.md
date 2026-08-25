@@ -1408,15 +1408,21 @@ population-level or real-world generalization.
   Detail review
 - P9-R1: remains paused by explicit user request
 
+## Latest P9-R1 thesis skeleton and traceability matrix
+
+- Source boundary: published X4-R6 commit `50f0624`
+- Skeleton: five front-matter placeholders and seven chapter/subsection maps
+- Traceability: 16 verified source-to-section rows; C01–C08 paragraph plan;
+  B01–B08 non-draftable guards; and five Phase 8 asset locations
+- Empirical boundary: Phase 6–8, API v1, hash-bound evidence, and X0–X4
+  closeouts unchanged
+- Authorization: structural placeholders and traceability only; no prose,
+  runtime, evidence, dataset, model, metric, test access, or claim broadening
+
 ## Next milestone
 
-P9-R1 — Thesis Skeleton and Traceability Matrix (paused by user request).
-
-P9-R1 must create the University-aligned front matter, seven chapter
-headings and subsections, source-to-section map, claim-to-paragraph plan,
-and locations for the five accepted Phase 8 assets. It may not recalculate
-an accepted value, reopen the test partition, or broaden the D-091/D-095
-claim boundary.
+P9-R2 — Controlled Chapter Drafting (not started; separate authorization
+required).
 
 ## Important limitation
 
