@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "receipt_id": "x5_r10_crash_safe_authoritative_successor_receipt_v1",
+  "source_commit": "e2ae10c9789145c1e3124588ace7c0349b2a3edc",
+  "evidence_kind": "CORRECTED_C4_AND_CRASH_SAFE_C5_RUNTIME_EVIDENCE_NOT_RECOVERED_OR_REPLACED",
+  "runs": [
+    {
+      "release_id": "X5_R4_OSPF_CORRECTION_AND_REVALIDATION",
+      "relative_run_path": "data/raw/x5_r4/x5-r4-targeted-c4-20260825T140611741533Z-4d050e04f7334ed0a4cf8782b579f793",
+      "authority": "AUTHORITATIVE_CORRECTED_C4",
+      "receipt_path": "plans/expansion/X5_R4_OSPF_CORRECTED_SUCCESSOR_RECEIPT_V1.json"
+    },
+    {
+      "release_id": "X5_R9_C5_RUNTIME_SAFETY_REVALIDATION",
+      "relative_run_path": "data/raw/x5_r9/x5-r9-crash-safe-operational-policy-c5-20260826T134943945141Z-bde3d371ea3a46669d8d82c4cacef89d",
+      "authority": "AUTHORITATIVE_CRASH_SAFE_C5",
+      "run_tree_sha256": "88a58fc29dae622b0db6147b91277a974ca78198dea8e28136d7d9dd0684158e",
+      "artifacts": [
+        {"path": "diagnosis/diagnosis_result_v2.json", "sha256": "c113a98d2302f88baea86b28a6fa1346d375625c3e3b86280cbb0bb2d36deee5", "size_bytes": 857},
+        {"path": "manifest.json", "sha256": "8c7401affc3acabad44ad11f51436b7e4f5cfc15f4fb061f9454434e64f9ec99", "size_bytes": 282},
+        {"path": "mutation/injection_record.json", "sha256": "4ac230b12dfa2bb9d91a7545ecf33e1aeacc64f725e81c026d82cfdda3ccdf9e", "size_bytes": 477},
+        {"path": "mutation/mutation_effectiveness.json", "sha256": "15988105a9a8c0facbfb36570ce109e55f1c4ff87e32ba0cd8013d8be57dbb9a", "size_bytes": 107938},
+        {"path": "mutation/mutation_journal.json", "sha256": "024b4c12ae0f450bd442276e8a2fc393072dd1aa9cc626116a040753b6ca85da", "size_bytes": 122102},
+        {"path": "mutation/recovery_intent.json", "sha256": "bb2b3588cb61c74ad96abc055c1867aea45d06fd60a243bc72bc603a9c5a459c", "size_bytes": 304},
+        {"path": "mutation/restoration_record.json", "sha256": "625f8c350026612ed163f1a4062d05ca338191ddf2eb89194320c60f41a782a4", "size_bytes": 2513},
+        {"path": "mutation/standalone_replay_record.json", "sha256": "cdea57d0886d372b66fbb20704193654b498e9b65406c0a3c76604558990274a", "size_bytes": 1537},
+        {"path": "parsed/evidence_v4.json", "sha256": "b84429e8baa2a7982549c1efac64e8c25d4cb30fba868a672746e1e067bfc3f6", "size_bytes": 4294},
+        {"path": "parsed/feature_vector_v2.json", "sha256": "577e08f9127b89532d30973bf08056c2abdd5ad0f5202fcded02e46fde51b8dd", "size_bytes": 838},
+        {"path": "raw/v4/ospf_state_collector_crash_safe_operational_policy/acl.json", "sha256": "a2f34074b7d013d48b948d5ae6e5044ebede4089dc50d0f91ecd7ca2630f46d7", "size_bytes": 202},
+        {"path": "raw/v4/ospf_state_collector_crash_safe_operational_policy/database.json", "sha256": "c1e9712fe0c7c4235c0cc9acb3763119af0a2781be67ce60b72b65bb29aba14d", "size_bytes": 1112},
+        {"path": "raw/v4/ospf_state_collector_crash_safe_operational_policy/interface.json", "sha256": "a194438de63aa3c29f3f3a05f0d2fb5f769993e0ff6bee02e7228172c0e7f157", "size_bytes": 388},
+        {"path": "raw/v4/ospf_state_collector_crash_safe_operational_policy/neighbor_r2.json", "sha256": "36edc62a1ba34c42b6b688a9413a5fe7e68e87e08afd8b3db1be666a8011de0c", "size_bytes": 1760},
+        {"path": "raw/v4/ospf_state_collector_crash_safe_operational_policy/policy.json", "sha256": "10f0d57048e1f228ca1052a89136ef85164489442a9ad6d1e61ca87c24158936", "size_bytes": 806},
+        {"path": "raw/v4/ospf_state_collector_crash_safe_operational_policy/reachability.json", "sha256": "fd3798b71dbb23254a61a936e7906435c1391cb7cc18d9ac6a5550e074b13b94", "size_bytes": 344},
+        {"path": "raw/v4/ospf_state_collector_crash_safe_operational_policy/route.json", "sha256": "95f99eb3dbbda72de05e35cd3fe061e433e9007804ed87a912af8784214fa36d", "size_bytes": 188},
+        {"path": "raw/v4/ospf_state_collector_crash_safe_operational_policy/static.json", "sha256": "6e1230573df0fedafe213b934f98bcd234682c4d620b82a5ee86c683444d4eb7", "size_bytes": 575},
+        {"path": "validation/baseline_after.json", "sha256": "5cc2ee58d05b06b112b8e0e82906738f6dd13cfee38be46722e74cf922a918a4", "size_bytes": 217},
+        {"path": "validation/baseline_before.json", "sha256": "5cc2ee58d05b06b112b8e0e82906738f6dd13cfee38be46722e74cf922a918a4", "size_bytes": 217},
+        {"path": "validation/control_exclusions.json", "sha256": "fa391dc693791d16822aa4be8051104670557513b66b9c2f5384c5c26a19949a", "size_bytes": 470},
+        {"path": "validation/runtime_image_identity.json", "sha256": "15c518559092662a5596c2f2231e0a7766ded0377d222942ece87e7a405c3ee2", "size_bytes": 505}
+      ]
+    }
+  ],
+  "historical_evidence": {
+    "x5_r1_c4": "RETAINED_HISTORICAL_NON_AUTHORITATIVE_FOR_CORRECTED_C4_SCIENTIFIC_USE",
+    "x5_r2_c5": "RETAINED_HISTORICAL_NON_AUTHORITATIVE_FOR_POLICY_FEATURE_SCIENTIFIC_USE",
+    "x5_r6_c5": "RETAINED_OBSERVATIONALLY_VALID_BUT_NON_AUTHORITATIVE_FOR_CRASH_SAFETY_AND_COMPLETE_RAW_CHAIN_CLAIMS",
+    "x5_r7_receipt": "RETAINED_OBSERVATIONALLY_VALID_BUT_NON_AUTHORITATIVE_FOR_CRASH_SAFETY_AND_COMPLETE_RAW_CHAIN_CLAIMS",
+    "x5_r9_first_tree": "RETAINED_DIAGNOSTIC_NON_AUTHORITATIVE_AFTER_SOURCE_GATE_FAILURE"
+  },
+  "summary": {
+    "authoritative_run_count": 2,
+    "c4_signature": [false, false, false, true],
+    "c5_signature": [true, false, false, false],
+    "claim_limit": "Only two controlled single-fault OSPF variants on the accepted topology; no generalized OSPF, ML/Hybrid, dataset, metric, API, unseen-topology, performance, or multi-fault claim."
+  }
+}

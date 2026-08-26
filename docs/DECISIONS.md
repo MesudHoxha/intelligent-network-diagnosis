@@ -3019,3 +3019,19 @@ verify raw artifact hashes against observation provenance, the exact C5
 signature and rule, expected FRR digest, baseline before/after, restoration and
 zero-container cleanup. X5-R10 is the next append-only authoritative receipt;
 X6-R1 and P9-R2 remain paused.
+
+## D-X5-R10 — Make only corrected C4 and crash-safe C5 authoritative
+
+Decision: bind corrected X5-R4 C4 and the source-verified second X5-R9 C5
+tree in a new append-only materialized receipt. The receipt must verify every
+bound file hash and the full Evidence v4 observation-to-collector-to-raw
+provenance chain, alongside Feature Vector v2 and diagnosis schema validity,
+the C4/C5 signatures and rules, C5 command acceptance/effectiveness, recovery
+and standalone replay, restoration, baselines, exclusion controls, and image
+identity. It does not create or recover evidence.
+
+The original X5-R1 and X5-R2 trees, X5-R6/X5-R7 closeout records, and the first
+X5-R9 tree remain immutable history. Only the X5-R4 C4 and second X5-R9 C5 tree
+support the bounded authoritative claim: two controlled single-fault OSPF
+variants on the accepted topology. X6-R1 and P9-R2 remain paused; next is
+`X6_R1_PACKET_LOSS`.

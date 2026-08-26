@@ -1875,3 +1875,17 @@ mutation, separate acceptance/effectiveness records, standalone idempotent
 replay, raw provenance hashes, matched FRR digest, restoration and baselines.
 Its observed signature is `true,false,false,false` with `R_X5_OSPF_002`.
 X5-R10 is next; X6-R1 and P9-R2 remain paused.
+
+## X5-R10 crash-safe authoritative successor closeout (2026-08-26)
+
+X5-R10 is an append-only, zero-runtime receipt closeout. It makes corrected
+X5-R4 C4 and the second, source-verified X5-R9 C5 tree the only authoritative
+X5 scientific evidence. The initial X5-R9 tree remains intact as diagnostic,
+non-authoritative history after its later source-safety failure; X5-R1, X5-R2,
+X5-R6, and X5-R7 remain intact historical records with the bounded statuses
+recorded in the receipt. The receipt validates the complete C5
+observation--collector--raw-artifact--hash chain, Evidence v4, Feature Vector
+v2, diagnosis, command acceptance, effectiveness, recovery/replay,
+restoration, baselines, controls, and recorded image identity. Claims remain
+limited to two controlled single-fault OSPF variants on the accepted topology.
+X6-R1 and P9-R2 remain paused; next: `X6_R1_PACKET_LOSS`.

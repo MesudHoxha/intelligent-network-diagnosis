@@ -516,14 +516,17 @@ Status: Accepted source-only corrective gate; X6-R1 remains paused
 
 - Preserve X5-R6/X5-R7 history unchanged
 - Require a new crash-safe C5 revalidation and an authoritative successor receipt
-- Next: `X5_R9_C5_RUNTIME_SAFETY_REVALIDATION`
+- X5-R9 has completed a corrected crash-safe C5 revalidation; the initial
+  diagnostic tree remains non-authoritative.
+- X5-R10 is the authoritative corrected-C4/crash-safe-C5 receipt closeout.
+- Next: `X6_R1_PACKET_LOSS` (paused pending separate authorization)
 
 ### X6-R0.1 — Measurement and traffic methodology
 Status: Accepted source-only methodology gate; F1--F4 signatures remain conditional
 
 - Freeze traffic, windows, p95, threshold-manifest and provenance method
 - Require numeric-collector/rule-predicate separation and no ML leakage
-- X5-R9 remains next; X6-R1 and P9-R2 remain paused
+- X5-R10 is complete; X6-R1 and P9-R2 remain paused
 
 ### X7 — Extended grouped single-fault dataset
 Status: Planned

@@ -1654,4 +1654,8 @@ measurements while rules alone derive predicates; neither threshold metadata
 nor rule predicates is a future ML label. F1--F4 signatures remain conditional
 until empirical pilot measurements show truthful separation. No performance
 runtime evidence, threshold, dataset, model, metric, API, or scientific claim
-is created. X5-R9 remains next; X6-R1 and P9-R2 remain paused.
+is created. X5-R9 has since produced the source-verified crash-safe C5 tree;
+X5-R10 is the zero-runtime authoritative receipt closeout that binds it only
+with corrected X5-R4 C4. The first X5-R9 tree remains diagnostic and
+non-authoritative. X6-R1 and P9-R2 remain paused; after X5-R10, the exact next
+milestone is `X6_R1_PACKET_LOSS`.

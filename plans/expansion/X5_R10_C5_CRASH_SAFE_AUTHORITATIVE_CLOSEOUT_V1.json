@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "release_id": "X5_R10_C5_CRASH_SAFE_AUTHORITATIVE_CLOSEOUT",
+  "status": "ACCEPTED_SOURCE_CLOSEOUT",
+  "source_boundary": {"parent_commit": "e2ae10c9789145c1e3124588ace7c0349b2a3edc", "extension_policy": "APPEND_ONLY", "runtime_inherited": false},
+  "authoritative_runs": {"c4": "X5_R4_OSPF_CORRECTION_AND_REVALIDATION", "c5": "X5_R9_C5_RUNTIME_SAFETY_REVALIDATION"},
+  "historical_evidence": {
+    "x5_r1_c4": "RETAINED_HISTORICAL_NON_AUTHORITATIVE_FOR_CORRECTED_C4_SCIENTIFIC_USE",
+    "x5_r2_c5": "RETAINED_HISTORICAL_NON_AUTHORITATIVE_FOR_POLICY_FEATURE_SCIENTIFIC_USE",
+    "x5_r6_c5": "RETAINED_OBSERVATIONALLY_VALID_BUT_NON_AUTHORITATIVE_FOR_CRASH_SAFETY_AND_COMPLETE_RAW_CHAIN_CLAIMS",
+    "x5_r7_receipt": "RETAINED_OBSERVATIONALLY_VALID_BUT_NON_AUTHORITATIVE_FOR_CRASH_SAFETY_AND_COMPLETE_RAW_CHAIN_CLAIMS",
+    "x5_r9_first_tree": "RETAINED_DIAGNOSTIC_NON_AUTHORITATIVE_AFTER_SOURCE_GATE_FAILURE"
+  },
+  "verification": {"receipt_hash_binding_required": true, "evidence_v4_and_feature_vector_validation_required": true, "observation_collector_raw_receipt_chain_required": true, "command_acceptance_and_effectiveness_required": true, "restoration_baselines_and_controls_required": true, "clean_clone_skip_only_when_ignored_archives_absent": true},
+  "claim_limit": "Only two controlled single-fault OSPF variants on the accepted topology; no generalized OSPF, ML/Hybrid, dataset, metric, API, unseen-topology, performance, or multi-fault claim.",
+  "track": {"next_release": "X6_R1_PACKET_LOSS", "x6_status": "PAUSED_BY_USER_PENDING_X5_R10_ACCEPTANCE", "p9_r2_status": "PAUSED_BY_USER"},
+  "runtime_authorization": {"containerlab_execution": false, "network_mutation": false, "new_evidence_collection": false, "dataset_generation": false, "model_training": false, "ml_or_hybrid_evaluation": false, "metric_calculation": false, "api_change": false, "multi_fault_experiment": false, "method_prediction": false}
+}
