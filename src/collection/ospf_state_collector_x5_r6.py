@@ -1,0 +1,102 @@
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+from typing import Mapping
+
+from src.collection.ospf_state_collector_x5_r4 import CONTROL, TARGET, capture, target_state
+from src.contracts.expansion import validate_evidence_v4, validate_feature_vector_v2
+from src.fault_injection.phase6_common import utc_now, write_json_atomic
+
+
+FEATURES = ("ospf_adjacency_full", "ospf_route_advertised", "ospf_route_installed", "route_filter_allows_prefix")
+PREFIX = "10.51.3.0/24"
+PREFIX_LSA_ID = "10.51.3.1"
+
+
+def _json_object(record: Mapping[str, object], *, allow_empty: bool) -> dict[str, object] | None:
+    if record.get("return_code") != 0 or not isinstance(record.get("stdout"), str) or not str(record["stdout"]).strip():
+        return None
+    try:
+        value = json.loads(str(record["stdout"]))
+    except json.JSONDecodeError:
+        return None
+    return value if isinstance(value, dict) and (allow_empty or bool(value)) else None
+
+
+def _walk(value: object) -> list[Mapping[str, object]]:
+    rows: list[Mapping[str, object]] = []
+    if isinstance(value, Mapping):
+        rows.append(value)
+        for child in value.values(): rows.extend(_walk(child))
+    elif isinstance(value, list):
+        for child in value: rows.extend(_walk(child))
+    return rows
+
+
+def _expected_lsa_present(database: Mapping[str, object]) -> bool:
+    return any((row.get("advertisedRouter") == "3.3.3.3" and str(row.get("linkStateId", row.get("lsId", ""))) == PREFIX_LSA_ID) or row.get("prefix") == PREFIX for row in _walk(database))
+
+
+def _route_installed(route: Mapping[str, object]) -> bool:
+    return any("ospf" in str(row.get("protocol", row.get("type", ""))).lower() or "ospf" in json.dumps(row).lower() for row in _walk(route))
+
+
+def _policy_state(policy: str) -> dict[str, bool]:
+    return {
+        "attachment_present": "redistribute connected route-map X5-R5-C5-EXPORT" in policy,
+        "route_map_match_present": "match ip address prefix-list X5-R5-C5-TARGET" in policy,
+        "active_deny_present": "ip prefix-list X5-R5-C5-TARGET seq 1 deny 10.51.3.0/24" in policy,
+        "baseline_permit_retained": "ip prefix-list X5-R5-C5-TARGET seq 5 permit 10.51.3.0/24" in policy,
+        "direct_expected_network_absent": "network 10.51.3.0/24 area 0" not in policy,
+    }
+
+
+def collect_x5_r6_evidence(root: Path, *, repository_root: Path) -> dict[str, object]:
+    raw = root / "raw/v4/ospf_state_collector_operational_policy"; raw.mkdir(parents=True)
+    commands = {
+        "neighbor_r2": ["docker", "exec", "clab-x5r5c5-r2", "vtysh", "-c", "show ip ospf neighbor json"],
+        "database": ["docker", "exec", "clab-x5r5c5-r1", "vtysh", "-c", "show ip ospf database json"],
+        "route": ["docker", "exec", "clab-x5r5c5-r1", "vtysh", "-c", "show ip route 10.51.3.0/24 json"],
+        "policy": ["docker", "exec", "clab-x5r5c5-r3", "vtysh", "-c", "show running-config"],
+        "interface": ["docker", "exec", "clab-x5r5c5-r2", "ip", "link", "show", "eth2"],
+        "static": ["docker", "exec", "clab-x5r5c5-r1", "vtysh", "-c", "show running-config"],
+        "acl": ["docker", "exec", "clab-x5r5c5-r1", "iptables", "-S"],
+        "reachability": ["docker", "exec", "clab-x5r5c5-hosta", "ping", "-c", "1", "-W", "2", "10.51.3.2"],
+    }
+    records: dict[str, tuple[str, str, dict[str, object]]] = {}
+    for name, command in commands.items():
+        record = capture(command); path = raw / (name + ".json"); write_json_atomic(path, record)
+        records[name] = (str(path.relative_to(root)), hashlib.sha256(path.read_bytes()).hexdigest(), record)
+    neighbor, database, route = (_json_object(records[name][2], allow_empty=name == "route") for name in ("neighbor_r2", "database", "route"))
+    state = target_state(records["neighbor_r2"][2]) if neighbor is not None else {"r2_r3_full": None, "r1_r2_full": None}
+    policy_text = str(records["policy"][2].get("stdout", "")); policy = _policy_state(policy_text)
+    parsers_valid = neighbor is not None and database is not None and route is not None
+    commands_valid = all(records[name][2]["return_code"] == 0 for name in records if name != "reachability")
+    controls = {
+        "target_r2_r3_full": state["r2_r3_full"] is True, "control_r1_r2_full": state["r1_r2_full"] is True,
+        "interface_healthy": "UP" in str(records["interface"][2].get("stdout", "")),
+        "no_static_override": "ip route 10.51.3.0/24" not in str(records["static"][2].get("stdout", "")),
+        "no_acl_block": "X5-R1-BLOCK" not in str(records["acl"][2].get("stdout", "")),
+        "scoped_reachability_failed": records["reachability"][2]["return_code"] != 0,
+        "structured_lsdb_valid": database is not None, "structured_route_valid": route is not None,
+        "lsa_absent": database is not None and not _expected_lsa_present(database), "route_absent": route is not None and not _route_installed(route),
+        **policy,
+    }
+    required = ("target_r2_r3_full", "control_r1_r2_full", "interface_healthy", "no_static_override", "no_acl_block", "scoped_reachability_failed", "structured_lsdb_valid", "structured_route_valid", "lsa_absent", "route_absent", "attachment_present", "route_map_match_present", "active_deny_present", "baseline_permit_retained", "direct_expected_network_absent")
+    if not commands_valid or not parsers_valid or not all(bool(controls[name]) for name in required):
+        raise RuntimeError("X5-R6 C5 controls/evidence did not hold: " + json.dumps(controls, sort_keys=True))
+    values = {"ospf_adjacency_full": True, "ospf_route_advertised": False, "ospf_route_installed": False, "route_filter_allows_prefix": False}
+    source = {"ospf_adjacency_full": "neighbor_r2", "ospf_route_advertised": "database", "ospf_route_installed": "route", "route_filter_allows_prefix": "policy"}
+    observations = {name: {"value": value, "value_type": "boolean", "availability": "observed", "collector_id": "ospf_state_collector_operational_policy", "raw_artifact": records[source[name]][0], "raw_artifact_sha256": records[source[name]][1]} for name, value in values.items()}
+    evidence = {"schema_version": 4, "evidence_id": "x5_r6_operational_policy_c5:evidence:v4", "topology_context_id": "X5_TOP_01_C5_OPERATIONAL_POLICY_VARIANT", "collected_at_utc": utc_now(), "observation_path": {"direction": "hosta_to_hostb", "source_node": "hosta", "destination_node": "hostb", "observer_nodes": ["r1", "r2"]}, "collector_runs": [{"schema_version": 1, "collector_id": "ospf_state_collector_operational_policy", "collector_version": 3, "domain": "routing", "status": "completed", "started_at_utc": utc_now(), "completed_at_utc": utc_now(), "feature_ids": list(FEATURES), "raw_artifacts": [{"path": row[0], "sha256": row[1]} for row in records.values()], "errors": []}], "observations": observations, "compatibility": {"origin": "native_v4", "source_schema_version": None, "source_artifact_sha256": None}}
+    catalog = json.loads((repository_root / "plans/expansion/X1_FEATURE_CATALOG_V1.json").read_text()); validate_evidence_v4(evidence, catalog, repository_root=repository_root)
+    write_json_atomic(root / "parsed/evidence_v4.json", evidence); write_json_atomic(root / "validation/control_exclusions.json", controls)
+    return evidence
+
+
+def build_x5_r6_feature_vector(root: Path, evidence: Mapping[str, object], *, repository_root: Path) -> dict[str, object]:
+    catalog_path = repository_root / "plans/expansion/X1_FEATURE_CATALOG_V1.json"; catalog = json.loads(catalog_path.read_text()); evidence_path = root / "parsed/evidence_v4.json"
+    vector = {"schema_version": 2, "vector_id": str(evidence["evidence_id"]) + ":vector:v2", "catalog_id": catalog["catalog_id"], "evidence_id": evidence["evidence_id"], "values": {name: {"value": evidence["observations"][name]["value"], "availability": evidence["observations"][name]["availability"]} for name in FEATURES}, "mask_id": None, "provenance": {"evidence_sha256": hashlib.sha256(evidence_path.read_bytes()).hexdigest(), "feature_catalog_sha256": hashlib.sha256(catalog_path.read_bytes()).hexdigest()}}
+    validate_feature_vector_v2(vector, catalog, repository_root=repository_root); write_json_atomic(root / "parsed/feature_vector_v2.json", vector); return vector

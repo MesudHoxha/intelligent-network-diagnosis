@@ -1607,3 +1607,14 @@ statement. The planned runtime mutation denies the expected prefix only through
 that attached criterion. No runtime evidence, scientific result, dataset,
 model, metric, API change or broad OSPF claim exists in X5-R5. X6 and P9-R2
 remain paused; next is `X5_R6_C5_OPERATIONAL_POLICY_RUNTIME_REVALIDATION`.
+
+## X5-R6 corrected C5 operational-policy runtime revalidation (2026-08-26)
+
+X5-R6 is the only new C5 runtime tree after X5-R5. It uses an attached FRR
+`redistribute connected route-map` plus prefix-list, retains healthy exact
+adjacencies, and proves policy denial without an expected-prefix OSPF `network`
+statement. Evidence requires valid structured LSDB/route output and Feature
+Vector v2 validation before diagnosis. Command acceptance, physical
+effectiveness, recovery replay, baseline before/after and cleanup are distinct
+records. No claim extends beyond controlled single-fault C5. X5-R7 is next;
+X6 and P9-R2 remain paused.

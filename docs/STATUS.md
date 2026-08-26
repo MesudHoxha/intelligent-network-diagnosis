@@ -1828,3 +1828,14 @@ the `X5-R5-C5-TARGET` prefix list. The future mutation may change only that
 attached criterion to deny `10.51.3.0/24`; direct expected-prefix OSPF network
 origination remains absent. X5-R5 creates no runtime material or scientific
 claim. X6 and P9-R2 remain paused. Next: `X5_R6_C5_OPERATIONAL_POLICY_RUNTIME_REVALIDATION`.
+
+## X5-R6 corrected C5 operational-policy runtime revalidation (2026-08-26)
+
+X5-R6 creates a new C5 Evidence v4 tree using R3's attached FRR OSPF
+redistribution route-map and prefix-list. The mutation adds an active deny to
+that attached list; it never removes direct expected-prefix OSPF network
+origination, which is absent in this topology variant. The run requires exact
+healthy R2--R3 and R1--R2 adjacencies, structured LSDB/route validation,
+direct policy proof, command-acceptance/effectiveness separation and idempotent
+recovery. It remains limited to the controlled C5 variant. Next X5-R7 binds
+authoritative X5-R4 C4 and this corrected C5; X6 and P9-R2 remain paused.

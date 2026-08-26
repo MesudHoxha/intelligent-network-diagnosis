@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "release_id": "X5_R6_C5_OPERATIONAL_POLICY_RUNTIME_REVALIDATION",
+  "status": "IMPLEMENTED_RUNTIME_REVALIDATION",
+  "source_boundary": {"parent_commit": "8ff7a1e788c3571518d97a342918bd9094f32ebd", "extension_policy": "APPEND_ONLY", "runtime_inherited": false},
+  "slice": {"fault_type": "route_filtering_or_advertisement_problem", "rule_id": "R_X5_OSPF_002", "signature": {"ospf_adjacency_full": true, "ospf_route_advertised": false, "ospf_route_installed": false, "route_filter_allows_prefix": false}, "topology": "X5_TOP_01_C5_OPERATIONAL_POLICY_VARIANT", "runtime_image": "frrouting/frr:v8.4.1"},
+  "mutation": {"approved_action": "add ip prefix-list X5-R5-C5-TARGET seq 1 deny 10.51.3.0/24", "attachment_must_remain": "redistribute connected route-map X5-R5-C5-EXPORT", "forbidden_action": "remove network 10.51.3.0/24 area 0", "command_acceptance_separate_from_effectiveness": true},
+  "acceptance": {"bounded_state_based_effectiveness_required": true, "target_r2_r3_full_required": true, "control_r1_r2_full_required": true, "structured_lsdb_and_route_required": true, "feature_vector_validation_at_rule_entry_required": true, "evidence_v4_required": true, "raw_hashes_required": true, "partial_mutation_recovery_required": true, "idempotent_replay_required": true, "baseline_before_after_required": true, "zero_container_cleanup_required": true},
+  "runtime_authorization": {"containerlab_execution": true, "network_mutation": true, "new_evidence_collection": true, "dataset_generation": false, "model_training": false, "ml_or_hybrid_evaluation": false, "metric_calculation": false, "api_change": false, "multi_fault_experiment": false, "method_prediction": true},
+  "scientific_claim_limit": "Only one controlled C5 operational-policy revalidation on the accepted topology; no generalized OSPF, ML/Hybrid, dataset, metric, API, unseen-topology, performance, or multi-fault claim.",
+  "track": {"next_release": "X5_R7_C5_CORRECTED_SUCCESSOR_CLOSEOUT", "x6_status": "PAUSED_UNTIL_X5_R7", "p9_r2_status": "PAUSED_BY_USER"},
+  "source_bindings": [
+    {"path": "plans/expansion/X5_R5_C5_OPERATIONAL_POLICY_CORRECTION_DESIGN_GATE_V1.json", "sha256": "333636366749ecc1d30ede7385af3cefd10dedd61fd4d83546e15d3d12182c75"},
+    {"path": "labs/topologies/x5_r5_c5_operational_policy/topology.clab.yml", "sha256": "e3354f7d8a58740776aea1825a1e2a4cfae7a875fda98da436f73f679f1d5e92"},
+    {"path": "labs/topologies/x5_r5_c5_operational_policy/configs/r3.conf", "sha256": "b7cf3bd4b3456d5eee770e6a4aa943f67ce691f788da5b71ec191ba6c0706e5a"},
+    {"path": "labs/topologies/x5_r5_c5_operational_policy/scripts/validate_baseline.sh", "sha256": "0b997f8f9cad72fe389e39227b5ee47b9bc9c0dbf7384bc88857b5a8da453195"},
+    {"path": "src/collection/ospf_state_collector_x5_r6.py", "sha256": "ef0c7f2f42ff39621cf93137359d1c3a632479b15b34d701493f8611607913c9"},
+    {"path": "src/rules/ospf_rule_engine_x5_r6.py", "sha256": "b16abc517b3509a1bb47562feea2f2353565b11acc056aee97017a1dbf4d002d"},
+    {"path": "src/orchestration/x5_r6_operational_policy_revalidation_runner.py", "sha256": "18ea4fb1d3d3ffa54cd943507d69be9dfd45dc17ad308ab12590ed2eac2fdc05"}
+  ]
+}

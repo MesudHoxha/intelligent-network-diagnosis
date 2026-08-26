@@ -2961,3 +2961,15 @@ Status: source-only gate. No runtime lifecycle, evidence, scientific claim,
 dataset, model, metric or API change is authorized. X6 and P9-R2 remain paused;
 the next authorized technical milestone is
 `X5_R6_C5_OPERATIONAL_POLICY_RUNTIME_REVALIDATION`.
+
+## D-X5-R6 — Revalidate C5 only through an attached operational policy
+
+Decision: run C5 with R3's connected route redistributed through the attached
+`X5-R5-C5-EXPORT` route map and target prefix list. Inject only a higher-order
+deny in that active list; direct expected-prefix OSPF network origination is
+absent and must not be changed. Require exact healthy target/control
+adjacencies, direct configuration proof, valid structured LSDB/route records
+before absence is observed, Feature Vector v2 validation at rule entry, and a
+bounded state postcondition. Preserve separate command acceptance and observed
+effectiveness, durable recovery intent/journal, idempotent replay, baselines and
+zero-container cleanup. The next step is a new append-only X5-R7 receipt.
