@@ -11,6 +11,7 @@ from collections.abc import Callable
 from datetime import datetime, timezone
 import json
 from pathlib import Path
+import sys
 from time import monotonic, sleep
 from typing import Any
 from uuid import uuid4
@@ -22,11 +23,11 @@ from src.collection.ospf_state_collector_x5_r6 import (
     _json_object,
     _policy_state,
     _route_installed,
-    build_x5_r6_feature_vector,
-    collect_x5_r6_evidence,
 )
+from src.collection.ospf_state_collector_x5_r9 import build_x5_r9_feature_vector, collect_x5_r9_evidence
 from src.fault_injection.phase6_common import utc_now, write_json_atomic
 from src.rules.ospf_rule_engine_x5_r6 import diagnose_x5_r6_operational_policy_c5
+from src.runtime.subprocesses import TIMEOUT_RETURN_CODE, run_capture
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -188,6 +189,26 @@ def recover_x5_r9_experiment(experiment_root: Path, *, command_executor: Command
     return {"schema_version": 2, "status": "RECOVERY_APPLIED" if restored else "RECOVERY_FAILED", "prior_action_status": prior_status, "action_status": action["status"], "recovery_command": command, "completed_at_utc": utc_now()}
 
 
+def _standalone_replay(root: Path, *, bounded_runner: Callable[..., object] = run_capture) -> dict[str, object]:
+    command = [sys.executable, "-m", "src.orchestration.x5_r9_c5_runtime_safety_revalidation_runner", "--recover", str(root)]
+    started_at_utc = utc_now()
+    result = bounded_runner(command, timeout_seconds=20.0, cwd=ROOT)
+    return_code = getattr(result, "returncode", None)
+    stdout = getattr(result, "stdout", "")
+    stderr = getattr(result, "stderr", "")
+    record: dict[str, object] = {"command": command, "timeout_seconds": 20.0, "return_code": return_code, "stdout": stdout, "stderr": stderr, "started_at_utc": started_at_utc, "completed_at_utc": utc_now(), "status": "STANDALONE_REPLAY_FAILED"}
+    if return_code == 0:
+        try: replay = json.loads(result.stdout)
+        except json.JSONDecodeError: replay = None
+        if isinstance(replay, dict) and replay.get("status") == "RECOVERY_APPLIED": record.update({"status": "STANDALONE_REPLAY_APPLIED", "replay": replay})
+    elif return_code == TIMEOUT_RETURN_CODE:
+        record["failure_kind"] = "TIMEOUT"
+    else:
+        record["failure_kind"] = "NONZERO_OR_INVALID_REPLAY"
+    write_json_atomic(root / "mutation/standalone_replay_record.json", record)
+    return record
+
+
 def _capture_image_identity(command_executor: CommandExecutor) -> dict[str, object]:
     result = command_executor(["docker", "image", "inspect", "frrouting/frr:v8.4.1"])
     identity: dict[str, object] = {"command": result.get("command"), "return_code": result.get("return_code"), "expected_repo_digest": EXPECTED_IMAGE_DIGEST, "status": "IMAGE_IDENTITY_UNAVAILABLE"}
@@ -229,8 +250,8 @@ def run_x5_r9_experiment(output_root: Path, baseline: Path, *, experiment_id: st
         _record_effectiveness(root, effectiveness)
         if effectiveness["status"] != "MUTATION_EFFECTIVE":
             raise RuntimeError("X5-R9 C5 postcondition did not converge")
-        evidence = collect_x5_r6_evidence(root, repository_root=ROOT)
-        vector = build_x5_r6_feature_vector(root, evidence, repository_root=ROOT)
+        evidence = collect_x5_r9_evidence(root, repository_root=ROOT)
+        vector = build_x5_r9_feature_vector(root, evidence, repository_root=ROOT)
         diagnosis = diagnose_x5_r6_operational_policy_c5(vector, repository_root=ROOT)
         write_json_atomic(root / "diagnosis/diagnosis_result_v2.json", diagnosis)
         if diagnosis.get("status") != "diagnosed":
@@ -238,8 +259,8 @@ def run_x5_r9_experiment(output_root: Path, baseline: Path, *, experiment_id: st
     except BaseException as error:
         primary = error
     recovery = recover_x5_r9_experiment(root, command_executor=command_executor)
-    replay = recover_x5_r9_experiment(root, command_executor=command_executor)
-    restoration = {"schema_version": 2, **intent, "recovery": recovery, "replay": replay, "status": "RESTORATION_CONFIRMED" if recovery["status"] == replay["status"] == "RECOVERY_APPLIED" else "RESTORATION_FAILED", "completed_at_utc": utc_now()}
+    replay = _standalone_replay(root)
+    restoration = {"schema_version": 2, **intent, "recovery": recovery, "standalone_replay": replay, "status": "RESTORATION_CONFIRMED" if recovery["status"] == "RECOVERY_APPLIED" and replay["status"] == "STANDALONE_REPLAY_APPLIED" else "RESTORATION_FAILED", "completed_at_utc": utc_now()}
     write_json_atomic(root / "mutation/restoration_record.json", restoration)
     if restoration["status"] != "RESTORATION_CONFIRMED":
         raise RuntimeError("X5-R9 idempotent restoration failed")
@@ -250,3 +271,13 @@ def run_x5_r9_experiment(output_root: Path, baseline: Path, *, experiment_id: st
         raise primary
     write_json_atomic(root / "manifest.json", {"schema_version": 1, "release_id": "X5_R9_C5_RUNTIME_SAFETY_REVALIDATION", "experiment_id": experiment_id, "status": "COMPLETED", "completed_at_utc": utc_now()})
     return {"status": "COMPLETED", "experiment_directory": str(root), "restoration_confirmed": True, "baseline_valid_after": True}
+
+
+def main() -> int:
+    import argparse
+    parser = argparse.ArgumentParser(); parser.add_argument("--recover", type=Path); arguments = parser.parse_args()
+    if arguments.recover is None: parser.error("--recover is required for the standalone recovery entry point")
+    print(json.dumps(recover_x5_r9_experiment(arguments.recover), sort_keys=True)); return 0
+
+
+if __name__ == "__main__": raise SystemExit(main())

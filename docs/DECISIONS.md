@@ -3009,3 +3009,13 @@ counters; F4 requires both direct cap configuration and a measured throughput
 consistency tolerance. No runtime evidence, threshold value, dataset, model,
 metric, API or scientific claim is authorized. X5-R9 remains next; X6-R1 and
 P9-R2 remain paused.
+
+## D-X5-R9 — Revalidate C5 with a crash-safe lifecycle
+
+Decision: accept one new C5 tree only when the planned action is durable before
+attempt, command acceptance and state-based effectiveness are distinct, and a
+fresh process can recover/replay from durable state idempotently. The run must
+verify raw artifact hashes against observation provenance, the exact C5
+signature and rule, expected FRR digest, baseline before/after, restoration and
+zero-container cleanup. X5-R10 is the next append-only authoritative receipt;
+X6-R1 and P9-R2 remain paused.

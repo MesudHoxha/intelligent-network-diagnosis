@@ -1867,3 +1867,11 @@ window, p95, threshold-manifest, numeric/provenance and independent
 effectiveness requirements without choosing a runtime threshold or running a
 performance lifecycle. F1--F4 signatures are conditional pending truthful
 future pilot separation. X5-R9 remains next; X6-R1 and P9-R2 remain paused.
+
+## X5-R9 crash-safe C5 runtime revalidation (2026-08-26)
+
+X5-R9 has a new durable C5 runtime tree with a planned-action journal before
+mutation, separate acceptance/effectiveness records, standalone idempotent
+replay, raw provenance hashes, matched FRR digest, restoration and baselines.
+Its observed signature is `true,false,false,false` with `R_X5_OSPF_002`.
+X5-R10 is next; X6-R1 and P9-R2 remain paused.

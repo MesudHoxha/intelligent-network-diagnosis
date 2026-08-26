@@ -1633,6 +1633,17 @@ depend on ignored archives; explicit materialized verification remains
 mandatory when those archives are available. X6-R1 and P9-R2 remain paused.
 The next release is `X5_R9_C5_RUNTIME_SAFETY_REVALIDATION`.
 
+## X5-R9 crash-safe C5 runtime revalidation (2026-08-26)
+
+X5-R9 is the new append-only C5 runtime tree following X5-R8. It proves the
+attached operational-policy denial while both exact OSPF adjacencies remain
+Full, and produces the exact C5 signature `true,false,false,false` with
+`R_X5_OSPF_002`. The planned action is durable before attempt; command
+acceptance, bounded physical effectiveness, in-process recovery and standalone
+new-process replay are separate records. It records and matches the expected
+FRR digest, verifies raw provenance, restores the baseline and cleans up all
+containers. X5-R10 is next; X6-R1 and P9-R2 remain paused.
+
 ## X6-R0.1 performance measurement and traffic methodology (2026-08-26)
 
 X6-R0.1 is an append-only design-only methodology gate. It freezes future
