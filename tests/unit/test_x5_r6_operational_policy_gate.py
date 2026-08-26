@@ -28,7 +28,25 @@ def test_x5_r6_rejects_empty_or_malformed_structured_observations() -> None:
 
 
 def test_x5_r6_rule_validates_vector_and_fails_closed_for_unavailable_evidence() -> None:
-    vector = json.loads((ROOT / "data/raw/x5_r2/x5-r2-route-filter-20260825T124415388794Z-9117d813357e4d3d8cd74e68c6c2d9d1/parsed/feature_vector_v2.json").read_text())
+    # This is deliberately source-only: accepted runtime archives are ignored
+    # and must not be a prerequisite for the default clean-checkout suite.
+    vector = {
+        "schema_version": 2,
+        "vector_id": "x5_r6_source_fixture:vector:v2",
+        "catalog_id": "x1_feature_catalog_v1",
+        "evidence_id": "x5_r6_source_fixture:evidence:v4",
+        "values": {
+            "ospf_adjacency_full": {"value": True, "availability": "observed"},
+            "ospf_route_advertised": {"value": False, "availability": "observed"},
+            "ospf_route_installed": {"value": False, "availability": "observed"},
+            "route_filter_allows_prefix": {"value": False, "availability": "observed"},
+        },
+        "mask_id": None,
+        "provenance": {
+            "evidence_sha256": "0" * 64,
+            "feature_catalog_sha256": "3dba72e83d7e17767ab0851a24541aa7d2d8b789dcf04a5aeb726ff48e9518e4",
+        },
+    }
     vector = copy.deepcopy(vector); vector["values"]["ospf_route_installed"] = {"value": None, "availability": "collection_unavailable"}
     result = diagnose_x5_r6_operational_policy_c5(vector, repository_root=ROOT)
     assert result["status"] == "insufficient_evidence" and result["evidence_assessment"]["completeness_ratio"] == 0.75

@@ -511,6 +511,13 @@ Status: Next design track — `X6_R0_PERFORMANCE_FAULT_DESIGN_GATE`
 - Congestion
 - Bandwidth/rate limiting
 
+### X5-R8 — C5 runtime-safety correction
+Status: Accepted source-only corrective gate; X6-R1 remains paused
+
+- Preserve X5-R6/X5-R7 history unchanged
+- Require a new crash-safe C5 revalidation and an authoritative successor receipt
+- Next: `X5_R9_C5_RUNTIME_SAFETY_REVALIDATION`
+
 ### X7 — Extended grouped single-fault dataset
 Status: Planned
 

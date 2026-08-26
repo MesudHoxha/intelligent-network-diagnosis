@@ -2973,3 +2973,22 @@ before absence is observed, Feature Vector v2 validation at rule entry, and a
 bounded state postcondition. Preserve separate command acceptance and observed
 effectiveness, durable recovery intent/journal, idempotent replay, baselines and
 zero-container cleanup. The next step is a new append-only X5-R7 receipt.
+
+## D-X5-R8 — Correct C5 crash-safety and receipt prerequisites append-only
+
+Decision: preserve X5-R6 and X5-R7 unchanged as observationally valid
+historical records, but require a new C5 runtime revalidation before making a
+crash-safety or complete observation-to-raw receipt claim authoritative. The
+future lifecycle writes a durable, exact planned-action journal before a
+mutation command is attempted. It records planned, attempted, command
+acceptance, effectiveness, restoration, and failure separately. A standalone
+recovery/replay entry point must read and validate that durable state in a new
+process, construct only the approved inverse action, and be safe after a
+partial action and after repeated replay.
+
+Source-only tests must not read ignored accepted-runtime archives. Receipt tests
+skip only through `accepted_runtime` and `require_materialized_receipts` when
+an archive is genuinely absent; explicit archive-equipped verification remains
+mandatory. X6-R1 and P9-R2 remain paused. The next release is
+`X5_R9_C5_RUNTIME_SAFETY_REVALIDATION`, followed by
+`X5_R10_C5_CRASH_SAFE_AUTHORITATIVE_CLOSEOUT`.

@@ -1847,3 +1847,15 @@ disjoint F1 packet-loss, F2 high-latency, F3 congestion, and F4 rate-limiting
 contracts over the six frozen planned X6 features, with `tc` ownership,
 threshold/provenance, recovery and exclusion requirements. It creates no
 performance evidence or metric. P9-R2 remains paused. Next: `X6_R1_PACKET_LOSS`.
+
+## X5-R8 C5 runtime-safety correction gate (2026-08-26)
+
+X5-R8 is an accepted source-only correction. It retains X5-R6 C5 and X5-R7
+unchanged as historical records, while requiring a new crash-safe C5 lifecycle
+before they can support authoritative crash-safety and full raw-chain receipt
+claims. The future runner journals the approved action before command attempt,
+records planned/attempted/accepted/effective/restored/failed states separately,
+and provides standalone idempotent recovery/replay from durable state. Default
+source tests no longer depend on ignored runtime archives; explicit materialized
+receipt checks remain mandatory. X6-R1 and P9-R2 remain paused. Next:
+`X5_R9_C5_RUNTIME_SAFETY_REVALIDATION`.

@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "release_id": "X5_R8_C5_RUNTIME_SAFETY_CORRECTION_GATE",
+  "status": "ACCEPTED_SOURCE_ONLY_RUNTIME_SAFETY_CORRECTION",
+  "source_boundary": {
+    "parent_commit": "84372a5f8cd67196e335538bb7638a1a6426848a",
+    "extension_policy": "APPEND_ONLY",
+    "runtime_inherited": false
+  },
+  "track": {
+    "current_release": "X5_R8_C5_RUNTIME_SAFETY_CORRECTION_GATE",
+    "next_release": "X5_R9_C5_RUNTIME_SAFETY_REVALIDATION",
+    "following_release": "X5_R10_C5_CRASH_SAFE_AUTHORITATIVE_CLOSEOUT",
+    "x6_status": "PAUSED_PENDING_X5_C5_RUNTIME_SAFETY_REVALIDATION",
+    "p9_r2_status": "PAUSED_BY_USER"
+  },
+  "historical_boundary": {
+    "x5_r4_c4": "AUTHORITATIVE_UNCHANGED",
+    "x5_r6_c5": "RETAINED_OBSERVATIONALLY_VALID_BUT_NON_AUTHORITATIVE_FOR_CRASH_SAFETY_AND_RECEIPT_CLAIMS",
+    "x5_r7_receipt": "RETAINED_OBSERVATIONALLY_VALID_BUT_NON_AUTHORITATIVE_FOR_CRASH_SAFETY_AND_COMPLETE_RAW_CHAIN_CLAIMS",
+    "accepted_history_rewritten": false
+  },
+  "runtime_safety_contract": {
+    "planned_action_journal": "An atomic durable action journal containing the exact approved action and idempotent recovery operation is written before any mutation command is attempted.",
+    "action_states": ["PLANNED", "ATTEMPTED", "COMMAND_ACCEPTED", "COMMAND_REJECTED", "MUTATION_EFFECTIVE", "MUTATION_NOT_EFFECTIVE", "RESTORED", "FAILED"],
+    "command_acceptance": "Command acceptance records only the command return status; it is not physical fault effectiveness.",
+    "effectiveness": "A bounded state-based loop separately proves attached-policy denial, healthy adjacencies, expected LSA withdrawal, and route withdrawal.",
+    "standalone_recovery": "A new-process recovery/replay entry point reads recovery_intent.json and mutation_journal.json, validates the approved action identity, constructs only the approved inverse command, and records each recovery attempt atomically.",
+    "partial_mutation": "Recovery is safe and idempotent for a journaled action that was planned, attempted, accepted, or effective when a process stops before normal restoration.",
+    "future_runtime_requirements": ["new durable C5 Evidence v4 tree", "Feature Vector v2 and exact R_X5_OSPF_002 diagnosis", "actual raw SHA-256 verification against observation provenance", "baseline before and after", "standalone recovery/replay demonstration", "zero-container cleanup", "recorded FRR image identity and expected digest equality when the image reports repository digests"],
+    "future_closeout_requirements": ["bind X5-R4 C4 and the new X5-R9 C5 only", "actual SHA-256 verification for every receipt-referenced raw file", "Evidence v4, vector availability, collector-to-observation-to-raw linkage and lifecycle-semantic verification", "preserve X5-R1, X5-R2, X5-R6 and X5-R7 as historical append-only records"]
+  },
+  "clean_checkout_contract": {
+    "source_tests": "Source-only tests use minimal valid Feature Vector v2 fixtures rather than ignored data/raw archives.",
+    "materialized_receipts": "X3, X4 and X5 receipt tests use accepted_runtime plus require_materialized_receipts when their ignored archive is absent; explicit materialized verification remains mandatory whenever archives are present or requested."
+  },
+  "scientific_claim_limit": "This source-only correction creates no runtime result or scientific claim and does not retroactively change X5-R6 execution. Future X5 claims remain limited to two controlled single-fault OSPF variants on the accepted topology.",
+  "runtime_authorization": {
+    "containerlab_execution": false,
+    "network_mutation": false,
+    "new_evidence_collection": false,
+    "dataset_generation": false,
+    "model_training": false,
+    "ml_or_hybrid_evaluation": false,
+    "metric_calculation": false,
+    "api_change": false,
+    "multi_fault_experiment": false,
+    "method_prediction": false
+  },
+  "source_bindings": [
+    {"path": "plans/expansion/X5_R5_C5_OPERATIONAL_POLICY_CORRECTION_DESIGN_GATE_V1.json", "sha256": "333636366749ecc1d30ede7385af3cefd10dedd61fd4d83546e15d3d12182c75"},
+    {"path": "plans/expansion/X5_R6_C5_OPERATIONAL_POLICY_RUNTIME_REVALIDATION_V1.json", "sha256": "53e2ebfc17e07a3c396a06bafe1b8e57e15c96d5afb377fd2af235ad3bc89f44"},
+    {"path": "plans/expansion/X5_R7_C5_CORRECTED_SUCCESSOR_CLOSEOUT_V1.json", "sha256": "de5ef712499ebf242fbe7cc1ecdb5a7fef686e9831a9416bc7be1a6fe8536c4e"},
+    {"path": "plans/expansion/X5_R7_AUTHORITATIVE_SUCCESSOR_RECEIPT_V1.json", "sha256": "61aa9a851fef183b88bb5851f401e78fc51451fb6b0a35be7f42f0d0786a1982"},
+    {"path": "src/orchestration/x5_r6_operational_policy_revalidation_runner.py", "sha256": "18ea4fb1d3d3ffa54cd943507d69be9dfd45dc17ad308ab12590ed2eac2fdc05"},
+    {"path": "plans/expansion/X6_R0_PERFORMANCE_FAULT_DESIGN_GATE_V1.json", "sha256": "e0ab129d4ef283c1bd816b735d01a1897cc00e7532863bc83a419fa943d518e8"}
+  ]
+}

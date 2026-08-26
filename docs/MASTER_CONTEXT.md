@@ -1618,3 +1618,17 @@ Vector v2 validation before diagnosis. Command acceptance, physical
 effectiveness, recovery replay, baseline before/after and cleanup are distinct
 records. No claim extends beyond controlled single-fault C5. X5-R7 is next;
 X6 and P9-R2 remain paused.
+
+## X5-R8 C5 runtime-safety correction gate (2026-08-26)
+
+Following a focused correctness audit, X5-R8 is an append-only source-only
+correction from the published X6-R0 boundary. It preserves every X5-R6/X5-R7
+artifact unchanged: their normal lifecycle observations remain historical, but
+they are not the authoritative basis for crash-safety or complete
+observation-to-raw receipt claims. The future C5 revalidation has a durable
+planned-action journal before every mutation attempt, separate action-state
+records, and a standalone idempotent recovery/replay entry point that reads
+durable mutation state after a partial mutation. Source-only tests do not
+depend on ignored archives; explicit materialized verification remains
+mandatory when those archives are available. X6-R1 and P9-R2 remain paused.
+The next release is `X5_R9_C5_RUNTIME_SAFETY_REVALIDATION`.
