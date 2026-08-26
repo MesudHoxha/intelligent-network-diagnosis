@@ -1889,3 +1889,14 @@ v2, diagnosis, command acceptance, effectiveness, recovery/replay,
 restoration, baselines, controls, and recorded image identity. Claims remain
 limited to two controlled single-fault OSPF variants on the accepted topology.
 X6-R1 and P9-R2 remain paused; next: `X6_R1_PACKET_LOSS`.
+
+## X5-R11 clean-checkout test correction (2026-08-27)
+
+X5-R11 is an append-only source-only test correction. It replaces an X5-R4
+unit test's ignored X5-R2 archive read with temporary synthetic Evidence v4
+and canonical Feature Vector v2 builder output. The synthetic input exists
+only in the test directory and is not runtime evidence. A focused source scan
+prevents default-collected X5 unit tests from directly reading ignored X5 raw
+trees without archive gating. The authoritative X5 C4/C5 evidence, receipts,
+production behavior, Feature Vector semantics, X6-R0.1 methodology and all
+scientific claims are unchanged. X6-R1 and P9-R2 remain paused.

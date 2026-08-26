@@ -3035,3 +3035,17 @@ X5-R9 tree remain immutable history. Only the X5-R4 C4 and second X5-R9 C5 tree
 support the bounded authoritative claim: two controlled single-fault OSPF
 variants on the accepted topology. X6-R1 and P9-R2 remain paused; next is
 `X6_R1_PACKET_LOSS`.
+
+## D-X5-R11 — Keep source tests independent of ignored runtime archives
+
+Decision: the X5-R4 unavailable-evidence unit test verifies only the
+rule-engine's fail-closed behavior. It must therefore construct a valid,
+temporary synthetic Evidence v4 input and obtain Feature Vector v2 through the
+canonical builder, rather than read historical X5-R2 runtime evidence. The
+input is explicitly source-test-only and cannot be treated as accepted evidence.
+
+Materialized evidence remains the responsibility of receipt tests gated with
+`accepted_runtime`. A focused AST regression prevents default-collected X5 unit
+tests from directly reading ignored X5 raw trees without that gate. No runtime,
+production, receipt, scientific, X6-R0.1, C4/C5-authority or pause boundary is
+changed. X6-R1 and P9-R2 remain paused.

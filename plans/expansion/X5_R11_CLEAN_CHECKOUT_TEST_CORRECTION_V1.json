@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "release_id": "X5_R11_CLEAN_CHECKOUT_TEST_CORRECTION",
+  "status": "ACCEPTED_SOURCE_ONLY_TEST_CORRECTION",
+  "source_boundary": {"parent_commit": "c198db3237daaef578c34677d293e764d0607e97", "extension_policy": "APPEND_ONLY", "runtime_inherited": false},
+  "scope": {"corrected_test": "tests/unit/test_x5_r4_correction_gate.py::test_corrected_r2_unavailable_evidence_fails_closed", "synthetic_input": "temporary Evidence v4 and canonical Feature Vector v2 builder output; source-test input only, never accepted runtime evidence", "archive_policy": "materialized historical evidence remains receipt-gated; this rule-engine test has no historical-evidence assertion", "default_collection_guard": "default-collected X5 unit tests may not read ignored data/raw/x5 trees without accepted_runtime gating"},
+  "preserved_boundaries": {"authoritative_c4": "X5_R4_OSPF_CORRECTION_AND_REVALIDATION:false,false,false,true:R_X5_OSPF_001", "authoritative_c5": "X5_R9_C5_RUNTIME_SAFETY_REVALIDATION:true,false,false,false:R_X5_OSPF_002", "production_diagnosis_orchestration_and_feature_vector_semantics": "UNCHANGED", "accepted_evidence_receipts_and_x6_r0_1_methodology": "UNCHANGED"},
+  "track": {"next_release": "X6_R1_PACKET_LOSS", "x6_r1_status": "PAUSED_BY_USER", "p9_r2_status": "PAUSED_BY_USER"},
+  "runtime_authorization": {"containerlab_execution": false, "network_mutation": false, "new_evidence_collection": false, "dataset_generation": false, "model_training": false, "ml_or_hybrid_evaluation": false, "metric_calculation": false, "api_change": false, "multi_fault_experiment": false, "method_prediction": false},
+  "source_bindings": [
+    {"path": "tests/unit/test_x5_r4_correction_gate.py", "sha256": "9ac640a01f46aeb09417aa4322b41d00d5d2949b80255f8605530be73e58ba8b"},
+    {"path": "tests/unit/test_x5_r11_clean_checkout_test_correction.py", "sha256": "324a9c2213eeffe175129580a38182eba70e64467b47a802d95258b2f6a01381"}
+  ]
+}
