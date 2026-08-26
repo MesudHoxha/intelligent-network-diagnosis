@@ -1632,3 +1632,15 @@ durable mutation state after a partial mutation. Source-only tests do not
 depend on ignored archives; explicit materialized verification remains
 mandatory when those archives are available. X6-R1 and P9-R2 remain paused.
 The next release is `X5_R9_C5_RUNTIME_SAFETY_REVALIDATION`.
+
+## X6-R0.1 performance measurement and traffic methodology (2026-08-26)
+
+X6-R0.1 is an append-only design-only methodology gate. It freezes future
+topology/traffic provenance, direct tool commands and versions, ten baseline
+windows, warm-up/measurement timing, exact p95 calculation and a hash-bound
+threshold-manifest boundary before a mutation. Collectors will retain numeric
+measurements while rules alone derive predicates; neither threshold metadata
+nor rule predicates is a future ML label. F1--F4 signatures remain conditional
+until empirical pilot measurements show truthful separation. No performance
+runtime evidence, threshold, dataset, model, metric, API, or scientific claim
+is created. X5-R9 remains next; X6-R1 and P9-R2 remain paused.

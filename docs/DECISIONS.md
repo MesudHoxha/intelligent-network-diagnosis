@@ -2992,3 +2992,20 @@ an archive is genuinely absent; explicit archive-equipped verification remains
 mandatory. X6-R1 and P9-R2 remain paused. The next release is
 `X5_R9_C5_RUNTIME_SAFETY_REVALIDATION`, followed by
 `X5_R10_C5_CRASH_SAFE_AUTHORITATIVE_CLOSEOUT`.
+
+## D-X6-R0.1 — Freeze measurement method before any performance runtime
+
+Decision: before X6-R1, freeze direct loss, RTT, throughput, utilization and
+queue observations; command/version provenance; deterministic traffic windows;
+exact p95 calculation; and a SHA-256-bound threshold manifest created from
+baseline windows before mutation. Preserve raw numeric collector values and
+availability separately from rule-owned predicates. Threshold metadata and
+rule predicates cannot become ML labels or predictors without a separate
+leakage-reviewed contract.
+
+F1--F4 predicate patterns remain conditional rather than forced disjoint
+claims. F3 requires a deterministic finite-capacity bottleneck and owned queue
+counters; F4 requires both direct cap configuration and a measured throughput
+consistency tolerance. No runtime evidence, threshold value, dataset, model,
+metric, API or scientific claim is authorized. X5-R9 remains next; X6-R1 and
+P9-R2 remain paused.

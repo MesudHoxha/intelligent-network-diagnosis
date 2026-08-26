@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "release_id": "X6_R0_1_MEASUREMENT_AND_TRAFFIC_METHOD_GATE",
+  "status": "ACCEPTED_SOURCE_ONLY_METHODOLOGY_GATE",
+  "source_boundary": {"parent_commit": "01b66272acd803ba8aa23c12809b2a1a81dd03b1", "extension_policy": "APPEND_ONLY", "runtime_inherited": false},
+  "track": {"current_release": "X6_R0_1_MEASUREMENT_AND_TRAFFIC_METHOD_GATE", "x5_status": "X5_R9_C5_RUNTIME_SAFETY_REVALIDATION_REQUIRED_BEFORE_X5_AUTHORITY", "x6_r1_status": "PAUSED_PENDING_THIS_METHOD_AND_FUTURE_RUNTIME_AUTHORIZATION", "p9_r2_status": "PAUSED_BY_USER", "next_release": "X5_R9_C5_RUNTIME_SAFETY_REVALIDATION"},
+  "topology_context": {"context_id": "X6_TOP_01_CONTROLLED_PERFORMANCE_PATH", "shape": "hosta--r1--r2--r3--hostb isolated Linux path", "path_direction": "hosta_to_hostb", "bottleneck_owner": "r2:egress_to_r3", "topology_hash_required": true, "frozen_phase_boundary": "separate from all Phase 6--8 and X5 runtime trees"},
+  "tools_and_direct_observations": {
+    "required_version_commands": ["tc -V", "ping -V", "iperf3 --version", "uname -r", "docker image inspect <runtime-image>"],
+    "loss_probe": "ping -n -q -i 0.2 -c 50 -W 1 -s 56 <hostb_ip>",
+    "latency_probe": "same loss_probe records every reply RTT; p95 uses only successful replies", 
+    "throughput_server": "iperf3 -s --one-off",
+    "throughput_client": "iperf3 -c <hostb_ip> -t 20 -P 1 -J",
+    "competing_traffic": "iperf3 -c <hostb_ip> -u -b <frozen_competing_rate> -t 20 -P 1 -J",
+    "transport": {"primary": "TCP", "competing": "UDP", "packet_payload_bytes": 56, "probe_frequency_hz": 5, "direction": "hosta_to_hostb", "synchronization": "record monotonic start/end timestamps; start competing traffic before the primary window and record the overlap interval", "warm_up_seconds": 5, "measurement_seconds": 20, "baseline_window_count": 10, "seed_policy": "No traffic-generator random seed is claimed. Record seed=null and deterministic context/window identifiers; a future randomized generator requires a separately frozen seed before use."}
+  },
+  "numeric_measurement_contract": {
+    "raw_outputs": ["packet_loss_ratio:number", "round_trip_latency_ms_p95:number", "throughput_mbps:number", "interface_utilization_ratio:number", "queue_drop_count:integer", "rate_limit_detected:boolean"],
+    "p95": "Sort successful RTT samples ascending. For n successful samples, select zero-based index ceil(0.95*n)-1. If n=0, latency is collection_unavailable, never an observed absence.",
+    "baseline_threshold_formula": "For each feature and topology/traffic context, threshold_manifest stores the ten raw baseline window values, median, dispersion method, absolute tolerance, relative tolerance, comparison direction, and formula_version. A predicate compares a fault window only to median plus/minus max(absolute_tolerance, relative_tolerance*abs(median), declared_dispersion_tolerance).",
+    "threshold_manifest": "A SHA-256-bound, immutable threshold manifest is written and validated after all baseline windows and before any mutation command. No fault-window value may supply a threshold, tolerance, or ground-truth label.",
+    "predicate_boundary": "Collectors emit raw numbers and availability only. Rule-owned predicates consume the raw values plus the threshold-manifest context. Predicate values and threshold metadata are not future ML labels or predictors unless a separate leakage-reviewed dataset contract authorizes them.",
+    "availability": "Malformed command output, empty required JSON, missing successful latency samples, invalid counter snapshots, or an absent threshold manifest yields collection_unavailable; it cannot be interpreted as an observed low/zero value."
+  },
+  "fault_contexts": [
+    {"code": "F1", "fault_type": "packet_loss", "approved_mutation": "tc netem loss on r2:egress_to_r3", "conditional_predicates": ["loss_above_baseline", "latency_within_baseline", "throughput_within_baseline", "utilization_within_baseline", "queue_delta_zero", "rate_limit_false"], "independent_effectiveness": ["direct tc qdisc netem loss configuration", "raw packet-loss ratio exceeds frozen loss threshold"]},
+    {"code": "F2", "fault_type": "high_latency", "approved_mutation": "tc netem delay on r2:egress_to_r3", "conditional_predicates": ["loss_within_baseline", "latency_above_baseline", "throughput_within_baseline", "utilization_within_baseline", "queue_delta_zero", "rate_limit_false"], "independent_effectiveness": ["direct tc qdisc netem delay configuration", "raw RTT p95 exceeds frozen latency threshold"]},
+    {"code": "F3", "fault_type": "congestion", "approved_mutation": "start only the declared bounded competing traffic; do not add an F4 targeted rate cap", "finite_bottleneck": {"location": "r2:egress_to_r3", "baseline_capacity": "frozen capacity in the traffic-context manifest", "queue": "declared qdisc queue at r2:egress_to_r3", "counter_owner": "tc -s qdisc show dev <r2_egress> and interface byte counters at both bottleneck endpoints"}, "conditional_predicates": ["loss_or_queue_elevated", "latency_above_baseline", "throughput_degraded", "utilization_high", "queue_delta_positive", "rate_limit_false"], "independent_effectiveness": ["recorded overlapping competing traffic interval", "raw bottleneck counters and utilization confirm offered-load contention without a new F4 targeted cap"]},
+    {"code": "F4", "fault_type": "bandwidth_rate_limiting", "approved_mutation": "tc tbf cap on r2:egress_to_r3 using cap, burst and latency frozen in the threshold manifest", "conditional_predicates": ["loss_within_baseline", "latency_within_or_above_baseline", "throughput_degraded", "utilization_below_cap", "queue_delta_not_required", "rate_limit_true"], "independent_effectiveness": ["direct tc qdisc configuration proves the configured cap", "raw primary-throughput measurement is at or below the manifest-declared cap-consistency tolerance"]}
+  ],
+  "conditional_signature_policy": "F1/F2/F3/F4 predicate vectors are conditional hypotheses, not accepted disjoint runtime signatures. Each future runtime slice must first run the frozen baseline/pilot measurement and stop without diagnosis if its observed predicates do not truthfully separate from its declared confounders. No threshold or artificial traffic shaping may be introduced merely to force disjointness.",
+  "effectiveness_recovery_and_provenance": {"effectiveness": "bounded state-based checks use direct mutation state and the independent raw measurement subset, never diagnosis output", "recovery": "intent and action journal precede mutation; exact qdisc/filter replay/removal is safe for partial mutation, idempotent on double recovery, and proves baseline before/after plus zero-container cleanup", "raw_provenance": ["topology SHA-256", "image, kernel and tool-version records", "exact command arrays and timestamps", "qdisc/filter state before, during and after", "traffic-context and threshold-manifest SHA-256", "every raw file SHA-256"]},
+  "scientific_claim_limit": "Design-only methodology. No performance deployment, evidence, dataset, model, metric, API change, generalized claim, forced signature or multi-fault claim is created.",
+  "runtime_authorization": {"containerlab_execution": false, "network_mutation": false, "new_evidence_collection": false, "dataset_generation": false, "model_training": false, "ml_or_hybrid_evaluation": false, "metric_calculation": false, "api_change": false, "multi_fault_experiment": false, "method_prediction": false},
+  "source_bindings": [
+    {"path": "plans/expansion/X6_R0_PERFORMANCE_FAULT_DESIGN_GATE_V1.json", "sha256": "e0ab129d4ef283c1bd816b735d01a1897cc00e7532863bc83a419fa943d518e8"},
+    {"path": "plans/expansion/X1_FEATURE_CATALOG_V1.json", "sha256": "3dba72e83d7e17767ab0851a24541aa7d2d8b789dcf04a5aeb726ff48e9518e4"},
+    {"path": "src/collection/modular_registry.py", "sha256": "4dbec2f96d7cc64eb96c5aee19bef99c8bd55c17623401ba531661256ae321fd"},
+    {"path": "labs/images/ind-linux/Dockerfile", "sha256": "ca5b97b08895081726b12c1311be050a18f0a1039aa168319ef1420e89761b0c"},
+    {"path": "plans/expansion/X5_R8_C5_RUNTIME_SAFETY_CORRECTION_GATE_V1.json", "sha256": "61b2b70ed5567b19bdfdf1ac5a4b7c6211b4ca49ac4f2b6764ca03c61cdbf6f1"}
+  ]
+}

@@ -1859,3 +1859,11 @@ and provides standalone idempotent recovery/replay from durable state. Default
 source tests no longer depend on ignored runtime archives; explicit materialized
 receipt checks remain mandatory. X6-R1 and P9-R2 remain paused. Next:
 `X5_R9_C5_RUNTIME_SAFETY_REVALIDATION`.
+
+## X6-R0.1 performance measurement and traffic methodology (2026-08-26)
+
+X6-R0.1 is accepted source-only. It freezes tool/version, traffic command,
+window, p95, threshold-manifest, numeric/provenance and independent
+effectiveness requirements without choosing a runtime threshold or running a
+performance lifecycle. F1--F4 signatures are conditional pending truthful
+future pilot separation. X5-R9 remains next; X6-R1 and P9-R2 remain paused.
