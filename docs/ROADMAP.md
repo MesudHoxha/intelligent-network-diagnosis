@@ -599,3 +599,10 @@ remains authoritative. X5-R6 is the future C5 runtime revalidation and X5-R7
 the future corrected successor closeout. X6 and P9-R2 remain intentionally
 paused; Phase 6--8, API v1, datasets, ML/Hybrid, metrics, and old archives stay
 frozen.
+
+## X6-R0 performance-fault design gate (2026-08-26)
+
+X6-R0 authorizes no runtime operation. The four bounded future releases are
+F1 packet loss, F2 high latency, F3 congestion, and F4 bandwidth/rate limiting,
+followed by a closeout. Future runtime work requires a separate gate and cannot
+modify Phase 6--8, X2--X5 evidence, API v1, datasets, ML/Hybrid, or P9-R2.

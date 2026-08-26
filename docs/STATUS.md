@@ -1839,3 +1839,11 @@ healthy R2--R3 and R1--R2 adjacencies, structured LSDB/route validation,
 direct policy proof, command-acceptance/effectiveness separation and idempotent
 recovery. It remains limited to the controlled C5 variant. Next X5-R7 binds
 authoritative X5-R4 C4 and this corrected C5; X6 and P9-R2 remain paused.
+
+## X6-R0 performance-fault design gate (2026-08-26)
+
+X6-R0 is append-only and design-only after authoritative X5-R7. It defines
+disjoint F1 packet-loss, F2 high-latency, F3 congestion, and F4 rate-limiting
+contracts over the six frozen planned X6 features, with `tc` ownership,
+threshold/provenance, recovery and exclusion requirements. It creates no
+performance evidence or metric. P9-R2 remains paused. Next: `X6_R1_PACKET_LOSS`.
