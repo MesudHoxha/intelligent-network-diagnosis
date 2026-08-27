@@ -1930,3 +1930,22 @@ blocked only before X6-R3 and F4 only before X6-R4. X5 reachability and real
 hard-kill work remain non-blocking hardening; no X5 evidence or receipt is
 reopened. This release creates no runtime evidence and has 0/10 current
 authorization. Next: `X6_R1_PACKET_LOSS`; P9-R2 remains paused.
+
+## X6-R0.4 F1 runtime parameter freeze (2026-08-27)
+
+X6-R0.4 resolves the stopped X6-R1 preflight through a source-only, append-only
+freeze. The concrete `x6r1` five-node Linux path uses `ind-linux:0.1`, four
+fixed `/30` links, hosta-to-hostb traffic, and `r2:eth2` as the sole mutation
+egress. It freezes 10% random NetEm loss with zero correlation, handles
+`10:`/`20:`, limits of 1000 packets, exact `noqueue 0:` pre/post-state, complete
+commands and crash-safe recovery states.
+
+One five-second warm-up precedes ten baseline composite windows; three fault
+and three restoration windows are fixed. Each composite window aligns a
+20-second TCP iperf3 client with the 50-packet ping beginning at t=5. Link
+utilization uses directly measured, matching veth speed provenance rather than
+a nominal capacity. The aggregate effectiveness bound is 6--25 drops over 150
+trials, fixed before runtime. `R_X6_PERFORMANCE_001` is reserved for the exact
+conditional F1 signature. No runtime, evidence or scientific claim exists in
+this release; authorization remains 0/10. Next: `X6_R1_PACKET_LOSS`. F3, F4
+and P9-R2 remain paused.

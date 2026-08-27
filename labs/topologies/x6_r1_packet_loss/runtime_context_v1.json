@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "release_id": "X6_R0_4_F1_RUNTIME_PARAMETER_FREEZE",
+  "topology": {
+    "context_id": "X6_TOP_01_CONTROLLED_PERFORMANCE_PATH",
+    "topology_id": "X6_R1_TOP_01_FIVE_NODE_LINUX_PATH",
+    "file": "labs/topologies/x6_r1_packet_loss/topology.clab.yml",
+    "sha256": "fcc443147130bb3368ebed67048dc4cd41dc68c3dbea8ad06d3a56b06d06662e",
+    "containerlab_name": "x6r1",
+    "nodes": [
+      {"name": "hosta", "role": "traffic_source", "kind": "linux", "image": "ind-linux:0.1"},
+      {"name": "r1", "role": "source_router", "kind": "linux", "image": "ind-linux:0.1"},
+      {"name": "r2", "role": "mutation_router", "kind": "linux", "image": "ind-linux:0.1"},
+      {"name": "r3", "role": "destination_router", "kind": "linux", "image": "ind-linux:0.1"},
+      {"name": "hostb", "role": "traffic_destination", "kind": "linux", "image": "ind-linux:0.1"}
+    ],
+    "links": [
+      {"a": "hosta:eth1", "b": "r1:eth1", "prefix": "10.61.1.0/30", "addresses": {"hosta:eth1": "10.61.1.2/30", "r1:eth1": "10.61.1.1/30"}},
+      {"a": "r1:eth2", "b": "r2:eth1", "prefix": "10.61.12.0/30", "addresses": {"r1:eth2": "10.61.12.1/30", "r2:eth1": "10.61.12.2/30"}},
+      {"a": "r2:eth2", "b": "r3:eth1", "prefix": "10.61.23.0/30", "addresses": {"r2:eth2": "10.61.23.1/30", "r3:eth1": "10.61.23.2/30"}},
+      {"a": "r3:eth2", "b": "hostb:eth1", "prefix": "10.61.3.0/30", "addresses": {"r3:eth2": "10.61.3.1/30", "hostb:eth1": "10.61.3.2/30"}}
+    ],
+    "forwarding_nodes": ["r1", "r2", "r3"],
+    "routes": [
+      {"node": "hosta", "destination": "default", "via": "10.61.1.1"},
+      {"node": "r1", "destination": "10.61.23.0/30", "via": "10.61.12.2"},
+      {"node": "r1", "destination": "10.61.3.0/30", "via": "10.61.12.2"},
+      {"node": "r2", "destination": "10.61.1.0/30", "via": "10.61.12.1"},
+      {"node": "r2", "destination": "10.61.3.0/30", "via": "10.61.23.2"},
+      {"node": "r3", "destination": "10.61.12.0/30", "via": "10.61.23.1"},
+      {"node": "r3", "destination": "10.61.1.0/30", "via": "10.61.23.1"},
+      {"node": "hostb", "destination": "default", "via": "10.61.3.1"}
+    ],
+    "source": {"node": "hosta", "container": "clab-x6r1-hosta", "interface": "eth1", "address": "10.61.1.2"},
+    "destination": {"node": "hostb", "container": "clab-x6r1-hostb", "interface": "eth1", "address": "10.61.3.2"},
+    "mutation_owner": {"node": "r2", "container": "clab-x6r1-r2", "interface": "eth2", "peer": "r3:eth1", "direction": "hosta_to_hostb"},
+    "observation_interfaces": [
+      {"node": "r2", "container": "clab-x6r1-r2", "interface": "eth2", "counter": "tx_bytes", "direction": "hosta_to_hostb"},
+      {"node": "r3", "container": "clab-x6r1-r3", "interface": "eth1", "counter": "rx_bytes", "direction": "hosta_to_hostb", "role": "cross_check"}
+    ],
+    "healthy_exclusions": {"finite_f3_bottleneck": false, "f4_rate_limiter": false, "competing_traffic": false}
+  },
+  "image": {
+    "tag": "ind-linux:0.1",
+    "dockerfile": "labs/images/ind-linux/Dockerfile",
+    "dockerfile_sha256": "ca5b97b08895081726b12c1311be050a18f0a1039aa168319ef1420e89761b0c",
+    "build_command": ["docker", "build", "--pull=false", "--tag", "ind-linux:0.1", "labs/images/ind-linux"],
+    "identity_command": ["docker", "image", "inspect", "ind-linux:0.1"],
+    "identity_policy": "record image Id and RepoDigests before deployment; source tag plus Dockerfile hash is not a runtime digest claim; unavailable identity fails before official deployment"
+  },
+  "traffic": {
+    "direction": "hosta_to_hostb",
+    "destination_address": "10.61.3.2",
+    "iperf3_port": 5201,
+    "transport": "TCP",
+    "streams": 1,
+    "duration_seconds": 20,
+    "server_command": ["docker", "exec", "-d", "clab-x6r1-hostb", "/bin/sh", "-c", "exec /usr/bin/iperf3 -s --one-off -p 5201 --json >/tmp/x6-r1-iperf-server.json 2>&1"],
+    "server_readiness_command": ["docker", "exec", "clab-x6r1-hostb", "/usr/bin/ss", "-H", "-ltn", "sport", "=", ":5201"],
+    "server_output_command": ["docker", "exec", "clab-x6r1-hostb", "/usr/bin/cat", "/tmp/x6-r1-iperf-server.json"],
+    "server_teardown_command": ["docker", "exec", "clab-x6r1-hostb", "/usr/bin/pkill", "-x", "iperf3"],
+    "client_command": ["docker", "exec", "clab-x6r1-hosta", "/usr/bin/iperf3", "-c", "10.61.3.2", "-t", "20", "-P", "1", "-p", "5201", "-J"],
+    "ping_command": ["docker", "exec", "--env", "LC_ALL=C", "clab-x6r1-hosta", "/usr/bin/ping", "-n", "-i", "0.2", "-c", "50", "-W", "1", "-s", "56", "10.61.3.2"],
+    "version_commands": [
+      ["docker", "exec", "clab-x6r1-hosta", "/usr/bin/ping", "-V"],
+      ["docker", "exec", "clab-x6r1-hosta", "/usr/bin/iperf3", "--version"],
+      ["docker", "exec", "clab-x6r1-r2", "/usr/sbin/tc", "-V"],
+      ["docker", "exec", "clab-x6r1-r2", "/usr/bin/uname", "-r"]
+    ],
+    "timeouts_seconds": {"server_start": 5, "server_readiness": 5, "client": 25, "ping": 16, "server_output": 5, "server_teardown": 5, "counter": 5, "qdisc": 10},
+    "server_retry_policy": "no completed-window retry; readiness polls every 0.1 seconds for at most 5 seconds before the window starts; teardown precedes the next window"
+  },
+  "qdisc": {
+    "pre_state": {"kind": "noqueue", "handle": "0:", "parent": "root", "children": [], "policy": "exactly one root noqueue record; any other qdisc or any filter fails before recovery intent or mutation"},
+    "capture_command": ["docker", "exec", "clab-x6r1-r2", "/usr/sbin/tc", "-j", "-s", "qdisc", "show", "dev", "eth2"],
+    "filter_commands": [
+      ["docker", "exec", "clab-x6r1-r2", "/usr/sbin/tc", "-j", "filter", "show", "dev", "eth2", "root"],
+      ["docker", "exec", "clab-x6r1-r2", "/usr/sbin/tc", "-j", "filter", "show", "dev", "eth2", "ingress"]
+    ],
+    "tc_binary": "/usr/sbin/tc",
+    "loss_model": "netem_random_independent_zero_correlation",
+    "loss_percent": "10.000000",
+    "correlation_percent": "0.000000",
+    "seed": null,
+    "seed_policy": "iproute2 in ind-linux:0.1 has no frozen portable deterministic NetEm seed contract; record tc/kernel versions and accept stochastic placement only within the predeclared binomial bound; never claim reproducible packet positions",
+    "netem": {"kind": "netem", "handle": "10:", "parent": "root", "limit_packets": 1000},
+    "pfifo": {"kind": "pfifo", "handle": "20:", "parent": "10:1", "limit_packets": 1000, "feature_owner": "queue_drop_count"},
+    "forward_commands": [
+      ["docker", "exec", "clab-x6r1-r2", "/usr/sbin/tc", "qdisc", "replace", "dev", "eth2", "root", "handle", "10:", "netem", "limit", "1000", "loss", "random", "10%", "0%"],
+      ["docker", "exec", "clab-x6r1-r2", "/usr/sbin/tc", "qdisc", "replace", "dev", "eth2", "parent", "10:1", "handle", "20:", "pfifo", "limit", "1000"]
+    ],
+    "recovery_command": ["docker", "exec", "clab-x6r1-r2", "/usr/sbin/tc", "qdisc", "del", "dev", "eth2", "root"],
+    "state_machine": ["PLANNED", "ATTEMPTED", "COMMAND_ACCEPTED", "MUTATION_EFFECTIVE", "RESTORATION_CONFIRMED"],
+    "journal_policy": "write recovery intent and PLANNED action atomically before first forward command; record ATTEMPTED before each command and acceptance afterward",
+    "partial_states": [
+      {"name": "root_only", "accepted": {"root": "netem 10:", "children": []}, "recovery": "delete root 10: then verify exact noqueue 0:"},
+      {"name": "root_and_child", "accepted": {"root": "netem 10:", "children": ["pfifo 20: parent 10:1"]}, "recovery": "delete root 10: recursively then verify exact noqueue 0:"}
+    ],
+    "idempotent_recovery": "inspect first: exact noqueue 0: is already restored; only netem 10: with optional pfifo 20: may be deleted; all other states fail closed; inspect again and require exact noqueue 0: with no filters",
+    "standalone_recovery_inputs": ["runtime_context_sha256", "topology_sha256", "node", "interface", "approved_handles", "durable_action_status"],
+    "command_timeout_seconds": 10
+  },
+  "windows": {
+    "warm_up": {"count": 1, "duration_seconds": 5, "accepted_measurement": false, "purpose": "route, neighbor and tool readiness only"},
+    "baseline": {"count": 10, "accepted_measurement": true},
+    "fault": {"count": 3, "accepted_measurement": true, "justification": "150 frozen ping trials reduce loss-sampling variability without selecting results"},
+    "restoration": {"count": 3, "accepted_measurement": true, "justification": "same fixed count as fault windows; every window must satisfy baseline thresholds"},
+    "timeline": [
+      {"offset_seconds": "0.000", "action": "capture initial interface and qdisc counters"},
+      {"offset_seconds": "0.000", "action": "start 20-second iperf3 TCP client after bounded server readiness"},
+      {"offset_seconds": "5.000", "action": "start 50-packet ping probe"},
+      {"offset_seconds": "20.000_or_bounded_completion", "action": "wait for both commands, then capture final counters and qdisc state"}
+    ],
+    "allowed_start_skew_seconds": "0.250",
+    "clock": "time.monotonic_ns for ordering/duration plus UTC timestamps for provenance",
+    "synchronization": "one controller assigns one immutable window_id, starts client, waits by monotonic deadline until t=5, starts ping, joins both bounded commands, and rejects the whole window if startup skew exceeds 0.250 seconds",
+    "failure_policy": "any command, parse, readiness, timeout, skew or counter failure makes the entire window unavailable; no selective feature/window retry"
+  },
+  "features": [
+    {"feature_id": "packet_loss_ratio", "value_type": "number", "unit": "ratio", "source": "hosta ping stdout summary plus individual replies", "per_window": "(50-received)/50 after X6-R0.3 validation", "fault_aggregation": "total losses divided by 150 across exactly three valid windows", "unavailable": "any ping chain invalid or any fault window unavailable"},
+    {"feature_id": "round_trip_latency_ms_p95", "value_type": "number", "unit": "ms", "source": "successful individual hosta ping reply RTTs", "per_window": "sort samples and select ceil(0.95*n)-1", "fault_aggregation": "pool all successful samples from exactly three valid windows and select ceil(0.95*n)-1", "unavailable": "zero successful RTT samples or any invalid fault window"},
+    {"feature_id": "throughput_mbps", "value_type": "number", "unit": "Mbps", "source": "hosta iperf3 client JSON end.sum_received.bits_per_second", "per_window": "bits_per_second / 1000000", "fault_aggregation": "median of exactly three valid per-window values", "unavailable": "nonzero exit, malformed JSON, missing/nonpositive end.sum_received.bits_per_second or any fault window unavailable"},
+    {"feature_id": "interface_utilization_ratio", "value_type": "number", "unit": "ratio", "source": "r2 eth2 tx_bytes delta with r3 eth1 rx_bytes cross-check", "per_window": "8*max(0,r2_eth2_tx_bytes_after-before)/(elapsed_monotonic_seconds*measured_speed_mbps*1000000)", "fault_aggregation": "median of exactly three valid per-window values", "unavailable": "counter reset, nonpositive elapsed time, ratio outside [0,1], absent/nonpositive speed, speed changes, or r2/r3 speed provenance disagrees", "denominator": "read /sys/class/net/eth2/speed on r2 and /sys/class/net/eth1/speed on r3 before every phase; require equal positive integer Mbps and corroborating ethtool records; never use nominal topology capacity"},
+    {"feature_id": "queue_drop_count", "value_type": "integer", "unit": "packets", "source": "tc -j -s child pfifo 20: dropped counter only", "per_window": "after minus before on kind pfifo handle 20: parent 10:1", "fault_aggregation": "sum of exactly three valid child-pfifo deltas", "unavailable": "missing/duplicate/malformed handle, owner mismatch or counter reset; NetEm 10: dropped never maps to this feature"},
+    {"feature_id": "rate_limit_detected", "value_type": "boolean", "unit": "boolean", "source": "direct tc qdisc and root/ingress filter JSON on r2 eth2", "per_window": "false only when no tbf/htb/cake/police/rate action exists and only the phase-approved noqueue or netem/pfifo hierarchy is present", "fault_aggregation": "false only when all three valid windows directly prove absence", "unavailable": "configuration output unavailable/malformed or any unapproved qdisc/filter present"}
+  ],
+  "effectiveness": {
+    "configured_probability": "0.100000",
+    "single_window_trials": 50,
+    "fault_window_count": 3,
+    "aggregate_trials": 150,
+    "single_window_expected_drops": "5.000000",
+    "single_window_standard_deviation": "2.1213203435596424",
+    "single_window_detection_probability": "0.9948462247926799",
+    "aggregate_expected_drops": "15.000000",
+    "aggregate_standard_deviation": "3.6742346141747673",
+    "aggregate_detection_probability": "0.9999998631085210",
+    "acceptance_drop_count_inclusive": [6, 25],
+    "acceptance_loss_ratio_inclusive": ["0.040000", "0.166667"],
+    "lower_tail_probability": "0.0019190344635072",
+    "upper_tail_probability": "0.0039171066165000",
+    "central_coverage": "0.9941638589199969",
+    "criterion": "MUTATION_EFFECTIVE only when exact netem 10: random 10% 0% and pfifo ownership are observed, NetEm counters are available, all three ping windows are valid, and aggregate drops are 6..25 inclusive; diagnosis and non-loss predicates are forbidden inputs",
+    "separation_stop": "if child pfifo 20: drop delta is nonzero from NetEm impairment, preserve diagnostic tree and stop as empirically non-separating"
+  },
+  "rule": {
+    "rule_id": "R_X6_PERFORMANCE_001",
+    "family": "performance_rule_engine:v1",
+    "diagnosis_label": "packet_loss",
+    "canonical_fault_type": "packet_loss",
+    "required_raw_features": ["packet_loss_ratio", "round_trip_latency_ms_p95", "throughput_mbps", "interface_utilization_ratio", "queue_drop_count", "rate_limit_detected"],
+    "required_availability": "all six observed after Feature Vector v2 validation",
+    "conditional_signature": ["loss_above_baseline", "latency_within_baseline", "throughput_within_baseline", "utilization_within_baseline", "queue_delta_zero", "rate_limit_false"],
+    "exclusion_controls": ["interfaces_up", "addressing_and_routes_healthy", "acl_policy_absent", "iperf_endpoint_ready", "no_competing_traffic", "no_f3_bottleneck", "no_f4_rate_limiter"],
+    "prediction": {"fault_type": "packet_loss", "score": 1.0, "location": "r2:eth2", "affected_resource": "x6_top_01_r2_to_r3_egress"},
+    "explanation_template": "Configured NetEm packet loss on r2:eth2 produced independently effective measured loss while all required conditional F1 predicates remained exact.",
+    "diagnosed": {"status": "diagnosed", "method": "rule_based_v2", "truth_model": "single_fault", "explanation_ref": "rule:R_X6_PERFORMANCE_001", "conflict_detected": false, "missing_domains": []},
+    "insufficient_evidence": {"status": "insufficient_evidence", "prediction": null, "ranked_candidates": [], "completeness_ratio": "observed_required_count/6", "conflict_detected": false, "missing_domains": ["performance"]},
+    "no_rule_match": {"status": "abstained", "prediction": null, "ranked_candidates": [], "completeness_ratio": 1.0, "conflict_detected": true, "missing_domains": [], "explanation_ref": "conflict:x6_f1_conditional_signature_not_exact"},
+    "result_mapping": {"schema_version": 2, "result_id": "vector_id:rule_based_v2", "input_vector_id": "vector_id", "method": "rule_based_v2", "truth_model": "single_fault", "prediction": "state-dependent", "ranked_candidates": "prediction singleton or empty", "evidence_assessment": "state-dependent", "explanation_refs": "state-dependent"}
+  },
+  "rerun_policy": {
+    "official_pilot_count": 1,
+    "pre_mutation_retryable": ["containerlab_deploy_failure_before_recovery_intent", "image_or_tool_prerequisite_failure_before_recovery_intent", "baseline_failure_before_recovery_intent"],
+    "retry_rule": "a retry always creates a new tree and is allowed only before recovery intent/PLANNED exists; never overwrite",
+    "post_mutation": "every outcome after recovery intent or PLANNED is durable diagnostic history; no opportunistic rerun or selective discard",
+    "immutable_after_result": ["loss_percent", "thresholds", "traffic", "window_counts", "sample_selection", "qdisc_limits"],
+    "authoritative": "all source/runtime gates, six-feature availability, independent effectiveness, empirical qdisc separation, exact conditional signature/rule/diagnosis, restoration, standalone replay, baseline-after, raw hashes and cleanup pass",
+    "diagnostic_non_authoritative": "physical fault is effective but signature does not separate, any required observation is unavailable, counters do not separate, or any post-mutation acceptance condition fails"
+  },
+  "authorization": {
+    "current_release": {"containerlab_execution": false, "network_mutation": false, "runtime_evidence": false, "dataset_generation": false, "model_training": false, "ml_or_hybrid": false, "metrics": false, "api_dashboard": false, "multi_fault": false, "scientific_claim": false},
+    "next_release": {"x6_r1_source_implementation": true, "x6_r1_controlled_runtime_pilot": true, "f2": false, "f3": false, "f4": false, "dataset_generation": false, "ml_or_hybrid": false, "metrics": false, "api_dashboard_p9_r2": false}
+  }
+}

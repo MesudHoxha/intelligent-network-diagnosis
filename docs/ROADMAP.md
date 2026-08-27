@@ -633,3 +633,11 @@ acceptance. It changes no threshold or experimental design and runs no
 Containerlab lifecycle. NetEm/pfifo behavior remains a required X6-R1 pilot
 observation. Next: `X6_R1_PACKET_LOSS`; F3 and F4 remain blocked until their
 X6-R3 and X6-R4 releases, and P9-R2 remains paused.
+
+## X6-R0.4 F1 runtime parameter freeze (2026-08-27)
+
+Source-only freeze of the complete X6-R1 topology, traffic, qdisc, loss,
+windowing, feature derivation, effectiveness, rule identity and rerun policy.
+It authorizes no runtime itself. The next exact milestone is
+`X6_R1_PACKET_LOSS`, limited to its source implementation and one controlled
+pilot. F3, F4 and P9-R2 remain paused.

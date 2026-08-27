@@ -3096,3 +3096,29 @@ changed. NetEm/pfifo behavior and conditional predicates remain empirical for
 the X6-R1 pilot. F3 and F4 retain their X6-R3/X6-R4 blockers; X5 reachability
 and real hard-kill work remain non-blocking hardening. Current authorization is
 0/10; only X6-R1 source implementation and its controlled pilot are next.
+
+## D-X6-R0.4 — Freeze every F1 runtime parameter before implementation
+
+Decision: use the existing local `ind-linux:0.1` tool image for an isolated
+hosta--r1--r2--r3--hostb Containerlab path. Bind all addresses, routes,
+interfaces and commands in the X6-R0.4 runtime context; `r2:eth2` is the exact
+hosta-to-hostb mutation and counter owner. Runtime must record the actual image
+ID/digest and direct interface speed; missing or inconsistent speed provenance
+fails before mutation.
+
+Freeze NetEm random loss at 10%, zero correlation and no portable seed claim.
+For each 50-packet window, detection probability is
+`1-(0.9^50)=0.9948462247926799`. Three fault windows yield 150 trials; the
+predeclared central binomial acceptance range is 6--25 drops with coverage
+0.9941638589199969. This selection is independent of throughput or future
+signature results. NetEm `10:` and child pfifo `20:` each have a 1000-packet
+limit; only pfifo owns X1 queue drops. The only supported healthy state is
+exact `noqueue 0:` with no filters.
+
+Composite windows start 20-second single-stream TCP iperf3 at t=0 and the
+frozen ping at t=5, allowing at most 0.250 seconds startup skew. Counts are one
+five-second warm-up, ten baseline, three fault and three restoration windows;
+no selective retry is allowed. Reserve `R_X6_PERFORMANCE_001` for the exact
+conditional F1 signature, with explicit insufficient-evidence and no-match
+states. One official pilot is allowed; post-mutation outcomes remain durable.
+No runtime is authorized by X6-R0.4 itself. F3, F4 and P9-R2 remain paused.

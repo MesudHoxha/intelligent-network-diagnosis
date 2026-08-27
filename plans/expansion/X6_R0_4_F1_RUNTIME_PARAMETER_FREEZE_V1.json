@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "release_id": "X6_R0_4_F1_RUNTIME_PARAMETER_FREEZE",
+  "status": "ACCEPTED_SOURCE_ONLY_RUNTIME_PARAMETER_FREEZE",
+  "source_boundary": {"parent_commit": "956f0cc5a51e7c11f931843580e00000946c3f23", "extension_policy": "APPEND_ONLY", "runtime_inherited": false},
+  "reason": "X6-R1 preflight stopped before implementation because loss magnitude, executable topology, qdisc limits/pre-state, composite windows, utilization denominator and rule identity were not frozen.",
+  "authoritative_runtime_context": "labs/topologies/x6_r1_packet_loss/runtime_context_v1.json",
+  "schema": "schemas/x6_r0_4_f1_runtime_context_v1.schema.json",
+  "topology": "labs/topologies/x6_r1_packet_loss/topology.clab.yml",
+  "resolved_parameters": ["five_node_topology_and_routes", "runtime_image_source_and_identity_policy", "r2_eth2_mutation_owner", "ten_percent_random_loss", "netem_and_pfifo_limits", "exact_noqueue_prestate_and_recovery", "aligned_composite_window", "window_counts", "six_feature_derivations", "measured_utilization_denominator", "binomial_effectiveness_bound", "R_X6_PERFORMANCE_001", "one_pilot_rerun_policy"],
+  "preserved_contracts": {"x6_r0_1": "HISTORICAL_0_OF_10", "x6_r0_2": "HISTORICAL_0_OF_10_5_OF_5_BINDINGS", "x6_r0_3": "HISTORICAL_0_OF_10_6_OF_6_BINDINGS", "x5_authority": "X5_R4_C4_AND_SECOND_X5_R9_C5_UNCHANGED", "thresholds_and_predicates": "UNCHANGED", "f2_f3_f4": "NOT_IMPLEMENTED", "p9_r2": "PAUSED_BY_USER"},
+  "scientific_limit": "Source-only parameter freeze. No deployment, mutation, evidence, dataset, model, metric, API/dashboard, thesis drafting, generalized performance or multi-fault claim.",
+  "current_release_authorization": {"containerlab_execution": false, "network_mutation": false, "runtime_evidence": false, "dataset_generation": false, "model_training": false, "ml_or_hybrid": false, "metrics": false, "api_dashboard": false, "multi_fault": false, "scientific_claim": false},
+  "next_release_authorization": {"x6_r1_source_implementation": true, "x6_r1_controlled_runtime_pilot": true, "f2": false, "f3": false, "f4": false, "dataset_generation": false, "ml_or_hybrid": false, "metrics": false, "api_dashboard_p9_r2": false},
+  "track": {"next_release": "X6_R1_PACKET_LOSS", "f3_status": "PAUSED_UNTIL_X6_R3", "f4_status": "PAUSED_UNTIL_X6_R4", "p9_r2_status": "PAUSED_BY_USER"},
+  "source_bindings": [
+    {"path": "labs/topologies/x6_r1_packet_loss/topology.clab.yml", "sha256": "fcc443147130bb3368ebed67048dc4cd41dc68c3dbea8ad06d3a56b06d06662e"},
+    {"path": "labs/topologies/x6_r1_packet_loss/runtime_context_v1.json", "sha256": "560c18708105221f5d9b17bf29fae5f8b64c899ec91556f57a91eefdb969630e"},
+    {"path": "schemas/x6_r0_4_f1_runtime_context_v1.schema.json", "sha256": "761b43bed4d1fb3ed522dd03c39353e9844837b729bb1f159f168649830d51ac"},
+    {"path": "src/expansion/x6_r0_4_runtime_parameter_freeze.py", "sha256": "cbfcf2b8d9ae10a07ffb551a018c0ccb4ffa7dbfe43b3f813b0e44df942a97ec"},
+    {"path": "tests/unit/test_x6_r0_4_runtime_parameter_freeze.py", "sha256": "564a783b8fda020d829cd2612bb02ae4dc912a6c33aa853cfeca964c77a0f576"},
+    {"path": "plans/expansion/X6_R0_3_F1_PRE_RUNTIME_VALIDATION_CORRECTION_V1.json", "sha256": "6b446951d0926ce7ca2af00478e6fa4be23918e42718f3af26d722d4f97541cc"},
+    {"path": "labs/images/ind-linux/Dockerfile", "sha256": "ca5b97b08895081726b12c1311be050a18f0a1039aa168319ef1420e89761b0c"},
+    {"path": "plans/expansion/X1_FEATURE_CATALOG_V1.json", "sha256": "3dba72e83d7e17767ab0851a24541aa7d2d8b789dcf04a5aeb726ff48e9518e4"}
+  ]
+}

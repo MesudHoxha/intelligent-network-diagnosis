@@ -1671,3 +1671,16 @@ canonical hash acceptance. Frozen measurement values, topology, traffic,
 qdisc ownership, X5 authority and scientific boundaries do not change. No
 runtime is authorized in X6-R0.3. X6-R1 source plus its controlled pilot is the
 next authorized milestone; P9-R2 remains paused.
+
+## X6-R0.4 F1 runtime parameter freeze (2026-08-27)
+
+X6-R0.4 is the source-only successor required after X6-R1 correctly stopped on
+unfrozen runtime values. Its authoritative context defines the complete local
+five-node topology, `ind-linux:0.1` source identity, exact routes and addresses,
+`r2:eth2` ownership, 10% zero-correlation stochastic NetEm, `10:`/`20:` qdisc
+limits and exact noqueue restoration. It aligns iperf3 and ping in fixed
+composite windows, derives utilization only from measured interface speed,
+freezes a 6--25/150-drop effectiveness bound, and reserves
+`R_X6_PERFORMANCE_001`. X6-R0.4 creates no runtime evidence and remains 0/10;
+only X6-R1 source and one controlled pilot are next. X5, F3, F4 and P9-R2 are
+unchanged or paused.
