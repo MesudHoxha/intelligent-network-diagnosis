@@ -1912,3 +1912,21 @@ versus child congestion-queue counters. No Containerlab lifecycle, performance
 evidence, dataset, model, metric, API, scientific result, or X5 material was
 created or changed. The exact next milestone is `X6_R1_PACKET_LOSS`; P9-R2
 remains paused. F3 and F4 retain their deferred blockers.
+
+## X6-R0.3 F1 pre-runtime validation correction (2026-08-27)
+
+X6-R0.3 is an append-only, source-only successor to published X6-R0.2. It
+corrects the frozen iputils interpretation: complete partial-loss runs use
+return code zero, while return code one is accepted only for a complete,
+internally consistent 50/0 statistics chain. Return codes never create an
+observation by themselves. It also independently recomputes every threshold
+manifest statistic, floor contribution, bound, clamp and canonical rounding
+from exactly ten sorted baseline values before verifying canonical SHA-256.
+
+The X6-R0.2 threshold values, formula, constants, topology, traffic, fault
+strength, qdisc ownership and conditional F1 predicates are unchanged.
+NetEm `10:` versus child pfifo `20:` remains an X6-R1 pilot question. F3 is
+blocked only before X6-R3 and F4 only before X6-R4. X5 reachability and real
+hard-kill work remain non-blocking hardening; no X5 evidence or receipt is
+reopened. This release creates no runtime evidence and has 0/10 current
+authorization. Next: `X6_R1_PACKET_LOSS`; P9-R2 remains paused.

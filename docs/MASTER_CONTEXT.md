@@ -1659,3 +1659,15 @@ X5-R10 is the zero-runtime authoritative receipt closeout that binds it only
 with corrected X5-R4 C4. The first X5-R9 tree remains diagnostic and
 non-authoritative. X6-R1 and P9-R2 remain paused; after X5-R10, the exact next
 milestone is `X6_R1_PACKET_LOSS`.
+
+## X6-R0.3 F1 pre-runtime validation correction (2026-08-27)
+
+X6-R0.3 supersedes only the current source interpretation used by future X6
+work; X6-R0.2 remains immutable history. Partial-loss iputils runs are accepted
+with return code zero only after a complete 50-packet summary/reply chain, and
+return code one is limited to complete 50/0 loss. Threshold manifests are now
+validated by independent recomputation from all ten canonical baselines before
+canonical hash acceptance. Frozen measurement values, topology, traffic,
+qdisc ownership, X5 authority and scientific boundaries do not change. No
+runtime is authorized in X6-R0.3. X6-R1 source plus its controlled pilot is the
+next authorized milestone; P9-R2 remains paused.

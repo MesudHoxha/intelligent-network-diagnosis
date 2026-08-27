@@ -623,3 +623,13 @@ X6-R0 authorizes no runtime operation. The four bounded future releases are
 F1 packet loss, F2 high latency, F3 congestion, and F4 bandwidth/rate limiting,
 followed by a closeout. Future runtime work requires a separate gate and cannot
 modify Phase 6--8, X2--X5 evidence, API v1, datasets, ML/Hybrid, or P9-R2.
+
+## X6-R0.3 F1 pre-runtime validation correction (2026-08-27)
+
+Append-only source correction after X6-R0.2. It fixes the exact iputils
+partial-loss return-code contract and requires independent semantic
+recomputation of every derived threshold field before canonical hash
+acceptance. It changes no threshold or experimental design and runs no
+Containerlab lifecycle. NetEm/pfifo behavior remains a required X6-R1 pilot
+observation. Next: `X6_R1_PACKET_LOSS`; F3 and F4 remain blocked until their
+X6-R3 and X6-R4 releases, and P9-R2 remains paused.

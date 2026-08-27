@@ -3071,3 +3071,28 @@ required controlled X6-R1 pilot check. F3 and F4 remain blocked for their own
 later design work. No X5 evidence, result, API, dataset, ML/Hybrid claim, or
 thesis work changes. X6-R1 is the next authorized controlled milestone; P9-R2
 remains paused.
+
+## D-X6-R0.3 — Validate F1 observations and thresholds before runtime
+
+Decision: preserve X6-R0.2 as immutable published history and make
+`src/collection/x6_r0_3_pre_runtime_validation.py` the source authority for
+future X6 work. For the exact locale-frozen 50-packet iputils command without
+an overall deadline, return code zero is valid for complete runs with one to
+fifty replies; return code one is valid only for a complete 50/0, 100-percent
+loss chain. Codes 2, 124 and all others, missing statistics, contradictory
+codes/counts, duplicate sequences and incomplete reply chains fail closed.
+
+Threshold acceptance must independently recompute the median, MAD, scaled
+dispersion, absolute/relative/dispersion contributions, final tolerance,
+bounds, domain clamps and six-place half-even representation from the ten
+canonical sorted baselines for each of the five numeric X1 features. Only
+after semantic comparison may canonical serialization and SHA-256 be trusted.
+The future X6-R1 path is contractually build, semantic validation, canonical
+freeze, then mutation; schema/hash-only acceptance is forbidden.
+
+No threshold, formula, constant, floor, topology, traffic, fault strength,
+qdisc ownership, conditional predicate, X5 authority or scientific result is
+changed. NetEm/pfifo behavior and conditional predicates remain empirical for
+the X6-R1 pilot. F3 and F4 retain their X6-R3/X6-R4 blockers; X5 reachability
+and real hard-kill work remain non-blocking hardening. Current authorization is
+0/10; only X6-R1 source implementation and its controlled pilot are next.

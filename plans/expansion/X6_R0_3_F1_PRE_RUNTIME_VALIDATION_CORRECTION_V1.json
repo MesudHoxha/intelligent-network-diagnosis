@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "release_id": "X6_R0_3_F1_PRE_RUNTIME_VALIDATION_CORRECTION",
+  "status": "ACCEPTED_SOURCE_ONLY_PRE_RUNTIME_SUCCESSOR",
+  "source_boundary": {"parent_commit": "2e47edecea1294e7b5281f9640db47da529a0ed9", "extension_policy": "APPEND_ONLY", "runtime_inherited": false},
+  "historical_predecessor": {"x6_r0_2": "PRESERVED_PUBLISHED_SOURCE_ONLY_5_OF_5_BINDINGS"},
+  "authoritative_source": "src/collection/x6_r0_3_pre_runtime_validation.py",
+  "ping_contract": {
+    "exact_command": ["LC_ALL=C", "/usr/bin/ping", "-n", "-i", "0.2", "-c", "50", "-W", "1", "-s", "56", "<destination>"],
+    "return_code_count_table": [
+      {"return_code": 0, "transmitted": 50, "received": "1..50", "unique_replies": "equals_received", "result": "OBSERVED_IF_COMPLETE_AND_CONSISTENT"},
+      {"return_code": 1, "transmitted": 50, "received": 0, "unique_replies": 0, "loss_percent": 100, "result": "LOSS_OBSERVED_RTT_UNAVAILABLE_IF_COMPLETE_AND_CONSISTENT"},
+      {"return_code": 0, "transmitted": 50, "received": 0, "result": "COLLECTION_UNAVAILABLE_CONTRADICTORY"},
+      {"return_code": 1, "transmitted": 50, "received": "1..50", "result": "COLLECTION_UNAVAILABLE_CONTRADICTORY"},
+      {"return_code": "2_OR_124_OR_OTHER", "result": "COLLECTION_UNAVAILABLE"}
+    ],
+    "return_code_alone_is_observation": false,
+    "required_checks": ["complete_summary", "transmitted_received_bounds", "loss_recomputation", "reply_count_agreement", "unique_in_range_icmp_sequences", "successful_reply_rtt_samples", "exact_nearest_rank_p95", "timeout_and_execution_errors_fail_closed"]
+  },
+  "threshold_semantic_contract": {
+    "methodology_version": "x6_r0_2_f1_measurement_semantics_v1",
+    "formula": "median +/- max(absolute_floor, relative_floor * abs(median), 3.000000 * 1.482600 * MAD)",
+    "rounding": {"decimal_places": 6, "mode": "ROUND_HALF_EVEN", "serialization": "canonical_json_sort_keys_compact_newline_v1"},
+    "numeric_feature_count": 5,
+    "baseline_windows_per_feature": 10,
+    "required_pipeline": ["build_threshold_manifest", "semantic_validation", "canonical_freeze", "mutation"],
+    "schema_or_hash_only_acceptance": "FORBIDDEN",
+    "independent_recomputation": ["median", "mad", "scaled_dispersion", "dispersion_contribution", "absolute_floor_contribution", "relative_floor_contribution", "tolerance", "lower_threshold", "upper_threshold", "domain_clamping", "canonical_rounding"],
+    "canonical_serialization_and_sha256": "REQUIRED_AFTER_SEMANTIC_COMPARISON",
+    "threshold_values_constants_formula_inputs": "UNCHANGED_FROM_X6_R0_2"
+  },
+  "preserved_design": {
+    "topology": "UNCHANGED",
+    "traffic": "UNCHANGED",
+    "fault_strength": "UNCHANGED",
+    "qdisc_ownership": {"netem": "10:_IMPAIRMENT_PROVENANCE_ONLY", "child_pfifo": "20:_SOLE_X1_QUEUE_DROP_OWNER"},
+    "conditional_f1_predicates": "UNCHANGED_EMPIRICAL",
+    "x5_authority": "X5_R4_C4_AND_SECOND_X5_R9_C5_UNCHANGED",
+    "x5_evidence_receipts": "NOT_REOPENED"
+  },
+  "remaining_pre_runtime_and_hardening": {
+    "netem_10_vs_pfifo_20": "X6_R1_RUNTIME_PILOT_REQUIRED",
+    "conditional_throughput_latency_utilization_predicates": "EMPIRICAL_PENDING_X6_R1",
+    "f3": "BLOCKED_ONLY_BEFORE_X6_R3",
+    "f4": "BLOCKED_ONLY_BEFORE_X6_R4",
+    "x5_reachability": "NON_BLOCKING_HARDENING",
+    "x5_real_hard_kill": "NON_BLOCKING_HARDENING",
+    "p9_r2": "PAUSED_BY_USER"
+  },
+  "current_release_authorization": {"containerlab_execution": false, "network_mutation": false, "new_evidence_collection": false, "dataset_generation": false, "model_training": false, "ml_or_hybrid_evaluation": false, "metric_calculation": false, "api_change": false, "multi_fault_experiment": false, "scientific_claim": false},
+  "next_release_authorization": {"x6_r1_source_implementation": true, "x6_r1_controlled_runtime_pilot": true, "f2_high_latency": false, "f3_congestion": false, "f4_rate_limiting": false, "dataset_generation": false, "ml_or_hybrid": false, "metrics": false, "api_dashboard_thesis": false},
+  "track": {"next_release": "X6_R1_PACKET_LOSS", "p9_r2_status": "PAUSED_BY_USER", "x6_r3_status": "BLOCKED_UNTIL_X6_R3", "x6_r4_status": "BLOCKED_UNTIL_X6_R4"},
+  "source_bindings": [
+    {"path": "src/collection/x6_r0_3_pre_runtime_validation.py", "sha256": "88e213d8ef492cbd61eb861a7499fc8351ca6a9446d53a0041b6cc2db3b5ab97"},
+    {"path": "tests/unit/test_x6_r0_3_pre_runtime_validation.py", "sha256": "2b98f7e3a0289651772dbf512726d9565ff5dabb5f7440ac5da4eaf631a32246"},
+    {"path": "schemas/x6_threshold_manifest_v1.schema.json", "sha256": "79f5ef4b8c3def5ce0d92863cb32b1c151b267315423b6327a97f6ebd9c742a6"},
+    {"path": "plans/expansion/X6_R0_2_F1_MEASUREMENT_SEMANTICS_CORRECTION_V1.json", "sha256": "35c0aa73dec9918f980005da4a9b832cba6a3900eaba787a4a7e74f87d25efd4"},
+    {"path": "plans/expansion/X6_R0_1_MEASUREMENT_AND_TRAFFIC_METHOD_GATE_V1.json", "sha256": "2092a1394863b0eb5e6165bbdfec76d81b81331b0edbe080de06fd93a7a454f0"},
+    {"path": "plans/expansion/X1_FEATURE_CATALOG_V1.json", "sha256": "3dba72e83d7e17767ab0851a24541aa7d2d8b789dcf04a5aeb726ff48e9518e4"}
+  ]
+}
