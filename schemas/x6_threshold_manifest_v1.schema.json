@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "methodology_version", "topology_context_id", "traffic_context_id", "formula", "rounding", "features", "boolean_feature_excluded", "fault_window_input", "post_hoc_override", "sha256"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "methodology_version": {"const": "x6_r0_2_f1_measurement_semantics_v1"},
+    "topology_context_id": {"type": "string", "minLength": 1},
+    "traffic_context_id": {"type": "string", "minLength": 1},
+    "formula": {"type": "string"},
+    "rounding": {"type": "object"},
+    "features": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"$ref": "#/$defs/feature"}},
+    "boolean_feature_excluded": {"const": "rate_limit_detected"},
+    "fault_window_input": {"const": "FORBIDDEN"},
+    "post_hoc_override": {"const": "FORBIDDEN"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "feature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["feature_id", "value_type", "unit", "comparison_direction", "sorted_baseline_values", "center_estimator", "median", "dispersion_estimator", "mad", "mad_normal_scale", "dispersion_multiplier", "dispersion_term", "absolute_floor", "relative_floor", "tolerance", "lower_threshold", "upper_threshold", "rationale"],
+      "properties": {
+        "feature_id": {"enum": ["packet_loss_ratio", "round_trip_latency_ms_p95", "throughput_mbps", "interface_utilization_ratio", "queue_drop_count"]},
+        "value_type": {"enum": ["number", "integer"]},
+        "unit": {"type": "string"},
+        "comparison_direction": {"enum": ["upper", "lower"]},
+        "sorted_baseline_values": {"type": "array", "minItems": 10, "maxItems": 10, "items": {"type": "string", "pattern": "^-?[0-9]+\\.[0-9]{6}$"}},
+        "center_estimator": {"const": "median_sorted_middle_or_even_mean_v1"},
+        "median": {"type": "string", "pattern": "^-?[0-9]+\\.[0-9]{6}$"},
+        "dispersion_estimator": {"const": "mad_about_median_v1"},
+        "mad": {"type": "string", "pattern": "^[0-9]+\\.[0-9]{6}$"},
+        "mad_normal_scale": {"const": "1.482600"},
+        "dispersion_multiplier": {"const": "3.000000"},
+        "dispersion_term": {"type": "string", "pattern": "^[0-9]+\\.[0-9]{6}$"},
+        "absolute_floor": {"type": "string", "pattern": "^[0-9]+\\.[0-9]{6}$"},
+        "relative_floor": {"type": "string", "pattern": "^[0-9]+\\.[0-9]{6}$"},
+        "tolerance": {"type": "string", "pattern": "^[0-9]+\\.[0-9]{6}$"},
+        "lower_threshold": {"type": "string", "pattern": "^-?[0-9]+\\.[0-9]{6}$"},
+        "upper_threshold": {"type": "string", "pattern": "^-?[0-9]+\\.[0-9]{6}$"},
+        "rationale": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

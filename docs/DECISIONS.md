@@ -3049,3 +3049,25 @@ Materialized evidence remains the responsibility of receipt tests gated with
 tests from directly reading ignored X5 raw trees without that gate. No runtime,
 production, receipt, scientific, X6-R0.1, C4/C5-authority or pause boundary is
 changed. X6-R1 and P9-R2 remain paused.
+
+## D-X6-R0.2 — Correct F1 measurement semantics before performance runtime
+
+Decision: preserve X6-R0 and X6-R0.1 as historical design/source-only gates,
+and correct their three F1 blockers only through an append-only successor.
+The future loss/RTT observation uses one non-quiet, locale-frozen iputils ping
+window, preserving raw command output and deriving loss plus exact p95 from the
+same packets. Summary min/avg/max/mdev cannot substitute for reply RTT samples.
+
+Threshold manifests are canonical, SHA-256-bound baseline-only artifacts: ten
+values per numeric X1 performance feature, exact median and MAD calculation,
+fixed scale/multiplier/floors, fixed rounding, no fault input and no override.
+`rate_limit_detected` remains boolean and is excluded from numeric thresholds.
+
+For F1, NetEm handle `10:` owns intentional impairment-drop provenance only;
+child pfifo handle `20:` at parent `10:1` is the sole X1
+`queue_drop_count` owner. A zero queue predicate therefore means zero delta on
+that congestion queue only. Actual Linux qdisc counter behavior remains a
+required controlled X6-R1 pilot check. F3 and F4 remain blocked for their own
+later design work. No X5 evidence, result, API, dataset, ML/Hybrid claim, or
+thesis work changes. X6-R1 is the next authorized controlled milestone; P9-R2
+remains paused.

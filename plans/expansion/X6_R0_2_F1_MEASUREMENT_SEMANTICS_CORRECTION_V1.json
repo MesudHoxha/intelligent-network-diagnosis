@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_id": "X6_R0_2_F1_MEASUREMENT_SEMANTICS_CORRECTION",
+  "status": "ACCEPTED_SOURCE_ONLY_METHODOLOGY_SUCCESSOR",
+  "source_boundary": {"parent_commit": "72c9ba2a00f6e9a7606447c8ae89ceba93a95e7f", "extension_policy": "APPEND_ONLY", "runtime_inherited": false},
+  "historical_predecessors": {"x6_r0": "PRESERVED_DESIGN_ONLY", "x6_r0_1": "PRESERVED_SOURCE_ONLY_0_OF_10_AUTHORIZATION"},
+  "scope": {
+    "quiet_ping_p95_contradiction": "RESOLVED_BY_NONQUIET_SHARED_PACKET_PROBE",
+    "threshold_determinism": "RESOLVED_BY_VERSIONED_CANONICAL_MAD_MANIFEST",
+    "f1_drop_counter_ownership": "RESOLVED_AT_SOURCE_DESIGN_LEVEL_PENDING_OFFICIAL_RUNTIME_PILOT",
+    "f3_finite_bottleneck": "BLOCKED_UNTIL_X6_R3",
+    "f4_cap_tolerance_and_neutral_implementation": "BLOCKED_UNTIL_X6_R4",
+    "f1_f2_throughput_predicates": "CONDITIONAL_RUNTIME_HYPOTHESES",
+    "x5_reachability_and_hard_kill_observations": "NON_BLOCKING_FUTURE_HARDENING"
+  },
+  "probe_contract": {
+    "contract_id": "x6_f1_iputils_ping_nonquiet_v1",
+    "environment": {"LC_ALL": "C"},
+    "executable": "/usr/bin/ping",
+    "version_command": ["/usr/bin/ping", "-V"],
+    "flags": ["-n", "-i", "0.2", "-c", "50", "-W", "1", "-s", "56"],
+    "forbidden_flag": "-q",
+    "packet_count": 50,
+    "interval_seconds": "0.2",
+    "timeout_seconds": 1,
+    "payload_bytes": 56,
+    "warm_up_seconds": 5,
+    "measurement_window_seconds": "10.0",
+    "direction": "hosta_to_hostb",
+    "raw_provenance": ["exact_command_array", "ping_version_output", "stdout", "stderr", "return_code", "monotonic_start_end"],
+    "parser": {"loss": "transmitted_received_summary_only", "rtt": "every_successful_nonquiet_time_equals_sample", "p95": "sort_samples_then_index_ceil_0.95_n_minus_1", "unavailable": ["missing_or_malformed_summary", "missing_or_malformed_rtt", "reply_summary_count_mismatch", "contradictory_return_code_or_counts", "timeout_or_execution_failure"], "forbidden": ["summary_min_avg_max_mdev_p95_reconstruction", "unavailable_as_zero"]}
+  },
+  "threshold_manifest_contract": {
+    "schema": "schemas/x6_threshold_manifest_v1.schema.json",
+    "methodology_version": "x6_r0_2_f1_measurement_semantics_v1",
+    "sample_count_per_numeric_feature": 10,
+    "formula": "median +/- max(absolute_floor, relative_floor * abs(median), 3.000000 * 1.482600 * MAD)",
+    "center_estimator": "median_sorted_middle_or_even_mean_v1",
+    "dispersion_estimator": "mad_about_median_v1",
+    "rounding": "six_decimal_places_ROUND_HALF_EVEN_canonical_sorted_compact_json_newline",
+    "domains": {"packet_loss_ratio": "[0,1]", "interface_utilization_ratio": "[0,1]", "queue_drop_count": "nonnegative_integer", "zero_baseline": "relative_term_is_zero_and_absolute_or_MAD_term_controls"},
+    "lifecycle": "build_validate_hash_freeze_after_all_ten_baselines_and_before_any_mutation",
+    "fault_window_input": "FORBIDDEN",
+    "post_hoc_override": "FORBIDDEN",
+    "boolean_feature_excluded": "rate_limit_detected",
+    "floors": {
+      "packet_loss_ratio": {"absolute": "0.020000", "relative": "0.000000", "unit": "ratio", "rationale": "one loss event per 50 probes"},
+      "round_trip_latency_ms_p95": {"absolute": "0.100000", "relative": "0.050000", "unit": "ms", "rationale": "reporting-resolution and numeric-stability floor"},
+      "throughput_mbps": {"absolute": "0.100000", "relative": "0.050000", "unit": "Mbps", "rationale": "bounded tool/window variation floor"},
+      "interface_utilization_ratio": {"absolute": "0.020000", "relative": "0.000000", "unit": "ratio", "rationale": "conservative bounded-ratio floor"},
+      "queue_drop_count": {"absolute": "1.000000", "relative": "0.000000", "unit": "packets", "rationale": "integral counter resolution"}
+    },
+    "identity": "identical_baseline_inputs_and_methodology_version_produce_byte_identical_sha256_bound_manifest"
+  },
+  "f1_qdisc_counter_contract": {
+    "location": "r2:egress_to_r3",
+    "snapshot_command": ["tc", "-s", "qdisc", "show", "dev", "<r2_egress>"],
+    "netem_impairment": {"kind": "netem", "handle": "10:", "parent": "root", "counter_field": "dropped", "meaning": "intentional impairment drops; provenance/effectiveness only", "role": "mutation_effectiveness_and_provenance_only"},
+    "congestion_queue": {"kind": "pfifo", "handle": "20:", "parent": "10:1", "counter_field": "dropped", "meaning": "X1 queue_drop_count owner; congestion-queue overflow only", "role": "sole_X1_queue_drop_count_owner"},
+    "delta": "after_minus_before_same_handle_same_parent_same_kind; reset_wrap_or_missing_is_collection_unavailable",
+    "queue_delta_zero": "zero delta only for pfifo handle 20: congestion-queue dropped field",
+    "raw_provenance": "preserve before_during_after_tc_s_qdisc_snapshots_and_normalized_counter_records",
+    "forbidden": ["map_netem_dropped_to_X1_queue_drop_count", "generic_all_qdisc_drop_delta", "collector_rule_predicates"],
+    "runtime_pilot_required": "verify_frozen_tc_hierarchy_and_counter_behavior_before_F1_acceptance"
+  },
+  "boundaries": {"x5_authority": "X5_R4_C4_AND_SECOND_X5_R9_C5_UNCHANGED", "x5_evidence_receipts_diagnoses": "UNCHANGED", "x1_feature_types": "UNCHANGED", "datasets_ml_hybrid_metrics_api_dashboard_thesis": "NOT_AUTHORIZED"},
+  "current_release_authorization": {"containerlab_execution": false, "network_mutation": false, "new_evidence_collection": false, "dataset_generation": false, "model_training": false, "ml_or_hybrid_evaluation": false, "metric_calculation": false, "api_change": false, "multi_fault_experiment": false, "method_prediction": false},
+  "next_release_authorization": {"x6_r1_source_implementation": true, "x6_r1_controlled_runtime_pilot": true, "f2_high_latency": false, "f3_congestion": false, "f4_rate_limiting": false, "dataset_generation": false, "ml_or_hybrid": false, "metrics": false, "api_dashboard_thesis": false},
+  "track": {"next_release": "X6_R1_PACKET_LOSS", "p9_r2_status": "PAUSED_BY_USER", "x6_r3_status": "BLOCKED_PENDING_FINITE_BOTTLENECK_DESIGN", "x6_r4_status": "BLOCKED_PENDING_CAP_TOLERANCE_AND_NEUTRAL_IMPLEMENTATION"},
+  "source_bindings": [
+    {"path": "src/collection/x6_r0_2_measurement_semantics.py", "sha256": "43a411ae93a878880b4724106a994024a13aac77dd7770defff8ec1a1c981e29"},
+    {"path": "schemas/x6_threshold_manifest_v1.schema.json", "sha256": "79f5ef4b8c3def5ce0d92863cb32b1c151b267315423b6327a97f6ebd9c742a6"},
+    {"path": "tests/unit/test_x6_r0_2_measurement_semantics.py", "sha256": "53474e7e5b25c51001af73f2ae3ddea263f89691fe3fbb170d28b8a6445c8ea5"},
+    {"path": "plans/expansion/X6_R0_1_MEASUREMENT_AND_TRAFFIC_METHOD_GATE_V1.json", "sha256": "2092a1394863b0eb5e6165bbdfec76d81b81331b0edbe080de06fd93a7a454f0"},
+    {"path": "plans/expansion/X1_FEATURE_CATALOG_V1.json", "sha256": "3dba72e83d7e17767ab0851a24541aa7d2d8b789dcf04a5aeb726ff48e9518e4"}
+  ]
+}

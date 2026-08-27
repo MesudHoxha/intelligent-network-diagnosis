@@ -1900,3 +1900,15 @@ prevents default-collected X5 unit tests from directly reading ignored X5 raw
 trees without archive gating. The authoritative X5 C4/C5 evidence, receipts,
 production behavior, Feature Vector semantics, X6-R0.1 methodology and all
 scientific claims are unchanged. X6-R1 and P9-R2 remain paused.
+
+## X6-R0.2 F1 measurement-semantics correction (2026-08-27)
+
+X6-R0.2 is an append-only, source-only methodology successor. It preserves
+X6-R0 and X6-R0.1 unchanged while resolving the F1 quiet-ping/p95,
+non-deterministic-threshold, and generic-qdisc-drop ambiguities. The successor
+freezes one non-quiet locale-stable iputils probe, exact successful-sample p95,
+canonical baseline-only MAD threshold manifests, and separate NetEm impairment
+versus child congestion-queue counters. No Containerlab lifecycle, performance
+evidence, dataset, model, metric, API, scientific result, or X5 material was
+created or changed. The exact next milestone is `X6_R1_PACKET_LOSS`; P9-R2
+remains paused. F3 and F4 retain their deferred blockers.
