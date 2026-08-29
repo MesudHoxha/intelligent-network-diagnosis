@@ -1684,3 +1684,14 @@ freezes a 6--25/150-drop effectiveness bound, and reserves
 `R_X6_PERFORMANCE_001`. X6-R0.4 creates no runtime evidence and remains 0/10;
 only X6-R1 source and one controlled pilot are next. X5, F3, F4 and P9-R2 are
 unchanged or paused.
+
+## X6-R0.5 topology bootstrap correction (2026-08-28)
+
+The X6-R0.4 topology remains immutable historical source. X6-R0.5 adds a
+versioned replacement topology only because endpoint default routes were
+shadowed by Containerlab management networking. All F1 values besides the
+topology artifact and endpoint bootstrap route materialization remain frozen.
+The bootstrap smoke creates non-scientific provenance only. It passed locally
+with preserved management defaults, exact experiment-route resolution,
+forwarding/reachability, and an unmutated `r2:eth2` qdisc/filter pre-state.
+X6-R1 remains paused until X6-R0.5 is reviewed and published.

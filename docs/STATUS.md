@@ -1949,3 +1949,16 @@ trials, fixed before runtime. `R_X6_PERFORMANCE_001` is reserved for the exact
 conditional F1 signature. No runtime, evidence or scientific claim exists in
 this release; authorization remains 0/10. Next: `X6_R1_PACKET_LOSS`. F3, F4
 and P9-R2 remain paused.
+
+## X6-R0.5 topology bootstrap correction (2026-08-28)
+
+X6-R0.5 is an append-only correction to the X6-R0.4 endpoint route bootstrap
+only. The published topology and its hash remain historical. Three failed
+X6-R1 trees are preserved as pre-mutation, non-authoritative diagnostics: no
+traffic entered the experiment dataplane and no qdisc mutation occurred. The
+new topology preserves endpoint management defaults while using explicit
+experiment `/32` routes on `eth1`. Its topology-only smoke passed locally with
+exact structured endpoint/router routes, forwarding, bidirectional
+experiment-dataplane reachability, and `r2:eth2` `noqueue 0:`/no-filter
+pre-state. This ignored local provenance is non-scientific and not F1 Evidence
+v4. X6-R1 remains paused until this local correction is reviewed and published.

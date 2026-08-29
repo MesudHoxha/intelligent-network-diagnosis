@@ -1,0 +1,17 @@
+{
+  "release_id": "X6_R0_5_TOPOLOGY_BOOTSTRAP_CORRECTION",
+  "status": "BOOTSTRAP_VALIDATED_NON_SCIENTIFIC_LOCAL_ACCEPTANCE_PENDING_PUBLISH",
+  "source_boundary": "55d419a4cbdd02f7f53c77fa60bafadb9876a45f",
+  "supersedes_only": ["topology_artifact_path_and_hash", "endpoint_route_bootstrap_materialization", "structured_route_resolution_health_checks"],
+  "diagnostic_history": "three X6-R1 bootstrap trees are preserved pre-mutation/non-authoritative; traffic did not enter the experiment dataplane and no qdisc mutation occurred",
+  "bootstrap_smoke": {"status":"TOPOLOGY_BOOTSTRAP_VALIDATED_NON_SCIENTIFIC","provenance":"ignored local materialization under data/raw/x6_r0_5_bootstrap; not F1 Evidence v4 or scientific evidence","topology_sha256":"9decd096606a7af5d6aa5a7de6c5d406c286e12094825cbc88b3fb59a2e37b14"},
+  "next_release": "X6_R1_PACKET_LOSS_RESUME_AFTER_PUBLISHED_R0_5",
+  "source_bindings": [
+    {"path":"labs/topologies/x6_r1_packet_loss_r0_5/topology.clab.yml","sha256":"9decd096606a7af5d6aa5a7de6c5d406c286e12094825cbc88b3fb59a2e37b14"},
+    {"path":"labs/topologies/x6_r1_packet_loss_r0_5/bootstrap_context_v1.json","sha256":"2b3d73d87cbdd7af94854486ef95fa2d0e75429f3950ff448b7bbcfb00e50278"},
+    {"path":"src/collection/x6_r0_5_route_bootstrap.py","sha256":"028c4009edc5ce92804f71d7cd41408048c936041831ae07f911ab2bd6cd96de"},
+    {"path":"src/expansion/x6_r0_5_gate.py","sha256":"a0ac6df0fb66bc78a748a1326ee3bf7d5d46649fbce493b2df5477fd58293a4a"},
+    {"path":"src/orchestration/x6_r0_5_bootstrap_smoke.py","sha256":"d76a4969bcc9864f88bcdecde531e46e017feeb7f73d17ea33275bd5958f5ab5"},
+    {"path":"tests/unit/test_x6_r0_5_bootstrap.py","sha256":"4bc9261ae532cbc2ae7b1f989f49bb1c63bbf330f806e181bbe2c150a6d0b9a8"}
+  ]
+}

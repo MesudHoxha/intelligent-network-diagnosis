@@ -641,3 +641,13 @@ windowing, feature derivation, effectiveness, rule identity and rerun policy.
 It authorizes no runtime itself. The next exact milestone is
 `X6_R1_PACKET_LOSS`, limited to its source implementation and one controlled
 pilot. F3, F4 and P9-R2 remain paused.
+
+## X6-R0.5 topology bootstrap correction
+
+The X6-R0.5 topology-only smoke passed locally: management defaults remain on
+`eth0`, experiment traffic resolves through `eth1` and all required router
+paths, and `r2:eth2` remains `noqueue 0:` without filters. This is bootstrap
+provenance only, not F1 Evidence v4 or a scientific result. Preserve the
+original X6-R0.4 topology and three pre-mutation diagnostic trees. After
+X6-R0.5 is reviewed and published, the next exact milestone is
+`X6_R1_PACKET_LOSS`.

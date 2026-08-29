@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "release_id": "X6_R0_5_TOPOLOGY_BOOTSTRAP_CORRECTION",
+  "supersedes_only": ["topology_artifact_path_and_hash", "endpoint_route_bootstrap", "structured_route_health_checks"],
+  "historical_topology": {"path": "labs/topologies/x6_r1_packet_loss/topology.clab.yml", "sha256": "fcc443147130bb3368ebed67048dc4cd41dc68c3dbea8ad06d3a56b06d06662e"},
+  "topology": {"path": "labs/topologies/x6_r1_packet_loss_r0_5/topology.clab.yml", "sha256": "9decd096606a7af5d6aa5a7de6c5d406c286e12094825cbc88b3fb59a2e37b14", "containerlab_name": "x6r1"},
+  "endpoint_routes": {
+    "hosta": {"destination": "10.61.3.2/32", "via": "10.61.1.1", "dev": "eth1", "src": "10.61.1.2"},
+    "hostb": {"destination": "10.61.1.2/32", "via": "10.61.3.1", "dev": "eth1", "src": "10.61.3.2"}
+  },
+  "management_defaults": {"preserved": true, "interface": "eth0", "forbidden_for_experiment_traffic": true},
+  "inherited_r0_4_context": "labs/topologies/x6_r1_packet_loss/runtime_context_v1.json",
+  "bootstrap_only_authorization": {"containerlab_bootstrap_smoke": true, "network_route_bootstrap": true, "netem_or_pfifo": false, "iperf3": false, "measurement_windows": false, "threshold_freeze": false, "evidence_v4": false, "rule_or_diagnosis": false, "scientific_claim": false}
+}

@@ -3122,3 +3122,20 @@ no selective retry is allowed. Reserve `R_X6_PERFORMANCE_001` for the exact
 conditional F1 signature, with explicit insufficient-evidence and no-match
 states. One official pilot is allowed; post-mutation outcomes remain durable.
 No runtime is authorized by X6-R0.4 itself. F3, F4 and P9-R2 remain paused.
+
+## D-X6-R0.5 — Preserve management default routes; bootstrap experiment routes explicitly
+
+Decision: do not replace Docker/Containerlab endpoint management defaults.
+The successor topology materializes idempotent `/32` routes for the two
+experiment endpoints on `eth1` and requires structured `ip -j route get`
+proof. This supersedes X6-R0.4 only for topology path/hash and bootstrap route
+materialization. The resulting smoke remains topology provenance, never F1
+evidence, measurement, diagnosis, or a scientific claim.
+
+Outcome: the corrected topology-only smoke verified both `eth0` management
+defaults, all six exact structured experiment/router route resolutions,
+router forwarding, bidirectional experiment reachability, and the unmutated
+`r2:eth2` `noqueue 0:` state with no filters. The local ignored provenance is
+not an acceptance archive, Evidence v4, or F1 scientific evidence. The three
+earlier X6-R1 trees remain pre-mutation/non-authoritative. X6-R1 can resume
+only after the X6-R0.5 correction is reviewed and published.
