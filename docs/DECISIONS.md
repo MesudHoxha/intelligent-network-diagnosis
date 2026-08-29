@@ -3139,3 +3139,12 @@ router forwarding, bidirectional experiment reachability, and the unmutated
 not an acceptance archive, Evidence v4, or F1 scientific evidence. The three
 earlier X6-R1 trees remain pre-mutation/non-authoritative. X6-R1 can resume
 only after the X6-R0.5 correction is reviewed and published.
+
+## D-X6-R0.6 — Make the source-test environment self-declaring
+
+Decision: preserve the existing test extra and add `pytest>=9,<10` directly.
+The interval contains the accepted environment's pytest 9.1.1 without an
+arbitrary exact patch pin. The canonical clean-install workflow is an isolated
+virtual environment followed by `python -m pip install -e '.[test]'` and
+`python -m pytest`. This decision does not introduce full dependency locking
+or alter runtime/scientific behavior. X6-R1 remains paused until publication.

@@ -1,0 +1,27 @@
+{
+  "release_id": "X6_R0_6_TEST_ENVIRONMENT_REPRODUCIBILITY_CORRECTION",
+  "status": "SOURCE_ONLY_LOCAL_ACCEPTANCE_PENDING_PUBLISH",
+  "source_boundary": "9c76c108f5b16b03fa02fa569036821a8987a342",
+  "pytest_requirement": "pytest>=9,<10",
+  "accepted_environment_pytest_version": "9.1.1",
+  "clean_install_command": "python -m pip install -e '.[test]'",
+  "runtime_scientific_authorization": {
+    "containerlab": false,
+    "runtime_evidence": false,
+    "performance_measurement": false,
+    "threshold_change": false,
+    "topology_change": false,
+    "f1_parameter_change": false,
+    "dataset": false,
+    "model": false,
+    "metric": false,
+    "scientific_claim": false
+  },
+  "next_release": "X6_R1_PACKET_LOSS_AFTER_PUBLISHED_R0_6",
+  "source_bindings": [
+    {"path": "pyproject.toml", "sha256": "378c932e685e34c0988cdf88c3a92fb801658369ef6857b16b4e365e75afbce0"},
+    {"path": "README.md", "sha256": "e3efb80ee6b2617bc328f8a5b3cd64b3e8a43902b455ff0b66f6c414b23b0b73"},
+    {"path": "docs/HANDOFF_X6_R0_6.md", "sha256": "0e75f6dc7aca39d9d3c8e3074671995d9169316e2901a4aec746187672b60669"},
+    {"path": "tests/unit/test_x6_r0_6_test_environment.py", "sha256": "40a1dbac9731966672753571797e2d9319ff5e07ec70304cbaca6698145bc771"}
+  ]
+}

@@ -1962,3 +1962,12 @@ exact structured endpoint/router routes, forwarding, bidirectional
 experiment-dataplane reachability, and `r2:eth2` `noqueue 0:`/no-filter
 pre-state. This ignored local provenance is non-scientific and not F1 Evidence
 v4. X6-R1 remains paused until this local correction is reviewed and published.
+
+## X6-R0.6 test-environment reproducibility correction (2026-08-29)
+
+Implemented locally as an append-only source-only correction. The project test
+extra directly declares `pytest>=9,<10` alongside the unchanged httpx
+dependency, and the documented clean-install command is
+`python -m pip install -e '.[test]'`. Acceptance requires an archive-free
+checkout and isolated virtual environment. No runtime or scientific material
+changes. X6-R1, F2--F4, and P9-R2 remain paused pending review/publication.

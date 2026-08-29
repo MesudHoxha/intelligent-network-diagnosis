@@ -651,3 +651,11 @@ provenance only, not F1 Evidence v4 or a scientific result. Preserve the
 original X6-R0.4 topology and three pre-mutation diagnostic trees. After
 X6-R0.5 is reviewed and published, the next exact milestone is
 `X6_R1_PACKET_LOSS`.
+
+## X6-R0.6 test-environment reproducibility correction
+
+Append-only source-only correction declaring `pytest>=9,<10` in the existing
+test extra and proving the documented `.[test]` workflow in an archive-free
+isolated environment. It changes no X5 authority, topology, F1 parameter,
+threshold, evidence, or claim. After review and publication, the next exact
+milestone remains `X6_R1_PACKET_LOSS`; F2--F4 and P9-R2 remain paused.

@@ -1695,3 +1695,10 @@ The bootstrap smoke creates non-scientific provenance only. It passed locally
 with preserved management defaults, exact experiment-route resolution,
 forwarding/reachability, and an unmutated `r2:eth2` qdisc/filter pre-state.
 X6-R1 remains paused until X6-R0.5 is reviewed and published.
+
+## X6-R0.6 test-environment reproducibility correction (2026-08-29)
+
+X6-R0.6 adds pytest 9 as a direct bounded member of the existing test extra
+and documents the isolated `.[test]` clean-install workflow. It is source-only
+and changes no scientific or runtime boundary. X6-R1 remains paused until this
+correction is reviewed and published; F2--F4 and P9-R2 remain paused.
