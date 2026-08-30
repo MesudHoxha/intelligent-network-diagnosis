@@ -1971,3 +1971,13 @@ dependency, and the documented clean-install command is
 `python -m pip install -e '.[test]'`. Acceptance requires an archive-free
 checkout and isolated virtual environment. No runtime or scientific material
 changes. X6-R1, F2--F4, and P9-R2 remain paused pending review/publication.
+
+## X6-R0.7 NetEm runtime-prerequisite correction (2026-08-30)
+
+The failed X6-R1 tree is preserved as non-authoritative because its first
+post-journal `tc netem` command was rejected before any fault window. A
+disposable isolated smoke then proved the frozen image and exact `10:`/`20:`
+chain work after the WSL host operator loads `sch_netem`. X6-R0.7 adds only
+the required fail-closed, verify-only prerequisite contract; no image,
+topology, F1 value, evidence, or scientific claim changes. X6-R1, F2--F4 and
+P9-R2 remain paused pending X6-R0.7 publication.

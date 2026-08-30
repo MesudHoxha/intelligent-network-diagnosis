@@ -1702,3 +1702,13 @@ X6-R0.6 adds pytest 9 as a direct bounded member of the existing test extra
 and documents the isolated `.[test]` clean-install workflow. It is source-only
 and changes no scientific or runtime boundary. X6-R1 remains paused until this
 correction is reviewed and published; F2--F4 and P9-R2 remain paused.
+
+## X6-R0.7 NetEm runtime-prerequisite correction (2026-08-30)
+
+The host module was the only missing prerequisite: `CONFIG_NET_SCH_NETEM=m`
+and a vermagic-compatible `sch_netem` module were present, but loading it was
+required before the frozen image could create the exact NetEm/pfifo hierarchy.
+A disposable non-scientific namespace smoke observed the active `10:`/`20:`
+chain and restored `noqueue 0:`. X6-R0.7 preserves every X6-R0.4/R0.5 value
+and adds a verify-only operator prerequisite. It does not create X6 evidence
+or a performance claim. X6-R1 remains paused pending publication.

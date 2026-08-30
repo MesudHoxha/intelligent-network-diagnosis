@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "release_id": "X6_R0_7_NETEM_RUNTIME_PREREQUISITE_CORRECTION",
+  "status": "IMPLEMENTED_PENDING_LOCAL_VERIFICATION",
+  "source_boundary": {"parent_commit": "f737c05fde265610e2cddf0b536b4a30fe37bb5b", "extension_policy": "APPEND_ONLY", "runtime_inherited": false},
+  "root_cause": "HOST_SCH_NETEM_MODULE_UNLOADED_BEFORE_X6_R1_MUTATION",
+  "diagnostic_evidence": {"failed_x6_r1_tree": "data/raw/x6_r1/x6-r1-packet-loss-20260829T173940591640Z-5007d9f82c8240c1b5b6a04eca41d644", "failed_x6_r1_classification": "DIAGNOSTIC_NON_AUTHORITATIVE_NO_FAULT_WINDOW_EVIDENCE_OR_DIAGNOSIS", "host_kernel_release": "6.18.33.2-microsoft-standard-WSL2", "kernel_config": "CONFIG_NET_SCH_NETEM=m", "module_path": "/lib/modules/6.18.33.2-microsoft-standard-WSL2/kernel/net/sched/sch_netem.ko", "module_vermagic": "6.18.33.2-microsoft-standard-WSL2 SMP preempt mod_unload modversions", "operator_action": "sudo modprobe sch_netem", "frozen_image_id": "sha256:66392daabae6054416fba5043f312bfc464bcc18246956867870e4953847ff5c", "tc_version": "tc utility, iproute2-6.1.0, libbpf 1.3.0", "iproute2_package": "iproute2 6.1.0-1ubuntu6.4", "disposable_smoke": "EXACT_FROZEN_NETEM_10_AND_PFIFO_20_CREATED_STRUCTURALLY_OBSERVED_AND_RESTORED_TO_NOQUEUE_0"},
+  "existing_image_and_topology_changed": false,
+  "frozen_values_preserved": {"loss_percent": "10.000000", "correlation_percent": "0.000000", "netem_handle": "10:", "pfifo_handle": "20:", "qdisc_limit_packets": 1000, "topology_routing": "X6_R0_5_UNCHANGED", "timing_thresholds_rule_and_diagnosis": "UNCHANGED"},
+  "pre_baseline_prerequisite": {"operator_load_after_wsl_restart": "sudo modprobe sch_netem", "runner_behavior": "VERIFY_AND_RECORD_ONLY_NEVER_PRIVILEGED_MODULE_LOAD", "required_provenance": ["kernel_release", "kernel_config", "modinfo_module_path_and_vermagic", "lsmod", "image_identity", "tc_version", "iproute2_package", "NET_ADMIN_capability", "active_exact_qdisc_chain", "restoration_to_noqueue"], "failure_classes": ["MODULE_UNAVAILABLE", "USERSPACE_QDISC_UNAVAILABLE", "PERMISSION_FAILURE", "COMMAND_REJECTED"]},
+  "replacement_pilot": {"authorization": "ONE_AFTER_X6_R0_7_PUBLICATION_ONLY", "classification": "PREREQUISITE_RECOVERY_NOT_OUTCOME_BASED_TUNING", "prior_attempt": "DIAGNOSTIC_NON_AUTHORITATIVE_NO_FAULT_WINDOW"},
+  "claim_boundary": {"proves": ["only functional availability of the frozen NetEm/pfifo chain after operator module loading"], "does_not_prove": ["an X6-R1 F1 result", "a parameter or threshold change", "a repeated observed fault outcome", "any scientific performance claim", "F2_F3_F4", "ML_Hybrid_dataset_metric_or_API_claims"]},
+  "runtime_scientific_authorization": {"containerlab_execution": false, "network_mutation": false, "new_evidence_collection": false, "dataset_generation": false, "model_training": false, "ml_or_hybrid_evaluation": false, "metric_calculation": false, "api_change": false, "multi_fault_execution": false, "method_prediction": false},
+  "track": {"next_release": "X6_R1_PACKET_LOSS", "x6_r1_status": "PAUSED_PENDING_X6_R0_7_PUBLICATION_AND_PREREQUISITE_INTEGRATION", "f2_f4_status": "PAUSED", "p9_r2_status": "PAUSED_BY_USER"},
+  "source_bindings": [
+    {"path": "src/expansion/x6_r0_7_netem_prerequisite.py", "sha256": "af523a0cad4895202b8b292eeb581924ce8fe7d6c7cf7c4074e294c85cef0f63"},
+    {"path": "src/expansion/x6_r0_7_gate.py", "sha256": "78b2bf1f67830643cf0810ead846b34e2f356357f7ce1c47a28598c1beab7b38"},
+    {"path": "tests/unit/test_x6_r0_7_netem_prerequisite.py", "sha256": "9cbcb6f6ee0299f2edca0f5a80f7db2b9a66a6423ebba7642eff696d14f241e1"},
+    {"path": "docs/HANDOFF_X6_R0_7.md", "sha256": "1d421a8c80edd458693cd7d60f430657a7acb8425bb1d7cd14706b0f707a7241"},
+    {"path": "plans/expansion/X6_R0_6_TEST_ENVIRONMENT_REPRODUCIBILITY_CORRECTION_V1.json", "sha256": "5997e12430604b711bc1ddb8fad6def09a1acba8631fae4e76a82d37052aa7e1"}
+  ]
+}

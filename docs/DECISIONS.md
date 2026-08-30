@@ -3148,3 +3148,16 @@ arbitrary exact patch pin. The canonical clean-install workflow is an isolated
 virtual environment followed by `python -m pip install -e '.[test]'` and
 `python -m pytest`. This decision does not introduce full dependency locking
 or alter runtime/scientific behavior. X6-R1 remains paused until publication.
+
+## D-X6-R0.7 — Treat NetEm availability as an operator prerequisite
+
+Decision: the X6-R1 qdisc rejection is attributable to an unloaded WSL host
+`sch_netem` module, not the frozen image or qdisc contract. The operator must
+load it with `sudo modprobe sch_netem` after a WSL restart. Future scientific
+runner code may verify and record the module, image/tool provenance,
+capability, exact disposable-chain success and restoration; it must never load
+the module itself. The existing image, topology, handles, loss setting,
+thresholds and diagnosis remain frozen. The failed X6-R1 tree is durable
+diagnostic provenance only. One replacement pilot may occur only after this
+append-only prerequisite correction is published; F2--F4 and P9-R2 remain
+paused.

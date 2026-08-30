@@ -659,3 +659,13 @@ test extra and proving the documented `.[test]` workflow in an archive-free
 isolated environment. It changes no X5 authority, topology, F1 parameter,
 threshold, evidence, or claim. After review and publication, the next exact
 milestone remains `X6_R1_PACKET_LOSS`; F2--F4 and P9-R2 remain paused.
+
+## X6-R0.7 NetEm runtime-prerequisite correction
+
+The existing frozen image and qdisc chain were proven functional only after
+the host `sch_netem` module was loaded. X6-R0.7 records an operator-owned
+`sudo modprobe sch_netem` prerequisite and a fail-closed verify-only contract
+before any future X6-R1 baseline. It does not load modules from the runner or
+alter any F1 parameter. After publication and prerequisite integration, one
+replacement `X6_R1_PACKET_LOSS` pilot is authorized; F2--F4 and P9-R2 stay
+paused.
