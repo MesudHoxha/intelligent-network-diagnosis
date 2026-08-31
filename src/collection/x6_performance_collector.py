@@ -89,9 +89,20 @@ def derive_window(raw: Mapping[str, object], *, phase: str, speed_mbps: int) -> 
     else:
         ratio = 8 * (after-before) / (elapsed * speed_mbps * 1_000_000)
         utilization = observed(ratio) if 0 <= ratio <= 1 else unavailable("utilization_outside_domain")
-    q_before = qdisc_dropped(raw["qdisc_before"], kind="pfifo", handle="20:") if phase == "fault" else 0
-    q_after = qdisc_dropped(raw["qdisc_after"], kind="pfifo", handle="20:") if phase == "fault" else 0
-    queue = observed(q_after-q_before) if q_before is not None and q_after is not None and q_after >= q_before else unavailable("invalid_pfifo_counter_chain")
+    if phase != "fault":
+        # A healthy exact noqueue state has no managed queue; zero is structural,
+        # not an unavailable pfifo-counter read.
+        filters_before = raw.get("filters_before", [])
+        if exact_noqueue(raw["qdisc_before"], filters_before) and exact_noqueue(raw["qdisc_after"], raw["filters_after"]):
+            queue = {**observed(0), "derivation": "STRUCTURAL_ZERO_NO_MANAGED_QUEUE"}
+        else:
+            queue = unavailable("healthy_qdisc_not_exact_noqueue")
+    else:
+        q_before = qdisc_dropped(raw["qdisc_before"], kind="pfifo", handle="20:")
+        q_after = qdisc_dropped(raw["qdisc_after"], kind="pfifo", handle="20:")
+        queue = ({**observed(q_after-q_before), "derivation": "COUNTER_DELTA_CHILD_PFIFO_20"}
+                 if exact_fault_hierarchy(raw["qdisc_before"]) and exact_fault_hierarchy(raw["qdisc_after"]) and q_before is not None and q_after is not None and q_after >= q_before
+                 else unavailable("invalid_pfifo_counter_chain"))
     return {"packet_loss_ratio": ping["packet_loss_ratio"], "round_trip_latency_ms_p95": ping["round_trip_latency_ms_p95"], "throughput_mbps": throughput, "interface_utilization_ratio": utilization, "queue_drop_count": queue, "rate_limit_detected": rate_limit_absent(raw["qdisc_after"], raw["filters_after"], phase=phase)}
 
 def aggregate_windows(windows: Sequence[Mapping[str, object]]) -> dict[str, dict[str, object]]:
@@ -123,6 +134,7 @@ def collect_window(window_id: str, phase: str, context: Mapping[str, Any], execu
     before_ns = monotonic_ns()
     raw: dict[str, object] = {"window_id": window_id, "phase": phase, "server_start": server, "server_readiness": ready, "server_teardown_before": teardown}
     for key, command in (("r2_tx_before", ["docker","exec","clab-x6r1-r2","cat","/sys/class/net/eth2/statistics/tx_bytes"]),("r3_rx_before",["docker","exec","clab-x6r1-r3","cat","/sys/class/net/eth1/statistics/rx_bytes"]),("qdisc_before",qdisc["capture_command"])): raw[key]=run(command)
+    raw["filters_before"]=[run(command) for command in qdisc["filter_commands"]]
     with ThreadPoolExecutor(max_workers=2) as pool:
         iperf_started = monotonic_ns(); iperf = pool.submit(run, traffic["client_command"])
         target = iperf_started + 5_000_000_000
@@ -134,6 +146,14 @@ def collect_window(window_id: str, phase: str, context: Mapping[str, Any], execu
     if raw["startup_skew_seconds"] > .250: raise RuntimeError("X6-R1 composite startup skew exceeded 0.250s")
     for key, command in (("r2_tx_after",["docker","exec","clab-x6r1-r2","cat","/sys/class/net/eth2/statistics/tx_bytes"]),("r3_rx_after",["docker","exec","clab-x6r1-r3","cat","/sys/class/net/eth1/statistics/rx_bytes"]),("qdisc_after",qdisc["capture_command"])): raw[key]=run(command)
     raw["filters_after"]=[run(command) for command in qdisc["filter_commands"]]
+    # Persist the same categorical provenance that derive_window will use.
+    # A phase label alone is never sufficient evidence of either derivation.
+    if phase == "fault" and exact_fault_hierarchy(raw["qdisc_before"]) and exact_fault_hierarchy(raw["qdisc_after"]):
+        raw["queue_drop_derivation"] = "COUNTER_DELTA_CHILD_PFIFO_20"
+    elif phase != "fault" and exact_noqueue(raw["qdisc_before"], raw["filters_before"]) and exact_noqueue(raw["qdisc_after"], raw["filters_after"]):
+        raw["queue_drop_derivation"] = "STRUCTURAL_ZERO_NO_MANAGED_QUEUE"
+    else:
+        raw["queue_drop_derivation"] = "UNAVAILABLE"
     raw["server_output"] = run(traffic["server_output_command"]); raw["server_teardown_after"] = run(traffic["server_teardown_command"])
     raw["elapsed_seconds"]=(monotonic_ns()-before_ns)/1e9; raw["collected_at_utc"]=utc_now()
     return raw

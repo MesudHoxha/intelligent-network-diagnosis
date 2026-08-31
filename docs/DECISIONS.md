@@ -3179,3 +3179,13 @@ Thresholds are built from ten baseline windows and frozen before the durable
 mutation journal. Physical effectiveness is independent of rule matching.
 Only an exact six-predicate match plus restoration, replay, hashes and cleanup
 can be authoritative; a non-separating run remains diagnostic without retry.
+
+## D-X6-R1.2 — Harden only future authoritative acceptance
+
+Decision: preserve the consumed pilot and all frozen F1 semantics, but require
+future-authoritative verification to bind the complete X6-R0.7 predecessor
+boundary and independently validate the complete raw-observation lifecycle.
+`queue_drop_count` retains its numeric value and threshold formula: healthy
+zero is `STRUCTURAL_ZERO_NO_MANAGED_QUEUE`; fault zero is the owned
+`COUNTER_DELTA_CHILD_PFIFO_20`. The historical NetEm record does not prove an
+unpreserved earlier WSL-kernel state. No pilot is authorized by this decision.

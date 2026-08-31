@@ -2,7 +2,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 import pytest
-from src.collection.x6_performance_collector import aggregate_windows, exact_fault_hierarchy, exact_noqueue, parse_iperf3, qdisc_dropped, validate_speed_pair
+from src.collection.x6_performance_collector import aggregate_windows, derive_window, exact_fault_hierarchy, exact_noqueue, parse_iperf3, qdisc_dropped, validate_speed_pair
+import src.collection.x6_performance_collector as performance_collector
 from src.collection.x6_r0_3_pre_runtime_validation import build_threshold_manifest
 from src.fault_injection.x6_packet_loss import apply_mutation, planned_journal, recover
 from src.fault_injection.phase6_common import write_json_atomic
@@ -24,6 +25,15 @@ def test_qdisc_ownership_is_exact():
  no=qdisc([{"kind":"noqueue","handle":"0:"}]); fault=qdisc([{"kind":"netem","handle":"10:","stats":{"drops":9}},{"kind":"pfifo","handle":"20:","parent":"10:1","stats":{"drops":0}}])
  assert exact_noqueue(no,filters()) and exact_fault_hierarchy(fault)
  assert qdisc_dropped(fault,kind="netem",handle="10:")==9 and qdisc_dropped(fault,kind="pfifo",handle="20:")==0
+
+def test_queue_drop_count_records_structural_and_counter_provenance(monkeypatch):
+ monkeypatch.setattr(performance_collector,"parse_iputils_ping_probe",lambda record:{"packet_loss_ratio":{"availability":"observed","value":0.0},"round_trip_latency_ms_p95":{"availability":"observed","value":1.0}})
+ monkeypatch.setattr(performance_collector,"parse_iperf3",lambda record:{"availability":"observed","value":100.0})
+ common={"ping":record(),"iperf":record(),"r2_tx_before":record("0"),"r2_tx_after":record("100"),"r3_rx_before":record("0"),"r3_rx_after":record("100"),"elapsed_seconds":1.0,"filters_before":filters(),"filters_after":filters()}
+ no=qdisc([{"kind":"noqueue","handle":"0:"}]); healthy=derive_window({**common,"qdisc_before":no,"qdisc_after":no},phase="baseline",speed_mbps=10000)
+ fault=qdisc([{"kind":"netem","handle":"10:","stats":{"drops":9}},{"kind":"pfifo","handle":"20:","parent":"10:1","stats":{"drops":0}}]); fault_row=derive_window({**common,"qdisc_before":fault,"qdisc_after":fault},phase="fault",speed_mbps=10000)
+ assert healthy["queue_drop_count"]=={"availability":"observed","value":0,"derivation":"STRUCTURAL_ZERO_NO_MANAGED_QUEUE"}
+ assert fault_row["queue_drop_count"]=={"availability":"observed","value":0,"derivation":"COUNTER_DELTA_CHILD_PFIFO_20"}
 
 def test_speed_requires_equal_direct_and_ethtool_provenance():
  assert validate_speed_pair(record("10000\n"),record("10000\n"),record("Speed: 10000Mb/s\n"),record("Speed: 10000Mb/s\n"))==10000

@@ -1,0 +1,20 @@
+{
+  "release_id": "X6_R1_2_FUTURE_AUTHORITATIVE_ACCEPTANCE_HARDENING",
+  "source_boundary": "ddcde64b14afb07d35a009e78fa752d24884a196",
+  "extension_policy": "APPEND_ONLY_SOURCE_ONLY",
+  "source_bindings": [
+    {"path": "plans/expansion/X6_R1_PACKET_LOSS_V1.json", "sha256": "9387a4982c3f26018c261849de2112a45ed3665a747382768f73512f8d616561"},
+    {"path": "src/expansion/x6_r1_gate.py", "sha256": "3715675660d1159ab5e2c4500fc8bfc96b5be1e81e5f1cdb31cc5ab55d2caa22"},
+    {"path": "src/expansion/x6_r1_2_authoritative_verifier.py", "sha256": "8b9a316e40fea8461d5d74cd8dd6b28f65092318e9834cde6e0f5f2f58eef27c"},
+    {"path": "src/collection/x6_performance_collector.py", "sha256": "dcb5bd850369d7291e9679870943102e1158e3dad178fe519ba1a852be9881f8"},
+    {"path": "src/expansion/x6_r0_7_gate.py", "sha256": "78b2bf1f67830643cf0810ead846b34e2f356357f7ce1c47a28598c1beab7b38"},
+    {"path": "src/expansion/x6_r0_7_netem_prerequisite.py", "sha256": "af523a0cad4895202b8b292eeb581924ce8fe7d6c7cf7c4074e294c85cef0f63"},
+    {"path": "plans/expansion/X6_R0_7_NETEM_RUNTIME_PREREQUISITE_CORRECTION_V1.json", "sha256": "20580364243e0cb4593ef11ccb81a999cfbe4ac76aee42040ef23d3c698fd368"}
+  ],
+  "historical_netem_provenance": "Repository evidence proves unavailable qdisc failure, later CONFIG_NET_SCH_NETEM=m, successful sch_netem loading, and exact disposable NetEm/pfifo smoke; it cannot determine whether an earlier unpreserved WSL kernel lacked support.",
+  "queue_drop_count_semantics": "Healthy exact noqueue 0: with no filters is STRUCTURAL_ZERO_NO_MANAGED_QUEUE represented numerically as zero; fault is COUNTER_DELTA_CHILD_PFIFO_20. Frozen numeric threshold and rule semantics remain unchanged.",
+  "future_authoritative_contract": "A future result must pass the independent verifier, including complete lifecycle, raw hash chain, Evidence v4, Feature Vector v2, threshold freeze, qdisc provenance, command/effectiveness separation, restoration/replay, baseline-after, and zero-container/namespace cleanup.",
+  "runtime_scientific_authorization": {"containerlab": false, "measurement": false, "f1_revalidation": false, "f2": false, "f3": false, "f4": false, "dataset": false, "ml_hybrid": false, "api": false, "p9_r2": false},
+  "x6_r1_1_boundary": "UNCHANGED_DIAGNOSTIC_NON_AUTHORITATIVE_PILOT_CONSUMED_BASELINE_INVALID_AFTER_C_INSUFFICIENT_EVIDENCE",
+  "next_action": "SEPARATE_REVIEW_OF_FUTURE_RUNTIME_AUTHORIZATION_ONLY_AFTER_X6_R1_2_PUBLICATION"
+}

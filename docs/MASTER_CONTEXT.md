@@ -1729,3 +1729,11 @@ the X6-R0.5 corrected topology plus every other frozen F1 parameter verbatim.
 Authority is limited to one controlled F1
 single-fault pilot on `X6_TOP_01`; it cannot alter X5, Phase 6--8, datasets,
 models, metrics, API v1, or the paused P9-R2 track.
+
+## X6-R1.2 future-authoritative acceptance hardening (2026-08-31)
+
+This append-only source-only release leaves the consumed X6-R1 pilot
+non-authoritative and adds no experimental result. It hardens only any future
+separately authorized acceptance path: full X6-R0.7 provenance, raw hash and
+lifecycle checks, explicit structural/counter queue provenance, and durable
+cleanup verification. Runtime/scientific authorization remains 0/10.

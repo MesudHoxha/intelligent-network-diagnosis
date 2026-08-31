@@ -2003,3 +2003,11 @@ six X1 features, exact `R_X6_PERFORMANCE_001`, crash-safe NetEm/pfifo mutation,
 standalone recovery, Evidence v4 and source/runtime gates. The one official
 pilot consumes the X6-R0.5 corrected topology; all other frozen F1 values
 remain unchanged. F2--F4 and P9-R2 remain paused.
+
+## X6-R1.2 future-authoritative acceptance hardening (2026-08-31)
+
+Append-only source-only hardening now enters the complete X6-R0.7 transitive
+boundary and independently verifies future authoritative runtime trees from
+raw observations, hashes, lifecycle, threshold freeze, qdisc provenance,
+restoration, replay and cleanup. X6-R1.1 and its consumed diagnostic pilot
+remain unchanged; runtime/scientific authorization remains 0/10.

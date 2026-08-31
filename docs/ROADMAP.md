@@ -683,3 +683,10 @@ Implement and execute the one frozen controlled F1 pilot using the X6-R0.5
 corrected topology. Stop on any source,
 runtime, restoration, evidence-integrity, or conditional-separation failure.
 F2--F4 and P9-R2 remain paused; no successor starts in this release.
+
+## X6-R1.2 future-authoritative acceptance hardening
+
+Source-only successor preserving X6-R1.1. It adds the future authoritative
+raw-observation acceptance contract and no runtime authorization. The next
+action is a separate review of future runtime authorization; F2--F4 and P9-R2
+remain paused.

@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 
 from src.contracts.expansion import validate_evidence_v4, validate_feature_vector_v2
-from src.expansion.x6_r0_6_gate import verify_x6_r0_6
+from src.expansion.x6_r0_7_gate import verify_x6_r0_7
 from src.expansion.x6_r1_runtime_context import load_x6_r1_runtime_context
 
 
@@ -33,9 +33,8 @@ def _load(path: Path) -> dict[str, object]:
 
 def verify_x6_r1_source(repository_root: Path = ROOT) -> dict[str, object]:
     root = Path(repository_root)
-    # X6-R0.6 transitively verifies X6-R0.2 through X6-R0.5.  Invoking all
-    # three entry points here repeats the schema-heavy predecessor chain.
-    verify_x6_r0_6(root)
+    # R0.7 transitively verifies R0.6 and binds the accepted NetEm prerequisite.
+    verify_x6_r0_7(root)
     context = load_x6_r1_runtime_context(root)
     plan = _load(root / PLAN)
     require(
@@ -80,7 +79,7 @@ def verify_x6_r1_source(repository_root: Path = ROOT) -> dict[str, object]:
         "X6-R1 inherited frozen F1 values drifted",
     )
     bindings = plan.get("source_bindings")
-    require(isinstance(bindings, list) and len(bindings) == 12, "X6-R1 requires twelve source bindings")
+    require(isinstance(bindings, list) and len(bindings) == 14, "X6-R1 requires fourteen source bindings")
     for row in bindings:
         require(isinstance(row, dict) and isinstance(row.get("path"), str) and isinstance(row.get("sha256"), str), "X6-R1 source binding malformed")
         path = root / row["path"]
@@ -89,28 +88,10 @@ def verify_x6_r1_source(repository_root: Path = ROOT) -> dict[str, object]:
 
 
 def verify_x6_r1_runtime(experiment_root: Path, repository_root: Path = ROOT) -> dict[str, object]:
-    verify_x6_r1_source(repository_root)
-    root = Path(experiment_root)
-    manifest = _load(root / "manifest.json")
-    effect = _load(root / "mutation/mutation_effectiveness.json")
-    diagnosis = _load(root / "diagnosis/diagnosis_result_v2.json")
-    predicates = _load(root / "diagnosis/conditional_predicates.json")
-    restoration = _load(root / "mutation/restoration_record.json")
-    replay = _load(root / "mutation/standalone_replay.json")
-    hashes = _load(root / "validation/raw_hashes.json")
-    evidence = _load(root / "parsed/evidence_v4.json")
-    vector = _load(root / "parsed/feature_vector_v2.json")
-    catalog = _load(repository_root / "plans/expansion/X1_FEATURE_CATALOG_V1.json")
-    validate_evidence_v4(evidence, catalog, repository_root=repository_root)
-    validate_feature_vector_v2(vector, catalog, repository_root=repository_root)
-    require(manifest.get("status") == "AUTHORITATIVE" and effect.get("status") == "MUTATION_EFFECTIVE" and 6 <= effect.get("lost_packet_count", -1) <= 25 and effect.get("pfifo_drop_delta") == 0, "X6-R1 effectiveness invalid")
-    require(diagnosis.get("status") == "diagnosed" and diagnosis.get("explanation_refs") == ["rule:R_X6_PERFORMANCE_001"] and all(predicates.get("predicates", {}).values()), "X6-R1 diagnosis/signature invalid")
-    require(restoration.get("status") == "RESTORATION_CONFIRMED" and replay.get("status") == "STANDALONE_REPLAY_CONFIRMED", "X6-R1 restoration invalid")
-    artifacts = hashes.get("artifacts", {})
-    require(isinstance(artifacts, dict) and len(artifacts) == 17, "X6-R1 requires sixteen raw windows plus aggregate provenance")
-    for name, digest in artifacts.items():
-        require(hashlib.sha256((root / name).read_bytes()).hexdigest() == digest, "X6-R1 raw hash drifted: " + name)
-    return manifest
+    # Import here to keep the verifier independent of this public compatibility
+    # entry point while preserving the established API.
+    from src.expansion.x6_r1_2_authoritative_verifier import verify_x6_r1_authoritative_independently
+    return verify_x6_r1_authoritative_independently(experiment_root, repository_root)
 
 
 def main() -> int:
@@ -120,7 +101,7 @@ def main() -> int:
     args = parser.parse_args()
     plan = verify_x6_r1_source(args.repository_root)
     print("x6_r1_source=VERIFIED")
-    print("source_bindings=" + str(len(plan["source_bindings"])) + "/12_HASH_BOUND_PASS")
+    print("source_bindings=" + str(len(plan["source_bindings"])) + "/14_HASH_BOUND_PASS")
     if args.experiment_root:
         verify_x6_r1_runtime(args.experiment_root, args.repository_root)
         print("x6_r1_runtime=AUTHORITATIVE")
