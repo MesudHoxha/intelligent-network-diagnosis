@@ -1,0 +1,30 @@
+{
+  "release_id": "X6_R1_PACKET_LOSS",
+  "status": "IMPLEMENTED_PENDING_OFFICIAL_PILOT",
+  "source_boundary": "430333f4cc78ebad5aa3bdc1a1e7a24b1d991c11",
+  "x6_r0_7_prerequisite": "VERIFY_ONLY_HOST_SCH_NETEM_LOADED_BEFORE_DEPLOYMENT_NEVER_PRIVILEGED_MODULE_LOAD",
+  "scenario": "F1_PACKET_LOSS",
+  "historical_frozen_runtime_context": "labs/topologies/x6_r1_packet_loss/runtime_context_v1.json",
+  "corrected_topology": {"path": "labs/topologies/x6_r1_packet_loss_r0_5/topology.clab.yml", "sha256": "9decd096606a7af5d6aa5a7de6c5d406c286e12094825cbc88b3fb59a2e37b14"},
+  "corrected_bootstrap_context": "labs/topologies/x6_r1_packet_loss_r0_5/bootstrap_context_v1.json",
+  "rule_id": "R_X6_PERFORMANCE_001",
+  "threshold_input_contract": "raw baseline observations remain preserved; threshold derivation canonicalizes only its bound numeric inputs to frozen six-decimal ROUND_HALF_EVEN values before semantic validation and freeze",
+  "historical_pre_mutation_diagnostic_trees": "PRESERVED_NON_AUTHORITATIVE; no mutation journal, qdisc change, fault window, Evidence v4, or diagnosis was produced",
+  "scope": "one controlled single-fault packet-loss pilot on X6_TOP_01 only",
+  "excluded": ["F2", "F3", "F4", "dataset", "ML/Hybrid", "metrics", "API/dashboard", "P9-R2", "generalized performance claims"],
+  "authoritative_requirements": ["source gates", "10 baseline windows", "threshold freeze before mutation", "6..25 losses over 150 trials", "zero pfifo overflow drops", "six observed features", "exact conditional signature", "diagnosis", "restoration", "standalone replay", "three baseline-after windows", "raw hashes", "zero-container cleanup"],
+  "source_bindings": [
+    {"path": "src/collection/x6_performance_collector.py", "sha256": "31d799c9b3fb12265bf3588ec56a38404996d1e7edaed2206c78228c511cc92a"},
+    {"path": "src/fault_injection/x6_packet_loss.py", "sha256": "737b93d0a53d4d453849a866deaec17ec8359cfce8bfb0bf7e4aab1cd7e1c360"},
+    {"path": "src/orchestration/x6_r1_packet_loss_runner.py", "sha256": "8ef9473b60715df8adf70c51016e143442593b2ea90f2ba7e670a7ebb47f0e71"},
+    {"path": "src/expansion/x6_r1_performance_rule.py", "sha256": "48c36aea0e8479c89a81aff9e267e4d1b98fc6fd82ebcf867549b24ec33928f6"},
+    {"path": "src/expansion/x6_r1_runtime_context.py", "sha256": "58d369a94a5c2f7680c3040477c8f9f04ea649dd8e7f7941a1b1c3e479d86b91"},
+    {"path": "tests/unit/test_x6_r1_packet_loss.py", "sha256": "231b7b35489ebd33da1181f4395e98f0c2dee54fe5f649d16a80656e01de23a5"},
+    {"path": "tests/e2e/test_x6_r1_packet_loss_containerlab.py", "sha256": "59df0906739ab1930bc440ed20c329d4836847cec8d024e04a628e29660da10c"},
+    {"path": "src/expansion/x6_r0_7_netem_prerequisite.py", "sha256": "af523a0cad4895202b8b292eeb581924ce8fe7d6c7cf7c4074e294c85cef0f63"},
+    {"path": "docs/HANDOFF_X6_R1.md", "sha256": "c29943439b28742d62d39f4ce00f6a09351483b56824dac8ed7159ed96d05a2a"},
+    {"path": "labs/topologies/x6_r1_packet_loss/runtime_context_v1.json", "sha256": "560c18708105221f5d9b17bf29fae5f8b64c899ec91556f57a91eefdb969630e"},
+    {"path": "labs/topologies/x6_r1_packet_loss_r0_5/bootstrap_context_v1.json", "sha256": "2b3d73d87cbdd7af94854486ef95fa2d0e75429f3950ff448b7bbcfb00e50278"},
+    {"path": "labs/topologies/x6_r1_packet_loss_r0_5/topology.clab.yml", "sha256": "9decd096606a7af5d6aa5a7de6c5d406c286e12094825cbc88b3fb59a2e37b14"}
+  ]
+}

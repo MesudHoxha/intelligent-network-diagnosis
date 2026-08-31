@@ -1,0 +1,20 @@
+{
+  "release_id": "X6_R1_1_FAILED_PILOT_TERMINALIZATION_AND_BASELINE_RECOVERY_AUDIT",
+  "source_boundary": "430333f4cc78ebad5aa3bdc1a1e7a24b1d991c11",
+  "extension_policy": "APPEND_ONLY_SOURCE_ONLY",
+  "consumed_pilot": "data/raw/x6_r1/x6-r1-packet-loss-20260830T092851322830Z-6d8df9d71cd54dce8883527804d715ba",
+  "pilot_status": "PILOT_CONSUMED_DIAGNOSTIC_NON_AUTHORITATIVE_BASELINE_INVALID_AFTER",
+  "scientific_result": "NONE; no Evidence v4, Feature Vector v2, diagnosis, acceptance manifest, metric, or generalized claim exists",
+  "baseline_after_audit": {"classification": "C_INSUFFICIENT_EVIDENCE", "implementation_defect_proven": false, "threshold_change": "FORBIDDEN", "reason": "no CPU/load provenance distinguishes implementation defect from host-local variability"},
+  "terminalization_contract": "atomic, post-cleanup where recovery was required, idempotent, diagnostic only, and unable to mask the originating lifecycle error",
+  "runtime_scientific_authorization": {"containerlab": false, "measurement": false, "f1_revalidation": false, "f2": false, "f3": false, "f4": false, "dataset": false, "ml_hybrid": false, "api": false, "p9_r2": false},
+  "frozen_boundaries": ["X5 authority unchanged", "X6-R0.4 and X6-R0.5 topology hashes unchanged", "ind-linux:0.1 unchanged", "F1 commands parameters timing thresholds and R_X6_PERFORMANCE_001 unchanged"],
+  "next_action": "ADDITIONAL_SOURCE_OR_PROVENANCE_ANALYSIS_ONLY; no runtime authorization is granted",
+  "clean_checkout_materialized_gating": "ordinary source-only collection skips the single-run receipt when its ignored tree is absent; explicit --materialized verification fails absent, incomplete, or hash-drifted trees",
+  "source_bindings": [
+    {"path": "src/expansion/x6_r1_failure_terminalization.py", "sha256": "e6c6a0fcf736297a91b7b2b786460452275779111229a3bb7edfefbfb7dee919"},
+    {"path": "src/expansion/x6_r1_1_failure_audit.py", "sha256": "8ae745a8a981e12e78f41ae479e11af7422e4d0d3df72923d4650bce00ce68d9"},
+    {"path": "src/orchestration/x6_r1_packet_loss_runner.py", "sha256": "8ef9473b60715df8adf70c51016e143442593b2ea90f2ba7e670a7ebb47f0e71"},
+    {"path": "tests/unit/test_x6_r1_1_failure_terminalization.py", "sha256": "693a1090a33ab176a55cddbec0a481fe5071e25a1b3e0d71321447a7d593dfde"}
+  ]
+}

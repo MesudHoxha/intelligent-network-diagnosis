@@ -1,5 +1,12 @@
 # ROADMAP
 
+## X6-R1.1 — Failed-pilot terminalization and baseline-recovery audit
+
+Status: source-only append-only correction. The consumed X6-R1 pilot is
+preserved as diagnostic/non-authoritative, not a scientific acceptance. The
+next action is additional source/provenance analysis; this release authorizes
+no revalidation or other runtime lifecycle.
+
 ## Phase 0 — Project foundation
 Status: In progress
 
@@ -669,3 +676,10 @@ before any future X6-R1 baseline. It does not load modules from the runner or
 alter any F1 parameter. After publication and prerequisite integration, one
 replacement `X6_R1_PACKET_LOSS` pilot is authorized; F2--F4 and P9-R2 stay
 paused.
+
+## X6-R1 packet loss
+
+Implement and execute the one frozen controlled F1 pilot using the X6-R0.5
+corrected topology. Stop on any source,
+runtime, restoration, evidence-integrity, or conditional-separation failure.
+F2--F4 and P9-R2 remain paused; no successor starts in this release.

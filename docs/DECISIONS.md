@@ -1,5 +1,14 @@
 # DECISIONS
 
+## D-X6-R1.1 — Consumed F1 pilot is terminal diagnostic evidence
+
+Decision: Preserve the consumed X6-R1 tree with a later append-only receipt,
+but do not backfill missing acceptance artifacts or infer a scientific result.
+Successful qdisc restoration does not override `BASELINE_INVALID_AFTER`.
+
+Status: Approved source-only boundary. Audit class C; no additional runtime
+authorization follows from this decision.
+
 ## D-001 — Domain
 
 Decision: Combine computer networking with AI/ML.
@@ -3161,3 +3170,12 @@ thresholds and diagnosis remain frozen. The failed X6-R1 tree is durable
 diagnostic provenance only. One replacement pilot may occur only after this
 append-only prerequisite correction is published; F2--F4 and P9-R2 remain
 paused.
+
+## D-X6-R1 — Execute exactly one frozen F1 pilot
+
+Decision: X6-R1 may implement and execute only the X6-R0.4 packet-loss slice
+using the X6-R0.5 corrected topology and endpoint bootstrap route contract.
+Thresholds are built from ten baseline windows and frozen before the durable
+mutation journal. Physical effectiveness is independent of rule matching.
+Only an exact six-predicate match plus restoration, replay, hashes and cleanup
+can be authoritative; a non-separating run remains diagnostic without retry.

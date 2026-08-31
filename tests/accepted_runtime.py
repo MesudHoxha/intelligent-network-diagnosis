@@ -19,10 +19,12 @@ def require_materialized_receipts(repository_root: Path, *receipt_paths: Path) -
         runs = receipt.get("runs", [])
         if not isinstance(runs, list):
             raise AssertionError("accepted-runtime receipt runs must be a list")
-        for run in runs:
-            if not isinstance(run, dict) or not isinstance(run.get("relative_run_path"), str):
+        paths: list[object] = [run.get("relative_run_path") if isinstance(run, dict) else None for run in runs]
+        if "relative_run_path" in receipt:
+            paths.append(receipt["relative_run_path"])
+        for relative in paths:
+            if not isinstance(relative, str):
                 raise AssertionError("accepted-runtime receipt run path is invalid")
-            relative = run["relative_run_path"]
             if not (repository_root / relative).is_dir():
                 missing.append(relative)
     if missing:

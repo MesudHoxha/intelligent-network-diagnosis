@@ -1,5 +1,14 @@
 # MASTER CONTEXT
 
+## X6-R1.1 boundary
+
+The packet-loss pilot rooted at
+`data/raw/x6_r1/x6-r1-packet-loss-20260830T092851322830Z-6d8df9d71cd54dce8883527804d715ba`
+is an immutable consumed diagnostic tree. It has no accepted F1 scientific
+result; missing Evidence v4, vector, diagnosis, raw-hash manifest, and runtime
+acceptance manifest must remain absent. X6-R1.1 adds only source terminalization
+and an append-only receipt/audit. All F1 parameters remain frozen.
+
 ## Project
 
 Intelligent Network Diagnosis
@@ -1712,3 +1721,11 @@ A disposable non-scientific namespace smoke observed the active `10:`/`20:`
 chain and restored `noqueue 0:`. X6-R0.7 preserves every X6-R0.4/R0.5 value
 and adds a verify-only operator prerequisite. It does not create X6 evidence
 or a performance claim. X6-R1 remains paused pending publication.
+
+## X6-R1 packet-loss vertical slice (2026-08-28)
+
+The source implementation is append-only over published X6-R0.7 and consumes
+the X6-R0.5 corrected topology plus every other frozen F1 parameter verbatim.
+Authority is limited to one controlled F1
+single-fault pilot on `X6_TOP_01`; it cannot alter X5, Phase 6--8, datasets,
+models, metrics, API v1, or the paused P9-R2 track.

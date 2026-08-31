@@ -1,5 +1,17 @@
 # STATUS
 
+## X6-R1.1 failed-pilot terminalization and audit
+
+The single X6-R1 F1 pilot was consumed but is diagnostic and non-authoritative:
+its NetEm mutation was accepted/effective and restoration/replay succeeded, but
+all three restored throughput windows remained below the frozen lower threshold.
+No Evidence v4, Feature Vector v2, diagnosis, accepted manifest, metric, or
+scientific result exists. X6-R1.1 adds an append-only hash receipt and future
+failure terminalization only; it grants no further runtime authorization.
+The read-only audit classification is C (insufficient provenance to distinguish
+an implementation defect from host-local variability). X6 F2–F4 and P9-R2
+remain paused.
+
 ## Current phase
 
 Phase 9 — Thesis writing and defense
@@ -1981,3 +1993,13 @@ chain work after the WSL host operator loads `sch_netem`. X6-R0.7 adds only
 the required fail-closed, verify-only prerequisite contract; no image,
 topology, F1 value, evidence, or scientific claim changes. X6-R1, F2--F4 and
 P9-R2 remain paused pending X6-R0.7 publication.
+
+## X6-R1 packet-loss implementation (2026-08-28)
+
+X6-R1 adds the source/runtime vertical slice for the single frozen F1 pilot
+after published X6-R0.7:
+bounded composite collection, threshold validation and pre-mutation freeze,
+six X1 features, exact `R_X6_PERFORMANCE_001`, crash-safe NetEm/pfifo mutation,
+standalone recovery, Evidence v4 and source/runtime gates. The one official
+pilot consumes the X6-R0.5 corrected topology; all other frozen F1 values
+remain unchanged. F2--F4 and P9-R2 remain paused.
