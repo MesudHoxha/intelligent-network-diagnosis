@@ -1,0 +1,20 @@
+{
+  "release_id": "X6_R1_3_1_BASELINE_ONLY_EXECUTION_CONTRACT_FREEZE",
+  "source_boundary": "883e45c538d9ea81dd75a7b9ad36bee7b4af78ca",
+  "extension_policy": "APPEND_ONLY_SOURCE_ONLY_PROSPECTIVE_METHODOLOGY",
+  "purpose": "Resolve the prospective X6-R1.3 cardinality ambiguity without changing X6-R0.2 canonical threshold mathematics or historical X6-R1 interpretation.",
+  "threshold_cohorts": {"construction": ["C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10"], "calibration_validation": ["C11", "C12", "C13", "C14", "C15", "C16", "C17", "C18", "C19", "C20"], "independent_holdout": ["H01", "H02", "H03", "H04", "H05", "H06", "H07", "H08", "H09", "H10"]},
+  "threshold_contract": {"builder": "src.collection.x6_r0_3_pre_runtime_validation.build_threshold_manifest", "construction_input": "C01_TO_C10_ONLY", "sample_count_per_numeric_feature": 10, "freeze": "CANONICAL_MANIFEST_TIMESTAMPED_AND_SHA256_BOUND_IMMEDIATELY_AFTER_C10_BEFORE_C11", "validation_and_holdout": "C11_TO_C20_AND_H01_TO_H10_NEVER_REGENERATE_OR_MODIFY_MANIFEST", "false_but_rehashed_manifest": "REJECT"},
+  "execution_contract": {"kind": "BASELINE_ONLY_VERIFY_ONLY_NO_MUTATION", "readiness_seconds": "5.000000", "warmup": {"count": 1, "duration_seconds": "5.000000"}, "window_duration_seconds": "20.000000", "window_spacing_seconds": "5.000000", "c10_to_c11_seconds": "5.000000", "c20_to_h01_seconds": "5.000000", "cooldown_seconds": "5.000000", "maximum_startup_skew_seconds": "0.250000", "baseline_after": "NOT_APPLICABLE_NO_MUTATION", "replay": "VERIFY_ONLY_REPLAY_REQUIRED", "justification": "Reuse the accepted X6-R0.4 five-second readiness/warm-up and twenty-second composite-window values where semantically applicable; no consumed-pilot measurement is an input."},
+  "admission": {"all_30_windows_required": true, "retry_replacement_removal_reordering": "FORBIDDEN", "mandatory_validation_rule": "EVERY_C11_TO_C20_AND_H01_TO_H10_NUMERIC_FEATURE_OBSERVATION_MUST_SATISFY_ITS_FROZEN_INCLUSIVE_BOUNDARY_AFTER_CANONICAL_SIX_PLACE_ROUNDING", "rate_limit_exclusion": "DIRECTLY_FALSE_PER_WINDOW", "terminal_statuses": ["QUALIFIED", "UNSTABLE", "COLLECTION_UNAVAILABLE", "ENVIRONMENT_INELIGIBLE", "INCONCLUSIVE"], "qualified_requires": ["validation", "holdout", "provenance", "timing", "source_identity", "qdisc_filter_state", "counter_continuity", "cleanup", "replay"], "failed_qualification": "DURABLE_TERMINAL_NO_PARAMETER_CHANGE_OR_AUTOMATIC_RERUN"},
+  "provenance": {"required": ["kernel identity", "kernel NetEm configuration", "loaded sch_netem module", "module provenance", "Python", "ip/iproute2", "tc", "ethtool", "ping", "iperf3", "Docker", "Containerlab", "image tag/ID/digest", "topology path/SHA-256", "Git commit/source-tree identity"], "record_requirements": ["command", "stdout", "stderr", "return_code", "UTC timestamp", "monotonic timestamp", "raw path", "raw SHA-256"], "host_prerequisite_policy": "VERIFY_ONLY_NO_SUDO_NO_MODPROBE_BEFORE_DEPLOYMENT_OR_MEASUREMENT; MISSING_NETEM_SUPPORT_OR_MODULE_IS_ENVIRONMENT_INELIGIBLE"},
+  "historical_boundary": "CONSUMED_X6_R1_PILOT_REMAINS_DIAGNOSTIC_NON_AUTHORITATIVE_PILOT_CONSUMED_BASELINE_INVALID_AFTER_C_INSUFFICIENT_EVIDENCE; IT_IS_A_PROHIBITED_INPUT",
+  "runtime_scientific_authorization": {"containerlab": false, "measurement": false, "f1_revalidation": false, "f2": false, "f3": false, "f4": false, "dataset": false, "ml_hybrid": false, "api": false, "p9_r2": false},
+  "next_action": "X6_R1_4_BASELINE_ONLY_RUNTIME_AUTHORIZATION_REVIEW",
+  "source_bindings": [
+    {"path": "src/expansion/x6_r1_3_1_baseline_execution_contract.py", "sha256": "318a6444f3d7e0cd6e74f763aa4580fafdd2c0942be03d00337c5671ff4c4b0f"},
+    {"path": "src/expansion/x6_r1_3_1_gate.py", "sha256": "cc802497933916f0ff3448e2d63a8aee7790473240b9d5a1e460fe548c9557a1"},
+    {"path": "tests/unit/test_x6_r1_3_1_baseline_execution_contract.py", "sha256": "d5a8e440d64b7f460f0446503c12cf51a6ecad57977f2aa9b74ea713746cc8fd"},
+    {"path": "plans/expansion/X6_R1_3_BASELINE_STABILITY_AND_HOST_PROVENANCE_METHOD_GATE_V1.json", "sha256": "83f9c65e14a7ea6d7771379fb240e2d1939ae8834dcf80b8ed3c2ad0de2e0384"}
+  ]
+}

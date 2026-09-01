@@ -3200,3 +3200,14 @@ Existing measurements establish only an unresolved provenance gap/failure mode;
 they do not calibrate thresholds or establish cause. The consumed pilot remains
 non-authoritative and no additional pilot, performance claim, or scientific
 authorization is granted.
+
+## D-X6-R1.3.1 — Freeze prospective baseline cohorts without changing X6-R0.2
+
+Decision: retain all twenty calibration windows, but freeze C01--C10 as the
+only canonical ten-sample threshold-construction cohort. C11--C20 evaluate the
+already byte-bound manifest; H01--H10 are independent holdout. Every mandatory
+later-cohort numeric observation must satisfy its frozen inclusive threshold;
+no retry, replacement, deletion, reordering, or consumed-pilot input is
+allowed. A mutation-free qualification has no baseline-after phase. Missing
+NetEm/module/tool provenance fails closed before future deployment. This is
+prospective methodology only; authorization remains 0/10.

@@ -698,5 +698,7 @@ baseline-only future qualification path with static/dynamic host provenance,
 strict calibration/holdout separation, no mutation, no selective retries, and
 fail-closed admission states. It neither authorizes nor executes that future
 runtime work. The next exact action is
+`X6_R1_3_1_BASELINE_ONLY_EXECUTION_CONTRACT_FREEZE` resolves the prospective
+cohort and provenance contract. The next exact source-only milestone is
 `X6_R1_4_BASELINE_ONLY_RUNTIME_AUTHORIZATION_REVIEW`; F2--F4, X7, and P9-R2
 remain paused.

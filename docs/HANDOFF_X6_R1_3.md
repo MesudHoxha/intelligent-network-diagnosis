@@ -33,6 +33,12 @@ WSL-kernel state.
 
 ## Next action
 
+X6-R1.3.1 resolves the prospective cardinality decision without changing the
+X6-R0.2 mathematics: C01--C10 construct the exact ten-value manifest;
+C11--C20 only validate it; H01--H10 are independent holdout. It adds
+fail-closed NetEm, tool, image, topology, Git and raw-command provenance.
+This remains source-only and grants no runtime or scientific authority.
+
 `X6_R1_4_BASELINE_ONLY_RUNTIME_AUTHORIZATION_REVIEW` is the next source-only
 review. It must not authorize a new F1 pilot directly. F2--F4, X7, and P9-R2
 remain paused.

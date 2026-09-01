@@ -2022,3 +2022,11 @@ baseline-only qualification contract. The consumed X6-R1 pilot remains
 classification remains `C — INSUFFICIENT_EVIDENCE`. No Evidence v4, feature
 vector, diagnosis, threshold calibration, scientific result, or pilot
 authority is added. Runtime/scientific authorization is 0/10.
+
+## X6-R1.3.1 baseline-only execution-contract freeze (prospective)
+
+X6-R1.3.1 freezes C01--C10 as the sole ten-sample canonical-threshold cohort,
+C11--C20 as validation-only, and H01--H10 as independent holdout. Neither
+later cohort can modify the manifest. Explicit host module, tool, image,
+topology, source and raw-command provenance is fail-closed. No qualification
+was run and runtime/scientific authorization remains 0/10.
