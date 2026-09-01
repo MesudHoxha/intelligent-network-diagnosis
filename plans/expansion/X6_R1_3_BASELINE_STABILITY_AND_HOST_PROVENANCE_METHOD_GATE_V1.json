@@ -1,0 +1,49 @@
+{
+  "release_id": "X6_R1_3_BASELINE_STABILITY_AND_HOST_PROVENANCE_METHOD_GATE",
+  "source_boundary": "733c1e50cf38c6a672db1d741e11e4c04ceb948d",
+  "extension_policy": "APPEND_ONLY_SOURCE_ONLY_PROSPECTIVE_METHODOLOGY",
+  "unresolved_baseline_after_explanations": ["host scheduling or CPU contention", "WSL timing variability", "TCP transient behavior", "warmup or recovery effects", "measurement-method instability", "another environment-specific factor"],
+  "historical_measurement_interpretation": "Existing pilot measurements document a provenance gap and failure mode only; they are neither threshold calibration nor a causal root-cause finding. Future raw evidence is required for every unresolved explanation.",
+  "source_bindings": [
+    {"path": "src/contracts/expansion.py", "sha256": "72f7a9188e1eca9c0b486517bb99f4eb174dffbc764a3cdd034bb7c75e842f74"},
+    {"path": "schemas/x6_host_runtime_provenance_v1.schema.json", "sha256": "527dac9712fdfa5c485a8543ef11ebf80efa13a7ba694f3bc76d81ecf60261af"},
+    {"path": "src/expansion/x6_r1_3_baseline_stability.py", "sha256": "0396a689726103d507fdfdcecb08d0179a1bfa5d4aa07c97626a323c2c21da6a"},
+    {"path": "src/expansion/x6_r1_2_gate.py", "sha256": "7af23ee83a49c31a0ca2dbddc65fb0989fe944ce7ccd5055991d29797ca50c53"},
+    {"path": "plans/expansion/X6_R1_2_FUTURE_AUTHORITATIVE_ACCEPTANCE_HARDENING_V1.json", "sha256": "1849a295af37bd1129c37e5505179031de1d7b45fb7cc819c5d8985162bef217"}
+  ],
+  "preserved_consumed_pilot": "DIAGNOSTIC_NON_AUTHORITATIVE_PILOT_CONSUMED_BASELINE_INVALID_AFTER_C_INSUFFICIENT_EVIDENCE_NO_EVIDENCE_V4_FEATURE_VECTOR_V2_DIAGNOSIS_OR_SCIENTIFIC_RESULT",
+  "host_context_role": ["provenance", "admission_control", "exclusion_evidence", "methodology_assessment"],
+  "host_context_prohibited_roles": ["fault_label", "rule_based_diagnosis_input", "ml_feature", "hybrid_input", "ground_truth"],
+  "numeric_limits_status": "UNRESOLVED_NO_RUNTIME_DERIVATION",
+  "provenance_contract": "schemas/x6_host_runtime_provenance_v1.schema.json plus src/expansion/x6_r1_3_baseline_stability.py",
+  "qualification_protocol": {
+    "execution_kind": "BASELINE_ONLY_NO_MUTATION",
+    "traffic_context": "REUSE_ACCEPTED_R0_4_TOPOLOGY_IMAGE_TOOLS_DIRECTION_UNLESS_FUTURE_SOURCE_CORRECTION",
+    "calibration_windows": 20,
+    "holdout_windows": 10,
+    "window_order": "CHRONOLOGICAL_CALIBRATION_THEN_HOLDOUT_NO_RETRY_NO_REMOVAL",
+    "warmup_cooldown_spacing": "UNRESOLVED_SEPARATE_BASELINE_ONLY_AUTHORIZATION_REQUIRED",
+    "statistics": "median_mad_independent_calibration_holdout_v1 with six-place half-even recomputation",
+    "numeric_stability_admission_limits": "UNRESOLVED_NO_RUNTIME_DERIVATION",
+    "possible_decisions": ["QUALIFIED", "UNSTABLE", "COLLECTION_UNAVAILABLE", "ENVIRONMENT_INELIGIBLE", "INCONCLUSIVE"],
+    "current_source_only_decision": "INCONCLUSIVE"
+  },
+  "retry_consumption_policy": {
+    "future_attempt_begins": "DURABLE_QUALIFICATION_INTENT_WRITTEN_BEFORE_ANY_WINDOW",
+    "pre_mutation_qualification_failure_consumes_fault_pilot": false,
+    "qualification_attempt_preservation": "EVERY_ATTEMPT_DURABLE_NO_SELECTIVE_REMOVAL",
+    "additional_qualification_attempt": "REQUIRES_SEPARATE_REVIEWED_AUTHORIZATION",
+    "fault_pilot_start_condition": "NEVER_FROM_A_SINGLE_FAVORABLE_BASELINE_BLOCK"
+  },
+  "restoration_stability": {
+    "qdisc_restoration": "NECESSARY_NOT_SUFFICIENT",
+    "required": ["exact_noqueue_0_no_filters", "cooldown_stabilization_per_successor_authorization", "no_lingering_iperf", "host_context_recovery", "baseline_after_cardinality", "comparison_to_frozen_pre_mutation_manifest"],
+    "distinguishes": ["network_restoration", "measurement_environment_recovery", "scientific_baseline_recovery"],
+    "invalid_baseline_after": "BLOCKS_AUTHORITATIVE_ACCEPTANCE"
+  },
+  "future_release_sequence": ["X6_R1_3_SOURCE_ONLY_METHODOLOGY_GATE", "SEPARATELY_REVIEWED_BASELINE_ONLY_RUNTIME_AUTHORIZATION", "BASELINE_ONLY_MATERIALIZED_QUALIFICATION", "SOURCE_ONLY_QUALIFICATION_CLOSEOUT", "PROSPECTIVE_SUCCESSOR_PARAMETER_THRESHOLD_FREEZE", "SEPARATE_REVIEW_OF_FUTURE_F1_JUSTIFICATION"],
+  "future_authoritative_verification": ["validate x6_host_runtime_provenance_v1 schema and exact field catalog", "validate every raw provenance path/hash and qualification observation-to-hash link", "validate baseline-only cardinality/order/separation/statistics without deriving numeric limits", "reject malformed proc/cgroup records, counter reset/wrap, wrong units, duplicate/missing windows, leakage, post-hoc limits, timestamp reordering, skew, lingering iperf, cleanup defects, and false-but-rehashed manifests"],
+  "clean_checkout_policy": "default source-only tests remain archive-free; accepted-runtime materialized checks use the shared explicit availability mechanism and must fail when explicitly requested with the private archive absent",
+  "runtime_scientific_authorization": {"containerlab": false, "measurement": false, "f1_revalidation": false, "f2": false, "f3": false, "f4": false, "dataset": false, "ml_hybrid": false, "api": false, "p9_r2": false},
+  "next_action": "SEPARATE_REVIEWED_BASELINE_ONLY_RUNTIME_AUTHORIZATION"
+}

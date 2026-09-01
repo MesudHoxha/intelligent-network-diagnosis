@@ -3189,3 +3189,14 @@ boundary and independently validate the complete raw-observation lifecycle.
 zero is `STRUCTURAL_ZERO_NO_MANAGED_QUEUE`; fault zero is the owned
 `COUNTER_DELTA_CHILD_PFIFO_20`. The historical NetEm record does not prove an
 unpreserved earlier WSL-kernel state. No pilot is authorized by this decision.
+
+## D-X6-R1.3 — Baseline stability is a future provenance qualification, not a retry
+
+Decision: X6-R1.3 may define only a future baseline-only qualification method.
+It must capture versioned host/runtime provenance, use predeclared calibration
+and holdout windows without mutation or selective removal, and fail closed on
+missing provenance, malformed counters, timing skew, or cleanup defects.
+Existing measurements establish only an unresolved provenance gap/failure mode;
+they do not calibrate thresholds or establish cause. The consumed pilot remains
+non-authoritative and no additional pilot, performance claim, or scientific
+authorization is granted.

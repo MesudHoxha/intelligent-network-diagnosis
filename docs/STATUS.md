@@ -2011,3 +2011,14 @@ boundary and independently verifies future authoritative runtime trees from
 raw observations, hashes, lifecycle, threshold freeze, qdisc provenance,
 restoration, replay and cleanup. X6-R1.1 and its consumed diagnostic pilot
 remain unchanged; runtime/scientific authorization remains 0/10.
+
+## X6-R1.3 baseline-stability and host-provenance method gate (prospective)
+
+X6-R1.3 is an append-only, source-only methodology gate. It records the
+unresolved baseline-after explanations as competing possibilities, not causal
+findings, and defines fail-closed host/runtime provenance plus a prospective
+baseline-only qualification contract. The consumed X6-R1 pilot remains
+`DIAGNOSTIC_NON_AUTHORITATIVE`, `PILOT_CONSUMED`, and `BASELINE_INVALID_AFTER`;
+classification remains `C — INSUFFICIENT_EVIDENCE`. No Evidence v4, feature
+vector, diagnosis, threshold calibration, scientific result, or pilot
+authority is added. Runtime/scientific authorization is 0/10.

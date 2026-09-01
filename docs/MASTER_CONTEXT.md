@@ -1737,3 +1737,12 @@ non-authoritative and adds no experimental result. It hardens only any future
 separately authorized acceptance path: full X6-R0.7 provenance, raw hash and
 lifecycle checks, explicit structural/counter queue provenance, and durable
 cleanup verification. Runtime/scientific authorization remains 0/10.
+
+## X6-R1.3 baseline stability and host provenance method gate (2026-09-01)
+
+X6-R1.3 is a source-only, append-only method gate that preserves all frozen F1
+parameters and the consumed non-authoritative pilot. It defines the future
+baseline-only admission, provenance, calibration/holdout, restoration, and
+exclusion requirements needed before any separately reviewed runtime action.
+It makes no causal, performance, ML, or scientific claim and grants no pilot
+authorization. F2--F4, X7, and P9-R2 remain paused.

@@ -690,3 +690,13 @@ Source-only successor preserving X6-R1.1. It adds the future authoritative
 raw-observation acceptance contract and no runtime authorization. The next
 action is a separate review of future runtime authorization; F2--F4 and P9-R2
 remain paused.
+
+## X6-R1.3 baseline stability and host provenance method gate
+
+Source-only methodology successor. It defines a separately reviewed,
+baseline-only future qualification path with static/dynamic host provenance,
+strict calibration/holdout separation, no mutation, no selective retries, and
+fail-closed admission states. It neither authorizes nor executes that future
+runtime work. The next exact action is
+`X6_R1_4_BASELINE_ONLY_RUNTIME_AUTHORIZATION_REVIEW`; F2--F4, X7, and P9-R2
+remain paused.

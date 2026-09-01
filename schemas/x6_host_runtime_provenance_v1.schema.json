@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "contract_id", "timestamp_format", "static_environment_identity", "dynamic_execution_context"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "contract_id": {"const": "X6_HOST_RUNTIME_PROVENANCE_V1"},
+    "timestamp_format": {"const": "RFC3339_UTC_AND_MONOTONIC_NS"},
+    "static_environment_identity": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/field"}},
+    "dynamic_execution_context": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/field"}}
+  },
+  "$defs": {
+    "field": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field_id", "owner", "source", "parser", "unit", "required", "absence_effect", "availability", "value", "captured_at_utc", "monotonic_ns", "raw_provenance_path", "raw_provenance_sha256", "failure_behavior"],
+      "properties": {
+        "field_id": {"type": "string", "minLength": 1},
+        "owner": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1},
+        "parser": {"type": "string", "minLength": 1},
+        "unit": {"type": "string", "minLength": 1},
+        "required": {"type": "boolean"},
+        "absence_effect": {"enum": ["BLOCKS_MUTATION", "BLOCKS_ACCEPTANCE", "RECORDED_LIMITATION"]},
+        "availability": {"enum": ["observed", "collection_unavailable"]},
+        "value": {},
+        "captured_at_utc": {"type": "string", "format": "date-time"},
+        "monotonic_ns": {"type": "integer", "minimum": 0},
+        "raw_provenance_path": {"type": "string", "minLength": 1},
+        "raw_provenance_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "failure_behavior": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

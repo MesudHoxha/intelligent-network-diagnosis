@@ -16,6 +16,7 @@ SCHEMA_PATHS = {
     "dataset_row_v4": "schemas/dataset_row_v4.schema.json",
     "diagnosis_result_v2": "schemas/diagnosis_result_v2.schema.json",
     "evidence_mask_plan_v2": "schemas/evidence_mask_plan_v2.schema.json",
+    "x6_host_runtime_provenance_v1": "schemas/x6_host_runtime_provenance_v1.schema.json",
 }
 
 FROZEN_P6_MASKS = {
