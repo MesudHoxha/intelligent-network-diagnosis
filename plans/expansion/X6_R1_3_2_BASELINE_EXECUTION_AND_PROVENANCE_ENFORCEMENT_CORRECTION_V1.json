@@ -1,0 +1,22 @@
+{
+  "release_id": "X6_R1_3_2_BASELINE_EXECUTION_AND_PROVENANCE_ENFORCEMENT_CORRECTION",
+  "source_boundary": "770ed88a80ddc6b9441d376cd5b46f7506b38566",
+  "extension_policy": "APPEND_ONLY_SOURCE_ONLY_PROSPECTIVE_METHODOLOGY",
+  "purpose": "Supersede X6-R1.3.1 for future authorization by enforcing schedule, materialized provenance, canonical observation identity, and derived terminal controls without changing frozen threshold mathematics.",
+  "enforcement": {
+    "physical_schedule": "MATERIALIZED_AND_INDEPENDENTLY_VERIFIED",
+    "provenance": "STRUCTURAL_AND_MATERIALIZED_VERIFICATION_SEPARATED",
+    "terminal": "QUALIFIED_REQUIRES_MATERIALIZED_DERIVATION",
+    "threshold_math": "X6_R0_2_R0_3_UNCHANGED"
+  },
+  "cohort_contract": {"construction": "C01_TO_C10_ONLY", "calibration_validation": "C11_TO_C20_ONLY", "independent_holdout": "H01_TO_H10_ONLY", "rate_limit_detected": "FALSE_FOR_ALL_THIRTY_WINDOWS", "retry_replacement_removal_reordering": "FORBIDDEN", "consumed_pilot_input": "FORBIDDEN"},
+  "runtime_scientific_authorization": {"containerlab": false, "measurement": false, "f1_revalidation": false, "f2": false, "f3": false, "f4": false, "dataset": false, "ml_hybrid": false, "api": false, "p9_r2": false},
+  "historical_boundary": "CONSUMED_X6_R1_PILOT_REMAINS_DIAGNOSTIC_NON_AUTHORITATIVE_PILOT_CONSUMED_BASELINE_INVALID_AFTER_C_INSUFFICIENT_EVIDENCE",
+  "next_action": "X6_R1_4_BASELINE_ONLY_RUNTIME_AUTHORIZATION_REVIEW",
+  "source_bindings": [
+    {"path": "src/expansion/x6_r1_3_2_baseline_execution_provenance_correction.py", "sha256": "7f2dafcb0737890d52efa78f2eb9b998aaf352cca53e6e965e08891bf263583d"},
+    {"path": "src/expansion/x6_r1_3_2_gate.py", "sha256": "28eb0aeb4db677825dfbcbf058a4622b0f28cb7fad1ddcf3aea15c7a112d068a"},
+    {"path": "tests/unit/test_x6_r1_3_2_baseline_execution_provenance_correction.py", "sha256": "780180b264921ef90271f0381f7c17334fd4ec488f9bec82b81abef0e05ac270"},
+    {"path": "plans/expansion/X6_R1_3_1_BASELINE_ONLY_EXECUTION_CONTRACT_FREEZE_V1.json", "sha256": "511531a9d57efa8641e2bf59b6903c80a5a23a47a8cd944333e99dc169e3543a"}
+  ]
+}
