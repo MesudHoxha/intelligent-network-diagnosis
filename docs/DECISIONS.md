@@ -3211,3 +3211,13 @@ no retry, replacement, deletion, reordering, or consumed-pilot input is
 allowed. A mutation-free qualification has no baseline-after phase. Missing
 NetEm/module/tool provenance fails closed before future deployment. This is
 prospective methodology only; authorization remains 0/10.
+
+## D-X6-R1.3.4 — Complete the future runner without authorizing it
+
+Decision: preserve the published R1.3.3 harness and append a separately bound
+production module. It may run only after a later valid one-attempt artifact is
+supplied, consumed before the first stateful action, and bound to exact source
+and contract identities. R1.3.4 itself creates neither that artifact nor any
+runtime evidence. Synthetic test records are not eligible evidence and cannot
+qualify. The frozen schedule, threshold mathematics, topology and traffic
+parameters are reused exactly; mutation and the consumed pilot remain excluded.

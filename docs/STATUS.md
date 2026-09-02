@@ -2030,3 +2030,15 @@ C11--C20 as validation-only, and H01--H10 as independent holdout. Neither
 later cohort can modify the manifest. Explicit host module, tool, image,
 topology, source and raw-command provenance is fail-closed. No qualification
 was run and runtime/scientific authorization remains 0/10.
+
+## X6-R1.3.4 baseline-only execution and materialized controls (source-only)
+
+X6-R1.3.4 appends a distinct, authorization-gated future execution module;
+the published R1.3.3 runner remains byte-for-byte unchanged. The new source
+implements the fixed C01--C10/C11--C20/H01--H10 lifecycle, canonical threshold
+finalization at C10, shell-false bounded raw control capture, owned cleanup,
+standalone replay, and independent raw-artifact verification. Temporary test
+authorization and deterministic injected executors are explicitly source-test
+only. No real authorization, Containerlab lifecycle, traffic, measurements,
+runtime evidence, or scientific result exists; all ten authorization fields
+remain false. X6-R1.4 remains paused pending a separate authorization review.

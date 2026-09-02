@@ -1,0 +1,19 @@
+{
+  "release_id": "X6_R1_3_4_BASELINE_ONLY_RUNTIME_EXECUTION_AND_MATERIALIZED_CONTROL_COMPLETION",
+  "source_boundary": "4fb867476ffaa8e5ca5b090558b1f0fd5be551e2",
+  "extension_policy": "APPEND_ONLY_SOURCE_ONLY_NO_RUNTIME_AUTHORIZATION",
+  "purpose": "Complete the separately bound future baseline-only lifecycle and independent raw-evidence verifier without creating or consuming a real authorization.",
+  "runtime_scientific_authorization": {"containerlab": false, "measurement": false, "f1_revalidation": false, "f2": false, "f3": false, "f4": false, "dataset": false, "ml_hybrid": false, "api": false, "p9_r2": false},
+  "future_authorization": {"scope": "BASELINE_ONLY_QUALIFICATION", "maximum_attempts": 1, "real_authorization_record": "ABSENT", "runtime_enabled": false, "test_authorization_only": true},
+  "execution_contract": {"cohorts": {"threshold_construction": ["C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10"], "calibration": ["C11", "C12", "C13", "C14", "C15", "C16", "C17", "C18", "C19", "C20"], "holdout": ["H01", "H02", "H03", "H04", "H05", "H06", "H07", "H08", "H09", "H10"]}, "schedule": {"readiness_seconds": 5, "warmup_seconds": 5, "window_seconds": 20, "post_window_spacing_seconds": 5, "cooldown_seconds": 5, "maximum_startup_skew_seconds": "0.250000"}, "threshold_freeze": "CANONICAL_C01_C10_BEFORE_C11", "mutation": "FORBIDDEN", "baseline_after": "NOT_APPLICABLE_NO_MUTATION"},
+  "controls": {"commands": "EXACT_ALLOWLISTED_ARGV_SHELL_FALSE", "raw_command_evidence": true, "owned_cleanup": "IDEMPOTENT", "new_process_recovery": true, "terminalization": "SUCCESS_FAILURE_INTERRUPTION", "materialized_verifier": "DERIVES_FROM_BOUND_RAW_ARTIFACTS"},
+  "next_action": "X6_R1_4_BASELINE_ONLY_RUNTIME_AUTHORIZATION_REVIEW",
+  "source_bindings": [
+    {"path": "src/orchestration/x6_r1_3_4_baseline_execution.py", "sha256": "07d7709ece3168a7fa5b883b417162faae8402e06b9fbe9028dc979a0ba51b05"},
+    {"path": "src/expansion/x6_r1_3_4_materialized_verifier.py", "sha256": "d00908a9aa1b22f6bd45d7723755eee170903a66c9c439544e4ec9c9255c6e26"},
+    {"path": "src/expansion/x6_r1_3_4_gate.py", "sha256": "8699725be5907d03b5f3a6016ad6f5234442d7fe744e82ec2b060ae5644ecfd5"},
+    {"path": "tests/unit/test_x6_r1_3_4_baseline_execution.py", "sha256": "5852a5de12f36086d7b6e6aa2b1b79b6361398b2cf6ae79dc8df2a60cf5eac50"},
+    {"path": "tests/unit/test_x6_r1_3_4_gate.py", "sha256": "8b7c325dbf4786fcb6c73265c0f773231423f51b96c684b3f2829e3d8d945989"},
+    {"path": "docs/HANDOFF_X6_R1_3_4.md", "sha256": "0a00a829f3f7c0d288b5c1baf9e7a25d5fc67bd52ee698fd55e6aadc404180e2"}
+  ]
+}
