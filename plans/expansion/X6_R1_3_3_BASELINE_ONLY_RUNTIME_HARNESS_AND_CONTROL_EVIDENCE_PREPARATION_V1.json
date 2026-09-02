@@ -1,0 +1,19 @@
+{
+  "release_id": "X6_R1_3_3_BASELINE_ONLY_RUNTIME_HARNESS_AND_CONTROL_EVIDENCE_PREPARATION",
+  "source_boundary": "b0abfcb1803229bd7940456da1f3307c6ea489ff",
+  "extension_policy": "APPEND_ONLY_SOURCE_ONLY_PREPARATION_NO_RUNTIME_AUTHORIZATION",
+  "purpose": "Prepare a separate mutation-free baseline-only harness, durable one-attempt consumption, recovery state, and raw-control verification before any later authorization review.",
+  "runtime_scientific_authorization": {"containerlab": false, "measurement": false, "f1_revalidation": false, "f2": false, "f3": false, "f4": false, "dataset": false, "ml_hybrid": false, "api": false, "p9_r2": false},
+  "future_authorization": {"scope": "BASELINE_ONLY_QUALIFICATION", "maximum_attempts": 1, "real_authorization_record": "ABSENT", "runtime_enabled": false},
+  "schedule": {"readiness_seconds": 5, "warmup_seconds": 5, "window_seconds": 20, "post_window_spacing_seconds": 5, "maximum_startup_skew_seconds": "0.250000", "windows": ["C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10", "C11", "C12", "C13", "C14", "C15", "C16", "C17", "C18", "C19", "C20", "H01", "H02", "H03", "H04", "H05", "H06", "H07", "H08", "H09", "H10"], "threshold_construction": ["C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10"], "calibration": ["C11", "C12", "C13", "C14", "C15", "C16", "C17", "C18", "C19", "C20"], "holdout": ["H01", "H02", "H03", "H04", "H05", "H06", "H07", "H08", "H09", "H10"], "cooldown_seconds": 5, "mutation": "FORBIDDEN"},
+  "terminal_statuses": ["QUALIFIED", "UNSTABLE", "COLLECTION_UNAVAILABLE", "ENVIRONMENT_INELIGIBLE", "TIMING_INVALID", "COUNTER_RESET", "CLEANUP_FAILED", "INTERRUPTED", "INCONCLUSIVE"],
+  "next_action": "X6_R1_4_BASELINE_ONLY_RUNTIME_AUTHORIZATION_REVIEW",
+  "source_bindings": [
+    {"path": "src/orchestration/x6_r1_3_3_baseline_only_runner.py", "sha256": "962747b7a6d362392488679744044835a28a4a60113f2e38a11ab9ec8480c0db"},
+    {"path": "src/expansion/x6_r1_3_3_baseline_control_verifier.py", "sha256": "0423bb8d667f77e569c21e051ff69ce274d5353015c6e4bcf8fda1c8da284086"},
+    {"path": "tests/unit/test_x6_r1_3_3_baseline_harness.py", "sha256": "cdfc5eb1a02b2fcbd641ec4c445e967e41fe0e352abe26a825f337206ccc94b3"},
+    {"path": "tests/unit/test_x6_r1_3_3_gate.py", "sha256": "f11023844134b9b5dfcb58bf2b264b3ac2c6dcebf5e693f163d3f392fd0525f5"},
+    {"path": "docs/HANDOFF_X6_R1_3_3.md", "sha256": "3a5839edac622e8804670bf38def0de746bf0afe7a1b4384f08f1167f113e6f1"},
+    {"path": "src/expansion/x6_r1_3_2_baseline_execution_provenance_correction.py", "sha256": "7f2dafcb0737890d52efa78f2eb9b998aaf352cca53e6e965e08891bf263583d"}
+  ]
+}
