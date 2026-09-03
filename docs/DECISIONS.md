@@ -3221,3 +3221,14 @@ and contract identities. R1.3.4 itself creates neither that artifact nor any
 runtime evidence. Synthetic test records are not eligible evidence and cannot
 qualify. The frozen schedule, threshold mathematics, topology and traffic
 parameters are reused exactly; mutation and the consumed pilot remain excluded.
+
+## D-X6-R1.3.5 — Complete provenance and independent verification before authorization
+
+Decision: correct the R1.3.4 readiness gaps append-only, without reinterpreting
+that published milestone. Future attempts require complete timestamped
+allowlisted command records, independently derived source identities, durable
+inventory and ledger checks, and a recovery result tied to a distinct process.
+Only an independent verifier may derive a prospective terminal result. Its
+highest complete state is source-contract completion for later authorization
+review; R1.3.5 cannot emit or accept runtime `QUALIFIED`. This is not an
+authorization artifact and leaves the historical 0/10 vector unchanged.

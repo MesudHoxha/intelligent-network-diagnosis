@@ -2042,3 +2042,14 @@ authorization and deterministic injected executors are explicitly source-test
 only. No real authorization, Containerlab lifecycle, traffic, measurements,
 runtime evidence, or scientific result exists; all ten authorization fields
 remain false. X6-R1.4 remains paused pending a separate authorization review.
+
+## X6-R1.3.5 provenance and independent-verification completion (source-only)
+
+X6-R1.3.5 is an append-only successor correction. It adds atomic, ordered,
+timestamped per-command records; independently derived checked-out source,
+topology and Dockerfile identity; durable command inventory verification;
+distinct-process replay verification; and verifier-derived terminal outcomes.
+Complete synthetic evidence reaches only source-contract completion for a
+later authorization review, never runtime `QUALIFIED`. It does not create or
+consume an authorization, and all ten authorization fields remain false. No
+runtime command has been invoked by this milestone.
