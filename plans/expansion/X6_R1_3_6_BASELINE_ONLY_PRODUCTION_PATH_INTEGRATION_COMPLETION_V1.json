@@ -1,0 +1,65 @@
+{
+  "extension_policy": "APPEND_ONLY_SOURCE_ONLY_NO_RUNTIME_AUTHORIZATION",
+  "future_authorization": {
+    "artifact": "ABSENT",
+    "execution_requires_separate_explicit_instruction": true,
+    "release_id": "X6_R1_4_BASELINE_ONLY_RUNTIME_AUTHORIZATION",
+    "scope": "BASELINE_ONLY_QUALIFICATION",
+    "test_artifacts_rejected_by_production_cli": true
+  },
+  "predecessor_snapshot_validation": {
+    "cumulative_documents": "HISTORICAL_BYTES_PREFIX_PLUS_APPEND_ONLY_SUCCESSOR_CONTENT",
+    "forbidden": ["WEAKEN", "SKIP", "MONKEYPATCH", "REWRITE_HISTORICAL_GATE"],
+    "historical_bindings": "VALIDATE_EXACT_HISTORICAL_BYTES",
+    "predecessor_commit": "03af67568c9ee55398d2bf7f8d4f76091d7f73b5",
+    "r1_3_5_gate_context": "EXACT_CLEAN_GIT_SNAPSHOT"
+  },
+  "prohibitions": [
+    "mutation", "netem", "pfifo", "fault_injection", "f1_revalidation",
+    "evidence_v4", "feature_vector_v2", "diagnosis", "dataset", "model",
+    "metric", "api", "thesis_result", "generalized_scientific_claim"
+  ],
+  "purpose": "Integrate accepted R1.3.5 primitives into one future-R1.4-only production path without creating an authorization or executing runtime work.",
+  "release_id": "X6_R1_3_6_BASELINE_ONLY_PRODUCTION_PATH_INTEGRATION_COMPLETION",
+  "runtime_execution": false,
+  "runtime_scientific_authorization": {
+    "api": false,
+    "containerlab": false,
+    "dataset": false,
+    "f1_revalidation": false,
+    "f2": false,
+    "f3": false,
+    "f4": false,
+    "measurement": false,
+    "ml_hybrid": false,
+    "p9_r2": false
+  },
+  "schedule": {
+    "calibration": ["C11", "C12", "C13", "C14", "C15", "C16", "C17", "C18", "C19", "C20"],
+    "construction": ["C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10"],
+    "cooldown_seconds": 5,
+    "holdout": ["H01", "H02", "H03", "H04", "H05", "H06", "H07", "H08", "H09", "H10"],
+    "maximum_startup_skew_seconds": "0.250000",
+    "readiness_seconds": 5,
+    "separation_seconds": 5,
+    "warmup_seconds": 5,
+    "window_seconds": 20,
+    "windows": [
+      "C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10",
+      "C11", "C12", "C13", "C14", "C15", "C16", "C17", "C18", "C19", "C20",
+      "H01", "H02", "H03", "H04", "H05", "H06", "H07", "H08", "H09", "H10"
+    ]
+  },
+  "source_bindings": [
+    {"path": "docs/DECISION_X6_R1_3_6.md", "sha256": "cf4515b85624bfebc3aacf5d34118a63ea7331fdbe7fa28b0c511e8f8220d2ec"},
+    {"path": "docs/STATUS_X6_R1_3_6.md", "sha256": "c3c2ba2357aabc1ade9d2cd9c5603fbf3e45927992ec27ae6aac1c88e0d0ee77"},
+    {"path": "docs/HANDOFF_X6_R1_3_6.md", "sha256": "4279a282a10803432f7679d811cd827b46af90d856a8a97683d32cf376f9b915"},
+    {"path": "src/orchestration/x6_r1_3_6_production_path.py", "sha256": "2bf5f94f18a4ba49be3dd205737200740572b35e156552167d6ce4317f32a70f"},
+    {"path": "src/orchestration/x6_r1_3_6_recovery.py", "sha256": "feb900ce654346609ce47fd69c801ec2fc239a8f161590c63b692c97ab5f573d"},
+    {"path": "src/expansion/x6_r1_3_6_materialized_verifier.py", "sha256": "19a1d6cfaa392b1dd46b4569d7c8f847a2b0ee263ee6f005f25b6210f413225d"},
+    {"path": "src/expansion/x6_r1_3_6_gate.py", "sha256": "4c17e64da9ff5ec15cc144cf0b34b5c83301a68883c5ce33424f3b783a58713e"},
+    {"path": "tests/unit/test_x6_r1_3_6_production_path.py", "sha256": "66acd084846c2a7482518c2f3ed244f71f8d805820371faa6d3cab2bb43b39cc"},
+    {"path": "tests/unit/test_x6_r1_3_6_gate.py", "sha256": "f96b15a7f4d7874d0a300139c7811780054892a5a9f9716439ede0a4cbe3e117"}
+  ],
+  "source_boundary": "03af67568c9ee55398d2bf7f8d4f76091d7f73b5"
+}
