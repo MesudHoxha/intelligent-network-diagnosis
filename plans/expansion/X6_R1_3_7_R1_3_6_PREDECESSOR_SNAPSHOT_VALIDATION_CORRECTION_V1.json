@@ -1,0 +1,59 @@
+{
+  "release_id": "X6_R1_3_7_R1_3_6_PREDECESSOR_SNAPSHOT_VALIDATION_CORRECTION",
+  "source_boundary": "bdf2fecb6c9042f36c8931175aa90bf91493433d",
+  "historical_r1_3_5_commit": "03af67568c9ee55398d2bf7f8d4f76091d7f73b5",
+  "historical_r1_3_6_commit": "bdf2fecb6c9042f36c8931175aa90bf91493433d",
+  "runtime_execution": false,
+  "runtime_scientific_authorization": {
+    "containerlab": false,
+    "measurement": false,
+    "f1_revalidation": false,
+    "f2": false,
+    "f3": false,
+    "f4": false,
+    "dataset": false,
+    "ml_hybrid": false,
+    "api": false,
+    "p9_r2": false
+  },
+  "validation_model": {
+    "r1_3_5": "EXACT_DETACHED_GIT_SNAPSHOT_SELF_VALIDATION",
+    "r1_3_6": "EXACT_DETACHED_GIT_SNAPSHOT_PLAN_BINDING_AND_COMMITTED_INVENTORY_VALIDATION",
+    "current_r1_3_7": "SEPARATE_DIRECT_SUCCESSOR_ANCESTRY_VALIDATION",
+    "forbidden": [
+      "CURRENT_WORKTREE_AS_HISTORICAL_PROOF",
+      "HEAD_SPOOFING",
+      "MONKEYPATCH_HISTORICAL_GATE",
+      "COPY_HISTORICAL_FILES_AS_PROOF",
+      "SHELL_COMMANDS",
+      "UNBOUNDED_SUBPROCESSES"
+    ]
+  },
+  "future_authorization": {
+    "artifact": "ABSENT",
+    "scope": "BASELINE_ONLY_QUALIFICATION",
+    "execution_requires_separate_explicit_instruction": true
+  },
+  "acceptance_partition": {
+    "successor_applicable": "ALL_COLLECTED_NODES_EXCEPT_EXACT_SIX_DIAGNOSTIC_NODES",
+    "frozen_expected_diagnostics": [
+      "tests/unit/test_x6_r1_3_6_gate.py::test_x6_r1_3_6_gate_preserves_disabled_historical_vector",
+      "tests/unit/test_x6_r1_3_6_gate.py::test_historical_r1_3_5_gate_is_validated_only_in_its_exact_snapshot",
+      "tests/unit/test_x6_r1_3_6_gate.py::test_historical_binding_validator_rejects_changed_historical_blob",
+      "tests/unit/test_x6_r1_3_6_gate.py::test_historical_binding_validator_rejects_wrong_predecessor_and_successor_substitution",
+      "tests/unit/test_x6_r1_3_6_gate.py::test_successor_gate_rejects_skipped_historical_gate",
+      "tests/unit/test_x6_r1_3_6_gate.py::test_gate_binds_versioned_successor_decision_and_status_documents"
+    ],
+    "diagnostic_cardinality": 6,
+    "diagnostic_expected_exception": "ValueError: X6-R1.3.6 work must extend the accepted R1.3.5 predecessor",
+    "diagnostic_is_not_a_passing_acceptance_test": true,
+    "union_requirement": "SUCCESSOR_APPLICABLE_PLUS_DIAGNOSTIC_EQUALS_COMPLETE_COLLECTED_UNIVERSE"
+  },
+  "source_bindings": [
+    {"path": "docs/DECISION_X6_R1_3_7.md", "sha256": "d35391b9d038624ea03aac0a58bf5fe5bb1e020c938de6e5fc4a835b97758b47"},
+    {"path": "docs/STATUS_X6_R1_3_7.md", "sha256": "361e04018adbfdc1b38893799ea7fd3f7a28b9d0f912a14c28f761f6ac12bf59"},
+    {"path": "docs/HANDOFF_X6_R1_3_7.md", "sha256": "3ef1d6fcfc3664a0c3482bfbb5432e98c826dd53392226efddaa47099b82baa9"},
+    {"path": "src/expansion/x6_r1_3_7_gate.py", "sha256": "6e3af51a8734db2fc807c8c67cc3c9984335de735efc33534141df75bc508cb2"},
+    {"path": "tests/unit/test_x6_r1_3_7_gate.py", "sha256": "0c713e399c1884beda4e7cecd89a50c6c8a4dd531bad543b6c57ba27a29d7957"}
+  ]
+}
