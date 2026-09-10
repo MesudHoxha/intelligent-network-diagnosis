@@ -1,0 +1,97 @@
+{
+  "release_id": "X6_R1_3_8_BASELINE_PRODUCTION_LIFECYCLE_CORRECTION",
+  "predecessor": "4f62b04112f8af23ab31ab98b92e0cc54e42b5cb",
+  "expected_predecessor_parent": "bdf2fecb6c9042f36c8931175aa90bf91493433d",
+  "extension_policy": "APPEND_ONLY_SOURCE_ONLY_NO_RUNTIME_AUTHORIZATION",
+  "purpose": "Correct the integrated baseline production lifecycle defects found by the R1.4 Phase-1 authorization review without executing or authorizing runtime work.",
+  "production_entrypoint": "src.orchestration.x6_r1_3_8_production_path",
+  "recovery_entrypoint": "src.orchestration.x6_r1_3_8_recovery",
+  "runtime_execution": false,
+  "runtime_authorization_artifact": "ABSENT",
+  "historical_authorization": {
+    "containerlab": false,
+    "measurement": false,
+    "f1_revalidation": false,
+    "f2": false,
+    "f3": false,
+    "f4": false,
+    "dataset": false,
+    "ml_hybrid": false,
+    "api": false,
+    "p9_r2": false
+  },
+  "corrections": {
+    "deployment_cleanup": "R0_5_TOPOLOGY_DEPLOYED_BEFORE_CONTAINER_OBSERVATION_IN_CONTAINER_CONTROLS_BEFORE_DESTROY_HOST_OBSERVATIONS_AFTER_DESTROY",
+    "authorization_consumption": "CANONICAL_ACTUAL_OUTPUT_BOUND_GLOBAL_EXCLUSIVE_FSYNCED_ONE_ATTEMPT_RESERVATION_BEFORE_STATEFUL_ACTION",
+    "timing": "MONOTONIC_BOUND_COMMAND_OBSERVATIONS_DERIVE_DURATION_AND_FIVE_SECOND_PING_OFFSET_WITH_0_250_SECOND_MAXIMUM_SKEW",
+    "failure_recovery": "DURABLE_TERMINALS_OR_DURABLE_INTERMEDIATE_STATE_WITH_DISTINCT_PROCESS_OWNED_RESOURCE_RECOVERY_AND_NO_AUTHORIZATION_REUSE",
+    "independent_verification": "RAW_COMMAND_RECONSTRUCTION_OF_MEASUREMENTS_TIMING_ORDER_THRESHOLDS_CONTROLS_CLEANUP_TERMINAL_AND_CONSUMPTION"
+  },
+  "numerical_contract": {
+    "source": "src/expansion/x6_r1_3_2_baseline_execution_provenance_correction.py::_six",
+    "representation": "DECIMAL_0_000001_ROUND_HALF_EVEN",
+    "application": "RECONSTRUCTED_NUMERIC_OBSERVATIONS_BEFORE_C01_C10_THRESHOLD_CONSTRUCTION_AND_LATER_COMPARISON",
+    "threshold_mathematics_changed": false
+  },
+  "simulation_contract": {
+    "external_observations": "CONTROLLED_LOCAL_SUBSTITUTES_ONLY",
+    "counter_fixture": "EQUAL_NONDECREASING_QUIET_BASELINE_BEFORE_AFTER_VALUES",
+    "continuity_checks_preserved": ["INTRA_WINDOW_NONDECREASING", "INTER_WINDOW_NONDECREASING"],
+    "positive_counter_growth_covered": false,
+    "runtime_or_network_evidence": false
+  },
+  "diagnostic_nodes": [
+    "tests/unit/test_x6_r1_3_6_gate.py::test_x6_r1_3_6_gate_preserves_disabled_historical_vector",
+    "tests/unit/test_x6_r1_3_6_gate.py::test_historical_r1_3_5_gate_is_validated_only_in_its_exact_snapshot",
+    "tests/unit/test_x6_r1_3_6_gate.py::test_historical_binding_validator_rejects_changed_historical_blob",
+    "tests/unit/test_x6_r1_3_6_gate.py::test_historical_binding_validator_rejects_wrong_predecessor_and_successor_substitution",
+    "tests/unit/test_x6_r1_3_6_gate.py::test_successor_gate_rejects_skipped_historical_gate",
+    "tests/unit/test_x6_r1_3_6_gate.py::test_gate_binds_versioned_successor_decision_and_status_documents"
+  ],
+  "historical_context": {
+    "r1_3_7_gate": "EXACT_DETACHED_4F62B041_SNAPSHOT",
+    "six_diagnostics": "SEPARATELY_REPORTED_EXPECTED_FAILURES_NOT_ACCEPTANCE_PASSES",
+    "seventh_test": "FROZEN_SHARED_DOCUMENT_REWRITE_REJECTION_PATH_MUST_PASS",
+    "replacement_coverage": "R1_3_7_VALID_DETACHED_BINDING_AND_CHANGED_BLOB_SOURCE_INTEGRITY_REJECTION"
+  },
+  "prohibitions": [
+    "authorization_creation_or_consumption",
+    "containerlab_runtime",
+    "traffic_or_measurement",
+    "qualification",
+    "runtime_cleanup",
+    "mutation_or_fault_phase",
+    "f1_revalidation",
+    "scientific_outputs_or_claims"
+  ],
+  "source_bindings": [
+    {"path": "docs/DECISION_X6_R1_3_8.md", "sha256": "71c6bcd13fc77eaad4f7bb5a6e5fb1cc5102e9565e080414414d1ea3375218a3"},
+    {"path": "docs/STATUS_X6_R1_3_8.md", "sha256": "cd9a74e985dfa2d1e27a915690c93269e15e7d48e9d1a6644e54787e3cb768a1"},
+    {"path": "docs/HANDOFF_X6_R1_3_8.md", "sha256": "b56f026a2d219ead3b37f108c9078aef627770d8eb918f820d3d7813742ed4a7"},
+    {"path": "src/orchestration/x6_r1_3_8_contract.py", "sha256": "1fa764d6147c621d396dbec1f35650016027f842aa9f98489056562f878f03d7"},
+    {"path": "src/orchestration/x6_r1_3_8_durable.py", "sha256": "f5afa20d8975d7c0a422c87d9fd465dad0770a3b9388b9c5d746fc96970abd53"},
+    {"path": "src/orchestration/x6_r1_3_8_observations.py", "sha256": "d261d59f50b5ace16cd891ec4b677458107ded40b468a55bb53779f5d808defe"},
+    {"path": "src/orchestration/x6_r1_3_8_production_path.py", "sha256": "2838ffabf4aa9ea0d5b7b0ba415bb9e4c64d7b473f48bc61119fa670c606d74a"},
+    {"path": "src/orchestration/x6_r1_3_8_recovery.py", "sha256": "82bfc111345bec324adf15a26e7a6b174789edd69c9706cf810ec2d83f3df219"},
+    {"path": "src/expansion/x6_r1_3_8_materialized_verifier.py", "sha256": "3a9b8b208e1e6c7fdcb782f9a17cc0a35ffe00b1139cfc3624b4b5628b524d65"},
+    {"path": "src/expansion/x6_r1_3_8_gate.py", "sha256": "2d7f2a7f2bcc1efd71e56916d2a22c13e0a5c047e4ac2e0d44c9fce7aab37cf6"},
+    {"path": "tests/fixtures/x6_r1_3_8_external_stub.py", "sha256": "4f309c913baab6c72b2eddda2006e7c6e7db22cd26b50f65be877977078edb0c"},
+    {"path": "tests/unit/test_x6_r1_3_8_production_path.py", "sha256": "8bba16f950a34f6f871fc15593f03b1fa22f9523b38413d4bf1c9fc6a31b3141"},
+    {"path": "plans/expansion/X6_R1_3_1_BASELINE_ONLY_EXECUTION_CONTRACT_FREEZE_V1.json", "sha256": "511531a9d57efa8641e2bf59b6903c80a5a23a47a8cd944333e99dc169e3543a"},
+    {"path": "plans/expansion/X6_R1_3_2_BASELINE_EXECUTION_AND_PROVENANCE_ENFORCEMENT_CORRECTION_V1.json", "sha256": "30a58b8e8731fbe3d4d8af785bfae14be3d9ad05e00dc1c3f6ff46549f56cac3"},
+    {"path": "plans/expansion/X6_R1_3_3_BASELINE_ONLY_RUNTIME_HARNESS_AND_CONTROL_EVIDENCE_PREPARATION_V1.json", "sha256": "6f9893fd31d94b6641811085b04854c7914c28689df94b3db104c87c92d12a77"},
+    {"path": "plans/expansion/X6_R1_3_4_BASELINE_ONLY_RUNTIME_EXECUTION_AND_MATERIALIZED_CONTROL_COMPLETION_V1.json", "sha256": "14c738432fe45b66a72ae14dc63ec77cc4960197a961cc7972b147d5d38e0616"},
+    {"path": "plans/expansion/X6_R1_3_5_BASELINE_RUNTIME_PROVENANCE_AND_INDEPENDENT_VERIFICATION_COMPLETION_V1.json", "sha256": "69289f029c174be9445b09f710e279cb5c16d8cc9ba8cd9f9e9015c71b5fb23e"},
+    {"path": "plans/expansion/X6_R1_3_6_BASELINE_ONLY_PRODUCTION_PATH_INTEGRATION_COMPLETION_V1.json", "sha256": "3b73737a7985bbeda77ff007fa27891f48422bc66a2cae6311a403b9612e70f5"},
+    {"path": "plans/expansion/X6_R1_3_7_R1_3_6_PREDECESSOR_SNAPSHOT_VALIDATION_CORRECTION_V1.json", "sha256": "bb1420cdeac309303c702a1e150181d1e7a11215775ffa3646f76fca91ce239b"},
+    {"path": "src/orchestration/x6_r1_3_6_production_path.py", "sha256": "2bf5f94f18a4ba49be3dd205737200740572b35e156552167d6ce4317f32a70f"},
+    {"path": "src/orchestration/x6_r1_3_6_recovery.py", "sha256": "feb900ce654346609ce47fd69c801ec2fc239a8f161590c63b692c97ab5f573d"},
+    {"path": "src/expansion/x6_r1_3_6_materialized_verifier.py", "sha256": "19a1d6cfaa392b1dd46b4569d7c8f847a2b0ee263ee6f005f25b6210f413225d"},
+    {"path": "src/collection/x6_performance_collector.py", "sha256": "dcb5bd850369d7291e9679870943102e1158e3dad178fe519ba1a852be9881f8"},
+    {"path": "src/collection/x6_r0_3_pre_runtime_validation.py", "sha256": "88e213d8ef492cbd61eb861a7499fc8351ca6a9446d53a0041b6cc2db3b5ab97"},
+    {"path": "labs/topologies/x6_r1_packet_loss_r0_5/topology.clab.yml", "sha256": "9decd096606a7af5d6aa5a7de6c5d406c286e12094825cbc88b3fb59a2e37b14"},
+    {"path": "labs/topologies/x6_r1_packet_loss/runtime_context_v1.json", "sha256": "560c18708105221f5d9b17bf29fae5f8b64c899ec91556f57a91eefdb969630e"},
+    {"path": "labs/images/ind-linux/Dockerfile", "sha256": "ca5b97b08895081726b12c1311be050a18f0a1039aa168319ef1420e89761b0c"}
+  ],
+  "next_action": "R1_3_8_FULL_PRIMARY_AND_ARCHIVE_FREE_SOURCE_VERIFICATION_PENDING"
+}
