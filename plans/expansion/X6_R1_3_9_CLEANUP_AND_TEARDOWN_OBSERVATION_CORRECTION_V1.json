@@ -1,0 +1,135 @@
+{
+  "release_id": "X6_R1_3_9_CLEANUP_AND_TEARDOWN_OBSERVATION_CORRECTION",
+  "predecessor": "099b199f5b6bb72dd18060a3e0e168aa00a8178c",
+  "extension_policy": "APPEND_ONLY_SOURCE_ONLY_NO_RUNTIME_AUTHORIZATION",
+  "scope": [
+    "H_INDEPENDENT_CLEANUP_BEFORE_RECONSTRUCTION",
+    "I_COMMAND_SPECIFIC_SERVER_TEARDOWN_SEMANTICS"
+  ],
+  "production_entrypoint": "src.orchestration.x6_r1_3_9_production_path",
+  "recovery_entrypoint": "src.orchestration.x6_r1_3_9_recovery",
+  "runtime_authorization_artifact": "ABSENT",
+  "historical_authorization": {
+    "containerlab": false,
+    "measurement": false,
+    "f1_revalidation": false,
+    "f2": false,
+    "f3": false,
+    "f4": false,
+    "dataset": false,
+    "ml_hybrid": false,
+    "api": false,
+    "p9_r2": false
+  },
+  "cleanup_contract": {
+    "group": [
+      "FIVE_CLEANUP_BEFORE_HOST_OBSERVATIONS",
+      "OPTIONAL_OWNED_TOPOLOGY_ACTION_IFF_OWNED_CONTAINERS_PRESENT",
+      "FIVE_CLEANUP_AFTER_HOST_OBSERVATIONS"
+    ],
+    "successful_run": "COMPLETE_DEPLOYMENT_IDENTITY_REQUIRED_ON_FIRST_CYCLE_AND_CLEAN_FINAL_STATE",
+    "failure_recovery": "OWNED_PARTIAL_DEPLOYMENT_ALLOWED_WITHOUT_INVENTING_COMPLETE_CARDINALITY",
+    "independent_verification": "RAW_GROUP_CARDINALITY_ORDER_RUN_DEPLOYMENT_OWNERSHIP_ACTION_AND_FINAL_STATE_RECONSTRUCTED"
+  },
+  "teardown_contract": {
+    "absence": "SUCCESSFUL_CONTAINER_IDENTITY_PROBE_PLUS_CLEAN_EXACT_PGREP_NO_MATCH",
+    "present": "NUMERIC_PID_OBSERVATION_THEN_RC0_PKILL_THEN_PROVED_ABSENCE",
+    "fail_closed": [
+      "SERVER_STOP_RC1",
+      "DOCKER_OR_CONTAINER_RC1",
+      "TOOL_RC1",
+      "TIMEOUT",
+      "AMBIGUOUS_STREAMS"
+    ],
+    "shell": false,
+    "bounded_seconds": 5
+  },
+  "diagnostic_nodes": [
+    "tests/unit/test_x6_r1_3_6_gate.py::test_x6_r1_3_6_gate_preserves_disabled_historical_vector",
+    "tests/unit/test_x6_r1_3_6_gate.py::test_historical_r1_3_5_gate_is_validated_only_in_its_exact_snapshot",
+    "tests/unit/test_x6_r1_3_6_gate.py::test_historical_binding_validator_rejects_changed_historical_blob",
+    "tests/unit/test_x6_r1_3_6_gate.py::test_historical_binding_validator_rejects_wrong_predecessor_and_successor_substitution",
+    "tests/unit/test_x6_r1_3_6_gate.py::test_successor_gate_rejects_skipped_historical_gate",
+    "tests/unit/test_x6_r1_3_6_gate.py::test_gate_binds_versioned_successor_decision_and_status_documents"
+  ],
+  "prohibitions": [
+    "runtime_authorization",
+    "docker_or_containerlab_runtime",
+    "traffic_or_measurement",
+    "qualification",
+    "scientific_outputs_or_claims",
+    "historical_file_or_receipt_changes"
+  ],
+  "source_bindings": [
+    {
+      "path": "docs/DECISION_X6_R1_3_9.md",
+      "sha256": "cf8f609e86ae29409ba1284871e994a3f0e93b78e48845b68d8909bbd1a5621a"
+    },
+    {
+      "path": "docs/STATUS_X6_R1_3_9.md",
+      "sha256": "d39921aef20dfe78fb8c9c7f6a92e94e9242da59f263d5de23ace3bff73f7f66"
+    },
+    {
+      "path": "docs/HANDOFF_X6_R1_3_9.md",
+      "sha256": "6c08949e1ff7f5b4bb7813cb4ec8f38c1118fbbcb880dcf00e3829a7d92d6546"
+    },
+    {
+      "path": "src/orchestration/x6_r1_3_9_contract.py",
+      "sha256": "3940ebf21d1486003d3bbdd0873b9fee2aba4d18f886a7b54acfb8e732891a0b"
+    },
+    {
+      "path": "src/orchestration/x6_r1_3_9_durable.py",
+      "sha256": "dfcb7f8f34c5c80d73901361d198e03af4274dcfd310a9455ab771a573fb0bb3"
+    },
+    {
+      "path": "src/orchestration/x6_r1_3_9_observations.py",
+      "sha256": "2f296cdb4aafddd5cf86a7dd21faa1b579001f411809f734eb57cb29b08eace8"
+    },
+    {
+      "path": "src/orchestration/x6_r1_3_9_production_path.py",
+      "sha256": "2465cc23508f9956a10681a011d640a216d4187dfbd00d0e710d8598b22dd67a"
+    },
+    {
+      "path": "src/orchestration/x6_r1_3_9_recovery.py",
+      "sha256": "d26cd79589c1074ab63ff68dbbc6e98c34165e88ebe381e9209400277ef29643"
+    },
+    {
+      "path": "src/expansion/x6_r1_3_9_materialized_verifier.py",
+      "sha256": "57662542e7e50746a89f1ba3879537ab0eda72bc10ff67793b3e83b8d79976cf"
+    },
+    {
+      "path": "src/expansion/x6_r1_3_9_gate.py",
+      "sha256": "208fbeba3da01b7ae49e5e57fa71d47d75c80f6d6cacd8e2502b8e5585dac7a1"
+    },
+    {
+      "path": "tests/fixtures/x6_r1_3_9_external_stub.py",
+      "sha256": "f4878f8088800a313885ec8b395b825942feb918a941e62f335dcbb8e04ec377"
+    },
+    {
+      "path": "tests/unit/test_x6_r1_3_9_cleanup_teardown.py",
+      "sha256": "914f556b068ffd5ebe7f34aca4c6e65db2bd1ac941f180dc9ff825ba63c72e7a"
+    },
+    {
+      "path": "plans/expansion/X6_R1_3_8_BASELINE_PRODUCTION_LIFECYCLE_CORRECTION_V1.json",
+      "sha256": "fd27002aba8daa7ebbeee4632b826651cd64d9edac348bbc3cad267bc9d619c8"
+    },
+    {
+      "path": "labs/topologies/x6_r1_packet_loss_r0_5/topology.clab.yml",
+      "sha256": "9decd096606a7af5d6aa5a7de6c5d406c286e12094825cbc88b3fb59a2e37b14"
+    },
+    {
+      "path": "labs/topologies/x6_r1_packet_loss/runtime_context_v1.json",
+      "sha256": "560c18708105221f5d9b17bf29fae5f8b64c899ec91556f57a91eefdb969630e"
+    },
+    {
+      "path": "labs/images/ind-linux/Dockerfile",
+      "sha256": "ca5b97b08895081726b12c1311be050a18f0a1039aa168319ef1420e89761b0c"
+    }
+  ],
+  "next_action": "R1_3_9_FOCUSED_AND_HISTORICAL_CONTEXT_VERIFICATION_THEN_COMPLETE_PRIMARY_AND_ARCHIVE_FREE_VERIFICATION",
+  "directly_necessary_timing_stability": {
+    "implementation": "RESERVE_PING_WORKER_BEFORE_EXISTING_MONOTONIC_FIVE_SECOND_DEADLINE",
+    "accepted_startup_skew_seconds": "0.250_UNCHANGED",
+    "timestamp_enforcement": "RAW_OBSERVATION_UNCHANGED"
+  }
+}
