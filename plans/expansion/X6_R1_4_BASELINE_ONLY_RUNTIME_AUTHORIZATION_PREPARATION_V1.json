@@ -1,0 +1,83 @@
+{
+  "release_id": "X6_R1_4_BASELINE_ONLY_RUNTIME_AUTHORIZATION_PREPARATION",
+  "predecessor": "2dde4972cd2228a38da7dee12a31506673e45b12",
+  "extension_policy": "APPEND_ONLY_SOURCE_ONLY_NO_RUNTIME_AUTHORIZATION",
+  "purpose": "Prepare the prospective baseline-only authorization schema and integrated successor lifecycle without issuing or consuming a real authorization.",
+  "production_entrypoint": "src.orchestration.x6_r1_4_production_path",
+  "recovery_entrypoint": "src.orchestration.x6_r1_4_recovery",
+  "runtime_authorization_artifact": "ABSENT",
+  "authorization_template": "NON_EXECUTABLE",
+  "trust_model": {
+    "id": "LOCAL_OPERATOR_ACCOUNT_V1",
+    "issuer": "USER_OPERATOR",
+    "trusted_boundary": "LOCAL_HOST_ACCOUNT_AND_PROCESSES_WITH_ITS_PERMISSIONS",
+    "content_binding": "CANONICAL_SHA256_NOT_ISSUER_AUTHENTICATION",
+    "same_account_process_distinction": false,
+    "signature_mac_or_key_infrastructure": false,
+    "concrete_record_policy": "EXTERNAL_AFTER_FINAL_EXECUTION_SOURCE_AND_EXPLICIT_USER_APPROVAL"
+  },
+  "source_model": {
+    "published_predecessor": "2dde4972cd2228a38da7dee12a31506673e45b12",
+    "execution_source": "EVENTUAL_FINAL_R1_4_COMMIT_TREE_AND_FILE_HASHES",
+    "self_referential_binding": false
+  },
+  "coordination_exception": "FIXED_TOPOLOGY_MUTUAL_EXCLUSION_LOCK_MAY_PRECEDE_CONSUMPTION_ONLY_NO_RUNTIME_AUTHORITY",
+  "environment_readiness": {
+    "time_bound": true,
+    "ethtool": "6.7",
+    "sch_netem": "LOADED_MATCHING_RUNNING_KERNEL",
+    "image_id": "sha256:66392daabae6054416fba5043f312bfc464bcc18246956867870e4953847ff5c",
+    "repo_digests": [],
+    "reconfirm_before_issuance": true
+  },
+  "historical_authorization": {
+    "containerlab": false,
+    "measurement": false,
+    "f1_revalidation": false,
+    "f2": false,
+    "f3": false,
+    "f4": false,
+    "dataset": false,
+    "ml_hybrid": false,
+    "api": false,
+    "p9_r2": false
+  },
+  "diagnostic_nodes": [
+    "tests/unit/test_x6_r1_3_6_gate.py::test_x6_r1_3_6_gate_preserves_disabled_historical_vector",
+    "tests/unit/test_x6_r1_3_6_gate.py::test_historical_r1_3_5_gate_is_validated_only_in_its_exact_snapshot",
+    "tests/unit/test_x6_r1_3_6_gate.py::test_historical_binding_validator_rejects_changed_historical_blob",
+    "tests/unit/test_x6_r1_3_6_gate.py::test_historical_binding_validator_rejects_wrong_predecessor_and_successor_substitution",
+    "tests/unit/test_x6_r1_3_6_gate.py::test_successor_gate_rejects_skipped_historical_gate",
+    "tests/unit/test_x6_r1_3_6_gate.py::test_gate_binds_versioned_successor_decision_and_status_documents"
+  ],
+  "prohibitions": [
+    "real_authorization_issuance_or_consumption",
+    "containerlab_deployment",
+    "traffic_or_measurement",
+    "runtime_cleanup",
+    "qualification",
+    "mutation_or_fault_injection",
+    "scientific_outputs_or_claims",
+    "historical_file_or_receipt_changes"
+  ],
+  "source_bindings": [
+    {"path": "docs/DECISION_X6_R1_4.md", "sha256": "27aff91c3ab6715042adcb4926e7e9507557c14ab550fc8e7b020d91562fcc27"},
+    {"path": "docs/STATUS_X6_R1_4.md", "sha256": "5b54c52a7200d6319329877e738d1b7279dc4221b06b241879ffb6592bdd0830"},
+    {"path": "docs/HANDOFF_X6_R1_4.md", "sha256": "21eddc5960fecd7c6538b35192641249f7b3a162711db2ca5fa1720207750bec"},
+    {"path": "plans/expansion/X6_R1_4_BASELINE_ONLY_AUTHORIZATION_TEMPLATE_V1.json", "sha256": "12910f163d8d30072e9a38d17332d1355b0d6fca91c31042b39762da918ef612"},
+    {"path": "src/orchestration/x6_r1_4_contract.py", "sha256": "7b3f3689f6f030ddc9f77db5866074a8f8704b6a6518d9ffb134469bd2928adc"},
+    {"path": "src/orchestration/x6_r1_4_durable.py", "sha256": "9cc7866d67497a23c900551a92fb1caaef31138d0f227b6784ded36c978083fb"},
+    {"path": "src/orchestration/x6_r1_4_observations.py", "sha256": "e993dd0a1b9e2b5a91c3346ba00154692643298c9adb002a88ce4507199e8bb8"},
+    {"path": "src/orchestration/x6_r1_4_production_path.py", "sha256": "710b1692fa447d701a2eac701a404fe7314f42eddcf6d1cd5bde9543c1452c6f"},
+    {"path": "src/orchestration/x6_r1_4_recovery.py", "sha256": "75a0533e391252557bfbc80601561e3b6b8d4823856f9fbae826a3519468660c"},
+    {"path": "src/expansion/x6_r1_4_materialized_verifier.py", "sha256": "af2ea7ebc029f1fac008e311725d4a427423f150086cf8ae411a8bb0d95a7516"},
+    {"path": "src/expansion/x6_r1_4_gate.py", "sha256": "d54d3eae0c0e61d7ef2b819580878374c0cc0ab13c81b7dfdad2943c1e512cdc"},
+    {"path": "tests/fixtures/x6_r1_4_external_stub.py", "sha256": "f4878f8088800a313885ec8b395b825942feb918a941e62f335dcbb8e04ec377"},
+    {"path": "tests/unit/test_x6_r1_4_authorization_preparation.py", "sha256": "d12eb141da7a54924c52dd5b207ea798226f0f1734e48092e4e905caf1180f1a"},
+    {"path": "plans/expansion/X6_R1_3_9_CLEANUP_AND_TEARDOWN_OBSERVATION_CORRECTION_V1.json", "sha256": "85c2145d908edc63337c20b77f5b0ea38b7cc57d872f21ef1e82aef4c2772b28"},
+    {"path": "labs/topologies/x6_r1_packet_loss_r0_5/topology.clab.yml", "sha256": "9decd096606a7af5d6aa5a7de6c5d406c286e12094825cbc88b3fb59a2e37b14"},
+    {"path": "labs/topologies/x6_r1_packet_loss/runtime_context_v1.json", "sha256": "560c18708105221f5d9b17bf29fae5f8b64c899ec91556f57a91eefdb969630e"},
+    {"path": "labs/images/ind-linux/Dockerfile", "sha256": "ca5b97b08895081726b12c1311be050a18f0a1039aa168319ef1420e89761b0c"}
+  ],
+  "next_action": "FOCUSED_AND_HISTORICAL_CONTEXT_PREFLIGHT_THEN_FINALIZED_SOURCE_ONLY_ACCEPTANCE_VERIFICATION"
+}
