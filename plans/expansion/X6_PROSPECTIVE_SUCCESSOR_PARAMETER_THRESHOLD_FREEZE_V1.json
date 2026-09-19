@@ -1,0 +1,559 @@
+{
+  "schema_version": 1,
+  "record_id": "X6_PROSPECTIVE_SUCCESSOR_PARAMETER_THRESHOLD_FREEZE_V1",
+  "record_kind": "APPEND_ONLY_SOURCE_ONLY_LIMITED_CONTEXT_FREEZE_RECORD",
+  "status": "PENDING_EXPLICIT_SOURCE_ONLY_ACCEPTANCE",
+  "creates_new_milestone": false,
+  "acceptance_effect": "NONE_UNTIL_EXPLICIT_ACCEPTANCE_OF_THE_EXACT_RECORD_BYTES",
+  "published_boundary": {
+    "commit": "729a5f4f52d0a77296989a70eb8b3ecb1fe01c8a",
+    "tree": "23f0ba2b818d3b935f312cac1221ef49b1c0f25c",
+    "direct_parent": "7fd529c101503dfebf555825db0dbc4d517ecefb"
+  },
+  "review_proposal": {
+    "path": "plans/expansion/X6_PROSPECTIVE_SUCCESSOR_PARAMETER_THRESHOLD_FREEZE_PROPOSAL_V1.json",
+    "sha256": "37d95641aecf125c7292f25f5ed3180bf93b9806195a27982368fab23ba91e2d",
+    "preservation": "BYTE_FOR_BYTE_UNCHANGED"
+  },
+  "governing_basis": {
+    "sequence": {
+      "plan": "plans/expansion/X6_R1_3_BASELINE_STABILITY_AND_HOST_PROVENANCE_METHOD_GATE_V1.json",
+      "stage": "PROSPECTIVE_SUCCESSOR_PARAMETER_THRESHOLD_FREEZE",
+      "predecessor_stage": "SOURCE_ONLY_QUALIFICATION_CLOSEOUT",
+      "successor_stage": "SEPARATE_REVIEW_OF_FUTURE_F1_JUSTIFICATION",
+      "authority": "This proposal prepares only the named source-only stage; it neither accepts the freeze nor authorizes the successor stage."
+    },
+    "baseline_method_gate": "X6-R1.3 permits a prospective parameter freeze only after baseline-only materialized qualification and source-only qualification closeout.",
+    "baseline_execution_contract": "X6-R1.3.1 fixes C01-C10 as the only threshold-construction cohort; C11-C20 and H01-H10 validate the immutable manifest and cannot modify it.",
+    "historical_parameter_contract": "X6-R0.4 supplies the frozen F1 command and fault-parameter catalog; X6-R0.5 replaces only the topology artifact and bootstrap checks.",
+    "next_stage": "SEPARATE_REVIEW_OF_FUTURE_F1_JUSTIFICATION"
+  },
+  "qualification_state": {
+    "original_lifecycle_and_replay": "SOURCE_CONTRACT_COMPLETE_REPLAY_VERIFIED",
+    "original_terminal_qualified": false,
+    "external_r1_3_1_baseline_assessment": "QUALIFIED",
+    "numeric_comparisons": {
+      "passed": 100,
+      "required": 100
+    },
+    "rate_limit_exclusion": "DIRECT_EXACT_NOQUEUE_0_AND_EMPTY_ROOT_INGRESS_FILTERS_FOR_ALL_30_WINDOWS",
+    "scientific_acceptance": "NOT_ESTABLISHED",
+    "interpretation": "The external assessment qualifies the exact baseline under the accepted R1.3.1 contract. It does not rewrite the original terminal, establish a scientific result, or authorize future F1 work."
+  },
+  "freeze_scope": {
+    "decision_if_accepted": "Freeze the exact existing threshold manifest values for prospective consumption only when the complete topology, image, traffic, measurement, reconstruction, provenance, and claim context below remains byte- and semantics-compatible.",
+    "eligible_context": "EXACT_QUALIFIED_R1_4_1_BASELINE_CONTEXT_ONLY",
+    "completed_run_local_freeze": "The immutable manifest was created from C01-C10 inside the completed baseline-only attempt and governed only that attempt's C11-C20 and H01-H10 comparisons.",
+    "prospective_effect": "Source-control the already frozen values without rebuilding, retuning, widening, or transferring their applicability.",
+    "manifest_rewrite": "FORBIDDEN",
+    "future_f1_authorization": false,
+    "runtime_authorization": false
+  },
+  "frozen_threshold_manifest": {
+    "boolean_feature_excluded": "rate_limit_detected",
+    "fault_window_input": "FORBIDDEN",
+    "features": [
+      {
+        "absolute_floor": "0.020000",
+        "center_estimator": "median_sorted_middle_or_even_mean_v1",
+        "comparison_direction": "upper",
+        "dispersion_estimator": "mad_about_median_v1",
+        "dispersion_multiplier": "3.000000",
+        "dispersion_term": "0.000000",
+        "feature_id": "packet_loss_ratio",
+        "lower_threshold": "0.000000",
+        "mad": "0.000000",
+        "mad_normal_scale": "1.482600",
+        "median": "0.000000",
+        "rationale": "One loss event is the 1/50 probe-resolution floor.",
+        "relative_floor": "0.000000",
+        "sorted_baseline_values": [
+          "0.000000",
+          "0.000000",
+          "0.000000",
+          "0.000000",
+          "0.000000",
+          "0.000000",
+          "0.000000",
+          "0.000000",
+          "0.000000",
+          "0.000000"
+        ],
+        "tolerance": "0.020000",
+        "unit": "ratio",
+        "upper_threshold": "0.020000",
+        "value_type": "number"
+      },
+      {
+        "absolute_floor": "0.100000",
+        "center_estimator": "median_sorted_middle_or_even_mean_v1",
+        "comparison_direction": "upper",
+        "dispersion_estimator": "mad_about_median_v1",
+        "dispersion_multiplier": "3.000000",
+        "dispersion_term": "0.024463",
+        "feature_id": "round_trip_latency_ms_p95",
+        "lower_threshold": "0.000000",
+        "mad": "0.005500",
+        "mad_normal_scale": "1.482600",
+        "median": "0.060000",
+        "rationale": "0.1 ms is a conservative reporting-resolution and numeric-stability floor.",
+        "relative_floor": "0.050000",
+        "sorted_baseline_values": [
+          "0.050000",
+          "0.052000",
+          "0.055000",
+          "0.057000",
+          "0.057000",
+          "0.063000",
+          "0.064000",
+          "0.066000",
+          "0.079000",
+          "0.081000"
+        ],
+        "tolerance": "0.100000",
+        "unit": "ms",
+        "upper_threshold": "0.160000",
+        "value_type": "number"
+      },
+      {
+        "absolute_floor": "0.100000",
+        "center_estimator": "median_sorted_middle_or_even_mean_v1",
+        "comparison_direction": "lower",
+        "dispersion_estimator": "mad_about_median_v1",
+        "dispersion_multiplier": "3.000000",
+        "dispersion_term": "886.362305",
+        "feature_id": "throughput_mbps",
+        "lower_threshold": "6867.148963",
+        "mad": "199.281062",
+        "mad_normal_scale": "1.482600",
+        "median": "7753.511268",
+        "rationale": "0.1 Mbps plus five percent avoids classifying negligible tool/window variation as degradation.",
+        "relative_floor": "0.050000",
+        "sorted_baseline_values": [
+          "5822.533681",
+          "6350.413186",
+          "7286.039953",
+          "7586.995508",
+          "7702.620935",
+          "7804.401601",
+          "7932.824539",
+          "7941.043882",
+          "7964.540777",
+          "8006.559986"
+        ],
+        "tolerance": "886.362305",
+        "unit": "Mbps",
+        "upper_threshold": "8639.873573",
+        "value_type": "number"
+      },
+      {
+        "absolute_floor": "0.020000",
+        "center_estimator": "median_sorted_middle_or_even_mean_v1",
+        "comparison_direction": "upper",
+        "dispersion_estimator": "mad_about_median_v1",
+        "dispersion_multiplier": "3.000000",
+        "dispersion_term": "0.079113",
+        "feature_id": "interface_utilization_ratio",
+        "lower_threshold": "0.621202",
+        "mad": "0.017787",
+        "mad_normal_scale": "1.482600",
+        "median": "0.700316",
+        "rationale": "Two percent is a conservative bounded-ratio measurement floor.",
+        "relative_floor": "0.000000",
+        "sorted_baseline_values": [
+          "0.496819",
+          "0.554167",
+          "0.644794",
+          "0.686599",
+          "0.696760",
+          "0.703871",
+          "0.715400",
+          "0.715576",
+          "0.720629",
+          "0.721385"
+        ],
+        "tolerance": "0.079113",
+        "unit": "ratio",
+        "upper_threshold": "0.779429",
+        "value_type": "number"
+      },
+      {
+        "absolute_floor": "1.000000",
+        "center_estimator": "median_sorted_middle_or_even_mean_v1",
+        "comparison_direction": "upper",
+        "dispersion_estimator": "mad_about_median_v1",
+        "dispersion_multiplier": "3.000000",
+        "dispersion_term": "0.000000",
+        "feature_id": "queue_drop_count",
+        "lower_threshold": "0.000000",
+        "mad": "0.000000",
+        "mad_normal_scale": "1.482600",
+        "median": "0.000000",
+        "rationale": "A counter is integral; one packet is its minimum non-zero resolution.",
+        "relative_floor": "0.000000",
+        "sorted_baseline_values": [
+          "0.000000",
+          "0.000000",
+          "0.000000",
+          "0.000000",
+          "0.000000",
+          "0.000000",
+          "0.000000",
+          "0.000000",
+          "0.000000",
+          "0.000000"
+        ],
+        "tolerance": "1.000000",
+        "unit": "packets",
+        "upper_threshold": "1.000000",
+        "value_type": "integer"
+      }
+    ],
+    "formula": "median +/- max(absolute_floor, relative_floor * abs(median), 3.000000 * 1.482600 * MAD)",
+    "methodology_version": "x6_r0_2_f1_measurement_semantics_v1",
+    "post_hoc_override": "FORBIDDEN",
+    "rounding": {
+      "decimal_places": 6,
+      "mode": "ROUND_HALF_EVEN",
+      "serialization": "canonical_json_sort_keys_compact_newline_v1"
+    },
+    "schema_version": 1,
+    "sha256": "0db20fccbb22f7bcde7bc5d7be0d3fd8923e32d663d59297c178dd300ce7c301",
+    "topology_context_id": "X6_TOP_01_CONTROLLED_PERFORMANCE_PATH",
+    "traffic_context_id": "X6_R1_BASELINE_ONLY_QUALIFICATION"
+  },
+  "qualified_context": {
+    "run_id": "x6-r1-4-1-baseline-only-20260919-a01",
+    "execution_source": {
+      "commit": "7fd529c101503dfebf555825db0dbc4d517ecefb",
+      "tree": "0bb2ea004a07d7574f7517c2309faf1358fb66a9",
+      "direct_parent": "9e2dee01d3f486cd0a523944523a1885bf8b9fac"
+    },
+    "topology": {
+      "context_id": "X6_TOP_01_CONTROLLED_PERFORMANCE_PATH",
+      "path": "labs/topologies/x6_r1_packet_loss_r0_5/topology.clab.yml",
+      "sha256": "9decd096606a7af5d6aa5a7de6c5d406c286e12094825cbc88b3fb59a2e37b14",
+      "r0_5_scope": "SUPERSEDES_ONLY_TOPOLOGY_ARTIFACT_PATH_HASH_ENDPOINT_BOOTSTRAP_AND_STRUCTURED_ROUTE_CHECKS"
+    },
+    "image": {
+      "tag": "ind-linux:0.1",
+      "dockerfile": "labs/images/ind-linux/Dockerfile",
+      "dockerfile_sha256": "ca5b97b08895081726b12c1311be050a18f0a1039aa168319ef1420e89761b0c",
+      "qualified_run_image_id": "sha256:66392daabae6054416fba5043f312bfc464bcc18246956867870e4953847ff5c",
+      "qualified_run_repo_digests": []
+    },
+    "traffic": {
+      "direction": "hosta_to_hostb",
+      "destination_address": "10.61.3.2",
+      "transport": "TCP",
+      "streams": 1,
+      "duration_seconds": 20,
+      "iperf3_port": 5201,
+      "client_command": [
+        "docker",
+        "exec",
+        "clab-x6r1-hosta",
+        "/usr/bin/iperf3",
+        "-c",
+        "10.61.3.2",
+        "-t",
+        "20",
+        "-P",
+        "1",
+        "-p",
+        "5201",
+        "-J"
+      ],
+      "ping_command": [
+        "docker",
+        "exec",
+        "--env",
+        "LC_ALL=C",
+        "clab-x6r1-hosta",
+        "/usr/bin/ping",
+        "-n",
+        "-i",
+        "0.2",
+        "-c",
+        "50",
+        "-W",
+        "1",
+        "-s",
+        "56",
+        "10.61.3.2"
+      ]
+    },
+    "timing": {
+      "iperf_start_reference_seconds": "0.000000",
+      "ping_start_reference_seconds": "5.000000",
+      "maximum_startup_skew_seconds": "0.250000"
+    },
+    "measurement_and_reconstruction": {
+      "numeric_normalization": "Decimal six-place ROUND_HALF_EVEN before inclusive comparison",
+      "threshold_construction": "EXACTLY_C01_TO_C10_TEN_SAMPLES_PER_NUMERIC_FEATURE_CHRONOLOGICAL_NO_RETRY_REPLACEMENT_REMOVAL_OR_REORDERING",
+      "formula": "median +/- max(absolute_floor, relative_floor * abs(median), 3.000000 * 1.482600 * MAD), domain-clamped as defined by the accepted builder",
+      "later_cohorts": "C11-C20 and H01-H10 validate only and can never regenerate, modify, tune, or select the manifest.",
+      "rate_limit_rule": "rate_limit_detected is excluded from numeric threshold derivation and must be directly false from bound qdisc/filter observations.",
+      "utilization_elapsed_interval": "FIRST_PRE_COUNTER_STARTED_NS_THROUGH_LAST_POST_CONTROL_COMPLETED_NS",
+      "raw_observation_binding": "R1.4.1 materialized reconstruction and independent replay bound to the accepted run evidence"
+    },
+    "provenance_limit": "Future applicability requires fresh accepted admission provenance and exact source binding; material topology, image, tool, traffic, timing, or measurement-contract drift requires separate review rather than threshold reuse."
+  },
+  "traffic_context_identity": {
+    "baseline_identifier": "X6_R1_BASELINE_ONLY_QUALIFICATION",
+    "historical_f1_identifier": "X6_TRAFFIC_01_FROZEN_TCP_AND_PING",
+    "alias_relationship": "NOT_ALIASES",
+    "proven_command_catalog_equality": {
+      "status": "PROVEN_FOR_THE_BOUND_RECORDS",
+      "includes": [
+        "hosta_to_hostb direction and destination 10.61.3.2",
+        "TCP, one stream, port 5201, and 20-second iperf3 command",
+        "50-probe ping command at 0.2-second interval with the accepted payload and timeout",
+        "iperf start at 0 seconds, ping start at 5 seconds, and maximum startup skew 0.250 seconds"
+      ]
+    },
+    "differences": {
+      "utilization_interval": "R1.4.1 spans the first pre-counter start through the last post-control completion; the historical F1 collector used a different elapsed-time boundary around initial counters and server completion/teardown.",
+      "lifecycle": "The qualified baseline is 30 mutation-free windows with readiness, warmup, separation, cooldown, cleanup, terminalization, and replay. Historical F1 is a 10-window baseline followed by fault and restoration cohorts.",
+      "controls": "The qualified baseline requires noqueue and empty filter controls. Future F1 fault phases require owned NetEm and child pfifo controls; those controls are not identical to baseline noqueue controls.",
+      "comparison_use": "Baseline qualification applies inclusive two-sided bounds to C11-C20 and H01-H10. Historical F1 predicates use feature-specific directional tests and separate fault-effectiveness requirements.",
+      "intended_scope": "Baseline stability qualification and future F1 fault justification are distinct decisions."
+    },
+    "limited_mapping_decision": "X6_R1_BASELINE_ONLY_QUALIFICATION is the authoritative source of the frozen baseline thresholds only for the exact R0.5 topology, recorded image identity, R0.4 traffic command catalog, and R1.4.1 measurement and reconstruction semantics. It is not an alias for X6_TRAFFIC_01_FROZEN_TCP_AND_PING. A future F1 successor may reference these thresholds only after source-only verification aligns its utilization interval, feature derivations, units, timing, controls, topology, image, and traffic bindings with the qualified baseline context. Such reference does not establish fault effectiveness, diagnosis, scientific acceptance, or runtime authorization and remains subject to SEPARATE_REVIEW_OF_FUTURE_F1_JUSTIFICATION."
+  },
+  "interface_utilization_precision": {
+    "source_values_by_window": {
+      "C01": "0.720629",
+      "C02": "0.721385",
+      "C03": "0.696760",
+      "C04": "0.715576",
+      "C05": "0.715400",
+      "C06": "0.686599",
+      "C07": "0.703871",
+      "C08": "0.644794",
+      "C09": "0.496819",
+      "C10": "0.554167"
+    },
+    "accepted_order": [
+      "Parse the ten already six-place-normalized C01-C10 observations as exact Decimal values.",
+      "Compute the even-sample median at full Decimal precision: (0.696760 + 0.703871) / 2 = 0.7003155.",
+      "Compute absolute deviations from the unrounded median and the even-sample MAD at full Decimal precision: (0.0152605 + 0.0203135) / 2 = 0.0177870.",
+      "Compute the dispersion term at full Decimal precision: 3.000000 * 1.482600 * 0.0177870 = 0.0791130186000000000.",
+      "Select tolerance max(0.020000, 0.000000 * abs(0.7003155), 0.0791130186000000000) = 0.0791130186000000000.",
+      "Compute the lower bound before output normalization: 0.7003155 - 0.0791130186000000000 = 0.6212024814000000000.",
+      "Normalize each published output independently to six places with ROUND_HALF_EVEN: median 0.700316, MAD 0.017787, tolerance 0.079113, lower 0.621202, upper 0.779429."
+    ],
+    "prohibited_alternative": "Subtracting the separately displayed rounded values 0.700316 - 0.079113 = 0.621203 changes the accepted operation order and is not the manifest derivation.",
+    "finding": "0.621202 is the correct accepted lower bound; there is no reporting or derivation defect and no threshold is altered."
+  },
+  "future_f1_applicability_requirements": {
+    "stage": "SEPARATE_REVIEW_OF_FUTURE_F1_JUSTIFICATION",
+    "implementation_status": "NOT_STARTED",
+    "requirements": [
+      "Prove compatible measurement semantics, including the utilization elapsed interval, feature derivations, units, six-place normalization, and raw-observation reconstruction.",
+      "State and verify the lifecycle and control differences explicitly; baseline noqueue controls must not be represented as identical to F1 NetEm and pfifo fault-phase controls.",
+      "Consume this exact immutable manifest and hashes without rebuilding, retuning, or selecting thresholds from validation, holdout, fault, or consumed-pilot observations.",
+      "Bind the corrected topology, qualified image identity, command catalog, timing, source, tools, provenance, and applicable fresh runtime observations.",
+      "Obtain SEPARATE_REVIEW_OF_FUTURE_F1_JUSTIFICATION and a later explicit runtime authorization before any F1 action."
+    ],
+    "not_established": [
+      "future_F1_runtime_justification",
+      "future_F1_authorization",
+      "fault_effectiveness",
+      "conditional_signature_match",
+      "Evidence_v4",
+      "Feature_Vector_v2",
+      "diagnosis",
+      "scientific_acceptance",
+      "generalization_to_other_hosts_images_topologies_traffic_or_tools"
+    ]
+  },
+  "evidence_bindings": {
+    "closeout_record": {
+      "path": "plans/expansion/X6_R1_4_1_BASELINE_ATTEMPT_CLOSEOUT_RECORD_V1.json",
+      "sha256": "8a7739adf40edd2beaa6127c9d3121d2b8ec9a3cf3522910f5866d0b37041557"
+    },
+    "closeout_document": {
+      "path": "docs/X6_R1_4_1_BASELINE_ATTEMPT_CLOSEOUT.md",
+      "sha256": "dd1a4687a48f9ff26bf3fdd70dd96992c33b1ad3c77de69ae4cfd9115fb9a72f"
+    },
+    "threshold_manifest": {
+      "path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01/state/threshold_manifest.json",
+      "embedded_sha256": "0db20fccbb22f7bcde7bc5d7be0d3fd8923e32d663d59297c178dd300ce7c301",
+      "complete_file_sha256": "40e71ce6275412adae4b956a050c116862e4f0c987ee556e67a52d5a0ae84eeb"
+    },
+    "threshold_freeze": {
+      "path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01/state/threshold_freeze.json",
+      "sha256": "19a1db2de28f0f11716614ec8289b779717eb82d9bf726d67a8acd3c595c2cb5",
+      "after": "C10",
+      "before": "C11"
+    },
+    "qualification_assessment": {
+      "path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01-qualification-assessment-v1/qualification-assessment-v1.json",
+      "sha256": "66497b59c0ba5b77f54a57d557bfb37eaac99a17762964d0916038f26afc3267"
+    },
+    "qualification_evaluator_input": {
+      "path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01-qualification-assessment-v1/qualification-evaluator-input-v1.json",
+      "sha256": "e599046ed59e3524e22283e24de9e38258834da2a1a0789cebe1c1c33adfb3bf"
+    },
+    "qualification_input_inventory": {
+      "path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01-qualification-assessment-v1/input-inventory-v1.json",
+      "sha256": "ea39287259a9991c374888f4c45e5be2a9571d9c04dfbaa6d7a7e0fa75cea5cf"
+    },
+    "qualification_evidence_manifest": {
+      "path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01-qualification-assessment-v1/evidence-manifest-v1.json",
+      "sha256": "e735cbb562d3814898f4457d08133376ae3ddbca06a8dea919135ac5ac71bae8"
+    },
+    "terminal": {
+      "path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01/terminal/terminal.json",
+      "sha256": "6cc491f1fc1c19c0cbb92b28b7b5423645b91ecf4320b8e1ad1ce9a05d4db0c3"
+    },
+    "recovery": {
+      "path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01/state/recovery.json",
+      "sha256": "d4c083481d0f9819d8b4d85f9a319318475b500b4451286fb59766c59a210dce"
+    },
+    "cleanup": {
+      "path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01/state/cleanup.json",
+      "sha256": "63a0fd6f96adebcc496f85cd43db7e0197444b04404c15f20cf2a68b8583ed48"
+    },
+    "consumption_ledger": {
+      "path": "/home/mesud/.x6-r1-4-1-consumption/X6_R1_4_1_BASELINE_ONLY_20260919_A01.json",
+      "sha256": "3513aa3467d0398855b4a7e7bda3661ad667f7321a0867a00a473b88513179c2"
+    },
+    "source_acceptance": {
+      "source_plan": {
+        "path": "plans/expansion/X6_R1_4_1_AUTHORIZATION_COMMITMENT_AND_BOOT_RECOVERY_CORRECTION_V1.json",
+        "sha256": "b3595ed8f11515dbca793828b8552972d8ec571fbe0dab8e6050420751cd5416"
+      },
+      "primary_execution_inventory": {
+        "path": "/home/mesud/x6-r1-4-1-correction-verification/final-v2/primary/execution-source.inventory.json",
+        "sha256": "132c5b70b97b115e92bec3cad17375148074ee20540edfcd7992b4c19ced24e5"
+      },
+      "archive_free_execution_inventory": {
+        "path": "/home/mesud/x6-r1-4-1-correction-verification/final-v2/archive-free/execution-source.inventory.json",
+        "sha256": "132c5b70b97b115e92bec3cad17375148074ee20540edfcd7992b4c19ced24e5"
+      },
+      "committed_boundary_gate": {
+        "path": "/home/mesud/x6-r1-4-1-correction-verification/post-commit-gate-v1/receipt.json",
+        "sha256": "98af3b5b14340d3f685042a1a141b131e0622ddfbb3c5b4fe2467eb97a6161ce"
+      }
+    }
+  },
+  "evidence_limitation": "The original production CLI top-level return code was not preserved. Replay return code zero does not backfill it. This remains documented evidence limitation and is not concealed or reinterpreted by this record.",
+  "prohibited_inputs_and_claims": {
+    "threshold_inputs": [
+      "validation_cohort_values",
+      "holdout_cohort_values",
+      "fault_window_values",
+      "consumed_pilot_values",
+      "diagnosis",
+      "rule_output",
+      "post_hoc_override"
+    ],
+    "historical_consumed_pilot": "PROHIBITED_INPUT_PRESERVED_DIAGNOSTIC_NON_AUTHORITATIVE",
+    "scientific_acceptance": false,
+    "generalized_applicability": false,
+    "fault_effectiveness_or_diagnosis": false
+  },
+  "authorization_boundary": {
+    "historical_authorization": {
+      "containerlab": false,
+      "measurement": false,
+      "f1_revalidation": false,
+      "f2": false,
+      "f3": false,
+      "f4": false,
+      "dataset": false,
+      "ml_hybrid": false,
+      "api": false,
+      "p9_r2": false
+    },
+    "runtime_authorization_created": false,
+    "freeze_accepted": false,
+    "future_f1_started": false,
+    "scientific_acceptance": false,
+    "x5_authority": "UNCHANGED",
+    "protected_evidence": "UNCHANGED"
+  },
+  "acceptance_requirements": {
+    "record": "EXPLICIT_ACCEPTANCE_OF_THE_EXACT_FINAL_RECORD_BYTES_REQUIRED",
+    "status_before_acceptance": "PENDING_EXPLICIT_SOURCE_ONLY_ACCEPTANCE",
+    "effect_of_acceptance": "FREEZE_ONLY_FOR_THE_EXACT_QUALIFIED_BASELINE_CONTEXT_DESCRIBED_HERE",
+    "future_f1": "NOT_AUTHORIZED_AND_REQUIRES_SEPARATE_REVIEW",
+    "runtime": "NOT_AUTHORIZED"
+  },
+  "source_bindings": [
+    {
+      "path": "docs/MASTER_CONTEXT.md",
+      "sha256": "64a80f8d4b3d6ff0f4160fd42e10c12e60461aaecab97b91b982c929cc440a57"
+    },
+    {
+      "path": "docs/DECISIONS.md",
+      "sha256": "2da8580391ea39b34573ce64541e431e1b35331727bde249f07f3dbb88783459"
+    },
+    {
+      "path": "docs/STATUS.md",
+      "sha256": "d654760fa8bb88097f1e20eb044f8111b6255c098e2b9fbef3d4e7cf6343e19d"
+    },
+    {
+      "path": "plans/expansion/X6_R1_3_BASELINE_STABILITY_AND_HOST_PROVENANCE_METHOD_GATE_V1.json",
+      "sha256": "83f9c65e14a7ea6d7771379fb240e2d1939ae8834dcf80b8ed3c2ad0de2e0384"
+    },
+    {
+      "path": "plans/expansion/X6_R1_3_1_BASELINE_ONLY_EXECUTION_CONTRACT_FREEZE_V1.json",
+      "sha256": "511531a9d57efa8641e2bf59b6903c80a5a23a47a8cd944333e99dc169e3543a"
+    },
+    {
+      "path": "plans/expansion/X6_R0_4_F1_RUNTIME_PARAMETER_FREEZE_V1.json",
+      "sha256": "1b33e0cd8b255311c0c6c7d6ce8a9d2cc2faf484b6912c867fa15d721159a898"
+    },
+    {
+      "path": "plans/expansion/X6_R0_5_TOPOLOGY_BOOTSTRAP_CORRECTION_V1.json",
+      "sha256": "4c484299f8ad500c66a9c8bf493349ed50edcaef633db99ea066dab62971d464"
+    },
+    {
+      "path": "labs/topologies/x6_r1_packet_loss/runtime_context_v1.json",
+      "sha256": "560c18708105221f5d9b17bf29fae5f8b64c899ec91556f57a91eefdb969630e"
+    },
+    {
+      "path": "labs/topologies/x6_r1_packet_loss_r0_5/topology.clab.yml",
+      "sha256": "9decd096606a7af5d6aa5a7de6c5d406c286e12094825cbc88b3fb59a2e37b14"
+    },
+    {
+      "path": "labs/images/ind-linux/Dockerfile",
+      "sha256": "ca5b97b08895081726b12c1311be050a18f0a1039aa168319ef1420e89761b0c"
+    },
+    {
+      "path": "src/collection/x6_r0_2_measurement_semantics.py",
+      "sha256": "43a411ae93a878880b4724106a994024a13aac77dd7770defff8ec1a1c981e29"
+    },
+    {
+      "path": "src/collection/x6_r0_3_pre_runtime_validation.py",
+      "sha256": "88e213d8ef492cbd61eb861a7499fc8351ca6a9446d53a0041b6cc2db3b5ab97"
+    },
+    {
+      "path": "src/collection/x6_performance_collector.py",
+      "sha256": "dcb5bd850369d7291e9679870943102e1158e3dad178fe519ba1a852be9881f8"
+    },
+    {
+      "path": "src/orchestration/x6_r1_4_1_observations.py",
+      "sha256": "00ce795ad5a4d6f18e36106347ea032895b0874a2586899589e06d2bacbcd651"
+    },
+    {
+      "path": "src/expansion/x6_r1_3_1_baseline_execution_contract.py",
+      "sha256": "318a6444f3d7e0cd6e74f763aa4580fafdd2c0942be03d00337c5671ff4c4b0f"
+    },
+    {
+      "path": "plans/expansion/X6_R1_4_1_AUTHORIZATION_COMMITMENT_AND_BOOT_RECOVERY_CORRECTION_V1.json",
+      "sha256": "b3595ed8f11515dbca793828b8552972d8ec571fbe0dab8e6050420751cd5416"
+    },
+    {
+      "path": "plans/expansion/X6_R1_4_1_BASELINE_ATTEMPT_CLOSEOUT_RECORD_V1.json",
+      "sha256": "8a7739adf40edd2beaa6127c9d3121d2b8ec9a3cf3522910f5866d0b37041557"
+    },
+    {
+      "path": "docs/X6_R1_4_1_BASELINE_ATTEMPT_CLOSEOUT.md",
+      "sha256": "dd1a4687a48f9ff26bf3fdd70dd96992c33b1ad3c77de69ae4cfd9115fb9a72f"
+    }
+  ]
+}
