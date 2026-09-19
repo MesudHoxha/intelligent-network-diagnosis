@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "record_id": "X6_R1_4_1_BASELINE_ATTEMPT_CLOSEOUT_RECORD_V1",
+  "record_kind": "APPEND_ONLY_SOURCE_ONLY_QUALIFICATION_CLOSEOUT_CANDIDATE",
+  "status": "PENDING_REVIEW",
+  "creates_new_milestone": false,
+  "published_execution_source": {
+    "commit": "7fd529c101503dfebf555825db0dbc4d517ecefb",
+    "tree": "0bb2ea004a07d7574f7517c2309faf1358fb66a9",
+    "direct_parent": "9e2dee01d3f486cd0a523944523a1885bf8b9fac",
+    "execution_inventory_sha256": "132c5b70b97b115e92bec3cad17375148074ee20540edfcd7992b4c19ced24e5",
+    "source_plan_sha256": "b3595ed8f11515dbca793828b8552972d8ec571fbe0dab8e6050420751cd5416"
+  },
+  "attempt": {
+    "authorization_id": "X6_R1_4_1_BASELINE_ONLY_20260919_A01",
+    "authorization_sha256": "3067c667c6e1380bbd01cc2d7da8b1a2c2fade13d894fc031b1963e771c26fe7",
+    "authorization_file_sha256": "448c0acb83b7204fd7ff1d50fbf7f9d0934117d73bfab1d28898889baa387c4e",
+    "run_id": "x6-r1-4-1-baseline-only-20260919-a01",
+    "output_root": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01",
+    "consumption_state": "CONSUMED_PERMANENTLY_SPENT",
+    "consumption_ledger_path": "/home/mesud/.x6-r1-4-1-consumption/X6_R1_4_1_BASELINE_ONLY_20260919_A01.json",
+    "consumption_ledger_sha256": "3513aa3467d0398855b4a7e7bda3661ad667f7321a0867a00a473b88513179c2",
+    "run_local_consumption_sha256": "3513aa3467d0398855b4a7e7bda3661ad667f7321a0867a00a473b88513179c2"
+  },
+  "lifecycle_and_replay": {
+    "terminal_status": "SOURCE_CONTRACT_COMPLETE_REPLAY_VERIFIED",
+    "qualified": false,
+    "completed_windows": 30,
+    "cohorts": {
+      "construction": ["C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10"],
+      "calibration_validation": ["C11", "C12", "C13", "C14", "C15", "C16", "C17", "C18", "C19", "C20"],
+      "independent_holdout": ["H01", "H02", "H03", "H04", "H05", "H06", "H07", "H08", "H09", "H10"]
+    },
+    "terminal_path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01/terminal/terminal.json",
+    "terminal_sha256": "6cc491f1fc1c19c0cbb92b28b7b5423645b91ecf4320b8e1ad1ce9a05d4db0c3",
+    "recovery_path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01/state/recovery.json",
+    "recovery_sha256": "d4c083481d0f9819d8b4d85f9a319318475b500b4451286fb59766c59a210dce",
+    "replay_return_code": 0,
+    "replay_return_code_path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01-execution-evidence/recovery-replay-cli.rc",
+    "replay_return_code_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "replay_log_path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01-execution-evidence/recovery-replay-cli.log",
+    "replay_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "cleanup_path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01/state/cleanup.json",
+    "cleanup_sha256": "63a0fd6f96adebcc496f85cd43db7e0197444b04404c15f20cf2a68b8583ed48",
+    "cleanup_result": "OWNED_RESOURCES_REMOVED_THEN_IDEMPOTENT_CLEAN_REOBSERVATION"
+  },
+  "frozen_threshold_manifest": {
+    "path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01/state/threshold_manifest.json",
+    "embedded_sha256": "0db20fccbb22f7bcde7bc5d7be0d3fd8923e32d663d59297c178dd300ce7c301",
+    "complete_file_sha256": "40e71ce6275412adae4b956a050c116862e4f0c987ee556e67a52d5a0ae84eeb",
+    "freeze_path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01/state/threshold_freeze.json",
+    "freeze_sha256": "19a1db2de28f0f11716614ec8289b779717eb82d9bf726d67a8acd3c595c2cb5",
+    "construction_input": "C01_TO_C10_ONLY",
+    "later_cohort_mutation": false
+  },
+  "external_qualification_assessment": {
+    "contract": "X6_R1_3_1_BASELINE_ONLY_EXECUTION_CONTRACT_FREEZE",
+    "status": "QUALIFIED",
+    "scientific_acceptance": false,
+    "numeric_comparisons": 100,
+    "numeric_comparisons_passed": 100,
+    "rate_limit_exclusion": "DIRECT_EXACT_NOQUEUE_0_AND_EMPTY_ROOT_INGRESS_FILTERS_FOR_ALL_30_WINDOWS",
+    "assessment_path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01-qualification-assessment-v1/qualification-assessment-v1.json",
+    "assessment_sha256": "66497b59c0ba5b77f54a57d557bfb37eaac99a17762964d0916038f26afc3267",
+    "evaluator_input_path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01-qualification-assessment-v1/qualification-evaluator-input-v1.json",
+    "evaluator_input_sha256": "e599046ed59e3524e22283e24de9e38258834da2a1a0789cebe1c1c33adfb3bf",
+    "input_inventory_path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01-qualification-assessment-v1/input-inventory-v1.json",
+    "input_inventory_sha256": "ea39287259a9991c374888f4c45e5be2a9571d9c04dfbaa6d7a7e0fa75cea5cf",
+    "evidence_manifest_path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01-qualification-assessment-v1/evidence-manifest-v1.json",
+    "evidence_manifest_sha256": "e735cbb562d3814898f4457d08133376ae3ddbca06a8dea919135ac5ac71bae8"
+  },
+  "result_boundaries": {
+    "lifecycle_result": "SOURCE_CONTRACT_COMPLETE_REPLAY_VERIFIED_WITH_QUALIFIED_FALSE",
+    "external_baseline_assessment": "QUALIFIED_UNDER_ACCEPTED_R1_3_1_CONTRACT",
+    "scientific_acceptance": "NOT_ESTABLISHED",
+    "evidence_v4": false,
+    "feature_vector_v2": false,
+    "diagnosis": false,
+    "dataset": false,
+    "model": false,
+    "metric": false,
+    "api": false,
+    "thesis_result": false,
+    "generalized_scientific_claim": false
+  },
+  "limitations": [
+    "The original production CLI top-level return code was not preserved because the external launcher failed before recording it.",
+    "Replay return code zero cannot backfill or prove the missing original launcher return code.",
+    "The accepted materialized closeout requires and verifies bounded raw-command return codes but does not require a top-level production CLI return-code artifact."
+  ],
+  "preservation": {
+    "original_run_tree": "UNCHANGED",
+    "original_terminal": "UNCHANGED",
+    "authorization_and_consumption": "UNCHANGED_AND_SPENT",
+    "external_assessment": "UNCHANGED",
+    "historical_authorization": "0/10_FALSE",
+    "x5_authority": "UNCHANGED",
+    "consumed_pilot_evidence": "PRESERVED_NON_AUTHORITATIVE",
+    "protected_stashes": "FOUR_REACHABLE_UNCHANGED"
+  },
+  "next_step": {
+    "accepted_plan": "plans/expansion/X6_R1_3_BASELINE_STABILITY_AND_HOST_PROVENANCE_METHOD_GATE_V1.json",
+    "accepted_sequence_stage": "PROSPECTIVE_SUCCESSOR_PARAMETER_THRESHOLD_FREEZE",
+    "status": "NOT_STARTED_NOT_AUTHORIZED_BY_THIS_CLOSEOUT",
+    "prerequisites": [
+      "Explicit acceptance of this source-only qualification closeout record",
+      "Fresh verification of every bound runtime and assessment hash before use",
+      "Preservation of the distinction between the lifecycle terminal and external qualification assessment",
+      "A separately reviewed source-only freeze proposal that preserves the accepted threshold mathematics and claim limits"
+    ],
+    "authorization_boundary": [
+      "No new runtime attempt, traffic, measurement, cleanup, recovery, or authorization issuance",
+      "No F1 revalidation, fault injection, Evidence v4, Feature Vector v2, diagnosis, dataset, model, metric, API, thesis result, or scientific claim",
+      "Any future F1 justification or execution remains subject to the later accepted SEPARATE_REVIEW_OF_FUTURE_F1_JUSTIFICATION stage and fresh explicit authorization"
+    ]
+  }
+}
