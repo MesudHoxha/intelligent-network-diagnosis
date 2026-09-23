@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "record_id": "X6_R1_5_SOURCE_ONLY_VERIFICATION_EVIDENCE_EXCEPTION_V1",
+  "record_kind": "APPEND_ONLY_NARROW_SOURCE_VERIFICATION_EVIDENCE_EXCEPTION",
+  "status": "USER_APPROVED_EXCEPTION_RECORDED_R1_5_NOT_ACCEPTED",
+  "published_boundary": "ff327c10e69e0f08a5c3586e169392667fe2d893",
+  "candidate_bindings": {
+    "source_plan_path": "plans/expansion/X6_R1_5_FUTURE_F1_SUCCESSOR_SOURCE_ONLY_V1.json",
+    "source_plan_sha256": "58a5caf1e66b609ff5de66e352a85898ac86022ee7f10a2d998fd07170a173ab",
+    "execution_inventory_sha256": "db7c19dcf3b9b9d5bbd8ae42eda4e1caf3a3dfad4a8b8f81facb1d908f14c487",
+    "primary_inventory_path": "/home/mesud/x6-r1-5-source-verification/final-v2-corrected/primary/execution-source.inventory.json",
+    "archive_free_inventory_path": "/home/mesud/x6-r1-5-source-verification/final-v2-corrected/archive-free/execution-source.inventory.json",
+    "reconciliation_path": "/home/mesud/x6-r1-5-source-verification/final-v2-corrected/reconciliation.json",
+    "reconciliation_sha256": "67df32c0e7c5c5621e059269fa077e08945018193c10d2534d9da624d2fbcd23",
+    "archive_free_plan_path": "/home/mesud/x6-r1-5-source-verification/final-v2-corrected/archive-free/verification-plan.json",
+    "archive_free_plan_sha256": "237c20f849bb7f132f55552abc047e83746d85986ebd07075079e4e883ab1940"
+  },
+  "exception_scope": {
+    "context": "archive-free",
+    "shard_id": "shard-14",
+    "attempt": 1,
+    "classification": "REPORTED_FAILED_ATTEMPT_WITH_INCOMPLETE_DURABLE_EVIDENCE",
+    "audit_path": "/home/mesud/x6-r1-5-source-verification/final-v2-corrected/archive-free/shards/shard-14/attempt-01-interrupted-by-wsl-reboot/audit.json",
+    "audit_sha256": "dc4b36b4db044d3970eb057c07ae6252e13fc7b7bdc91db8a1b296de5f0fdb06",
+    "console_report": {
+      "passed": 80,
+      "skipped": 1,
+      "errors": 7,
+      "return_code": 1
+    },
+    "durable_evidence_complete": false,
+    "error_causes": "UNRECOVERABLE",
+    "exact_execution_bindings": "UNRECOVERABLE",
+    "wsl_reboot_attribution": "NOT_ESTABLISHED",
+    "counts_as_pass": false,
+    "counts_as_historical_diagnostic": false,
+    "counts_as_harmless_attempt": false
+  },
+  "permitted_replacement": {
+    "record_path": "/home/mesud/x6-r1-5-source-verification/final-v2-corrected/archive-free/shards/shard-14/record.json",
+    "record_sha256": "3fa5e54eeb1b2f58d6bec777ce8446d6f46f9f99338c85ce9f65a1cac1d88f37",
+    "plan_sha256": "237c20f849bb7f132f55552abc047e83746d85986ebd07075079e4e883ab1940",
+    "nodes_sha256": "27253d959db596009be51455e4387967189bedeafda1eeece38f5d60036db2b9",
+    "node_count": 88,
+    "return_code": 0,
+    "summary": {
+      "passed": 87,
+      "skipped": 1,
+      "failed": 0,
+      "errors": 0
+    },
+    "effect": "MAY_SATISFY_THIS_CANDIDATE_FINAL_SOURCE_VERIFICATION_COVERAGE"
+  },
+  "decision_limits": [
+    "The failed first attempt remains visible and is not erased or reclassified.",
+    "The exception does not establish equivalence between the lost attempt and replacement execution contexts.",
+    "The seven console-reported errors remain unexplained and are not attributed to the WSL reboot.",
+    "No test node, source-verification requirement, or acceptance criterion is waived.",
+    "The replacement record is evaluated only on its own independently bound evidence.",
+    "This decision creates no general retry or replacement policy.",
+    "The original immutable plans, inventories, receipts, attempts, and reconciliation remain unchanged."
+  ],
+  "preserved_primary_failures": [
+    {
+      "attempt": 1,
+      "record_sha256": "9c70c95103492f4dd046628b6f54048bd90bb3f7f4c76bc617aa47bf17fa6435",
+      "diagnosis_sha256": "effe79d11c314f7f48809aac6085050a510a0e136b05a3219942ce1929460ead",
+      "return_code": 1,
+      "summary": "75 passed, 13 errors; C19 startup skew 0.315212119 seconds exceeded 0.250000 seconds"
+    },
+    {
+      "attempt": 2,
+      "record_sha256": "cabe4001f8981fec63a725b231465681e9b37277c75f439892798ce35295d23c",
+      "diagnosis_sha256": "445365dc9a0a46c93b80bf7d3780354c8d79daf768edf509e8e77aeeca57441c",
+      "return_code": 1,
+      "summary": "75 passed, 13 errors; C06 startup skew 0.408197222 seconds exceeded 0.250000 seconds"
+    }
+  ],
+  "acceptance_review_effect": {
+    "previous_recommendation": "BLOCKED_PENDING_EXPLICIT_VERIFICATION_EVIDENCE_DECISION",
+    "updated_recommendation": "ELIGIBLE_FOR_SOURCE_ONLY_ACCEPTANCE_PENDING_SEPARATE_EXPLICIT_ACCEPTANCE",
+    "r1_5_accepted": false,
+    "remaining_source_only_review_blockers": [],
+    "runtime_result_established": false,
+    "scientific_acceptance_established": false
+  },
+  "preservation": {
+    "candidate_implementation_files": "UNCHANGED_EXACT_16_FILE_INVENTORY",
+    "historical_authorization": "0/10_FALSE",
+    "frozen_thresholds": "UNCHANGED",
+    "x5_authority": "UNCHANGED",
+    "consumed_pilot_evidence": "PRESERVED_NON_AUTHORITATIVE",
+    "protected_stashes": "FOUR_REACHABLE_UNCHANGED"
+  },
+  "next_step": "SEPARATE_EXPLICIT_R1_5_SOURCE_ONLY_ACCEPTANCE_OR_REJECTION"
+}

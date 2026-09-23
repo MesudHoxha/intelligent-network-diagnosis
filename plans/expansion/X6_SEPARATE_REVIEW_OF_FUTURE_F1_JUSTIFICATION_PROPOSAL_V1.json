@@ -1,0 +1,412 @@
+{
+  "schema_version": 1,
+  "proposal_id": "X6_SEPARATE_REVIEW_OF_FUTURE_F1_JUSTIFICATION_PROPOSAL_V1",
+  "record_kind": "APPEND_ONLY_SOURCE_ONLY_REVIEW_PROPOSAL",
+  "status": "REVIEW_ONLY_NOT_ACCEPTED",
+  "creates_new_milestone": false,
+  "published_boundary": {
+    "commit": "ff327c10e69e0f08a5c3586e169392667fe2d893",
+    "tree": "e8e3953d50e7712bdbc59fb97b7c457d8b85c238",
+    "direct_parent": "729a5f4f52d0a77296989a70eb8b3ecb1fe01c8a"
+  },
+  "governing_sequence": {
+    "plan": "plans/expansion/X6_R1_3_BASELINE_STABILITY_AND_HOST_PROVENANCE_METHOD_GATE_V1.json",
+    "stage": "SEPARATE_REVIEW_OF_FUTURE_F1_JUSTIFICATION",
+    "predecessor_stage": "PROSPECTIVE_SUCCESSOR_PARAMETER_THRESHOLD_FREEZE",
+    "following_stage": "NONE_ESTABLISHED_BY_THIS_PROPOSAL",
+    "authority": "Review whether a source-only future F1 successor may be implemented; do not authorize runtime, mutation, or a scientific result."
+  },
+  "accepted_freeze": {
+    "acceptance_basis": "EXPLICIT_USER_ACCEPTANCE_AND_PUBLISHED_COMMIT_FF327C10E69E0F08A5C3586E169392667FE2D893",
+    "proposal": {
+      "path": "plans/expansion/X6_PROSPECTIVE_SUCCESSOR_PARAMETER_THRESHOLD_FREEZE_PROPOSAL_V1.json",
+      "sha256": "37d95641aecf125c7292f25f5ed3180bf93b9806195a27982368fab23ba91e2d"
+    },
+    "record": {
+      "path": "plans/expansion/X6_PROSPECTIVE_SUCCESSOR_PARAMETER_THRESHOLD_FREEZE_V1.json",
+      "sha256": "635d62272c593a6ddf6de490a96e664aa94ce3ec2ea4bba5e44a4396cfb18402"
+    },
+    "handoff": {
+      "path": "docs/HANDOFF_X6_PROSPECTIVE_SUCCESSOR_PARAMETER_THRESHOLD_FREEZE.md",
+      "sha256": "019cd5422a5911fecb7443135ff2f94b83f844f82229dab01b3dedcd2d225e8a"
+    },
+    "historical_record_status_note": "The accepted record retains its pre-acceptance status text because exact reviewed bytes were preserved; acceptance is bound by the explicit decision and published commit.",
+    "scope": "EXACT_QUALIFIED_R1_4_1_BASELINE_CONTEXT_ONLY",
+    "manifest_embedded_sha256": "0db20fccbb22f7bcde7bc5d7be0d3fd8923e32d663d59297c178dd300ce7c301",
+    "manifest_complete_file_sha256": "40e71ce6275412adae4b956a050c116862e4f0c987ee556e67a52d5a0ae84eeb"
+  },
+  "established_requirements": [
+    {
+      "requirement": "Preserve the X6-R0.4 F1 schedule and parameters: one warmup, ten pre-fault baseline windows, three 10-percent zero-correlation NetEm fault windows, three restoration windows, 20-second TCP plus ping at t=5, startup skew at most 0.250 seconds, r2:eth2 ownership, handles 10:/20:, 1000-packet limits, and 6-25 losses over 150 probes.",
+      "basis": [
+        "docs/DECISIONS.md D-X6-R0.4",
+        "plans/expansion/X6_R0_4_F1_RUNTIME_PARAMETER_FREEZE_V1.json",
+        "labs/topologies/x6_r1_packet_loss/runtime_context_v1.json"
+      ]
+    },
+    {
+      "requirement": "Use the corrected X6-R0.5 topology and exact image, route, traffic, tool, qdisc, and provenance bindings; verify sch_netem without loading it in production code.",
+      "basis": [
+        "docs/DECISIONS.md D-X6-R0.5 and D-X6-R0.7",
+        "plans/expansion/X6_R0_5_TOPOLOGY_BOOTSTRAP_CORRECTION_V1.json",
+        "plans/expansion/X6_R0_7_NETEM_RUNTIME_PREREQUISITE_CORRECTION_V1.json"
+      ]
+    },
+    {
+      "requirement": "Keep command acceptance separate from physical mutation effectiveness; retain the exact six-predicate R_X6_PERFORMANCE_001 rule and fail closed on missing observations or a nonexact signature.",
+      "basis": [
+        "docs/DECISIONS.md D-X6-R1",
+        "plans/expansion/X6_R1_PACKET_LOSS_V1.json",
+        "src/expansion/x6_r1_performance_rule.py"
+      ]
+    },
+    {
+      "requirement": "Independently verify the complete raw-observation lifecycle, hashes, Evidence v4, Feature Vector v2, qdisc provenance, restoration, standalone replay, baseline-after state, terminalization, and owned cleanup before scoped authoritative acceptance.",
+      "basis": [
+        "docs/DECISIONS.md D-X6-R1.2",
+        "plans/expansion/X6_R1_2_FUTURE_AUTHORITATIVE_ACCEPTANCE_HARDENING_V1.json"
+      ]
+    },
+    {
+      "requirement": "Consume the accepted manifest only under its exact qualified topology, image, command, timing, measurement, reconstruction, and provenance context; never rebuild or retune it from later baseline, validation, holdout, fault, restored, or consumed-pilot data.",
+      "basis": [
+        "plans/expansion/X6_PROSPECTIVE_SUCCESSOR_PARAMETER_THRESHOLD_FREEZE_V1.json",
+        "plans/expansion/X6_R1_3_1_BASELINE_ONLY_EXECUTION_CONTRACT_FREEZE_V1.json"
+      ]
+    },
+    {
+      "requirement": "Preserve the historical authorization vector as 0/10_FALSE until a later separately reviewed one-attempt runtime authorization exists.",
+      "basis": [
+        "docs/DECISIONS.md D-X6-R1.3",
+        "plans/expansion/X6_R1_3_BASELINE_STABILITY_AND_HOST_PROVENANCE_METHOD_GATE_V1.json"
+      ]
+    }
+  ],
+  "future_f1_purpose_and_claims": {
+    "technical_purpose": "Run one separately authorized, controlled, single-fault packet-loss attempt on the exact bound context to determine whether the fixed mutation is physically effective, whether the exact conditional signature supports the scoped packet-loss diagnosis, and whether the owned network and measurement environment restore cleanly.",
+    "fault_effectiveness": {
+      "meaning": "Independent empirical check that the exact NetEm/pfifo hierarchy was active, 6-25 of 150 ping probes were lost, child pfifo overflow delta was zero, and mutation command acceptance was not used as proof of effect.",
+      "does_not_establish": [
+        "diagnosis",
+        "restoration",
+        "scientific_acceptance"
+      ]
+    },
+    "diagnosis": {
+      "meaning": "R_X6_PERFORMANCE_001 may diagnose packet_loss at r2:eth2 only when all six bound predicates are observed and true after independent reconstruction.",
+      "does_not_establish": [
+        "fault effectiveness by itself",
+        "general diagnostic accuracy",
+        "F2-F4",
+        "multi-fault performance"
+      ]
+    },
+    "restoration": {
+      "meaning": "Owned NetEm/pfifo removal, exact noqueue/no-filter restoration, no lingering traffic, standalone replay, three restoration windows within the accepted frozen inclusive bounds, and zero owned residual resources.",
+      "does_not_establish": [
+        "fault effectiveness",
+        "diagnosis",
+        "general host recovery"
+      ]
+    },
+    "scientific_acceptance": {
+      "current_state": "NOT_ESTABLISHED",
+      "future_condition": "Only a complete separately authorized attempt that passes the successor independent materialized verifier may support authoritative acceptance for the exact single-F1 bound context.",
+      "claim_limit": "No generalization, dataset, model, metric, API, thesis, multi-host, multi-image, multi-topology, or multi-fault claim follows."
+    }
+  },
+  "compatibility_analysis": {
+    "traffic_context_identifiers": {
+      "baseline": "X6_R1_BASELINE_ONLY_QUALIFICATION",
+      "historical_f1": "X6_TRAFFIC_01_FROZEN_TCP_AND_PING",
+      "relationship": "NOT_ALIASES",
+      "established_equality": "The bound command catalog, endpoints, direction, transport, stream count, port, duration, t=0 iperf start, t=5 ping start, and 0.250-second skew limit match.",
+      "non_equivalence": "Measurement interval, phase controls, lifecycle, comparison use, and intended claims differ."
+    },
+    "utilization_elapsed_time": {
+      "qualified_baseline": "Elapsed time is independently reconstructed from the first pre-control command started.monotonic_ns through the last post-control command completed.monotonic_ns.",
+      "historical_f1": "collect_window captures before_ns before issuing pre-controls and computes elapsed after server output and post-window server teardown; raw command records do not carry the bounded monotonic timestamps needed to independently reconstruct that summary.",
+      "impact": "The historical baseline/fault/restored utilization values are not directly comparable with the accepted manifest and the historical verifier checks only that elapsed_seconds is positive.",
+      "affected_production_callers": [
+        "src/orchestration/x6_r1_packet_loss_runner.py: baseline collect_window/derive_window",
+        "src/orchestration/x6_r1_packet_loss_runner.py: fault collect_window/derive_window and aggregation",
+        "src/orchestration/x6_r1_packet_loss_runner.py: restored collect_window/derive_window and baseline-after check"
+      ],
+      "affected_derivation": [
+        "src/collection/x6_performance_collector.py: collect_window",
+        "src/collection/x6_performance_collector.py: derive_window",
+        "src/collection/x6_performance_collector.py: aggregate_windows"
+      ],
+      "affected_verification": [
+        "src/expansion/x6_r1_2_authoritative_verifier.py: _check_raw_inventory",
+        "src/expansion/x6_r1_2_authoritative_verifier.py: _check_lifecycle",
+        "src/expansion/x6_r1_2_authoritative_verifier.py: threshold and predicate verification"
+      ]
+    },
+    "threshold_flow": {
+      "historical": "The runner builds a new X6_TRAFFIC_01_FROZEN_TCP_AND_PING manifest from its ten runtime baseline windows, and the historical verifier requires those windows as threshold inputs.",
+      "required_successor": "Load and validate the exact accepted X6_R1_BASELINE_ONLY_QUALIFICATION manifest from the published freeze record; copy it canonically into run evidence and bind the source record, source commit, embedded digest, complete-file digest, and run-local digest before mutation.",
+      "pre_fault_baseline_role": "VALIDATION_ONLY_NEVER_CALIBRATION",
+      "fault_restored_role": "EFFECTIVENESS_DIAGNOSIS_AND_RESTORATION_ONLY_NEVER_CALIBRATION"
+    },
+    "comparison_semantics": {
+      "pre_fault_and_restoration": "Normalize numeric observations to six places with ROUND_HALF_EVEN and require every value within both frozen inclusive bounds; require directly established rate_limit_detected=false.",
+      "fault_diagnosis": "Preserve the existing feature-specific directional R_X6_PERFORMANCE_001 predicates against the same immutable manifest.",
+      "historical_gap": "_within_restored_baseline uses directional checks and does not enforce the accepted lower utilization boundary."
+    },
+    "lifecycle_gap": "The historical runner/verifier predates the accepted one-attempt reservation, raw command identity/timestamp, durable terminalization, cleanup reconstruction, and cross-boot recovery semantics. A future production path cannot be justified by calling the historical runner directly."
+  },
+  "proposed_minimum_source_correction": {
+    "policy": "APPEND_ONLY_PRESERVE_ALL_PUBLISHED_F1_AND_BASELINE_FILES",
+    "production": "Add a versioned F1 successor production CLI that uses the accepted R1.4.1 durable authorization, command recording, teardown classification, ownership-scoped cleanup, terminalization, and recovery patterns with an F1-specific immutable contract and phase state machine.",
+    "measurement": "Add a phase-aware successor observation path that records shell-false bounded raw commands and reconstructs baseline, fault, and restored utilization from first pre-control start through last post-control completion. Keep healthy STRUCTURAL_ZERO_NO_MANAGED_QUEUE distinct from fault COUNTER_DELTA_CHILD_PFIFO_20.",
+    "thresholds": "Add a fail-closed manifest loader that extracts the exact accepted frozen manifest, verifies canonical bytes and all bound hashes, writes an identical run-local copy before mutation, and has no production path to build_threshold_manifest.",
+    "baseline_admission": "Treat all ten future pre-fault baseline windows as validation-only against the exact inclusive frozen bounds and direct rate-limit evidence. Any failure terminalizes the spent attempt before mutation; it cannot retune or select windows.",
+    "fault_and_rule": "Preserve the three fault windows, pooled RTT rule, 6-25 effectiveness bound, exact phase controls, Evidence v4, Feature Vector v2, and R_X6_PERFORMANCE_001, all independently reconstructed from bound raw observations.",
+    "restoration": "Require owned mutation reversal, exact noqueue/no-filter controls, cooldown, no lingering traffic, standalone recovery/replay, three restoration windows within inclusive frozen bounds, and final owned-resource absence with host-drift checks.",
+    "verification": "Add a versioned source gate and independent materialized verifier for the successor. Neither may treat historical X6_R1 source tests, the baseline qualification, or synthetic fixtures as runtime proof.",
+    "why_minimum": "Changing the shared historical collector would alter published baseline and F1 behavior. An append-only phase-aware successor reuses accepted parsing and feature formulas while isolating the necessary timing, lifecycle, authorization, and manifest-consumption corrections."
+  },
+  "phase_specific_controls": {
+    "pre_fault_baseline": {
+      "required": "exact root noqueue 0: and empty root/ingress filters before and after every window",
+      "queue_drop_semantics": "STRUCTURAL_ZERO_NO_MANAGED_QUEUE",
+      "rate_limit": "directly false from bound qdisc/filter observations"
+    },
+    "fault": {
+      "required": "exact owned root NetEm handle 10: plus child pfifo handle 20: at 10:1, with no foreign filters or qdiscs",
+      "queue_drop_semantics": "COUNTER_DELTA_CHILD_PFIFO_20",
+      "rate_limit": "directly false only when the exact approved fault hierarchy and absence of rate-control constructs are observed"
+    },
+    "restoration": {
+      "required": "exact root noqueue 0:, empty filters, stable counters, no lingering iperf, accepted cooldown and separation, baseline measurements within the immutable inclusive bounds, standalone replay, and final owned cleanup",
+      "statement": "Baseline noqueue controls are not identical to intentional F1 NetEm/pfifo fault controls."
+    }
+  },
+  "source_only_verification_requirements": {
+    "established": [
+      "Source bindings and clean-checkout/archive-free verification under repository convention.",
+      "Historical-context gates in their accepted snapshots, including only the six approved diagnostics where applicable.",
+      "Independent raw reconstruction of command identity, argv, shell=False, timestamps, return code, stdout, stderr, hashes, controls, counters, ordering, lifecycle, recovery, cleanup, and terminal status.",
+      "R1.2 Evidence v4, Feature Vector v2, effectiveness, diagnosis, restoration, replay, baseline-after, and zero-owned-resource requirements."
+    ],
+    "focused_adversarial": [
+      "Reject wrong or altered freeze record, manifest, embedded/full/run-local hash, source commit, topology, image, command catalog, or context identity.",
+      "Reject any reachable threshold builder, recalibration, post-hoc boundary change, or input from fault, restored, validation, holdout, or consumed-pilot data.",
+      "Reject legacy elapsed summaries, altered command timestamps, wrong boot context, counter reset/wrap, reordered controls, startup skew, phase/control mismatch, or utilization derived outside the accepted interval.",
+      "Reject noqueue represented as a fault control, NetEm/pfifo represented as baseline control, foreign qdisc/filter state, ambiguous ownership, command error disguised as absence, cleanup drift, traffic resumption after interruption, or reusable authorization.",
+      "Exercise successful source-only synthetic lifecycle plus failure, interruption, same-boot recovery, cross-boot read-only reconstruction/owned cleanup, and independent replay through the real successor interfaces."
+    ],
+    "final_acceptance": "After source finalization, freeze immutable complete primary and archive-free plans, reconcile exact node identities including spaces, preserve exactly the accepted six historical diagnostics, and run applicable predecessor, materialized-receipt, clean-checkout, production-subprocess, focused, and complete source-only checks."
+  },
+  "future_runtime_prerequisites": {
+    "status": "NOT_AUTHORIZED_OR_SATISFIED_BY_THIS_PROPOSAL",
+    "requirements": [
+      "A separately reviewed one-attempt F1 authorization bound to the eventual successor commit/tree/files, exact accepted freeze, run/output identity, original boot, validity, image identity, topology, commands, schedule, controls, artifact inventory, cleanup/recovery, and prohibitions.",
+      "Fresh clean Git/source identity and actual image ID confirmation matching the freeze scope; tag equality alone is insufficient.",
+      "Fresh running-kernel, sch_netem-loaded, ethtool/tool, Docker/Containerlab, topology, route, qdisc/filter, ownership, lock, output-root, and consumption-ledger readiness.",
+      "No conflicting experiment resources or active/interrupted lifecycle and durable consumption before the first stateful action.",
+      "No automatic retry or replacement after reservation, admission, interruption, failure, or completion."
+    ]
+  },
+  "classification": {
+    "source_implementation_readiness": "SUPPORTED_AFTER_EXPLICIT_ACCEPTANCE_OF_THIS_PROPOSAL",
+    "current_blockers": [
+      "The proposal decisions are not accepted yet.",
+      "No append-only future-F1 successor implementation, source gate, or independent verifier exists.",
+      "No future-F1 one-attempt authorization exists; historical authorization remains 0/10_FALSE."
+    ],
+    "not_source_blockers": [
+      "Fresh runtime readiness and image confirmation are deferred runtime prerequisites.",
+      "The historical consumed pilot remains prohibited evidence rather than an input needing repair."
+    ],
+    "unresolved_questions": [
+      "Exact future authorization ID, run ID, output root, validity interval, and execution commit are runtime-review values and must not be invented now.",
+      "No future runtime date or scientific closeout decision is established by this review."
+    ],
+    "future_f1_applicability_established": false
+  },
+  "authorization_and_claim_boundary": {
+    "historical_authorization": {
+      "containerlab": false,
+      "measurement": false,
+      "f1_revalidation": false,
+      "f2": false,
+      "f3": false,
+      "f4": false,
+      "dataset": false,
+      "ml_hybrid": false,
+      "api": false,
+      "p9_r2": false
+    },
+    "runtime_authorization_created": false,
+    "future_f1_started": false,
+    "scientific_acceptance": false,
+    "baseline_freeze_scope": "UNCHANGED_EXACT_QUALIFIED_R1_4_1_CONTEXT_ONLY",
+    "x5_authority": "UNCHANGED",
+    "consumed_pilot": "PRESERVED_DIAGNOSTIC_NON_AUTHORITATIVE_PROHIBITED_INPUT",
+    "protected_evidence": "UNCHANGED"
+  },
+  "evidence_bindings": {
+    "freeze_record": {
+      "path": "plans/expansion/X6_PROSPECTIVE_SUCCESSOR_PARAMETER_THRESHOLD_FREEZE_V1.json",
+      "sha256": "635d62272c593a6ddf6de490a96e664aa94ce3ec2ea4bba5e44a4396cfb18402"
+    },
+    "freeze_handoff": {
+      "path": "docs/HANDOFF_X6_PROSPECTIVE_SUCCESSOR_PARAMETER_THRESHOLD_FREEZE.md",
+      "sha256": "019cd5422a5911fecb7443135ff2f94b83f844f82229dab01b3dedcd2d225e8a"
+    },
+    "baseline_closeout_record": {
+      "path": "plans/expansion/X6_R1_4_1_BASELINE_ATTEMPT_CLOSEOUT_RECORD_V1.json",
+      "sha256": "8a7739adf40edd2beaa6127c9d3121d2b8ec9a3cf3522910f5866d0b37041557"
+    },
+    "threshold_manifest": {
+      "path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01/state/threshold_manifest.json",
+      "embedded_sha256": "0db20fccbb22f7bcde7bc5d7be0d3fd8923e32d663d59297c178dd300ce7c301",
+      "complete_file_sha256": "40e71ce6275412adae4b956a050c116862e4f0c987ee556e67a52d5a0ae84eeb"
+    },
+    "threshold_freeze": {
+      "path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01/state/threshold_freeze.json",
+      "sha256": "19a1db2de28f0f11716614ec8289b779717eb82d9bf726d67a8acd3c595c2cb5",
+      "after": "C10",
+      "before": "C11"
+    },
+    "qualification_assessment": {
+      "path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01-qualification-assessment-v1/qualification-assessment-v1.json",
+      "sha256": "66497b59c0ba5b77f54a57d557bfb37eaac99a17762964d0916038f26afc3267"
+    },
+    "qualification_evaluator_input": {
+      "path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01-qualification-assessment-v1/qualification-evaluator-input-v1.json",
+      "sha256": "e599046ed59e3524e22283e24de9e38258834da2a1a0789cebe1c1c33adfb3bf"
+    },
+    "qualification_input_inventory": {
+      "path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01-qualification-assessment-v1/input-inventory-v1.json",
+      "sha256": "ea39287259a9991c374888f4c45e5be2a9571d9c04dfbaa6d7a7e0fa75cea5cf"
+    },
+    "qualification_evidence_manifest": {
+      "path": "/home/mesud/x6-r1-4-1-baseline-only-20260919-a01-qualification-assessment-v1/evidence-manifest-v1.json",
+      "sha256": "e735cbb562d3814898f4457d08133376ae3ddbca06a8dea919135ac5ac71bae8"
+    },
+    "committed_boundary_gate": {
+      "path": "/home/mesud/x6-r1-4-1-correction-verification/post-commit-gate-v1/receipt.json",
+      "sha256": "98af3b5b14340d3f685042a1a141b131e0622ddfbb3c5b4fe2467eb97a6161ce"
+    }
+  },
+  "evidence_limitations": [
+    "The original R1.4.1 baseline launcher return code remains missing; replay success does not backfill it.",
+    "The qualified image had no RepoDigests, so exact applicability binds the recorded image ID, tag, Dockerfile, and raw image observation rather than the tag alone.",
+    "Completed baseline qualification demonstrates the exact baseline context only and supplies no F1 fault, diagnosis, or restoration result."
+  ],
+  "acceptance_criteria_for_this_review": {
+    "proposal": "EXPLICIT_ACCEPTANCE_OR_REJECTION_OF_EXACT_FINAL_BYTES",
+    "effect_if_accepted": "AUTHORIZE_ONLY_APPEND_ONLY_SOURCE_IMPLEMENTATION_AND_SOURCE_ONLY_VERIFICATION_OF_THE_DESCRIBED_SUCCESSOR",
+    "does_not_authorize": [
+      "runtime authorization",
+      "deployment",
+      "traffic",
+      "mutation",
+      "recovery or cleanup",
+      "experiment",
+      "scientific acceptance",
+      "F2-F4",
+      "X7",
+      "P9-R2"
+    ],
+    "next_step_if_accepted": "IMPLEMENT_SMALLEST_APPEND_ONLY_FUTURE_F1_SUCCESSOR_AND_COMPLETE_SOURCE_ONLY_VERIFICATION",
+    "next_step_if_rejected": "REVISE_ONLY_THE_IDENTIFIED_REVIEW_DECISION_WITHOUT_RUNTIME_ACTION"
+  },
+  "source_bindings": [
+    {
+      "path": "docs/MASTER_CONTEXT.md",
+      "sha256": "64a80f8d4b3d6ff0f4160fd42e10c12e60461aaecab97b91b982c929cc440a57"
+    },
+    {
+      "path": "docs/DECISIONS.md",
+      "sha256": "2da8580391ea39b34573ce64541e431e1b35331727bde249f07f3dbb88783459"
+    },
+    {
+      "path": "docs/STATUS.md",
+      "sha256": "d654760fa8bb88097f1e20eb044f8111b6255c098e2b9fbef3d4e7cf6343e19d"
+    },
+    {
+      "path": "plans/expansion/X6_R1_3_BASELINE_STABILITY_AND_HOST_PROVENANCE_METHOD_GATE_V1.json",
+      "sha256": "83f9c65e14a7ea6d7771379fb240e2d1939ae8834dcf80b8ed3c2ad0de2e0384"
+    },
+    {
+      "path": "plans/expansion/X6_R1_3_1_BASELINE_ONLY_EXECUTION_CONTRACT_FREEZE_V1.json",
+      "sha256": "511531a9d57efa8641e2bf59b6903c80a5a23a47a8cd944333e99dc169e3543a"
+    },
+    {
+      "path": "plans/expansion/X6_PROSPECTIVE_SUCCESSOR_PARAMETER_THRESHOLD_FREEZE_V1.json",
+      "sha256": "635d62272c593a6ddf6de490a96e664aa94ce3ec2ea4bba5e44a4396cfb18402"
+    },
+    {
+      "path": "plans/expansion/X6_R0_4_F1_RUNTIME_PARAMETER_FREEZE_V1.json",
+      "sha256": "1b33e0cd8b255311c0c6c7d6ce8a9d2cc2faf484b6912c867fa15d721159a898"
+    },
+    {
+      "path": "plans/expansion/X6_R0_5_TOPOLOGY_BOOTSTRAP_CORRECTION_V1.json",
+      "sha256": "4c484299f8ad500c66a9c8bf493349ed50edcaef633db99ea066dab62971d464"
+    },
+    {
+      "path": "plans/expansion/X6_R0_7_NETEM_RUNTIME_PREREQUISITE_CORRECTION_V1.json",
+      "sha256": "20580364243e0cb4593ef11ccb81a999cfbe4ac76aee42040ef23d3c698fd368"
+    },
+    {
+      "path": "plans/expansion/X6_R1_PACKET_LOSS_V1.json",
+      "sha256": "9387a4982c3f26018c261849de2112a45ed3665a747382768f73512f8d616561"
+    },
+    {
+      "path": "plans/expansion/X6_R1_2_FUTURE_AUTHORITATIVE_ACCEPTANCE_HARDENING_V1.json",
+      "sha256": "1849a295af37bd1129c37e5505179031de1d7b45fb7cc819c5d8985162bef217"
+    },
+    {
+      "path": "labs/topologies/x6_r1_packet_loss/runtime_context_v1.json",
+      "sha256": "560c18708105221f5d9b17bf29fae5f8b64c899ec91556f57a91eefdb969630e"
+    },
+    {
+      "path": "labs/topologies/x6_r1_packet_loss_r0_5/topology.clab.yml",
+      "sha256": "9decd096606a7af5d6aa5a7de6c5d406c286e12094825cbc88b3fb59a2e37b14"
+    },
+    {
+      "path": "labs/images/ind-linux/Dockerfile",
+      "sha256": "ca5b97b08895081726b12c1311be050a18f0a1039aa168319ef1420e89761b0c"
+    },
+    {
+      "path": "src/collection/x6_r0_2_measurement_semantics.py",
+      "sha256": "43a411ae93a878880b4724106a994024a13aac77dd7770defff8ec1a1c981e29"
+    },
+    {
+      "path": "src/collection/x6_r0_3_pre_runtime_validation.py",
+      "sha256": "88e213d8ef492cbd61eb861a7499fc8351ca6a9446d53a0041b6cc2db3b5ab97"
+    },
+    {
+      "path": "src/collection/x6_performance_collector.py",
+      "sha256": "dcb5bd850369d7291e9679870943102e1158e3dad178fe519ba1a852be9881f8"
+    },
+    {
+      "path": "src/orchestration/x6_r1_packet_loss_runner.py",
+      "sha256": "8ef9473b60715df8adf70c51016e143442593b2ea90f2ba7e670a7ebb47f0e71"
+    },
+    {
+      "path": "src/expansion/x6_r1_performance_rule.py",
+      "sha256": "48c36aea0e8479c89a81aff9e267e4d1b98fc6fd82ebcf867549b24ec33928f6"
+    },
+    {
+      "path": "src/expansion/x6_r1_2_authoritative_verifier.py",
+      "sha256": "8b9a316e40fea8461d5d74cd8dd6b28f65092318e9834cde6e0f5f2f58eef27c"
+    },
+    {
+      "path": "src/orchestration/x6_r1_4_1_observations.py",
+      "sha256": "00ce795ad5a4d6f18e36106347ea032895b0874a2586899589e06d2bacbcd651"
+    },
+    {
+      "path": "src/orchestration/x6_r1_4_1_contract.py",
+      "sha256": "6e0b8ec67318b3a10dc3c5acf28ca02212269476d384b29ac57c9648d7a1bcec"
+    },
+    {
+      "path": "src/expansion/x6_r1_4_1_materialized_verifier.py",
+      "sha256": "4925b3b4f47aff5927c2404c92e501fddbb26ddea06a873b49613ff99908a2f9"
+    }
+  ]
+}
