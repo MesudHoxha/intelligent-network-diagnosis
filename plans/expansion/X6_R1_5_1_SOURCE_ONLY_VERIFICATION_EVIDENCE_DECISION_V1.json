@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "record_id": "X6_R1_5_1_SOURCE_ONLY_VERIFICATION_EVIDENCE_DECISION_V1",
+  "record_kind": "APPEND_ONLY_ONE_OFF_SOURCE_VERIFICATION_EVIDENCE_DECISION",
+  "status": "USER_APPROVED_DECISION_RECORDED_R1_5_1_NOT_ACCEPTED",
+  "published_predecessor": "287809ecc74bc3962de67fb903058fc6db09e899",
+  "candidate_bindings": {
+    "candidate_inventory_path": "/home/mesud/x6-r1-5-1-source-verification/implementation-report-v2/candidate-inventory.json",
+    "candidate_inventory_sha256": "9d4c76de416d2b932856c0207efe7d37bad102af9ebafdfeb6dec34677039799",
+    "candidate_file_count": 17,
+    "source_plan_path": "plans/expansion/X6_R1_5_1_POSTMORTEM_CORRECTION_SOURCE_ONLY_V1.json",
+    "source_plan_sha256": "74009c411d0d2dd60cdaa397f79468865e092f198bf9c04639e0db0b0a5f6628",
+    "final_reconciliation_path": "/home/mesud/x6-r1-5-1-source-verification/final-v2/reconciliation.json",
+    "final_reconciliation_sha256": "1154a14fa0eef622d3a97ecce049800653384ce3b511c99b69700d9f5335afad",
+    "primary_verification_plan_path": "/home/mesud/x6-r1-5-1-source-verification/final-v2/primary/verification-plan.json",
+    "primary_verification_plan_sha256": "af9f39a7e449e1c98df6a2756339b49f015cd8923a03e5f98bb4e6f9830ea39c",
+    "primary_execution_source_inventory_sha256": "01a37c044b803d2a391e449f1ca098360b0ac65259f6b372e5510bce778c1b9e"
+  },
+  "frozen_node_list": {
+    "context": "primary",
+    "shard_id": "shard-01",
+    "path": "/home/mesud/x6-r1-5-1-source-verification/final-v2/primary/shards/shard-01.nodes.txt",
+    "sha256": "4da18be5e8b14a2fd64a8d9265f453e86770c07c7464b0eaa44f719a9ef70d71",
+    "node_count": 91
+  },
+  "preserved_failed_attempt": {
+    "classification": "FAILED_SOURCE_VERIFICATION_ATTEMPT",
+    "record_path": "/home/mesud/x6-r1-5-1-source-verification/final-v2/primary/shards/shard-01/record.json",
+    "record_sha256": "9972c4d7a5e9e48e7d1f460c0bc16a582047fcc8da7d9c5e503fb24c39f3ee22",
+    "plan_sha256": "af9f39a7e449e1c98df6a2756339b49f015cd8923a03e5f98bb4e6f9830ea39c",
+    "nodes_sha256": "4da18be5e8b14a2fd64a8d9265f453e86770c07c7464b0eaa44f719a9ef70d71",
+    "node_count": 91,
+    "shell": false,
+    "return_code": 1,
+    "summary": {
+      "passed": 77,
+      "skipped": 1,
+      "failed": 0,
+      "errors": 13,
+      "xfailed": 0,
+      "xpassed": 0
+    },
+    "stdout_sha256": "d9905eee3f1d72313d73864131ce5daa1cd57be19c5f06f14b01547f4a68d62b",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "timing_observation_seconds": "5.526556567",
+    "scheduling_reference_seconds": "5.000000000",
+    "startup_skew_seconds": "0.526556567",
+    "startup_skew_limit_seconds": "0.250000000",
+    "underlying_cause": "UNPROVEN",
+    "counts_as_pass": false,
+    "counts_as_historical_diagnostic": false,
+    "counts_as_invalid_non_result": false
+  },
+  "permitted_replacement": {
+    "record_path": "/home/mesud/x6-r1-5-1-source-verification/final-v2/primary/replacement-attempts/shard-01-retry-01/record.json",
+    "record_sha256": "c119ec7f3c9ca838052b1eca7b36dfb087bfaf11f33d6f22cd0e71586cab12d6",
+    "plan_sha256": "af9f39a7e449e1c98df6a2756339b49f015cd8923a03e5f98bb4e6f9830ea39c",
+    "nodes_sha256": "4da18be5e8b14a2fd64a8d9265f453e86770c07c7464b0eaa44f719a9ef70d71",
+    "node_count": 91,
+    "shell": false,
+    "return_code": 0,
+    "summary": {
+      "passed": 90,
+      "skipped": 1,
+      "failed": 0,
+      "errors": 0,
+      "xfailed": 0,
+      "xpassed": 0
+    },
+    "stdout_sha256": "3679385108294b4ced7d65f072bc6bbea09734a211c2919259313a98ccc984fc",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "replaced_attempt_record_sha256": "9972c4d7a5e9e48e7d1f460c0bc16a582047fcc8da7d9c5e503fb24c39f3ee22",
+    "effect": "MAY_SATISFY_FINAL_PRIMARY_COVERAGE_FOR_THIS_EXACT_FROZEN_NODE_LIST"
+  },
+  "decision_limits": [
+    "The original attempt remains a failed verification attempt and remains visible with its complete recorded outcome.",
+    "The replacement satisfies coverage only for the exact primary shard-01 node list, source plan, execution source inventory, and verification plan bound above.",
+    "No node, threshold, acceptance criterion, historical diagnostic, or source-verification requirement is waived.",
+    "The observed timing rejection does not establish the underlying cause of the delay.",
+    "The failed attempt is not reclassified as passed, an approved diagnostic, or an invalid non-result.",
+    "This decision creates no general retry or replacement policy.",
+    "This decision does not extend or rely on X6_R1_5_SOURCE_ONLY_VERIFICATION_EVIDENCE_EXCEPTION_V1.",
+    "The original plans, inventories, receipts, attempt records, reconciliation, and 17 candidate files remain byte-for-byte unchanged."
+  ],
+  "acceptance_review_effect": {
+    "previous_recommendation": "BLOCKED_PENDING_EXPLICIT_PRIMARY_SHARD_01_EVIDENCE_DECISION",
+    "updated_recommendation": "ELIGIBLE_FOR_SOURCE_ONLY_ACCEPTANCE_PENDING_SEPARATE_EXPLICIT_ACCEPTANCE",
+    "r1_5_1_accepted": false,
+    "remaining_source_only_review_blockers": [],
+    "runtime_result_established": false,
+    "scientific_acceptance_established": false
+  },
+  "preservation": {
+    "candidate_implementation_files": "UNCHANGED_EXACT_17_FILE_INVENTORY",
+    "published_r1_5": "UNCHANGED",
+    "spent_r1_5_attempt": "PRESERVED_FAILED",
+    "historical_authorization": "0/10_FALSE",
+    "six_predicates": "UNCHANGED",
+    "frozen_thresholds": "UNCHANGED",
+    "x5_authority": "UNCHANGED",
+    "consumed_pilot_evidence": "PRESERVED_NON_AUTHORITATIVE",
+    "protected_stashes": "FOUR_REACHABLE_UNCHANGED"
+  },
+  "next_step": "SEPARATE_EXPLICIT_R1_5_1_SOURCE_ONLY_ACCEPTANCE_OR_REJECTION"
+}

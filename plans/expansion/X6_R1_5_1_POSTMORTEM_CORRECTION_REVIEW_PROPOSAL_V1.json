@@ -1,0 +1,321 @@
+{
+  "schema_version": 1,
+  "proposal_id": "X6_R1_5_1_POSTMORTEM_CORRECTION_REVIEW_PROPOSAL_V1",
+  "record_kind": "APPEND_ONLY_SOURCE_ONLY_REVIEW_PROPOSAL",
+  "status": "REVIEW_ONLY_NOT_ACCEPTED",
+  "published_boundary": {
+    "commit": "287809ecc74bc3962de67fb903058fc6db09e899",
+    "tree": "93c13c18d989c1f25699f2e810761ca4751fba94",
+    "direct_parent": "ff327c10e69e0f08a5c3586e169392667fe2d893"
+  },
+  "authority": {
+    "authorized_now": [
+      "analysis",
+      "append-only proposal preparation"
+    ],
+    "not_authorized": [
+      "source implementation",
+      "runtime authorization",
+      "runtime execution",
+      "threshold changes",
+      "historical reclassification",
+      "commit",
+      "push"
+    ],
+    "historical_authorization": "0/10_FALSE"
+  },
+  "governing_records": [
+    {
+      "path": "docs/DECISION_X6_R1_5.md",
+      "sha256": "6d72aa0971a4be5fdc6a7c7e1f773daa440116c5c7e4d62d91e4217b762da6ee",
+      "clauses": [
+        "lines 9-13: immutable manifest, validation-only B windows, six-place ROUND_HALF_EVEN, directional six-predicate rule",
+        "lines 22-25: effectiveness, diagnosis, restoration, cleanup, and verification are separate outcomes",
+        "lines 37-41: independent raw reconstruction and persisted artifacts as comparison targets",
+        "lines 43-48: failed cleanup claims require independent reconstruction"
+      ]
+    },
+    {
+      "path": "docs/HANDOFF_X6_R1_5.md",
+      "sha256": "f909f91be2024de032209290524fef0eb616f63df4e45e62661e4352fd686fb3",
+      "clauses": [
+        "lines 15-20: B01-B10, F01-F03, restoration, cooldown, R01-R03, cleanup, replay, and separated outcomes",
+        "lines 27-30: independently rebuilt fault artifacts and interrupted cleanup"
+      ]
+    },
+    {
+      "path": "plans/expansion/X6_R1_5_FUTURE_F1_SUCCESSOR_SOURCE_ONLY_V1.json",
+      "sha256": "58a5caf1e66b609ff5de66e352a85898ac86022ee7f10a2d998fd07170a173ab"
+    },
+    {
+      "path": "plans/expansion/X6_R1_5_SOURCE_ONLY_VERIFICATION_EVIDENCE_EXCEPTION_V1.json",
+      "sha256": "a94b64c6f646aa607b7cfa0edd304d368d4a8a04753a06b8fdda0eaff8c1b882"
+    },
+    {
+      "path": "plans/expansion/X6_PROSPECTIVE_SUCCESSOR_PARAMETER_THRESHOLD_FREEZE_V1.json",
+      "sha256": "635d62272c593a6ddf6de490a96e664aa94ce3ec2ea4bba5e44a4396cfb18402"
+    },
+    {
+      "path": "plans/expansion/X6_SEPARATE_REVIEW_OF_FUTURE_F1_JUSTIFICATION_PROPOSAL_V1.json",
+      "sha256": "6c03445e0b4a851f7c1c484a891577407eeb2fbf8a22f967aa3b1ee05161d9eb"
+    }
+  ],
+  "immutable_postmortem": {
+    "root": "/home/mesud/x6-r1-5-f1-20260924-a01-postmortem-v1",
+    "files": [
+      {
+        "path": "input-inventory.json",
+        "sha256": "d2001be1a67bed0793646faa143ae6cbbd2658bc5b49a125efdbe38605ed9967"
+      },
+      {
+        "path": "reconstruction.json",
+        "sha256": "43bcf18f07e9859d05bd45b9437b19ccfe8608fe4b1d3a995c686ce64d7d2103"
+      },
+      {
+        "path": "POSTMORTEM.md",
+        "sha256": "57eb7040673a60082c3f74bddde3033d3effd18fb7a1b3c0c1024b772c9c3ec9"
+      },
+      {
+        "path": "HANDOFF.md",
+        "sha256": "b9abdc315e464e02b77f5c79b229897793e009b0e74d3c3e4ba2b38e131d4bcf"
+      },
+      {
+        "path": "evidence-manifest.json",
+        "sha256": "46d153fe8b599baeda4a822ac2fcba9e98792aa62ea6cac4a3bbb9f550ad5b0e"
+      }
+    ]
+  },
+  "failed_attempt_bindings": {
+    "run_id": "x6-r1-5-f1-20260924-a01",
+    "terminal": {
+      "path": "/home/mesud/x6-r1-5-f1-20260924-a01/terminal/terminal.json",
+      "sha256": "3de97a9dd88caaac55c95557cb131b9d7c722565570764e75134e7466b3655c2",
+      "status": "F1_ATTEMPT_FAILED",
+      "qualified": false,
+      "scientific_acceptance": false
+    },
+    "consumption_ledger": {
+      "path": "/home/mesud/.x6-r1-5-consumption/X6_R1_5_F1_20260924_A01.json",
+      "sha256": "e936ff8a4636584a948a2b1428b2c989a676b353a1493cdf5ad8a45e0aad1750",
+      "state": "SPENT_AND_NOT_REUSABLE"
+    },
+    "threshold_manifest": {
+      "path": "/home/mesud/x6-r1-5-f1-20260924-a01/state/threshold_manifest.json",
+      "file_sha256": "40e71ce6275412adae4b956a050c116862e4f0c987ee556e67a52d5a0ae84eeb",
+      "embedded_canonical_sha256": "0db20fccbb22f7bcde7bc5d7be0d3fd8923e32d663d59297c178dd300ce7c301"
+    },
+    "fault_artifacts": [
+      {
+        "path": "state/fault_effectiveness.json",
+        "sha256": "282a3f75fe9178c0c817253ad3df696b30abb8e3e66a70ce32d5b6321c9a1165"
+      },
+      {
+        "path": "parsed/evidence_v4.json",
+        "sha256": "efa667056385fd84d7e35fbaf01b634c1e3498c590b918352346f85b9b66142f"
+      },
+      {
+        "path": "parsed/feature_vector_v2.json",
+        "sha256": "7a8053af001c8587ae0a9fdb1f1e6c39f846dc5f4c95ac3c5c9e8ebf7e0cdf2e"
+      },
+      {
+        "path": "state/diagnosis.json",
+        "sha256": "3479a7ea4413dfe6f7f234deaf3402bd7b216a73ad511b0ed550e64306cffd94"
+      }
+    ],
+    "preservation": "All original run, authorization, terminal, recovery, replay, postmortem, and source artifacts remain immutable."
+  },
+  "postmortem_facts": {
+    "completed_fault_windows": [
+      "F01",
+      "F02",
+      "F03"
+    ],
+    "restoration_windows": [],
+    "fault_effectiveness": "MUTATION_EFFECTIVE",
+    "diagnosis": "abstained",
+    "predicate_results": {
+      "loss_above_baseline": true,
+      "latency_within_baseline": false,
+      "throughput_within_baseline": false,
+      "utilization_within_baseline": true,
+      "queue_delta_zero": true,
+      "rate_limit_false": true
+    },
+    "fault_aggregate": {
+      "packet_loss_ratio": "0.08666666666666667",
+      "round_trip_latency_ms_p95": "0.212",
+      "throughput_mbps": "52.738613",
+      "interface_utilization_ratio": "0.004763",
+      "queue_drop_count": 0,
+      "rate_limit_detected": false
+    },
+    "frozen_boundaries": {
+      "packet_loss_ratio_upper": "0.020000",
+      "round_trip_latency_ms_p95_upper": "0.160000",
+      "throughput_mbps_lower": "6867.148963",
+      "interface_utilization_ratio_upper": "0.779429",
+      "queue_drop_count_required": 0,
+      "rate_limit_detected_required": false
+    },
+    "deviations": {
+      "latency_absolute_ms_above_upper": "0.052000",
+      "latency_relative_above_upper_percent": "32.500000",
+      "throughput_absolute_mbps_below_lower": "6814.410350",
+      "throughput_relative_below_lower_percent": "99.2320158877555"
+    },
+    "implementation_defect_finding": "No raw-to-persisted fault measurement or aggregation contradiction was found for this attempt.",
+    "causal_limit": "The observations show loss, retransmission-related counters, RTT samples, and reduced receiver throughput together; they do not isolate a causal mechanism."
+  },
+  "contract_compliance_corrections": {
+    "failed_path_verification": {
+      "finding": "src/expansion/x6_r1_5_materialized_verifier.py:182-185 returns after failed-path cleanup verification, before the complete-path reconstruction at lines 203-220. Completed F01-F03 artifacts therefore are not independently compared on the failed terminal path.",
+      "proposed_decision": "A successor verifier MUST reconstruct every completed fault window and the complete F01-F03 aggregate from bound raw observations on all terminal paths. When the complete F cohort exists, it MUST recompute and compare fault effectiveness, Evidence v4, Feature Vector v2, predicate results, and diagnosis without requiring R01-R03. Persisted summaries remain comparison targets only.",
+      "artifact_state_rules": [
+        "Before F03 completes, absent cohort-level artifacts are legitimate and any present artifact must match the reconstructable completed prefix and its declared scope; it cannot claim a complete F cohort.",
+        "After all F01-F03 raw observations complete but before the fault-assessment commit, a wholly or partially persisted derived set is classified FAULT_ASSESSMENT_PERSISTENCE_INCOMPLETE. Every present artifact must match raw reconstruction; missing artifacts remain an explicit incompleteness and never become acceptance evidence.",
+        "A commit-last fault-assessment record binds the run, source, authorization ledger, manifest, original boot, F01-F03 raw record range, and hashes of effectiveness, Evidence v4, Feature Vector v2, predicates, and diagnosis. If that record exists, every bound artifact is required and must match exactly.",
+        "Missing required artifacts, duplicate or reordered raw groups, a false complete claim, a mismatched commit record, or any raw/derived contradiction is a verification failure.",
+        "R01-R03 absence is not a reason to skip verification of completed F01-F03 evidence and is not itself repaired or fabricated by replay."
+      ]
+    },
+    "diagnosis_and_restoration_separation": {
+      "finding": "src/orchestration/x6_r1_5_production_path.py:211 raises when the exact diagnosis is absent; lifecycle restoration begins only at line 239. This conflicts with the accepted separation of diagnosis and restoration and prevents the independently specified cooldown and R01-R03 sequence after a well-formed abstention.",
+      "proposed_decision": "Fault assessment returns a durable structured result instead of raising for a well-formed abstention. After the fault-assessment commit, a diagnostic abstention records an unsuccessful diagnostic outcome but, when the operational safety gate remains valid, proceeds immediately to owned qdisc restoration, restoration controls, cooldown, R01-R03 validation, owned cleanup, terminalization, and independent replay. Overall acceptance remains unsuccessful whenever required diagnosis criteria fail, even if restoration succeeds.",
+      "operational_safety_gate": [
+        "authorization, source, manifest, run, ownership, and original lifecycle evidence remain valid",
+        "all required completed F-window commands and raw schemas are valid",
+        "fault qdisc/filter ownership and counter continuity are unambiguous",
+        "no command failure, timeout, interruption, malformed evidence, foreign resource, or unsafe state is present"
+      ],
+      "must_stop_measurement_and_use_recovery": [
+        "external command failure or timeout",
+        "malformed, missing, contradictory, or tampered raw evidence",
+        "ambiguous or foreign resource ownership",
+        "unsafe qdisc/filter state",
+        "source, authorization, manifest, boot, timing, or lifecycle integrity failure",
+        "process interruption"
+      ],
+      "classification": {
+        "abstained": "All evidence is valid and available but at least one exact directional predicate is false; restoration validation may continue through the safety gate.",
+        "insufficient_evidence": "Required diagnostic input is unavailable; no new measurement continues and recovery is used as applicable.",
+        "operational_failure": "A command, timing, ownership, control, or integrity requirement failed; no further measurement continues.",
+        "interrupted": "The process did not complete the current durable stage; traffic never resumes and only accepted recovery may restore owned state."
+      }
+    },
+    "numeric_semantics": {
+      "accepted_basis": "docs/DECISION_X6_R1_5.md:9-13 requires six-place ROUND_HALF_EVEN for pre-fault and restoration and retains the directional F1 rule; the source plan declares SIX_PLACE_ROUND_HALF_EVEN for measurement.",
+      "observed_gap": "Per-window numeric values are quantized through Decimal in x6_r1_5_observations.py:187-194, but aggregate_windows uses binary float arithmetic and x6_r1_performance_rule.py:22-25 compares binary floats. The observed 0.08666666666666667 aggregate exposes the missing aggregate normalization. It did not change this attempt's predicate outcomes.",
+      "proposed_order": [
+        "Parse each raw numeric observation through Decimal from its exact textual representation or exact integer counts.",
+        "Derive each per-window numeric feature, then quantize it to Decimal('0.000001') with ROUND_HALF_EVEN before persistence.",
+        "Aggregate the three normalized fault-window values: arithmetic mean for packet loss, median for throughput and utilization, integer sum for queue drops, and boolean any for rate limiting.",
+        "For latency, pool bound raw RTT samples, select index ceil(0.95*N)-1 in sorted order, then quantize the selected value to six places with ROUND_HALF_EVEN.",
+        "Quantize each numeric aggregate once after its aggregation operation. For this attempt the packet-loss aggregate representation would be 0.086667; frozen thresholds and operators remain unchanged.",
+        "Parse frozen decimal boundaries as Decimal and compare normalized Decimal values with the existing strict/inclusive operators. Queue and rate predicates remain exact integer/boolean comparisons.",
+        "Persist canonical six-place decimal text or an equivalently schema-valid representation that round-trips without binary-float reinterpretation; production and verifier use the same specified order independently."
+      ],
+      "operators_preserved": {
+        "packet_loss_ratio": "> upper_threshold",
+        "round_trip_latency_ms_p95": "<= upper_threshold",
+        "throughput_mbps": ">= lower_threshold",
+        "interface_utilization_ratio": "<= upper_threshold",
+        "queue_drop_count": "== 0",
+        "rate_limit_detected": "is false"
+      },
+      "decision_required_before_implementation": "Accept the proposed end-to-end Decimal and post-aggregation normalization order as the precise successor interpretation. Published R1.5 artifacts and frozen thresholds remain unchanged."
+    }
+  },
+  "separate_methodological_review": {
+    "current_rule_status": "PRESERVED_UNCHANGED_FOR_THE_SMALLEST_COMPLIANCE_SUCCESSOR",
+    "accepted_rationale": "R_X6_PERFORMANCE_001 uses packet loss above baseline with baseline-level latency and throughput, utilization not above its upper bound, zero child-pfifo drops, and no rate limiter to discriminate the intended F1 signature from delay, congestion/queue, and rate-limiting classes.",
+    "primary_sources": [
+      {
+        "source": "RFC 5681, TCP Congestion Control",
+        "url": "https://www.rfc-editor.org/rfc/rfc5681.html",
+        "relevance": "TCP treats segment loss as a congestion signal, retransmits, and reduces congestion state; therefore substantial throughput degradation under packet loss is technically plausible rather than evidence of an implementation defect by itself."
+      },
+      {
+        "source": "RFC 6675, SACK Loss Recovery for TCP",
+        "url": "https://www.rfc-editor.org/rfc/rfc6675.html",
+        "relevance": "Multiple losses in one flight require explicit recovery behavior, and recovery choices affect transfer performance; this supports mechanism plausibility but does not prove this attempt's cause."
+      },
+      {
+        "source": "Linux tc-netem manual",
+        "url": "https://man7.org/linux/man-pages/man8/tc-netem.8.html",
+        "relevance": "The random loss model independently drops packets, zero correlation is not a no-effect promise, and the manual warns that TCP performance realism depends on placement and kernel behavior."
+      },
+      {
+        "source": "ESnet iperf Linux TCP-info implementation",
+        "url": "https://github.com/esnet/iperf/blob/master/src/tcp_info.c",
+        "relevance": "iperf's Linux retransmit observation reads TCP_INFO total retransmissions. It is a supporting TCP-stack observation, not a causal attribution."
+      }
+    ],
+    "existing_evidence": {
+      "established": [
+        "the exact NetEm/pfifo hierarchy and physical loss-effectiveness check passed",
+        "F01-F03 sender retransmit counts were 1499, 1728, and 1338",
+        "receiver throughput collapsed relative to B01-B10",
+        "pooled fault RTT p95 exceeded the frozen upper bound",
+        "raw reconstruction matched every persisted fault artifact"
+      ],
+      "not_established": [
+        "which lost packets caused the observed TCP recovery behavior",
+        "whether retransmission, RTT sampling, TCP congestion response, host scheduling, or another retained-but-unisolated condition caused each deviation",
+        "whether the same response generalizes beyond this one spent attempt",
+        "whether the current six-predicate rule is the best discriminator across F1-F4"
+      ]
+    },
+    "prospective_alternative_for_later_review_only": "A later methodological proposal may treat the exact owned mutation, independently measured loss, queue/rate exclusions, and control provenance as the core F1 evidence while treating latency and throughput as outcome descriptors or multi-class discriminators. That would increase sensitivity to effective packet loss but could reduce specificity against congestion or mixed faults and increase non-abstaining classifications. It must be justified and evaluated on independently authorized, balanced future evidence across relevant fault classes before any rule change.",
+    "prohibitions": [
+      "No threshold or predicate is changed by this proposal.",
+      "The spent attempt is not calibration, selection, tuning, or acceptance input for an alternative rule.",
+      "No alternative rule may be adopted merely because it would classify this failed attempt as diagnosed."
+    ]
+  },
+  "affected_successor_paths": {
+    "production": [
+      "append-only successor of src/orchestration/x6_r1_5_production_path.py",
+      "append-only successor durable fault-assessment commit and terminal classification",
+      "append-only successor recovery integration"
+    ],
+    "reconstruction": [
+      "append-only successor of src/orchestration/x6_r1_5_observations.py",
+      "append-only successor of src/expansion/x6_r1_5_evidence.py",
+      "append-only successor of src/expansion/x6_r1_performance_rule.py"
+    ],
+    "verification": [
+      "append-only successor of src/expansion/x6_r1_5_materialized_verifier.py",
+      "versioned successor gate, plan, decision, status, tests, and handoff"
+    ],
+    "historical_files": "Published R1.5 files remain unchanged."
+  },
+  "focused_test_requirements": [
+    "Failing-before and passing-after proof that a failed terminal with complete F01-F03 rejects altered effectiveness, Evidence v4, Feature Vector v2, predicates, or diagnosis without requiring R01-R03.",
+    "Presence-matrix tests before F03, after F03 but before fault-assessment commit, between every derived-artifact persistence boundary, and after the commit record; test missing, partial, duplicate, reordered, contradictory, and tampered states.",
+    "A well-formed diagnostic abstention restores owned qdisc state, validates restoration controls, completes cooldown and R01-R03, cleans owned resources, terminalizes unsuccessful, and independently replays unsuccessful.",
+    "A diagnostic abstention remains distinct from insufficient evidence, external-command failure, timeout, timing failure, malformed evidence, foreign ownership, unsafe state, and interruption; those paths do not continue measurements.",
+    "A restoration success cannot override failed effectiveness or diagnosis acceptance criteria.",
+    "Same-boot and cross-boot recovery verify completed fault evidence and owned cleanup without resuming traffic.",
+    "Half-even ties at the sixth decimal place, repeating loss ratios, pooled RTT order-statistic boundaries, three-value medians, values just below/equal/above every frozen boundary, integer queue sums, and boolean rate aggregation agree independently between production and verifier.",
+    "Real successor CLI, persistence, recovery, and materialized verifier are exercised with controlled external-command substitutes; mocks may not replace the validation logic under test.",
+    "Focused receipts record exact argv, return code, stdout/stderr hashes, source inventory, and simulation identity."
+  ],
+  "future_source_only_acceptance_requirements": [
+    "Accept this exact proposal or a reviewed replacement before implementation.",
+    "Finalize append-only source and versioned records before freezing immutable complete verification plans.",
+    "Run focused semantic review and impact preflight before expensive suites.",
+    "Run required finalized-source primary and archive-free verification with exact collected node identities, preserve exactly the six approved historical diagnostics, and introduce no new exclusions.",
+    "Do not use predecessor receipts as verification of changed source.",
+    "Source-only verification establishes no runtime result or scientific acceptance."
+  ],
+  "unresolved_questions": [
+    "Whether to accept the proposed end-to-end Decimal/post-aggregation six-place normalization order as the explicit successor contract.",
+    "Whether a later, separate methodology review should replace the baseline-level latency or throughput predicates; the smallest compliance successor preserves both.",
+    "Any alternative F1 rule requires independent future evidence and a separate accepted decision; no suitable evidence set or acceptance design is established here."
+  ],
+  "central_record_impact": {
+    "now": "NONE. MASTER_CONTEXT, DECISIONS, STATUS, accepted R1.5 records, and all runtime evidence remain unchanged.",
+    "if_accepted_for_implementation": "Append versioned successor plan, decision, status, gate, tests, and handoff only. Do not rewrite published R1.5 records or reclassify the spent attempt."
+  },
+  "next_step": "Explicit review and acceptance, revision, or rejection of these exact proposal bytes. Acceptance would authorize only the bounded append-only source implementation and source-only verification, not runtime work or a methodological rule change."
+}
