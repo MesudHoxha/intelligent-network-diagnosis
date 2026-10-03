@@ -1,0 +1,920 @@
+{
+  "schema_version": 1,
+  "proposal_id": "X6_PROSPECTIVE_F1_SUCCESSOR_STUDY_DESIGN_PROPOSAL_V1",
+  "record_kind": "APPEND_ONLY_REVIEW_ONLY_STUDY_DESIGN_PROPOSAL",
+  "status": "REVIEW_ONLY_NOT_ACCEPTED",
+  "published_boundary": {
+    "commit": "babde86fd863d105b30262d205ced09995251515",
+    "direct_parent": "287809ecc74bc3962de67fb903058fc6db09e899"
+  },
+  "methodology_acceptance": {
+    "path": "plans/expansion/X6_PROSPECTIVE_F1_DIAGNOSTIC_METHODOLOGY_REVIEW_ACCEPTANCE_V1.json",
+    "scope": "METHODOLOGICAL_PRINCIPLES_ONLY",
+    "design_choices_in_this_record": "UNACCEPTED"
+  },
+  "governing_basis": [
+    {
+      "path": "docs/MASTER_CONTEXT.md",
+      "sha256": "64a80f8d4b3d6ff0f4160fd42e10c12e60461aaecab97b91b982c929cc440a57"
+    },
+    {
+      "path": "docs/DECISIONS.md",
+      "sha256": "2da8580391ea39b34573ce64541e431e1b35331727bde249f07f3dbb88783459"
+    },
+    {
+      "path": "docs/STATUS.md",
+      "sha256": "d654760fa8bb88097f1e20eb044f8111b6255c098e2b9fbef3d4e7cf6343e19d"
+    },
+    {
+      "path": "plans/expansion/X6_R0_1_MEASUREMENT_AND_TRAFFIC_METHOD_GATE_V1.json",
+      "sha256": "2092a1394863b0eb5e6165bbdfec76d81b81331b0edbe080de06fd93a7a454f0",
+      "rule": "Performance signatures are conditional hypotheses and must stop without diagnosis when observations do not separate truthfully from declared confounders."
+    },
+    {
+      "path": "plans/expansion/X6_R0_4_F1_RUNTIME_PARAMETER_FREEZE_V1.json",
+      "sha256": "1b33e0cd8b255311c0c6c7d6ce8a9d2cc2faf484b6912c867fa15d721159a898",
+      "rule": "The exact historical F1 mutation, window schedule, location, and R_X6_PERFORMANCE_001 comparator remain frozen."
+    },
+    {
+      "path": "plans/expansion/X6_PROSPECTIVE_SUCCESSOR_PARAMETER_THRESHOLD_FREEZE_V1.json",
+      "sha256": "635d62272c593a6ddf6de490a96e664aa94ce3ec2ea4bba5e44a4396cfb18402",
+      "rule": "The baseline manifest is immutable and may not be rebuilt or retuned from later observations."
+    },
+    {
+      "path": "plans/expansion/X6_R1_5_FUTURE_F1_SUCCESSOR_SOURCE_ONLY_V1.json",
+      "sha256": "58a5caf1e66b609ff5de66e352a85898ac86022ee7f10a2d998fd07170a173ab",
+      "rule": "Fault effectiveness, diagnosis, restoration, cleanup, independent verification, and scientific acceptance are separate outcomes."
+    },
+    {
+      "path": "plans/expansion/X6_R1_5_1_POSTMORTEM_CORRECTION_SOURCE_ONLY_V1.json",
+      "sha256": "74009c411d0d2dd60cdaa397f79468865e092f198bf9c04639e0db0b0a5f6628",
+      "rule": "Completed fault evidence is independently reconstructed; diagnostic abstention remains unsuccessful while safe restoration proceeds."
+    }
+  ],
+  "immutable_historical_inputs": {
+    "methodology_proposal": {
+      "path": "plans/expansion/X6_PROSPECTIVE_F1_DIAGNOSTIC_METHODOLOGY_REVIEW_PROPOSAL_V1.json",
+      "sha256": "d42eba9bfda59f83f32d991a1f3f7bdc5df328debcc2ca992e72e6954f5a4104"
+    },
+    "methodology_handoff": {
+      "path": "docs/HANDOFF_X6_PROSPECTIVE_F1_DIAGNOSTIC_METHODOLOGY_REVIEW.md",
+      "sha256": "703fa77403f499df19372f7c2f720a96ea09f31997f87e60cb489293dcaf6daa"
+    },
+    "threshold_freeze": {
+      "path": "plans/expansion/X6_PROSPECTIVE_SUCCESSOR_PARAMETER_THRESHOLD_FREEZE_V1.json",
+      "sha256": "635d62272c593a6ddf6de490a96e664aa94ce3ec2ea4bba5e44a4396cfb18402",
+      "embedded_manifest_sha256": "0db20fccbb22f7bcde7bc5d7be0d3fd8923e32d663d59297c178dd300ce7c301"
+    },
+    "postmortem": {
+      "root": "/home/mesud/x6-r1-5-f1-20260924-a01-postmortem-v1",
+      "postmortem_sha256": "57eb7040673a60082c3f74bddde3033d3effd18fb7a1b3c0c1024b772c9c3ec9",
+      "reconstruction_sha256": "43bcf18f07e9859d05bd45b9437b19ccfe8608fe4b1d3a995c686ce64d7d2103",
+      "input_inventory_sha256": "d2001be1a67bed0793646faa143ae6cbbd2658bc5b49a125efdbe38605ed9967",
+      "evidence_manifest_sha256": "46d153fe8b599baeda4a822ac2fcba9e98792aa62ea6cac4a3bbb9f550ad5b0e",
+      "handoff_sha256": "b9abdc315e464e02b77f5c79b229897793e009b0e74d3c3e4ba2b38e131d4bcf",
+      "role": "DISCLOSED_MOTIVATING_HISTORICAL_EVIDENCE_ONLY_NOT_DEVELOPMENT_OR_EVALUATION_DATA"
+    }
+  },
+  "recommended_scope": {
+    "choice": "EXPLORATORY_BINARY_F1_DETECTION_IN_ONE_EXACT_CONTEXT",
+    "status": "PROPOSED_UNACCEPTED",
+    "fault_cardinality": "SINGLE_FAULT_ONLY",
+    "location_scope": "R2_ETH2_ONLY",
+    "topology_scope": "X6_TOP_01_CONTROLLED_PERFORMANCE_PATH_ONLY",
+    "why_binary": "It directly tests the only implemented X6 performance fault and permits a bounded rule/ML/hybrid comparison without pretending that F2-F4 have accepted runtime contracts or evidence.",
+    "claim_limit": "Sensitivity is limited to this exact F1 configuration and specificity is limited to the matched no-fault control. No multiclass, alternate-location, alternate-strength, cross-topology, or population-generalization claim is permitted.",
+    "multiclass_alternative": "DEFERRED; no-fault/F1-F4 would better test differential diagnosis but is infeasible until F2-F4 contracts, controls, source implementations, authorizations, and independent evidence are separately accepted.",
+    "assigned_positive_class": "Precommitted F1 assignment: apply the exact authorized 10 percent zero-correlation random packet-loss intervention at r2:eth2 under the accepted context. Assignment is fixed before execution and is the primary label whether the mutation is effective, ineffective, ambiguous, interrupted, or not run.",
+    "assigned_negative_class": "Precommitted N0 assignment: execute the matched no-fault lifecycle under the same context and exact noqueue and empty-filter controls. Assignment is fixed before execution and is the primary label whether the attempt completes or not.",
+    "effectiveness_role": "Independently reconstructed physical effectiveness is a post-assignment outcome and a secondary conditional-analysis qualifier. It never changes F1 assignment, creates a replacement slot, or selects primary evaluation examples.",
+    "prediction_role": "A method predicts F1_PRESENT, F1_ABSENT, ABSTAIN, or UNAVAILABLE_EVIDENCE without receiving assignment, effectiveness, phase, qdisc hierarchy, or eligibility metadata."
+  },
+  "matched_lifecycle": {
+    "status": "PROPOSED_UNACCEPTED",
+    "attempt_shape": "Each class uses one fresh deployment with ten pre-target validation windows, three target windows, cooldown, three post-target restoration/control windows, owned cleanup, terminalization, and independent replay.",
+    "positive_target_phase": "Exact accepted F1 NetEm 10 percent zero-correlation root qdisc and child pfifo at r2:eth2.",
+    "negative_target_phase": "No mutation; exact noqueue and empty filters remain in force while the same three target windows execute.",
+    "rationale": "A matched target-window schedule avoids comparing the F1 lifecycle with the different 30-window baseline-qualification lifecycle.",
+    "threshold_role": "The immutable manifest is available only to the historical rule arm and to context validation. It is never rebuilt, retuned, used as an ML label, or selected from campaign outcomes.",
+    "primary_label": "PRECOMMITTED_ASSIGNMENT_N0_OR_F1",
+    "post_assignment_effectiveness": "SEPARATE_INDEPENDENT_OUTCOME",
+    "blocked_slot": "A scheduled member that cannot start is recorded NOT_RUN_OPERATIONAL_FAILURE under its precommitted assignment and remains in every primary full-denominator report."
+  },
+  "predictor_contract": {
+    "status": "PROPOSED_UNACCEPTED",
+    "unit": "ONE_ATTEMPT_LEVEL_TARGET_PHASE_AGGREGATE_FROM_EXACTLY_THREE_TARGET_WINDOWS",
+    "allowlist_in_order": [
+      "packet_loss_ratio",
+      "round_trip_latency_ms_p95",
+      "throughput_mbps",
+      "interface_utilization_ratio"
+    ],
+    "aggregation": {
+      "packet_loss_ratio": "Arithmetic mean of the three six-place-normalized window values, then normalize once to six places with Decimal ROUND_HALF_EVEN.",
+      "round_trip_latency_ms_p95": "Nearest-rank p95 over all individual retained successful ICMP replies pooled from the three target windows, then normalize once to six places; lost probes remain represented only in packet_loss_ratio.",
+      "throughput_mbps": "Median of the three six-place-normalized window values, then normalize once to six places.",
+      "interface_utilization_ratio": "Median of the three six-place-normalized window values, then normalize once to six places."
+    },
+    "finite_numeric_requirement": "All numeric predictor inputs and aggregates must be finite; no imputation is permitted.",
+    "permitted_elapsed_time": "Bound raw monotonic durations may derive interface_utilization_ratio under the accepted interval semantics but are not themselves predictors and cannot encode time, order, identity, or partition.",
+    "prohibited_predictor_or_selector_fields": [
+      "run_id",
+      "attempt_id",
+      "window_id",
+      "experiment_id",
+      "authorization_id_or_hash",
+      "path_or_artifact_name",
+      "wall_clock_or_collection_timestamp",
+      "partition_or_split_metadata",
+      "collection_order",
+      "mutation_command_or_injection_state",
+      "ground_truth_label",
+      "fault_location_label",
+      "fault_effectiveness_classification",
+      "threshold_metadata_or_rule_predicates",
+      "phase_name_or_phase_index",
+      "qdisc_kind_handle_parent_or_hierarchy",
+      "queue_or_rate_control_derivation",
+      "eligibility_status_or_reason"
+    ],
+    "explanatory_only": [
+      "per-window predictor values",
+      "individual ICMP reply distribution",
+      "iperf3 sender retransmit count",
+      "TCP-native statistics not in the six-feature contract",
+      "pre-target and post-target feature trajectories",
+      "restoration observations",
+      "queue and rate-limit control values and their raw qdisc/filter observations",
+      "qdisc counter trajectories"
+    ],
+    "provenance_only": [
+      "source commit and tree",
+      "topology and image identities",
+      "kernel, boot, module, tool, command, and raw-artifact identities",
+      "authorization and consumption records",
+      "paths, hashes, timestamps, grouping, and partition records"
+    ],
+    "effectiveness_only": [
+      "authorized mutation configuration",
+      "owned NetEm identity and counter deltas",
+      "accepted 6-to-25 lost-probe effectiveness result",
+      "physical-effectiveness classification"
+    ],
+    "ground_truth_only": [
+      "preassigned N0 or F1 class",
+      "authorized fault location",
+      "campaign block and stage",
+      "expected mutation state"
+    ],
+    "common_eligibility_controls": {
+      "evaluated_before_any_method": "Independent raw reconstruction must establish queue_drop_count observed as integer zero and rate_limit_detected observed as false, plus intact source/context/evidence bindings.",
+      "failure": "Missing, nonzero, true, contradictory, or tampered control evidence makes the slot CONTROL_INELIGIBLE. No comparison method is invoked; the slot remains a full-denominator non-success under its assigned label.",
+      "historical_rule": "R_X6_PERFORMANCE_001 remains byte-for-byte and semantically unchanged with all six predicates. Its native audit result may be preserved, but the common comparison gate is applied before counting any method prediction.",
+      "not_predictors": "queue_drop_count and rate_limit_detected are eligibility and exclusion controls only. Their values, availability, derivation category, qdisc kind, handle, hierarchy, phase, and gate result are forbidden ML inputs and forbidden hybrid-routing inputs.",
+      "reason": "N0 derives queue zero structurally from noqueue while F1 derives it from the owned child pfifo counter; both queue and rate checks validate phase-specific experimental controls and are not class-neutral learned predictors in this binary study."
+    }
+  },
+  "control_design": {
+    "status": "PROPOSED_UNACCEPTED",
+    "evaluated_classes": [
+      "N0_MATCHED_NO_FAULT",
+      "F1_EFFECTIVE_PACKET_LOSS_AT_R2_ETH2"
+    ],
+    "required_no_fault_controls": [
+      "Exact same topology, image, command catalog, destination, timing, and host provenance as the paired F1 attempt.",
+      "Exact noqueue 0: and empty-filter observations before, during, and after target windows.",
+      "No mutation command or mutation-derived predictor input.",
+      "Ten pre-target validation windows and three post-target windows using the same immutable manifest only as a validation context."
+    ],
+    "competing_faults": {
+      "F2_HIGH_LATENCY": "OUT_OF_SCOPE_NOT_AN_EVALUATED_NEGATIVE_CLASS",
+      "F3_CONGESTION": "OUT_OF_SCOPE_NOT_AN_EVALUATED_NEGATIVE_CLASS",
+      "F4_RATE_LIMITING": "OUT_OF_SCOPE_NOT_AN_EVALUATED_NEGATIVE_CLASS",
+      "mixed_faults": "PROHIBITED",
+      "alternate_locations_or_strengths": "OUT_OF_SCOPE"
+    },
+    "consequence": "The study may estimate discrimination from matched no-fault only. It cannot establish specificity against other faults, and any out-of-scope condition encountered makes that attempt operationally ineligible rather than a relabelled control.",
+    "future_extension": "Any F2-F4 or alternate-context challenge set requires its own accepted contracts and preregistered grouping, sample-size, and predictor-equivalence review."
+  },
+  "method_arms": {
+    "status": "PROPOSED_UNACCEPTED_STUDY_ARMS_NOT_ACCEPTED_CLASSIFIERS",
+    "common_gate": "Run the common evidence-integrity, queue-zero, and rate-limit-false eligibility gate before every method. Gate metadata is never passed to ML or hybrid routing. A failed gate yields no method invocation and is a full-denominator non-success.",
+    "common_output_space": [
+      "F1_PRESENT",
+      "F1_ABSENT",
+      "ABSTAIN",
+      "UNAVAILABLE_EVIDENCE"
+    ],
+    "rule_based": {
+      "method": "R_X6_PERFORMANCE_001_UNCHANGED",
+      "mapping": "diagnosed maps to F1_PRESENT; insufficient_evidence maps to UNAVAILABLE_EVIDENCE; historical abstained remains ABSTAIN and is never rewritten as F1_ABSENT.",
+      "thresholds": "Exact immutable accepted manifest; all six historical predicates remain unchanged."
+    },
+    "machine_learning": {
+      "method": "L2_REGULARIZED_BINARY_LOGISTIC_REGRESSION",
+      "feature_order": [
+        "packet_loss_ratio",
+        "round_trip_latency_ms_p95",
+        "throughput_mbps",
+        "interface_utilization_ratio"
+      ],
+      "labels": {
+        "N0": 0,
+        "F1": 1,
+        "basis": "PRECOMMITTED_ASSIGNMENT"
+      },
+      "fit_rows": "Every development slot that passed the common gate and has all four finite predictors is included under its assigned label regardless of independently assessed F1 effectiveness. No imputation, effectiveness selection, or result-conditioned replacement.",
+      "numeric_conversion": "Require canonical six-place finite Decimal input, convert each canonical decimal string directly to numpy.float64, reject non-finite conversion, and retain the canonical Decimal string beside the model matrix for audit.",
+      "scaling": "For each predictor over fit rows, StandardScaler semantics with population mean mu=sum(x)/n and population variance=sum((x-mu)^2)/n (ddof=0). scale=sqrt(variance); when variance is exactly zero use scale=1.0. Transform z=(x-mu)/scale. Fit mu and scale on development fit rows only.",
+      "estimator": {
+        "library": "scikit-learn",
+        "version": "1.7.2",
+        "class": "sklearn.linear_model.LogisticRegression",
+        "penalty": "l2",
+        "solver": "liblinear",
+        "C": 1.0,
+        "dual": false,
+        "fit_intercept": true,
+        "intercept_scaling": 1.0,
+        "class_weight": null,
+        "sample_weight": "ALL_ROWS_WEIGHT_1",
+        "tol": 1e-10,
+        "max_iter": 1000,
+        "random_state": 20260925,
+        "warm_start": false,
+        "n_jobs": null,
+        "multi_class": "BINARY_ONLY",
+        "verbose": 0,
+        "l1_ratio": null,
+        "multi_class_argument": "OMITTED_USE_SCIKIT_LEARN_1_7_2_DEFAULT_DEPRECATED_FOR_BINARY",
+        "constructor_rule": "Pass exactly penalty, dual, tol, C, fit_intercept, intercept_scaling, class_weight, random_state, solver, max_iter, verbose, warm_start, n_jobs, and l1_ratio as recorded; omit multi_class."
+      },
+      "decision": "probability for assigned F1 from frozen classes_ ordering; F1_PRESENT when p>=0.500000, otherwise F1_ABSENT.",
+      "missing": "Any unavailable predictor yields UNAVAILABLE_EVIDENCE; no imputation and no partial model.",
+      "convergence_failure": "Any fit exception, ConvergenceWarning, n_iter_ >= max_iter, non-finite scaler/coefficient/intercept/probability, unexpected classes_, or serialization round-trip mismatch makes the ML and hybrid arms UNUSABLE_MODEL and stops before evaluation collection or access.",
+      "dependencies": {
+        "python": "3.12.3",
+        "numpy": "2.5.1",
+        "joblib": "1.5.3"
+      },
+      "serialization": "Canonical JSON with schema and method IDs, exact dependency/platform identity, feature order, development inventory hash, scaler n/mean/variance/scale, classes, coefficient and intercept values serialized with Python float.hex(), all estimator parameters, convergence record, source identity, and SHA-256. Reload from float.fromhex() and require byte-identical predictions/probabilities on the development matrix before freeze; joblib/pickle is not the authority."
+    },
+    "hybrid": {
+      "method": "HISTORICAL_RULE_FIRST_WITH_CONSERVATIVE_ML_FALLBACK",
+      "decision_table": [
+        "After the common gate, if the historical rule returns F1_PRESENT, return F1_PRESENT.",
+        "If any of the four ML predictors is unavailable or the frozen ML model is unusable, return UNAVAILABLE_EVIDENCE.",
+        "Otherwise return F1_PRESENT when frozen ML probability is at least 0.800000, F1_ABSENT when it is at most 0.200000, and ABSTAIN when 0.200000 < p < 0.800000."
+      ],
+      "prohibitions": "No queue/rate value, phase, qdisc identity/hierarchy, eligibility reason, assignment, effectiveness, or metadata may route the hybrid.",
+      "limits": "The inclusive 0.20/0.80 limits are fixed exploratory choices, not calibrated or validated. Freeze the exact decision table, model hash, thresholds, implementation source identity, and test vectors before evaluation collection or access."
+    },
+    "freeze_boundary": "Fit all preprocessing and coefficients only after development closes. Freeze canonical model, rule binding, hybrid policy, implementations, dependency identities, test vectors, reporting code, and hashes before any evaluation collection or access.",
+    "fairness": "Every invoked method receives the same four reconstructed predictors. The unchanged rule additionally evaluates its pre-existing queue/rate predicates, but the common gate requires those controls for every arm and keeps their values and derivations out of ML and hybrid routing. All methods use the same scheduled evaluation slots."
+  },
+  "partition_and_independence": {
+    "status": "PROPOSED_UNACCEPTED",
+    "scheduled_inventory": {
+      "schema_version": 1,
+      "proposal_id": "X6_PROSPECTIVE_F1_SUCCESSOR_STUDY_DESIGN_PROPOSAL_V1",
+      "published_boundary": "babde86fd863d105b30262d205ced09995251515",
+      "ordering_algorithm": "SHA256_RANK_BALANCED_V1",
+      "ordering_seed_hex": "83409b280b276b776ea8e0c09d4a3e76f40ae8038493e51e78cef3b0eeb7d0aa",
+      "blocks": [
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B01",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B02",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B03",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B04",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B05",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B06",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B07",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B08",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B09",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B10",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B11",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B12",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B13",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B14",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B15",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B16",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B17",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B18",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B19",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B20",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B21",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B22",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B23",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B24",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B25",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B26",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B27",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B28",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B29",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "DEVELOPMENT",
+          "block_id": "DEV_B30",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "EVALUATION",
+          "block_id": "EVAL_B01",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "EVALUATION",
+          "block_id": "EVAL_B02",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "EVALUATION",
+          "block_id": "EVAL_B03",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "EVALUATION",
+          "block_id": "EVAL_B04",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "EVALUATION",
+          "block_id": "EVAL_B05",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "EVALUATION",
+          "block_id": "EVAL_B06",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "EVALUATION",
+          "block_id": "EVAL_B07",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "EVALUATION",
+          "block_id": "EVAL_B08",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "EVALUATION",
+          "block_id": "EVAL_B09",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "EVALUATION",
+          "block_id": "EVAL_B10",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "EVALUATION",
+          "block_id": "EVAL_B11",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "EVALUATION",
+          "block_id": "EVAL_B12",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "EVALUATION",
+          "block_id": "EVAL_B13",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "EVALUATION",
+          "block_id": "EVAL_B14",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "EVALUATION",
+          "block_id": "EVAL_B15",
+          "within_block_order": [
+            "F1",
+            "N0"
+          ]
+        },
+        {
+          "stage": "EVALUATION",
+          "block_id": "EVAL_B16",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "EVALUATION",
+          "block_id": "EVAL_B17",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "EVALUATION",
+          "block_id": "EVAL_B18",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "EVALUATION",
+          "block_id": "EVAL_B19",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        },
+        {
+          "stage": "EVALUATION",
+          "block_id": "EVAL_B20",
+          "within_block_order": [
+            "N0",
+            "F1"
+          ]
+        }
+      ]
+    },
+    "scheduled_inventory_canonicalization": "UTF-8 JSON, sort_keys=true, separators comma/colon, ensure_ascii=false, one trailing LF",
+    "scheduled_inventory_sha256": "c1ff4d276705936111b12c918cad7a387d44369859b828ca13c7e28a5dba2c2c",
+    "scheduled_inventory_length": 4199,
+    "ordering_algorithm": "For each stage enumerate fixed block IDs. Compute SHA-256(seed_bytes || 0x00 || stage ASCII || 0x00 || block_id ASCII), sort ascending by digest then block_id, and assign the first half N0-first and the second half F1-first. This yields exactly 15/15 orders in development and 10/10 in evaluation.",
+    "precollection_freeze": "Before collection, materialize the exact scheduled_inventory canonical bytes, verify the recorded hash and length, bind them into the campaign contract, and forbid renaming, reordering, replacement, insertion, or deletion.",
+    "evaluation_unit": "ONE_PRECOMMITTED_ATTEMPT_SLOT_FOR_CLASS_SPECIFIC_POINT_METRICS; ONE_WHOLE_PAIRED_BLOCK_FOR_COMBINED_UNCERTAINTY_AND_METHOD_COMPARISONS",
+    "grouping_key": [
+      "campaign_contract_sha256",
+      "stage_id",
+      "collection_epoch_id",
+      "paired_block_id"
+    ],
+    "grouping_rule": "Both assigned members, all windows and artifacts, and every correlated repetition remain in one partition. No window, artifact, variant, or replacement may cross development and evaluation.",
+    "carryover_controls": "Each member uses a fresh deployment. Independent cleanup/replay must establish no lifecycle-owned containers, processes, namespaces, qdisc/filter state, lock, or active run before the next member. Readiness and pre-target controls are re-established from raw observations.",
+    "blocked_member": "If cleanup or the required clean-state proof after the first member fails, do not start the second member. Record it NOT_RUN_OPERATIONAL_FAILURE under its preassigned class; do not replace or re-pair it.",
+    "collection_epoch_binding": "Each epoch durably binds source commit/tree, topology hash, image ID/digest, host identity, boot ID, kernel/module provenance, tool versions, command catalog, monotonic-clock boot context, and readiness observations.",
+    "environment_change": "A boot change closes the current epoch. If it occurs between pair members, the unstarted member is NOT_RUN_OPERATIONAL_FAILURE. Later scheduled blocks may enter a new epoch only after fresh readiness proves every non-boot binding unchanged. Any source, topology, image, kernel, module, tool, command, or contract drift stops the stage and marks all remaining scheduled slots NOT_RUN_ENVIRONMENT_DRIFT.",
+    "development": "Thirty whole paired blocks: 30 N0 plus 30 F1 assigned slots. The spent historical attempt is excluded.",
+    "evaluation": "Twenty new whole paired blocks: 20 N0 plus 20 F1 assigned slots, collected only after preprocessing, model, hybrid policy, implementation identity, reports, and criteria are frozen and evaluation access is authorized.",
+    "independence_assumption": "Blocks are treated as conditionally exchangeable only if their frozen context bindings match and no unresolved serial carryover is observed. Sharing one host/topology does not establish independence; temporal dependence, host drift, and common infrastructure can remain.",
+    "claim_limit": "Pairing controls local order and context and block resampling preserves within-pair dependence. It does not establish population independence or generalization beyond this host, topology, image, traffic, and intervention."
+  },
+  "sample_size_and_criteria": {
+    "status": "PROPOSED_UNACCEPTED_EXPLORATORY_VALUES",
+    "scheduled_attempts": 100,
+    "development_attempts": 60,
+    "evaluation_attempts": 40,
+    "class_balance": "50 N0 and 50 F1 overall; development 30 per class and evaluation 20 per class.",
+    "replacement_policy": "No replacement, top-up, re-pairing, identity reuse, or automatic expansion for any outcome. Every one of the 100 preassigned slots remains in final accounting.",
+    "rationale": [
+      "Thirty development examples per class permit only a small fixed regularized model and do not establish confirmatory model stability.",
+      "Twenty independent evaluation attempts per class are the smallest proposed bounded holdout that can expose gross method differences while remaining operationally feasible.",
+      "At 18 correct of 20, a two-sided 95 percent Clopper-Pearson interval is approximately 0.683017 to 0.987651; even this apparently high point estimate is too imprecise for a confirmatory generalization claim.",
+      "Modern prediction-model guidance requires assumptions about anticipated fit, calibration, predictor parameters, and target precision that are not established here; therefore the design is explicitly exploratory."
+    ],
+    "proposed_progression_criteria": {
+      "purpose": "Advance a method only to a separately reviewed confirmatory-design proposal; never scientific acceptance.",
+      "per_method_evaluation_F1_correct": "At least 18 of 20 scheduled F1 attempts.",
+      "per_method_evaluation_N0_correct": "At least 18 of 20 scheduled N0 attempts.",
+      "full_denominator_coverage": "At least 36 of 40 scheduled evaluation attempts produce F1_PRESENT or F1_ABSENT.",
+      "evidence_integrity": "Zero accepted predictions from tampered, contradictory, or unverified evidence.",
+      "historical_rule": "Reported regardless of whether it meets the progression criteria; failure is not grounds to alter its predicates or thresholds."
+    },
+    "uncertainty_reporting": [
+      "Primary block-aware procedure: paired-block nonparametric percentile bootstrap over the 20 evaluation block IDs using numpy 2.5.1 Generator(PCG64(3705850974925186758)), exactly 10000 replicates, each drawing 20 block indices with replacement. Each selected block contributes both original scheduled slots with their original assignments, method outputs, NOT_RUN/failure statuses, and effectiveness/restoration outcomes.",
+      "For each replicate recompute full-denominator metrics and paired method differences using the same sampled block indices for every method. Report the 0.025 and 0.975 numpy.quantile values with method=linear plus the point estimate. No p-value or superiority claim.",
+      "Incomplete blocks are resampled unchanged; their blocked or failed member remains a non-success. No complete-case deletion.",
+      "For a conditional metric, replicates with a zero conditional denominator are NOT_ESTIMABLE and omitted only from that interval; report their count. Suppress the interval if fewer than 9500 of 10000 replicates are estimable.",
+      "Supplemental class-specific assignment sensitivity and specificity may use two-sided 95 percent Clopper-Pearson intervals over one assigned slot per block. This assumes the 20 blocks are mutually independent and identically distributed conditional on frozen context. Shared-host serial effects can violate that assumption, so the interval is descriptive and the limitation must accompany it.",
+      "Do not treat all 40 slots as independent. The paired block is the uncertainty and combined-comparison unit."
+    ],
+    "confirmatory_blocker": "A confirmatory sample size cannot be fixed until the target effect or minimum acceptable sensitivity and specificity, anticipated model fit and calibration, permissible predictor parameters, multiplicity policy, and desired interval precision are accepted.",
+    "development_sufficiency": {
+      "minimum": "At least 24 common-gate-passing, four-predictor-complete slots in each assigned class and at least 48 total fit rows.",
+      "reason": "A bounded exploratory floor for a fixed four-input regularized model; it is not a confirmatory sample-size justification.",
+      "failure": "If unmet, record INCONCLUSIVE_INSUFFICIENT_DEVELOPMENT_DATA, do not fit or select a model, do not collect or access evaluation, and mark all 40 evaluation slots NOT_RUN_DEVELOPMENT_INCONCLUSIVE. No top-up."
+    },
+    "unusable_model": "Any convergence, finiteness, class inventory, serialization, or round-trip failure defined in method_arms makes the ML and hybrid arms UNUSABLE_MODEL. Stop before evaluation collection/access and mark all 40 evaluation slots NOT_RUN_UNUSABLE_MODEL; no alternate solver, parameter, model search, or top-up.",
+    "evaluation_completeness": {
+      "sufficient_for_planned_exploratory_interpretation": "At least 18 of 20 evaluation blocks have both scheduled members reach independently verified target observations, and at least 18 slots per assigned class pass the common gate.",
+      "failure": "Otherwise report INCONCLUSIVE_INCOMPLETE_EVALUATION. Still report all fixed full-denominator outcomes and failure reasons; do not replace or expand."
+    },
+    "campaign_terminal_states": [
+      "EXPLORATORY_COMPLETE",
+      "INCONCLUSIVE_INSUFFICIENT_DEVELOPMENT_DATA",
+      "INCONCLUSIVE_UNUSABLE_MODEL",
+      "INCONCLUSIVE_INCOMPLETE_EVALUATION",
+      "INCONCLUSIVE_ENVIRONMENT_DRIFT",
+      "INCONCLUSIVE_INTEGRITY_FAILURE"
+    ],
+    "fixed_scope": "Exactly 100 scheduled slots. An inconclusive result is a valid terminal outcome and does not authorize another attempt or campaign.",
+    "block_bootstrap": {
+      "replicates": 10000,
+      "library": "numpy",
+      "version": "2.5.1",
+      "rng": "numpy.random.Generator",
+      "bit_generator": "PCG64",
+      "seed_hex": "336dd3d3c6f366c62f0beab1b65eca5d1c50014ed7ddc91de8c62566843023a1",
+      "seed_uint64": 3705850974925186758,
+      "draw": "For each replicate draw 20 integers uniformly with replacement from [0,20); each index selects one entire ordered evaluation block and both scheduled member records.",
+      "quantiles": [
+        0.025,
+        0.975
+      ],
+      "quantile_method": "linear",
+      "method_comparison": "Use the identical sampled index vector for every method and compute within-replicate paired metric differences.",
+      "incomplete_blocks": "Retain unchanged; blocked or failed members contribute non-successes.",
+      "conditional_zero_denominator": "Mark replicate NOT_ESTIMABLE, report count, and suppress interval if fewer than 9500 replicates are estimable."
+    }
+  },
+  "denominators": {
+    "assigned_slots": "Development: 30 N0 and 30 F1. Evaluation: 20 N0 and 20 F1. Assignment never changes after effectiveness, failure, interruption, or non-execution.",
+    "correct_indicator": "For method m and slot i, correct=1 only for assigned F1 with output F1_PRESENT or assigned N0 with output F1_ABSENT; otherwise 0. ABSTAIN is not F1_ABSENT. UNAVAILABLE, CONTROL_INELIGIBLE, operational failure, interruption, NOT_RUN, wrong output, and contradictory evidence all have correct=0.",
+    "assignment_accuracy": "sum(correct_m_i over all 40 scheduled evaluation slots)/40.",
+    "assignment_sensitivity": "number of the 20 assigned-F1 slots outputting F1_PRESENT / 20.",
+    "assignment_specificity": "number of the 20 assigned-N0 slots outputting F1_ABSENT / 20.",
+    "balanced_accuracy": "(assignment_sensitivity + assignment_specificity)/2.",
+    "decisive_coverage": "number of all 40 scheduled evaluation slots outputting F1_PRESENT or F1_ABSENT / 40. ABSTAIN is a completed non-decision, not a negative prediction; UNAVAILABLE and non-executed slots have no prediction.",
+    "abstention_rate": "number outputting ABSTAIN / 40, also reported separately within each assigned class.",
+    "unavailable_rate": "number outputting UNAVAILABLE_EVIDENCE or blocked by common control/evidence gate / 40, also reported separately by reason and assigned class.",
+    "effectiveness_rate": "assigned-F1 slots with independently verified effective mutation / 20. Ineffective, ambiguous, interrupted, and NOT_RUN remain in the denominator.",
+    "secondary_effectiveness_qualified_sensitivity": "Among assigned-F1 slots with independently verified effective mutation, number outputting F1_PRESENT divided by all such effective slots. ABSTAIN, UNAVAILABLE, control failure, and wrong output remain denominator non-successes. If denominator is zero, report NOT_ESTIMABLE.",
+    "secondary_clean_control_specificity": "Among assigned-N0 slots with independently verified clean no-fault controls, number outputting F1_ABSENT divided by all such clean slots. ABSTAIN, UNAVAILABLE, and wrong output remain denominator non-successes. If denominator is zero, report NOT_ESTIMABLE.",
+    "end_to_end_success": "For each slot, success=1 only when assignment prediction is correct AND the assigned intervention/control is independently valid (effective F1 or clean N0) AND required lifecycle terminalization, owned cleanup, independent replay, and phase-appropriate restoration/post-target verification pass. End-to-end success rate=sum(success_i)/40. Correct prediction alone never overrides ineffective, ambiguous, failed, interrupted, NOT_RUN, cleanup, replay, or restoration failure.",
+    "restoration": "For assigned F1 slots that entered mutation, report restoration-confirmed / all that entered mutation, with failed, interrupted, unavailable, and not reached listed separately. Also retain every assigned F1 slot in the overall end-to-end denominator.",
+    "operational_yield": "slots with independently verified target observations / all scheduled slots for that stage; NOT_RUN and operational failures remain denominator failures.",
+    "scientific_acceptance": "Not an outcome of this exploratory design."
+  },
+  "campaign_contract_requirement": {
+    "required": true,
+    "reason": "Existing authorization is spent and attempt-specific, the historical authorization vector keeps dataset and ml_hybrid false, and neither the R1.4.1 baseline lifecycle nor R1.5.1 F1 lifecycle authorizes a repeated balanced paired campaign or dataset/model production.",
+    "must_freeze_before_collection": [
+      "Exact N0 and F1 lifecycle and command catalogs",
+      "Source, topology, image, kernel/tool provenance and ownership controls",
+      "The 100-attempt stage and block inventory, randomized within-block order seed, and no-replacement rule",
+      "Ground-truth, effectiveness, predictor, provenance, evidence, dataset-row, partition, and report schemas",
+      "Exact predictor reconstruction and six-place Decimal semantics",
+      "Development/evaluation access controls and immutable inventories",
+      "Model and hybrid algorithms, proposed constants, software versions, and deterministic seeds",
+      "Outcome denominators, progression criteria, uncertainty calculations, and claim limits",
+      "Per-attempt authorization, consumption, recovery, cleanup, terminalization, and independent replay",
+      "The exact embedded 50-block inventory, canonical hash, balanced order algorithm and seed",
+      "The exact four-predictor boundary and common queue/rate eligibility gate",
+      "The exact model dependencies, scaling, estimator, serialization and block-bootstrap algorithm/seeds"
+    ],
+    "authorization_boundary": "The planned count is a study-design inventory, not runtime authority. Design acceptance would authorize only later source-only campaign-contract preparation. Every real slot and any dataset/model operation require separate explicit reviewed authority."
+  },
+  "resource_budget": {
+    "status": "ESTIMATE_NOT_MEASURED_CAMPAIGN_FACT",
+    "active_measurement_per_attempt_seconds": 320,
+    "basis": "Sixteen accepted 20-second windows per matched attempt shape.",
+    "estimated_wall_clock_per_attempt": "8 to 12 minutes including readiness, warmup, separations, cooldown, deployment, verification, cleanup, and replay.",
+    "estimated_serial_wall_clock_for_100_attempts": "Approximately 13.3 to 20 hours, excluding operator review, authorization preparation, failures, host rest periods, and development/freeze work between stages.",
+    "measured_historical_reference": {
+      "failed_attempt_tree_bytes": 1246777,
+      "postmortem_tree_bytes": 148144,
+      "scope": "One incomplete historical F1 attempt and its external postmortem; not a forecast of a complete campaign attempt."
+    },
+    "estimated_storage_per_complete_attempt": "2 to 3 MiB after allowing for R01-R03, assessment, replay, inventories, and logs.",
+    "estimated_campaign_storage": "200 to 300 MiB for 100 attempts; reserve at least 500 MiB for immutable plans, duplicated verification manifests, model/report artifacts, and failed-attempt evidence.",
+    "compute": "One local host, sequential attempts, no concurrent topology lifecycles; model fitting is negligible compared with runtime collection.",
+    "feasibility_conclusion": "The bounded exploratory campaign appears locally feasible by time and storage estimates. It is not a defensible confirmatory comparison because the evaluation intervals remain wide and the model-development assumptions needed for formal sizing are unknown.",
+    "measured_runtime_reference": "The failed 13-window R1.5 attempt spans 461.857354277 seconds from reservation start through recorded recovery cleanup; it is incomplete and not a complete-attempt benchmark.",
+    "measured_complete_storage_reference": "The completed 30-window R1.4.1 baseline tree is 2284429 bytes and its external qualification assessment is 268443 bytes.",
+    "stopping": "If development, model freeze, environment, or evaluation sufficiency fails, preserve all acquired evidence, classify the fixed campaign inconclusive, mark every unstarted scheduled slot with its reason, and stop without replacement, top-up, automatic expansion, or inferred runtime authority."
+  },
+  "minimum_future_implementation": {
+    "status": "NOT_AUTHORIZED",
+    "changes": [
+      "A versioned campaign contract and validator for the matched N0/F1 attempt inventory, pairing, randomization, partitions, and access boundary.",
+      "A production N0 lifecycle matching R1.5.1 timing and evidence semantics without mutation, plus a campaign coordinator that invokes one independently authorized attempt at a time.",
+      "A strict attempt-level evidence and dataset-row builder exporting only the six allowlisted aggregates while retaining all excluded fields in separate provenance/effectiveness/ground-truth sections.",
+      "Independent materialized reconstruction for both classes, exact manifest binding, lifecycle terminalization, cleanup, recovery, and replay.",
+      "Deterministic development-only logistic-regression training and frozen model serialization.",
+      "A deterministic hybrid decision-table implementation with explicit abstention and unavailable-evidence handling.",
+      "A single evaluation coordinator that feeds identical frozen evaluation examples to all three arms and emits full-denominator, conditional, restoration, and uncertainty reports.",
+      "Adversarial source-only coverage for leakage, partition crossing, grouping drift, label/effectiveness injection, unavailable evidence, non-finite values, artifact tampering, unauthorized retries, and evaluation access before freeze."
+    ]
+  },
+  "alternatives_considered": [
+    {
+      "option": "NO_FAULT_PLUS_F1_F2_F3_F4_MULTICLASS",
+      "decision": "DEFER",
+      "reason": "Scientifically broader but requires three unimplemented fault contracts and a much larger balanced campaign; it would exceed the narrow evidence base and current authority."
+    },
+    {
+      "option": "WINDOW_LEVEL_ROWS",
+      "decision": "REJECT",
+      "reason": "Correlated windows from one lifecycle are not independent examples and would create pseudoreplication and partition leakage."
+    },
+    {
+      "option": "RETUNE_THE_SIX_HISTORICAL_PREDICATES",
+      "decision": "REJECT",
+      "reason": "That would use the spent attempt post hoc and erase the value of the preregistered historical comparator."
+    },
+    {
+      "option": "USE_THE_SPENT_ATTEMPT_IN_DEVELOPMENT_OR_EVALUATION",
+      "decision": "REJECT",
+      "reason": "Its result motivated this design and is therefore neither untouched evaluation evidence nor an independent basis for selecting a successor."
+    },
+    {
+      "option": "CLAIM_CONFIRMATORY_SUPERIORITY_FROM_20_EVALUATION_ATTEMPTS_PER_CLASS",
+      "decision": "REJECT",
+      "reason": "The exact confidence intervals are too wide and formal model-development and comparison sizing assumptions are unresolved."
+    }
+  ],
+  "primary_statistical_sources": [
+    {
+      "title": "Buderer 1996, Statistical methodology: incorporating prevalence into sample size calculation for sensitivity and specificity",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8870764/",
+      "use": "Supports prespecifying anticipated sensitivity, specificity, prevalence or class balance, and desired precision when sizing a diagnostic-accuracy study."
+    },
+    {
+      "title": "Riley et al. 2020, Calculating the sample size required for developing a clinical prediction model",
+      "url": "https://www.bmj.com/content/368/bmj.m441",
+      "use": "Supports basing model-development size on predictor parameters, anticipated outcome proportion and model fit, shrinkage, optimism, and prediction precision rather than a simple universal events-per-variable rule."
+    },
+    {
+      "title": "NIST Technical Note 2119, Estimating Instrument Performance with Confidence Intervals and Confidence Bounds",
+      "url": "https://nvlpubs.nist.gov/nistpubs/TechnicalNotes/NIST.TN.2119.pdf",
+      "use": "Defines the two-sided Clopper-Pearson exact binomial interval used to disclose small-sample uncertainty."
+    }
+  ],
+  "genuine_blockers_before_implementation_or_collection": [
+    "Explicit acceptance, revision, or rejection of this exact revised binary design, fixed 100-slot inventory, four-predictor boundary, common controls, model/hybrid specification, block-aware analysis, and stopping rules.",
+    "A separately reviewed campaign contract because current records authorize no repeated collection, matched N0 lifecycle, dataset, ML fitting, hybrid evaluation, or runtime slot.",
+    "Source implementation and source-only verification of the campaign, evidence, leakage, partition, preprocessing, model, hybrid, reporting, recovery, and replay contracts.",
+    "Fresh per-slot readiness and explicit authorization; the planned 100 slots confer no runtime authority.",
+    "A later formal sample-size decision only if a confirmatory or superiority claim is desired; it is not required for the bounded exploratory study."
+  ],
+  "central_record_impact": {
+    "MASTER_CONTEXT": "UNCHANGED",
+    "DECISIONS": "UNCHANGED",
+    "STATUS": "UNCHANGED",
+    "reason": "This is an unaccepted review-only proposal; central records should change only after a separate accepted design decision."
+  },
+  "preservation_and_authorization": {
+    "historical_comparator": "UNCHANGED",
+    "frozen_thresholds": "UNCHANGED",
+    "spent_attempt": "UNCHANGED_FAILED_HISTORICAL_EVIDENCE",
+    "x5_authority": "UNCHANGED",
+    "consumed_pilot": "UNCHANGED_DIAGNOSTIC_NON_AUTHORITATIVE",
+    "historical_authorization": "0/10_FALSE",
+    "runtime_authorization": "ABSENT",
+    "implementation": "NOT_AUTHORIZED",
+    "dataset_model_metric": "NOT_AUTHORIZED",
+    "scientific_acceptance": false
+  },
+  "next_step": "SEPARATE_REVIEW_OF_THIS_EXACT_STUDY_DESIGN; IF_ACCEPTED_PREPARE_ONE_SOURCE_ONLY_CAMPAIGN_CONTRACT_BEFORE_ANY_IMPLEMENTATION_OR_COLLECTION",
+  "revision_basis": {
+    "superseded_unaccepted_proposal_sha256": "a0f54721ea55bf5188710d94065c4e0bb1880f2e43278ec39760ea4ed1ea885b",
+    "superseded_unaccepted_handoff_sha256": "22cc3d8ec307c3f8ece04ff974c9d0ef09d61c66fe3e43a82aaf51a49c4ffd5b",
+    "scope": "Focused assignment/effectiveness, paired-order, predictor-leakage, reproducibility, block-aware uncertainty, and stopping correction; accepted methodology artifacts remain unchanged."
+  }
+}

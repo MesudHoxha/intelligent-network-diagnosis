@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "decision_id": "X6_R1_5_2_NOT_RUN_ACCOUNTING_AUTHORITY_DECISION_V1",
+  "status": "ACCEPTED_FOR_SOURCE_ONLY_IMPLEMENTATION_NO_REAL_AUTHORITY",
+  "published_predecessor": "babde86fd863d105b30262d205ced09995251515",
+  "accepted_campaign_contract_sha256": "2e6ea92cb329088c981f03fdebb4a206def53eb8a19321458e531b9641e0e9a3",
+  "semantic_review_sha256": "5ef05eb2e803260076c805ab9565f56f4944ba7361a40713701a71fd5f0153f3",
+  "pre_extension_candidate_inventory_sha256": "6bbf1f044716e7b474649628c5a41783d72898d76c93038360a71e7e72c115fe",
+  "action": "record-not-run",
+  "record_kind": "X6_R1_5_2_NOT_RUN_ACCOUNTING_AUTHORIZATION_V1",
+  "permitted_outcomes": [
+    "NOT_RUN_OPERATIONAL_FAILURE",
+    "NOT_RUN_ENVIRONMENT_DRIFT",
+    "NOT_RUN_DEVELOPMENT_INCONCLUSIVE",
+    "NOT_RUN_UNUSABLE_MODEL"
+  ],
+  "authority": "One separately reviewed authorization may account only its exact bounded accepted-inventory slot list. It grants no lifecycle, deployment, cleanup, traffic, fitting, evaluation, reopening, replacement, or expansion authority.",
+  "commitment": "Exclusive durable reservation is followed by a post-fsync validity observation, ADMITTED and CONSUMED before any slot event. Partial reservation is permanently spent. The decision bundle is published after all target events.",
+  "prerequisites": {
+    "NOT_RUN_OPERATIONAL_FAILURE": "Independently verified preceding pair member or campaign operational/cleanup failure that prevents the target from starting; cleanup success is not required when cleanup failure is the blocker.",
+    "NOT_RUN_ENVIRONMENT_DRIFT": "Exact expected epoch and independently observed mismatching epoch evidence; accounting grants no authority to resume.",
+    "NOT_RUN_DEVELOPMENT_INCONCLUSIVE": "Independently closed development accounting with accepted progression criteria unsatisfied.",
+    "NOT_RUN_UNUSABLE_MODEL": "Durable consumed development-freeze action failed its fixed model/freeze requirements without publishing a usable freeze."
+  },
+  "target_rule": "Every target must be an exact accepted slot with an absent accounting directory and run root. Any reservation, consumption, runtime artifact, or terminal rejects the whole action.",
+  "artifact_rule": "NOT_RUN targets contain only precommitted identity, assignment, source/epoch/reason/evidence bindings, and the accounting event. Measurements, predictor rows, method outputs, and predictions are forbidden.",
+  "runtime_authority_created": false,
+  "historical_authorization": "0/10_FALSE"
+}

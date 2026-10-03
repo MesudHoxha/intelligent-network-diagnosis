@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "record_id": "X6_PROSPECTIVE_F1_DIAGNOSTIC_METHODOLOGY_REVIEW_ACCEPTANCE_V1",
+  "record_kind": "APPEND_ONLY_METHODOLOGICAL_PRINCIPLES_ACCEPTANCE",
+  "status": "METHODOLOGICAL_PRINCIPLES_ACCEPTED_DESIGN_NOT_ACCEPTED",
+  "decision_date": "2026-09-25",
+  "published_boundary": {
+    "commit": "babde86fd863d105b30262d205ced09995251515",
+    "direct_parent": "287809ecc74bc3962de67fb903058fc6db09e899"
+  },
+  "accepted_exact_artifacts": [
+    {
+      "path": "plans/expansion/X6_PROSPECTIVE_F1_DIAGNOSTIC_METHODOLOGY_REVIEW_PROPOSAL_V1.json",
+      "sha256": "d42eba9bfda59f83f32d991a1f3f7bdc5df328debcc2ca992e72e6954f5a4104",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/HANDOFF_X6_PROSPECTIVE_F1_DIAGNOSTIC_METHODOLOGY_REVIEW.md",
+      "sha256": "703fa77403f499df19372f7c2f720a96ea09f31997f87e60cb489293dcaf6daa",
+      "mode": "100644"
+    }
+  ],
+  "accepted_principles": [
+    "R_X6_PERFORMANCE_001 remains the historical strict conjunctive comparator with unknown sensitivity and specificity.",
+    "Correct execution of the historical comparator is distinct from diagnostic validity.",
+    "The spent R1.5 attempt remains a failed, motivating historical observation and is not untouched successor evaluation data.",
+    "TCP estimator and retransmission-timer behavior cannot be transferred to the successful-reply-only ICMP ping p95.",
+    "A prospective applicability limitation cannot redefine the historical task, exclude the spent attempt, alter its outcome, or convert abstention into success.",
+    "Predictors and hybrid selection logic exclude identifiers, paths, artifact names, wall-clock or collection timestamps, partition metadata, injection state, labels, and effectiveness classifications.",
+    "All windows and artifacts from an attempt remain in one partition, and correlated repetitions or variants remain grouped under a key frozen before collection.",
+    "Rule-based, Machine Learning, and hybrid comparison requires the same leakage-reviewed observation boundary and independently held-out experiment attempts."
+  ],
+  "explicit_non_acceptance": {
+    "successor_classifier": false,
+    "numerical_evaluation_criteria": false,
+    "sample_size": false,
+    "runtime_campaign": false,
+    "dataset_or_model_authority": false,
+    "runtime_authority": false,
+    "scientific_acceptance": false,
+    "historical_reclassification": false
+  },
+  "preserved": {
+    "reviewed_artifact_bytes": "UNCHANGED",
+    "historical_comparator": "R_X6_PERFORMANCE_001_UNCHANGED",
+    "frozen_thresholds": "UNCHANGED",
+    "spent_attempt": "F1_ATTEMPT_FAILED_QUALIFIED_FALSE_SCIENTIFIC_ACCEPTANCE_FALSE",
+    "x5_authority": "UNCHANGED",
+    "historical_authorization": "0/10_FALSE",
+    "protected_stashes": "UNCHANGED"
+  },
+  "next_step": "REVIEW_THE_SEPARATE_NON_EXECUTABLE_SUCCESSOR_STUDY_DESIGN_PROPOSAL; NO IMPLEMENTATION OR COLLECTION IS AUTHORIZED"
+}

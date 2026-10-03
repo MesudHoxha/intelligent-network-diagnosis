@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "record_id": "X6_PROSPECTIVE_F1_SUCCESSOR_STUDY_DESIGN_ACCEPTANCE_V1",
+  "record_kind": "APPEND_ONLY_EXPLORATORY_STUDY_DESIGN_ACCEPTANCE",
+  "status": "EXPLORATORY_DESIGN_ACCEPTED_CAMPAIGN_CONTRACT_NOT_ACCEPTED",
+  "decision_date": "2026-09-25",
+  "published_boundary": {
+    "commit": "babde86fd863d105b30262d205ced09995251515",
+    "direct_parent": "287809ecc74bc3962de67fb903058fc6db09e899"
+  },
+  "accepted_exact_artifacts": [
+    {
+      "path": "plans/expansion/X6_PROSPECTIVE_F1_SUCCESSOR_STUDY_DESIGN_PROPOSAL_V1.json",
+      "sha256": "3bce7a8264d059f1dbfb772eafbecc6e1782e7d74ecfe092c6d6eaa8c2ca7388",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/HANDOFF_X6_PROSPECTIVE_F1_SUCCESSOR_STUDY_DESIGN.md",
+      "sha256": "40fedd19de8a9d0ec0a8a2aa8c3725f0afabb4d80b15513bc9068df785e616ee",
+      "mode": "100644"
+    }
+  ],
+  "accepted_embedded_inventory": {
+    "block_count": 50,
+    "slot_count": 100,
+    "sha256": "c1ff4d276705936111b12c918cad7a387d44369859b828ca13c7e28a5dba2c2c",
+    "canonical_length": 4199,
+    "development_blocks": 30,
+    "evaluation_blocks": 20
+  },
+  "accepted_scope": {
+    "study_type": "EXPLORATORY_BINARY_MATCHED_NO_FAULT_VERSUS_EXACT_F1_PACKET_LOSS",
+    "assignment": "PRECOMMITTED_N0_OR_F1_PRIMARY_LABEL",
+    "fault": "TEN_PERCENT_ZERO_CORRELATION_RANDOM_LOSS_AT_R2_ETH2",
+    "predictors": [
+      "packet_loss_ratio",
+      "round_trip_latency_ms_p95",
+      "throughput_mbps",
+      "interface_utilization_ratio"
+    ],
+    "common_controls": [
+      "queue_drop_count_observed_zero",
+      "rate_limit_detected_observed_false"
+    ],
+    "methods": [
+      "UNCHANGED_R_X6_PERFORMANCE_001",
+      "FIXED_L2_LOGISTIC_REGRESSION_PROPOSAL",
+      "RULE_FIRST_FIXED_ML_FALLBACK_PROPOSAL"
+    ],
+    "analysis": "FULL_DENOMINATOR_ASSIGNMENT_BASED_WITH_PAIRED_BLOCK_UNCERTAINTY",
+    "claim_limit": "EXPLORATORY_EXACT_CONTEXT_ONLY"
+  },
+  "explicit_non_acceptance": {
+    "campaign_contract": false,
+    "source_implementation": false,
+    "classifier_validity": false,
+    "runtime_authority": false,
+    "authorization_issuance_or_consumption": false,
+    "dataset_or_model_creation": false,
+    "confirmatory_or_superiority_claim": false,
+    "scientific_acceptance": false
+  },
+  "preserved": {
+    "accepted_methodology_artifacts": "UNCHANGED",
+    "historical_comparator": "R_X6_PERFORMANCE_001_UNCHANGED",
+    "frozen_thresholds": "UNCHANGED",
+    "spent_attempt": "UNCHANGED_FAILED_HISTORICAL_EVIDENCE",
+    "x5_authority": "UNCHANGED",
+    "historical_authorization": "0/10_FALSE",
+    "protected_stashes": "UNCHANGED"
+  },
+  "next_step": "SEPARATE_REVIEW_OF_A_SOURCE_ONLY_CAMPAIGN_CONTRACT_PROPOSAL; NO IMPLEMENTATION_COLLECTION_OR_RUNTIME_AUTHORITY"
+}

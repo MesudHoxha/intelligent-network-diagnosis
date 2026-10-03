@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "record_id": "X6_PROSPECTIVE_F1_EXPLORATORY_CAMPAIGN_CONTRACT_ACCEPTANCE_V1",
+  "record_kind": "APPEND_ONLY_EXPLORATORY_CAMPAIGN_CONTRACT_ACCEPTANCE",
+  "status": "CAMPAIGN_CONTRACT_ACCEPTED_SOURCE_IMPLEMENTATION_AUTHORIZED_RUNTIME_NOT_AUTHORIZED",
+  "decision_date": "2026-09-28",
+  "published_predecessor": "babde86fd863d105b30262d205ced09995251515",
+  "accepted_exact_artifacts": [
+    {
+      "path": "plans/expansion/X6_PROSPECTIVE_F1_EXPLORATORY_CAMPAIGN_CONTRACT_PROPOSAL_V1.json",
+      "sha256": "2e6ea92cb329088c981f03fdebb4a206def53eb8a19321458e531b9641e0e9a3",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/HANDOFF_X6_PROSPECTIVE_F1_EXPLORATORY_CAMPAIGN_CONTRACT.md",
+      "sha256": "cd85277ec91d7002cd98ff2a1fcdc4296778461456414d8c45447390e8c7b383",
+      "mode": "100644"
+    }
+  ],
+  "scope": {
+    "source_only_implementation": true,
+    "source_only_verification": true,
+    "synthetic_model_fit_and_action_consumption_in_temporary_tests": true,
+    "real_campaign": false,
+    "production_authorization": false,
+    "runtime_readiness": false,
+    "real_slot_or_non_slot_action": false,
+    "classifier_validity": false,
+    "scientific_acceptance": false
+  },
+  "preserved": {
+    "accepted_methodology_and_design": "UNCHANGED",
+    "published_files": "UNCHANGED",
+    "frozen_thresholds": "UNCHANGED",
+    "historical_comparator": "UNCHANGED",
+    "spent_attempt": "UNCHANGED_FAILED_HISTORICAL_EVIDENCE",
+    "x5_authority": "UNCHANGED",
+    "historical_authorization": "0/10_FALSE",
+    "protected_stashes": "UNCHANGED"
+  }
+}

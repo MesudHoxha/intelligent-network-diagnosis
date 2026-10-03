@@ -1,0 +1,288 @@
+{
+  "schema_version": 1,
+  "record_id": "X6_PROSPECTIVE_F1_DIAGNOSTIC_METHODOLOGY_REVIEW_PROPOSAL_V1",
+  "record_kind": "APPEND_ONLY_REVIEW_ONLY_METHODOLOGY_PROPOSAL",
+  "status": "REVIEW_ONLY_NOT_ACCEPTED",
+  "revision_basis": {
+    "prior_unaccepted_proposal_sha256": "ef4db7d2c140525d6aa29caa451b9b4ac53df93843d50075fd7414c412a3265c",
+    "prior_unaccepted_handoff_sha256": "ba1c2914f61bb83340f04007b21a5c25b286ed305d56e71936b1548dff6c74b3",
+    "scope": "Focused revision of measurement-type, diagnostic-validity, applicability, leakage, evaluation-independence, and unresolved-study-design wording only."
+  },
+  "published_boundary": {
+    "commit": "babde86fd863d105b30262d205ced09995251515",
+    "direct_parent": "287809ecc74bc3962de67fb903058fc6db09e899"
+  },
+  "governing_basis": [
+    {
+      "path": "plans/expansion/X6_R0_1_MEASUREMENT_AND_TRAFFIC_METHOD_GATE_V1.json",
+      "sha256": "2092a1394863b0eb5e6165bbdfec76d81b81331b0edbe080de06fd93a7a454f0",
+      "rule": "F1-F4 predicate vectors are conditional hypotheses and must stop without diagnosis when empirical observations do not truthfully separate from declared confounders."
+    },
+    {
+      "path": "plans/expansion/X6_R0_4_F1_RUNTIME_PARAMETER_FREEZE_V1.json",
+      "sha256": "1b33e0cd8b255311c0c6c7d6ce8a9d2cc2faf484b6912c867fa15d721159a898",
+      "rule": "R_X6_PERFORMANCE_001 is reserved for the exact conditional F1 signature, including explicit insufficient-evidence and no-match states."
+    },
+    {
+      "path": "plans/expansion/X6_PROSPECTIVE_SUCCESSOR_PARAMETER_THRESHOLD_FREEZE_V1.json",
+      "sha256": "635d62272c593a6ddf6de490a96e664aa94ce3ec2ea4bba5e44a4396cfb18402",
+      "rule": "Frozen baseline thresholds remain immutable and baseline-only; future F1 applicability requires separate review."
+    },
+    {
+      "path": "plans/expansion/X6_R1_5_FUTURE_F1_SUCCESSOR_SOURCE_ONLY_V1.json",
+      "sha256": "58a5caf1e66b609ff5de66e352a85898ac86022ee7f10a2d998fd07170a173ab",
+      "rule": "Fault effectiveness, diagnosis, restoration, cleanup, independent verification, and scientific acceptance are separate outcomes."
+    },
+    {
+      "path": "plans/expansion/X6_R1_5_1_POSTMORTEM_CORRECTION_SOURCE_ONLY_V1.json",
+      "sha256": "74009c411d0d2dd60cdaa397f79468865e092f198bf9c04639e0db0b0a5f6628",
+      "rule": "R1.5.1 preserves all six predicates and frozen thresholds while correcting failed-path reconstruction, abstention/restoration ordering, and numeric semantics."
+    },
+    {
+      "path": "docs/DECISION_X6_R1_5.md",
+      "sha256": "6d72aa0971a4be5fdc6a7c7e1f773daa440116c5c7e4d62d91e4217b762da6ee"
+    },
+    {
+      "path": "docs/DECISION_X6_R1_5_1.md",
+      "sha256": "3bc663c1b94e0367cec8b077a10b0d349224c909f8b93d8ba7b1729e92eb80c1"
+    }
+  ],
+  "immutable_postmortem_bindings": {
+    "root": "/home/mesud/x6-r1-5-f1-20260924-a01-postmortem-v1",
+    "run_id": "x6-r1-5-f1-20260924-a01",
+    "terminal": "F1_ATTEMPT_FAILED",
+    "qualified": false,
+    "scientific_acceptance": false,
+    "authorization": "SPENT_NO_RETRY",
+    "postmortem_sha256": "57eb7040673a60082c3f74bddde3033d3effd18fb7a1b3c0c1024b772c9c3ec9",
+    "reconstruction_sha256": "43bcf18f07e9859d05bd45b9437b19ccfe8608fe4b1d3a995c686ce64d7d2103",
+    "input_inventory_sha256": "d2001be1a67bed0793646faa143ae6cbbd2658bc5b49a125efdbe38605ed9967",
+    "evidence_manifest_sha256": "46d153fe8b599baeda4a822ac2fcba9e98792aa62ea6cac4a3bbb9f550ad5b0e",
+    "handoff_sha256": "b9abdc315e464e02b77f5c79b229897793e009b0e74d3c3e4ba2b38e131d4bcf"
+  },
+  "spent_attempt_findings": {
+    "physical_fault_effectiveness": {
+      "status": "ESTABLISHED_FOR_THIS_ATTEMPT",
+      "lost_ping_probes": 13,
+      "accepted_range": [6, 25],
+      "netem_drop_delta": 4591,
+      "pfifo_drop_delta": 0,
+      "limits": "Establishes the owned mutation's physical effect in this attempt, not diagnosis or general behavior."
+    },
+    "observable_transport_effects": {
+      "status": "OBSERVED_WITHOUT_EXCLUSIVE_CAUSAL_ATTRIBUTION",
+      "sender_retransmits_f01_f03": [1499, 1728, 1338],
+      "receiver_throughput_mbps_f01_f03": ["52.738613", "57.052299", "45.060426"],
+      "diagnosis_throughput_median_mbps": "52.738613",
+      "frozen_throughput_lower_mbps": "6867.148963",
+      "pooled_successful_reply_rtt_p95_ms": "0.212000",
+      "frozen_rtt_upper_ms": "0.160000",
+      "limits": "The retained observations show retransmission, throughput reduction, and a pooled surviving-reply RTT shift. They do not identify which losses caused which TCP response or exclude every unmeasured host, kernel, scheduling, or sampling effect."
+    },
+    "diagnostic_specificity_and_abstention": {
+      "status": "EXACT_RULE_ABSTAINED_AS_DESIGNED",
+      "true_predicates": [
+        "loss_above_baseline",
+        "utilization_within_baseline",
+        "queue_delta_zero",
+        "rate_limit_false"
+      ],
+      "false_predicates": [
+        "latency_within_baseline",
+        "throughput_within_baseline"
+      ],
+      "established": "R_X6_PERFORMANCE_001 is not applicable to this effective-loss observation under its exact conjunction.",
+      "not_established": "One attempt cannot estimate sensitivity, specificity, abstention rate, false-positive rate, or cross-class discrimination."
+    },
+    "performance_restoration": {
+      "status": "UNPROVEN_FOR_THE_SPENT_ATTEMPT",
+      "qdisc_restoration": "ESTABLISHED",
+      "r01_r03_performance_windows": "ABSENT",
+      "note": "Published R1.5.1 corrects future abstention/restoration control flow but does not retroactively create restoration observations."
+    },
+    "overall_scientific_acceptance": {
+      "status": "NOT_ESTABLISHED",
+      "reason": "Diagnosis abstained, restoration performance was not measured, and no independent multi-class evaluation exists."
+    },
+    "role_in_future_methodology": {
+      "status": "MOTIVATING_EVIDENCE_ONLY",
+      "rule": "The spent attempt motivated this review and remains a required historical evaluation outcome. Because a prospective successor would be designed with knowledge of its results, this attempt is not untouched independent evaluation data for that successor and cannot select its predictors, operators, thresholds, or acceptance criteria."
+    }
+  },
+  "primary_transport_sources": [
+    {
+      "title": "RFC 5681: TCP Congestion Control",
+      "url": "https://www.rfc-editor.org/rfc/rfc5681.html",
+      "finding": "TCP treats detected loss as congestion, reduces congestion state, and enters retransmission/recovery behavior; baseline-level TCP throughput is therefore not a generally warranted invariant under packet loss."
+    },
+    {
+      "title": "RFC 6675: A Conservative Loss Recovery Algorithm Based on SACK for TCP",
+      "url": "https://www.rfc-editor.org/rfc/rfc6675.html",
+      "finding": "Multiple losses within a flight invoke explicit recovery and congestion-window reduction, so recovery behavior can materially affect transfer performance."
+    },
+    {
+      "title": "RFC 6298: Computing TCP's Retransmission Timer",
+      "url": "https://www.rfc-editor.org/rfc/rfc6298.html",
+      "finding": "RFC 6298 governs a TCP sender's TCP-native RTT estimator and retransmission timer, including Karn's algorithm and RTO backoff. It may inform interpretation of the iperf3 TCP connection, but it does not explain or validate the experiment's ICMP ping RTT p95."
+    },
+    {
+      "title": "RFC 2681: A Round-trip Delay Metric for IPPM",
+      "url": "https://www.rfc-editor.org/rfc/rfc2681.html",
+      "finding": "RFC 2681 supports reporting the exact packet type, path, calibration, and treatment of loss when interpreting round-trip delay. Its percentile treats undefined or lost observations as infinitely large, so it does not validate the accepted experiment-specific successful-reply-only ICMP p95; that statistic remains defined by the bound X6 measurement contract."
+    },
+    {
+      "title": "RFC 6349: Framework for TCP Throughput Testing",
+      "url": "https://www.rfc-editor.org/rfc/rfc6349.html",
+      "finding": "Within RFC 6349's TCP-throughput-testing framework, interpretation requires retransmission efficiency, delay, windowing, host capacity, and network integrity context, and high loss can make that framework's throughput measurement unsuitable for its intended accuracy claims. Its guidance is contextual and is not a classifier threshold or diagnostic acceptance criterion."
+    },
+    {
+      "title": "Mathis et al., The Macroscopic Behavior of the TCP Congestion Avoidance Algorithm",
+      "url": "https://www.cs.utexas.edu/~lam/395t/papers/Mathis1998.pdf",
+      "finding": "Under stated assumptions, sustained TCP congestion-avoidance throughput depends on loss probability and RTT; the restricted model supports mechanism plausibility but is not a causal fit for this single high-loss attempt."
+    },
+    {
+      "title": "Linux tc-netem manual",
+      "url": "https://www.man7.org/linux/man-pages/man8/netem.8.html",
+      "finding": "NetEm random loss drops packets independently at the configured probability; correlation, placement, kernel timing, and protocol behavior remain part of interpreting observed effects."
+    }
+  ],
+  "scientific_assessment": {
+    "current_rule_as_general_f1_signature": "NOT_JUSTIFIED",
+    "current_rule_as_strict_conditional_signature": "HISTORICAL_STRICT_CONJUNCTIVE_COMPARATOR_WITH_UNKNOWN_SENSITIVITY_AND_SPECIFICITY",
+    "correct_execution_vs_validity": "The spent attempt establishes that the accepted implementation reconstructed the observations, evaluated the exact six predicates, and abstained. Correct execution does not establish diagnostic validity, sensitivity, specificity, or scientific acceptance.",
+    "successful_reply_only_latency": "The latency value is the project-defined pooled p95 over retained successful ICMP ping replies. Lost probes contribute to packet_loss_ratio but are not included as infinite values in this p95. It is not a TCP RTT estimator and is not governed by RFC 6298.",
+    "applicability_limitation": "Prospectively, R_X6_PERFORMANCE_001 can be reported only as the historical strict conjunction in which independently effective packet loss coexists with baseline-compatible pooled successful-reply ICMP RTT and TCP throughput, bounded utilization, zero owned child-pfifo drops, and no rate limiter. This reporting limitation does not redefine the historical F1 task, exclude the spent attempt from evaluation, change its expected outcome, or convert abstention into success. Abstention remains an unsuccessful diagnostic outcome and must count in method evaluation.",
+    "reasoning": [
+      "The accepted contract explicitly labels the predicate vector a conditional hypothesis rather than a disjoint class truth.",
+      "TCP standards and primary measurements make throughput degradation under loss technically expected or plausible, so throughput-within-baseline cannot be presumed necessary for packet loss without independent evidence.",
+      "Pooled ICMP RTT over successful replies and TCP recovery measurements are different observables; their joint behavior under loss needs empirical characterization rather than a universal invariant.",
+      "The spent attempt supplies a valid counterexample to applicability of the exact conjunction, but cannot select a replacement rule or establish population performance."
+    ]
+  },
+  "options": [
+    {
+      "id": "RETAIN_R_X6_PERFORMANCE_001_WITH_LIMITATION",
+      "scope": "Keep the exact rule and frozen thresholds as the historical strict conjunctive comparator with unknown sensitivity and specificity. Report its abstention as an unsuccessful method outcome, retain the spent attempt in evaluation, and make no claim that the rule covers effective F1 generally.",
+      "benefit": "Smallest change; preserves preregistration and avoids post-hoc fitting.",
+      "cost": "F1 coverage, sensitivity, specificity, and usefulness for the thesis comparison remain unknown; the spent attempt cannot support scientific acceptance."
+    },
+    {
+      "id": "SEPARATELY_REVIEW_VERSIONED_SUCCESSOR_DIAGNOSTIC_DESIGN",
+      "scope": "Before any new observations, preregister a versioned candidate design that separates mutation effectiveness and experimental ground truth from diagnosis inputs, defines the role of loss, RTT, throughput, utilization, queue, rate-limit, and TCP recovery observations, and fixes evaluation and abstention semantics.",
+      "benefit": "Can test whether a rule that permits transport degradation improves F1 coverage while preserving discrimination from F2 high latency, F3 congestion, F4 rate limiting, and no-fault controls.",
+      "cost": "Requires an accepted design, leakage review, development/evaluation separation, source implementation, and separately authorized balanced future evidence. It cannot use the spent attempt to choose predicates or thresholds."
+    }
+  ],
+  "recommendation": {
+    "decision": "RETAIN_R_X6_PERFORMANCE_001_AS_HISTORICAL_STRICT_COMPARATOR_AND_REVIEW_A_SEPARATE_PROSPECTIVE_SUCCESSOR_DESIGN",
+    "smallest_next_step": "A review-only preregistration of the successor diagnostic hypothesis and evaluation protocol. Do not implement or collect observations until its exact criteria and data separation are accepted.",
+    "why": "Simply weakening the current conjunction would be post-hoc tuning. Treating it as universally justified would contradict the accepted conditional-hypothesis policy and the observed effective-loss abstention."
+  },
+  "prospective_falsifiable_requirements": {
+    "before_any_new_observation": [
+      "Freeze the candidate rule version, exact observable inputs, units, aggregation, normalization, operators, unavailable-data handling, abstention semantics, and confounder exclusions.",
+      "Freeze whether TCP retransmission and TCP-native RTT information are diagnostic inputs or explanatory-only observations; do not treat the successful-reply ICMP p95 as a TCP RTT estimator.",
+      "Exclude run, attempt, window, experiment and authorization identifiers; file paths; artifact names; collection timestamps; partition metadata; mutation commands and injection state; ground-truth labels; and effectiveness classifications from rule predicates, ML predictors, and hybrid selection logic. These fields may be used only for provenance, integrity, grouping, effectiveness assessment, and audit.",
+      "Preserve permitted elapsed-time measurements only when they are raw monotonic intervals required to derive an already accepted observable feature. They must not encode wall-clock time, run identity, partition membership, or experiment order.",
+      "Freeze the eligible no-fault, F1, F2, F3, and F4 contexts and establish that every method receives the same leakage-reviewed observable feature boundary.",
+      "Freeze the independent experiment grouping key and independence claim before collection. Every window, command observation, and derived artifact from one attempt must remain in one partition. Correlated repetitions and parameter or topology variants sharing the frozen causal context must remain grouped; no window-level split is permitted.",
+      "Freeze sample-size justification and numeric minimum acceptance bounds for class sensitivity, non-F1 specificity, abstention coverage, and restoration success before collection. No numeric bounds are authorized by this proposal."
+    ],
+    "hypotheses": [
+      {
+        "id": "H_F1_EFFECT",
+        "claim": "The accepted F1 mutation is physically effective under the predeclared state-and-loss effectiveness contract.",
+        "falsified_by": "Failure of owned mutation identity or a loss outcome outside the predeclared effectiveness interval."
+      },
+      {
+        "id": "H_F1_DIAGNOSIS",
+        "claim": "The frozen prospective rule distinguishes F1 from no-fault and each declared F2-F4 confounder on untouched evaluation contexts at the predeclared sensitivity, specificity, and abstention bounds.",
+        "falsified_by": "Any predeclared evaluation bound failing; operational effectiveness or command success cannot substitute for diagnostic performance."
+      },
+      {
+        "id": "H_F1_RESTORATION",
+        "claim": "Restoration independently returns controls and all R01-R03 features to the immutable baseline bounds.",
+        "falsified_by": "Any required restoration control or measurement failing."
+      },
+      {
+        "id": "H_COMPARISON_FAIRNESS",
+        "claim": "Rule-based, ML, and hybrid methods are compared on the same independently held-out examples and permitted observables without injection or threshold leakage.",
+        "falsified_by": "Any identifier, path, artifact name, collection timestamp, partition metadata, injection state, label, effectiveness classification, evaluation observation, frozen threshold, or correlated cross-partition variant influencing predictors, rule selection, training, or hybrid selection."
+      }
+    ]
+  },
+  "leakage_boundary": {
+    "prohibited_predictor_or_selector_inputs": [
+      "run_id",
+      "attempt_id",
+      "window_id",
+      "experiment_id",
+      "authorization_id_or_hash",
+      "file_path_or_artifact_name",
+      "wall_clock_or_collection_timestamp",
+      "partition_or_split_metadata",
+      "mutation_command_or_injection_state",
+      "ground_truth_label",
+      "fault_effectiveness_classification"
+    ],
+    "metadata_only_uses": [
+      "provenance",
+      "integrity_verification",
+      "independent-experiment_grouping",
+      "physical-effectiveness_assessment",
+      "audit"
+    ],
+    "permitted_elapsed_time": "Bound raw monotonic intervals may be used only to derive accepted timing-dependent observable features. They cannot carry wall-clock, identity, ordering, or partition information into a predictor or hybrid selector."
+  },
+  "evaluation_independence": {
+    "minimum_unit": "ONE_COMPLETE_INDEPENDENT_EXPERIMENT_ATTEMPT_WITH_ALL_WINDOWS_COMMAND_OBSERVATIONS_AND_DERIVED_ARTIFACTS",
+    "grouping": "Correlated repetitions and parameter or topology variants sharing a frozen causal context remain in the same partition.",
+    "prohibited": [
+      "window-level random splitting",
+      "placing artifacts from one attempt in multiple partitions",
+      "placing correlated context variants across development and evaluation",
+      "using evaluation observations for threshold, rule, feature, sample-size, or hybrid selection"
+    ],
+    "unresolved": "The exact grouping key and empirical independence justification require explicit acceptance before collection."
+  },
+  "thesis_relevance": {
+    "rule_based": "Preserve R_X6_PERFORMANCE_001 as a preregistered strict baseline and count abstention explicitly rather than rewriting history.",
+    "machine_learning": "Future ML must learn only from an accepted leakage-reviewed feature contract and development partition, never from mutation provenance, frozen rule predicates, or evaluation evidence.",
+    "hybrid": "A future hybrid may use versioned rule outputs or abstention only after a separate leakage and selection review; it must not gain privileged access to experimental ground truth.",
+    "comparison_outputs": [
+      "per-class confusion outcomes",
+      "abstention and unavailable-evidence rates",
+      "fault-effectiveness-qualified diagnostic coverage",
+      "restoration outcomes reported separately",
+      "no scientific superiority claim without the accepted independent evaluation"
+    ]
+  },
+  "unresolved_decisions": [
+    "Target diagnosis: binary F1 detection or multiclass no-fault/F1-F4 diagnosis, including the single-fault and location scope.",
+    "Predictor boundary: which ICMP, TCP, interface, queue, and rate-limit observations are predictors and which remain effectiveness, provenance, or explanatory evidence.",
+    "Controls and confounders: the exact no-fault controls and eligible F2 high-latency, F3 congestion, and F4 rate-limiting contexts required to test discrimination.",
+    "Independent evaluation unit: the exact grouping key for attempts, correlated repetitions, parameter variants, and topology variants, plus the justification that evaluation groups are independent of development groups.",
+    "Sample-size rationale: the prospective power, precision, or other justification and numeric minimum acceptance bounds; this proposal authorizes no values.",
+    "Outcome denominators: how diagnosed, abstained, unavailable-evidence, operational-failure, interrupted, and restoration-failure outcomes enter or remain separate from each reported denominator.",
+    "Comparison fairness: the common leakage-reviewed observable boundary, development/evaluation partitions, selection rules, and reporting outputs for rule-based, ML, and hybrid methods.",
+    "Whether future performance evidence belongs in the existing thesis dataset/evaluation pipeline or requires a separate leakage-reviewed campaign contract."
+  ],
+  "prohibitions": [
+    "No threshold or predicate tuning from the spent attempt.",
+    "No reclassification of the failed attempt or spent authorization.",
+    "No adoption or implementation of a successor rule by this proposal.",
+    "No runtime readiness, authorization, deployment, traffic, mutation, measurement, recovery, or cleanup.",
+    "No F2-F4 execution, dataset construction, model training, hybrid evaluation, metric claim, API work, or scientific acceptance claim."
+  ],
+  "preservation": {
+    "published_r1_5_1": "UNCHANGED",
+    "frozen_thresholds": "UNCHANGED",
+    "six_predicates": "UNCHANGED",
+    "failed_attempt_and_spent_authorization": "IMMUTABLE",
+    "x5_authority": "UNCHANGED",
+    "consumed_pilot_evidence": "PRESERVED_NON_AUTHORITATIVE",
+    "historical_authorization": "0/10_FALSE",
+    "protected_stashes": "FOUR_REACHABLE_UNCHANGED"
+  },
+  "next_step": "EXPLICIT_REVIEW_ACCEPT_REVISE_OR_REJECT_THIS_METHODOLOGY_PROPOSAL_ONLY"
+}

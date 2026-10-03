@@ -1,0 +1,631 @@
+{
+  "schema_version": 1,
+  "proposal_id": "X6_PROSPECTIVE_F1_EXPLORATORY_CAMPAIGN_CONTRACT_PROPOSAL_V1",
+  "record_kind": "APPEND_ONLY_REVIEW_ONLY_SOURCE_CAMPAIGN_CONTRACT_PROPOSAL",
+  "status": "REVIEW_ONLY_NOT_ACCEPTED",
+  "published_boundary": {
+    "commit": "babde86fd863d105b30262d205ced09995251515",
+    "direct_parent": "287809ecc74bc3962de67fb903058fc6db09e899"
+  },
+  "accepted_design_bindings": {
+    "methodology_acceptance": {
+      "path": "plans/expansion/X6_PROSPECTIVE_F1_DIAGNOSTIC_METHODOLOGY_REVIEW_ACCEPTANCE_V1.json",
+      "sha256": "97a378e29d9555f6e4d02c794bab74e15fdd44d33dd03346faf8ee2cd5cf0e07"
+    },
+    "study_design": {
+      "path": "plans/expansion/X6_PROSPECTIVE_F1_SUCCESSOR_STUDY_DESIGN_PROPOSAL_V1.json",
+      "sha256": "3bce7a8264d059f1dbfb772eafbecc6e1782e7d74ecfe092c6d6eaa8c2ca7388"
+    },
+    "study_handoff": {
+      "path": "docs/HANDOFF_X6_PROSPECTIVE_F1_SUCCESSOR_STUDY_DESIGN.md",
+      "sha256": "40fedd19de8a9d0ec0a8a2aa8c3725f0afabb4d80b15513bc9068df785e616ee"
+    },
+    "study_acceptance": {
+      "path": "plans/expansion/X6_PROSPECTIVE_F1_SUCCESSOR_STUDY_DESIGN_ACCEPTANCE_V1.json",
+      "sha256": "84697581dd3ec5543e51e96e8dee51f92ec55f491876b0143a24fd07646392c3"
+    },
+    "embedded_inventory_sha256": "c1ff4d276705936111b12c918cad7a387d44369859b828ca13c7e28a5dba2c2c",
+    "embedded_inventory_length": 4199,
+    "slots": 100,
+    "blocks": 50
+  },
+  "governing_bindings": [
+    {
+      "path": "docs/MASTER_CONTEXT.md",
+      "sha256": "64a80f8d4b3d6ff0f4160fd42e10c12e60461aaecab97b91b982c929cc440a57"
+    },
+    {
+      "path": "docs/DECISIONS.md",
+      "sha256": "2da8580391ea39b34573ce64541e431e1b35331727bde249f07f3dbb88783459"
+    },
+    {
+      "path": "docs/STATUS.md",
+      "sha256": "d654760fa8bb88097f1e20eb044f8111b6255c098e2b9fbef3d4e7cf6343e19d"
+    },
+    {
+      "path": "plans/expansion/X6_R1_5_1_POSTMORTEM_CORRECTION_SOURCE_ONLY_V1.json",
+      "sha256": "74009c411d0d2dd60cdaa397f79468865e092f198bf9c04639e0db0b0a5f6628"
+    },
+    {
+      "path": "plans/expansion/X6_PROSPECTIVE_SUCCESSOR_PARAMETER_THRESHOLD_FREEZE_V1.json",
+      "sha256": "635d62272c593a6ddf6de490a96e664aa94ce3ec2ea4bba5e44a4396cfb18402",
+      "manifest_embedded_sha256": "0db20fccbb22f7bcde7bc5d7be0d3fd8923e32d663d59297c178dd300ce7c301"
+    }
+  ],
+  "source_contract_conflicts": [
+    {
+      "id": "C01_CURRENT_AUTHORIZATION_SCOPE",
+      "existing": "src/orchestration/x6_r1_5_1_contract.py accepts only schema-v1 scope F1_PACKET_LOSS_SINGLE_FAULT, one F1 run identity, and a contract that explicitly prohibits dataset, model, and metrics work.",
+      "impact": "It cannot authorize an N0 slot, campaign membership, development freeze, or evaluation analysis.",
+      "resolution": "Create a successor-only slot-authorization schema and validator binding one accepted inventory slot. Preserve LOCAL_OPERATOR_ACCOUNT_V1, exclusive one-attempt reservation, commitment/consumption timing, validity, boot, source, and no-reuse semantics. Never reinterpret an R1.5.1 authorization."
+    },
+    {
+      "id": "C02_NO_MATCHED_N0_LIFECYCLE",
+      "existing": "src/orchestration/x6_r1_5_1_production_path.py always enters the F1 mutation path after ten validation windows.",
+      "impact": "The accepted matched N0 target phase cannot be produced by the published CLI.",
+      "resolution": "Add a successor slot lifecycle with assignment selected only from the authorized inventory. N0 runs three noqueue target windows without any mutation command; F1 uses the exact accepted mutation. Both retain the same pre-target and post-target schedule."
+    },
+    {
+      "id": "C03_EFFECTIVENESS_CURRENTLY_ABORTS_RESTORATION_MEASUREMENTS",
+      "existing": "x6_r1_5_1_production_path.fault_outputs raises when physical effectiveness is false, so the normal lifecycle cannot reach cooldown and R01-R03 after a valid but ineffective mutation.",
+      "impact": "That conflicts with assignment-based full-denominator collection and independent restoration reporting.",
+      "resolution": "In the successor only, persist effectiveness as a post-assignment outcome and continue owned restoration, cooldown, and R01-R03 when command integrity, evidence integrity, ownership, timing, and safety remain valid. Effectiveness failure and diagnostic abstention remain unsuccessful outcomes. Operational or unsafe failures still stop measurements and enter recovery."
+    },
+    {
+      "id": "C04_SIX_FEATURE_RUNTIME_VECTOR_IS_NOT_THE_FOUR_INPUT_ML_MATRIX",
+      "existing": "The historical Feature Vector v2 and R_X6_PERFORMANCE_001 require six values, including phase-specific queue and rate controls.",
+      "impact": "Passing that vector directly to ML would violate the accepted leakage boundary.",
+      "resolution": "Preserve the six-feature historical vector and comparator unchanged. Add a distinct campaign row whose predictor object contains only loss, successful-reply ICMP RTT p95, TCP throughput, and utilization. Queue/rate evidence remains in a separate common-control section unavailable to the model and hybrid router."
+    },
+    {
+      "id": "C05_CURRENT_VERIFIER_AND_ARTIFACT_INVENTORY_ARE_F1_RUN_SPECIFIC",
+      "existing": "x6_r1_5_1_materialized_verifier requires one F1 mutation, the R1.5.1 terminal vocabulary, sixteen F1 files, and its fixed artifact inventory.",
+      "impact": "It cannot verify N0, 100-slot accounting, development/model freeze, sealed evaluation, or paired analysis.",
+      "resolution": "Create an append-only successor verifier that delegates unchanged observation primitives where compatible but independently reconstructs slot assignment, controls, measurements, campaign ledger, model, predictions, block resampling, metrics, and terminal state. Published verifier behavior remains unchanged."
+    }
+  ],
+  "conflict_finding": "ALL_CONFLICTS_HAVE_NARROW_SUCCESSOR_ONLY_RESOLUTIONS; NO_ACCEPTED_HISTORICAL_FILE_OR_THRESHOLD_REQUIRES_MODIFICATION",
+  "successor_interface": {
+    "release_id": "X6_R1_5_2_EXPLORATORY_F1_CAMPAIGN_SOURCE_ONLY",
+    "module": "src.orchestration.x6_r1_5_2_campaign",
+    "entrypoint": "python -m src.orchestration.x6_r1_5_2_campaign",
+    "subcommands": {
+      "validate-contract": "Read-only validation of accepted contract, source, and inventory bindings.",
+      "run-slot": "Execute exactly one separately authorized slot: --contract PATH --campaign-root PATH --slot-id ID --authorization PATH.",
+      "recover-slot": "Classify and clean one interrupted consumed slot without resuming traffic: --campaign-root PATH --slot-id ID.",
+      "freeze-development": "Read-only reconstruction plus development-only preprocessing/model/policy freeze after all 60 development slots are terminal or durably NOT_RUN.",
+      "verify-slot": "Independent materialized verification of one slot in a new process.",
+      "evaluate": "After all 40 evaluation slots are terminal or NOT_RUN, independently reconstruct predictions, metrics, block bootstrap, and the exploratory report from frozen artifacts."
+    },
+    "single_action_rule": "run-slot accepts exactly one slot and one authorization. The CLI never issues authorization, loops over slots, retries a slot, or treats the 100-slot inventory as runtime authority."
+  },
+  "reusable_published_components": [
+    {
+      "path": "src/orchestration/x6_r1_5_1_contract.py",
+      "sha256": "36ed529b4b816c2ab2ac84a2be0ac3539407dacbf42f59c9c6ab44680585ef21",
+      "reuse": "Canonical serialization, source/image/manifest checks, new-attempt versus committed-attempt validity principles, and partial-reservation classification; release-specific schema and scope are replaced only in successor code."
+    },
+    {
+      "path": "src/orchestration/x6_r1_5_1_durable.py",
+      "sha256": "09d4f0bcc588ba1581e28dcefcb3f4d9b71ceef6d7ad860a1f1d5fe46f5016e5",
+      "reuse": "Atomic save/fsync, exclusive reservation, durable ADMITTED/CONSUMED ordering, process identity, raw command recording, shell=False, bounded execution, and topology lock patterns."
+    },
+    {
+      "path": "src/orchestration/x6_r1_5_1_observations.py",
+      "sha256": "1fab8c629c9a4dcacc24779f1d02e35a156c1c5912e3acfc45e8da597bf25a47",
+      "reuse": "Command catalog primitives, raw window reconstruction, Decimal six-place aggregation, topology/bootstrap controls, host state, cleanup reconstruction, and ownership checks."
+    },
+    {
+      "path": "src/orchestration/x6_r1_5_1_production_path.py",
+      "sha256": "dbd74ec680f13fe26b587d773ab5875835b9857cf97fcd9247ef225d6d172748",
+      "reuse": "Preflight, manifest persistence, matched window scheduling, exact F1 mutation/restoration, owned cleanup, and failure terminalization patterns; lifecycle branching and non-gating assessment are successor-owned."
+    },
+    {
+      "path": "src/orchestration/x6_r1_5_1_recovery.py",
+      "sha256": "43f1162df79dd51a31edf544fd5c12347a57016ea9f8571b625c00a29b097b76",
+      "reuse": "No-traffic-resumption recovery, boot-aware observations, fail-closed ownership, idempotent restoration/cleanup, and new-process replay patterns."
+    },
+    {
+      "path": "src/expansion/x6_r1_5_1_performance_rule.py",
+      "sha256": "ad802c62c560c21ae574c148c8609a7c4a30003d1e036b484be016316d3244d2",
+      "reuse": "Unchanged historical six-predicate comparator only."
+    },
+    {
+      "path": "src/expansion/x6_r1_5_1_materialized_verifier.py",
+      "sha256": "44bbd1d231724396737d938d2f67744e4039bf474b5c2634133af5b9498016d1",
+      "reuse": "Raw command, timing, source, authorization, window, assessment, recovery, cleanup, and terminal reconstruction patterns; campaign-specific verification is additive."
+    }
+  ],
+  "campaign_identity": {
+    "campaign_id": "X6_F1_EXPLORATORY_BINARY_V1",
+    "campaign_root_template": "/home/mesud/x6-f1-exploratory-binary-v1",
+    "inventory_source": "accepted study design embedded scheduled_inventory",
+    "inventory_sha256": "c1ff4d276705936111b12c918cad7a387d44369859b828ca13c7e28a5dba2c2c",
+    "stages": [
+      "DEVELOPMENT",
+      "EVALUATION"
+    ],
+    "blocks": {
+      "DEVELOPMENT": "DEV_B01 through DEV_B30",
+      "EVALUATION": "EVAL_B01 through EVAL_B20"
+    },
+    "slot_id": "X6_F1_EXP_V1_<DEV|EVAL>_B<01..30_or_20>_S<01|02>_<N0|F1>",
+    "slot_position": "S01 or S02 is determined exclusively by the accepted within_block_order.",
+    "run_id": "lowercase slot_id with underscores replaced by hyphens",
+    "slot_output_root": "<campaign_root>/slots/<run_id>",
+    "authorization_id": "<slot_id>_A01",
+    "no_aliasing": "Campaign, block, slot, run, authorization, output, assignment, and stage identities must agree exactly and cannot be renamed after contract freeze."
+  },
+  "environment_identity": {
+    "epoch_id": "SHA-256 of canonical epoch record",
+    "epoch_record": [
+      "campaign_contract_sha256",
+      "stage",
+      "source_commit_and_tree",
+      "topology_path_and_sha256",
+      "image_ID_and_repo_digests",
+      "host_identity",
+      "boot_id",
+      "kernel_and_sch_netem_provenance",
+      "Python_ip_tc_ethtool_Docker_Containerlab_versions",
+      "command_catalog_sha256",
+      "readiness_observation_hashes"
+    ],
+    "pair_rule": "Both pair members must use one epoch. A boot change between members blocks the unstarted member as NOT_RUN_OPERATIONAL_FAILURE.",
+    "later_boot": "A later block may use a new epoch after fresh readiness only when source, topology, image, kernel, module, tools, and commands still match the accepted contract.",
+    "material_drift": "Any non-boot binding drift stops the stage and marks every remaining slot NOT_RUN_ENVIRONMENT_DRIFT."
+  },
+  "slot_authorization_contract": {
+    "record_kind": "X6_R1_5_2_CAMPAIGN_SLOT_AUTHORIZATION_V1",
+    "trust_model": "LOCAL_OPERATOR_ACCOUNT_V1",
+    "one_record_per_slot": true,
+    "binds": [
+      "authorization_id",
+      "campaign_contract_sha256",
+      "accepted_inventory_sha256",
+      "slot_id_block_stage_position_and_assignment",
+      "run_id_and_output_root",
+      "eventual_execution_source_commit_tree_and_file_inventory",
+      "topology_image_traffic_schedule_threshold_and_command_catalog",
+      "environment_epoch_or_admission_requirements",
+      "permitted_N0_or_F1_operations",
+      "one_attempt_reservation_and_consumption",
+      "issued_expires_and_boot_validity",
+      "cleanup_recovery_replay_and_artifact_inventory",
+      "development_freeze_sha256_for_every_evaluation_slot"
+    ],
+    "N0_scope": "Permits matched windows and controls only; every mutation or mutation-restore command is forbidden.",
+    "F1_scope": "Permits only the exact accepted NetEm/pfifo mutation and owned restoration.",
+    "spend_point": "Atomic exclusive publication of the per-slot reservation ledger before ADMITTED. Every partial reservation remains spent.",
+    "no_batch_authority": "One slot authorization grants no authority for its pair member or any later slot.",
+    "evaluation_gate": "No evaluation authorization is valid without the exact independently verified development_freeze_sha256.",
+    "not_created_by_this_proposal": true
+  },
+  "non_slot_action_authorization_contract": {
+    "status": "PROPOSED_REQUIREMENT_NO_AUTHORIZATION_CREATED",
+    "purpose": "The accepted study design requires separate explicit reviewed authority for operations that fit a model or publish analysis. Campaign state, a completed slot inventory, or an accepted contract is never authority for either action.",
+    "actions": {
+      "DEVELOPMENT_FREEZE_MODEL_FIT": {
+        "record_kind": "X6_R1_5_2_DEVELOPMENT_FREEZE_MODEL_FIT_AUTHORIZATION_V1",
+        "command": "freeze-development",
+        "canonical_output": "<campaign_root>/development-freeze-v1",
+        "required_prior_state": "All 60 accepted development slots have independently verified final accounting states; the canonical development output and its action reservation do not yet exist; no evaluation root, evaluation authorization, or evaluation observation exists.",
+        "exact_inputs": "Canonical hashes of the accepted campaign contract and inventory, the complete development slot accounting inventory, every independently verified eligible row and exclusion reason, reconstruction implementation, feature aggregation, model/hybrid implementation, dependencies, source commit/tree/file inventory, and canonical output path.",
+        "permitted_effect": "Reconstruct development inputs, fit exactly one fixed model, validate serialization and test vectors, and atomically publish exactly one immutable development-freeze bundle."
+      },
+      "FINAL_EVALUATION_ANALYSIS": {
+        "record_kind": "X6_R1_5_2_FINAL_EVALUATION_ANALYSIS_AUTHORIZATION_V1",
+        "command": "evaluate",
+        "canonical_output": "<campaign_root>/final-analysis-v1",
+        "required_prior_state": "The independently verified development-freeze bundle and SHA-256 are bound; all 40 accepted evaluation slots have independently verified terminal or NOT_RUN accounting; the canonical evaluation inventory is frozen; the canonical final-analysis output and its action reservation do not yet exist.",
+        "exact_inputs": "Canonical hashes of the accepted campaign contract and inventory, development-freeze bundle, complete evaluation slot accounting and evidence inventory, deterministic method implementations, metric formulas, bootstrap specification, reporting implementation, source commit/tree/file inventory, and canonical output path.",
+        "permitted_effect": "Reconstruct predictions and outcomes, compute exactly one deterministic analysis, and atomically publish exactly one immutable final-analysis bundle. It cannot collect a slot, refit or alter the frozen model, or select examples."
+      }
+    },
+    "common_bindings": [
+      "unique_action_authorization_id_and_record_kind",
+      "campaign_id_root_contract_sha256_and_inventory_sha256",
+      "exact_action_and_stage",
+      "exact_canonical_input_inventory_and_hashes",
+      "eventual_execution_source_commit_tree_and_file_inventory",
+      "exact_canonical_output_location",
+      "required_prior_state_and_absence_of_prior_output",
+      "one_action_reservation_consumption_and_terminal_outcomes",
+      "issued_expires_and_boot_validity_for_new_action_admission",
+      "standalone_read_only_reconstruction_and_replay_requirements"
+    ],
+    "reservation": "Before fitting, analysis, or canonical output creation, atomically and exclusively publish and fsync one action reservation at <campaign_root>/action-ledger/<record_kind>/<authorization_id>.reservation.json. The authorization binds that ledger path. Copying the authorization to another filesystem path grants no additional action; changing campaign root, action, input, source, or output fails validation.",
+    "concurrency": "The action reservation, campaign coordination lock, exact canonical output absence, and prior-state hash are checked together after lock acquisition. One winner may proceed; every concurrent or later invocation observes the spent reservation and fails without fitting, analysis, or publication.",
+    "admission_and_consumption": "Use the accepted commitment semantics: persist the positive authorization decision, ADMITTED state, and durable CONSUMED state before entering the permitted operation. Any partial reservation or ADMITTED-with-incomplete-consumption state is permanently spent and grants no authority to execute the action.",
+    "interruption": "An interruption after reservation remains spent. Preserve staging evidence and classify the action as INTERRUPTED_SPENT or INTEGRITY_UNRESOLVED. Do not automatically refit, rerun analysis, reuse the authorization, or publish a partial result.",
+    "replay_rejection": "The production action entrypoint rejects every consumed, partially reserved, completed, failed, or interrupted authorization. A later process may perform read-only reconstruction and verification only; it cannot cross back into the fitting or analysis action.",
+    "read_only_verification": "validate-contract, verify-slot, and standalone verification of an existing development-freeze or final-analysis bundle never create an authoritative fit, publish analysis, mutate canonical campaign state, or require action authority. A verifier may deterministically refit or recompute in isolated transient memory solely to compare expected values with existing immutable evidence; it discards that transient result and may write only a review receipt outside canonical campaign outputs. Such recomputation grants no model, analysis, slot, or runtime authority.",
+    "no_authority_created": true
+  },
+  "durable_campaign_accounting": {
+    "campaign_manifest": "Immutable canonical accepted inventory and contract bindings.",
+    "slot_event_log": "Each slot has an append-only hash-chained sequence of canonical events with index, prior-event SHA-256, event SHA-256, stage/block/slot/assignment, process, boot, and source identity.",
+    "slot_states": [
+      "SCHEDULED",
+      "RESERVED_UNDECIDED",
+      "REJECTED_SPENT",
+      "ADMITTED",
+      "CONSUMED",
+      "RUNNING",
+      "TERMINAL",
+      "NOT_RUN_OPERATIONAL_FAILURE",
+      "NOT_RUN_ENVIRONMENT_DRIFT",
+      "NOT_RUN_DEVELOPMENT_INCONCLUSIVE",
+      "NOT_RUN_UNUSABLE_MODEL"
+    ],
+    "legal_slot_transitions": {
+      "SCHEDULED": [
+        "RESERVED_UNDECIDED",
+        "NOT_RUN_OPERATIONAL_FAILURE",
+        "NOT_RUN_ENVIRONMENT_DRIFT",
+        "NOT_RUN_DEVELOPMENT_INCONCLUSIVE",
+        "NOT_RUN_UNUSABLE_MODEL"
+      ],
+      "RESERVED_UNDECIDED": [
+        "REJECTED_SPENT",
+        "ADMITTED"
+      ],
+      "ADMITTED": [
+        "CONSUMED",
+        "TERMINAL"
+      ],
+      "CONSUMED": [
+        "RUNNING",
+        "TERMINAL"
+      ],
+      "RUNNING": [
+        "TERMINAL"
+      ],
+      "REJECTED_SPENT": [],
+      "TERMINAL": [],
+      "NOT_RUN_OPERATIONAL_FAILURE": [],
+      "NOT_RUN_ENVIRONMENT_DRIFT": [],
+      "NOT_RUN_DEVELOPMENT_INCONCLUSIVE": [],
+      "NOT_RUN_UNUSABLE_MODEL": []
+    },
+    "transition_prerequisites": "Every transition is one canonical hash-chained event whose prior state, event index, slot identity, source, process, boot, authorization and input hashes equal the current durable head. Compare-and-create or compare-and-replace under the campaign lock rejects stale, skipped, repeated, reverse, cross-slot, or contradictory transitions. ADMITTED requires a durable positive decision; CONSUMED requires the exact admitted decision and reservation; RUNNING requires CONSUMED; TERMINAL requires a contract-defined terminal classification and evidence inventory.",
+    "terminal_classifications": [
+      "SLOT_COMPLETE",
+      "SLOT_FAILED_OPERATIONAL",
+      "SLOT_FAILED_INTEGRITY",
+      "SLOT_INTERRUPTED_RECOVERED",
+      "SLOT_INTERRUPTED_UNRESOLVED",
+      "SLOT_CLEANUP_FAILED"
+    ],
+    "admitted_partial": "ADMITTED followed by missing or incomplete CONSUMED is authorization committed, consumption incomplete, permanently spent, and ineligible for RUNNING. Read-only reconstruction terminalizes it as SLOT_FAILED_INTEGRITY or SLOT_INTERRUPTED_UNRESOLVED without fabricating a run root or observations.",
+    "not_run_observation_rule": "A NOT_RUN state has no run root, measurement window, raw command observation, predictor row, method invocation, method output, or prediction record. Only its precommitted identity, assigned label, blocking reason, source/context bindings, and durable accounting evidence exist. Any purported observation or prediction for a NOT_RUN slot is contradictory evidence and forces INCONCLUSIVE_INTEGRITY_FAILURE.",
+    "prediction_accounting_status": "NO_PREDICTION_OPERATIONAL is a slot-accounting status only for a scheduled slot that has no method invocation because operational evidence is unavailable or invalid. It is never a method output, measurement, or prediction.",
+    "commit_last_ordering": [
+      "Persist each raw command record and stream bytes, fsync the files, atomically rename them into their bound immutable locations, and fsync the containing directory before any derived observation references them.",
+      "Persist and fsync reconstructed measurements, controls, effectiveness and predictor candidates before any method result references them.",
+      "Persist and fsync method results and cleanup/recovery observations before terminal classification.",
+      "Publish the hash-chained state event or terminal manifest last by exclusive atomic create or replacement, then fsync its directory. A state event never proves an artifact that was not already durable."
+    ],
+    "incomplete_publication": "Temporary files, staging directories, orphan artifacts, a missing final publication manifest, a broken hash chain, an unexpected artifact after a NOT_RUN state, or a state event referencing absent or unhashed evidence is incomplete or contradictory publication, never a completed state. Preserve it, reject normal progression, and classify it through read-only reconstruction without filling gaps.",
+    "terminal_requirement": "Every one of the 100 scheduled slots has exactly one durable final accounting state. No extra slot identity is permitted.",
+    "order_gate": "S02 admission requires S01 terminal or classified interruption, independently verified owned cleanup, matching epoch, and no active slot or topology lock.",
+    "blocked_pair_member": "If S01 cleanup is not independently clean or its boot/epoch changed, S02 becomes NOT_RUN_OPERATIONAL_FAILURE without reservation or replacement.",
+    "interruption": "Never resume traffic or remaining windows. Preserve evidence, spend authorization, run only authorized ownership-safe recovery, terminalize, and keep the slot in full-denominator accounting.",
+    "recovery_after_reboot": "Read-only reconstruction is allowed. Cleanup is allowed only for independently established lifecycle-owned resources. Ambiguous ownership fails closed and blocks the pair/stage as required.",
+    "replacement": "Forbidden: no retry, new identity, top-up, re-pairing, slot deletion, or outcome-conditioned extension."
+  },
+  "slot_collection_contract": {
+    "common_schedule": "Ten pre-target validation windows, three target windows, cooldown, three post-target windows, final controls, owned cleanup, terminalization, and separate-process replay.",
+    "N0_target": "Three noqueue target windows with no mutation command and exact noqueue/empty-filter observations.",
+    "F1_target": "Three windows under the exact accepted 10 percent zero-correlation NetEm root and child pfifo controls.",
+    "pre_target_failure": "Failed readiness, baseline compatibility, command integrity, ownership, timing, topology, or safety prevents target entry and follows failure cleanup.",
+    "post_target_rule": "Once all three target windows are durably complete and evidence integrity and ownership remain valid, physical ineffectiveness or diagnostic abstention does not suppress restoration, cooldown, or R01-R03.",
+    "operational_stop": "Command failure, malformed or contradictory raw evidence, unsafe qdisc state, ownership ambiguity, timing failure, interruption, source drift, or cleanup conflict stops further measurement and invokes only the accepted recovery path.",
+    "diagnostic_independence": "Study-arm predictions are not inputs to slot scheduling, collection, restoration, cleanup, or authorization. Historical rule output may be recorded for audit but cannot gate post-target collection.",
+    "thresholds": "Consume the exact accepted manifest for pre/post validation and the unchanged historical comparator; never rebuild or retune it."
+  },
+  "data_separation": {
+    "assignment_ground_truth": "Stored in campaign accounting and slot provenance, never in the predictor object, model matrix, scaler, or hybrid router.",
+    "effectiveness": "Stored in a separate independently reconstructed outcome record, never in predictors or selection logic.",
+    "provenance": "Identifiers, paths, hashes, times, stage, partition, environment, qdisc hierarchy, authorization, and control derivation remain outside predictors.",
+    "common_controls": "Queue observed integer zero and rate-limit detected false are evaluated before method invocation. Control values, availability, derivation, phase, qdisc identity/hierarchy, and gate reason are forbidden model and hybrid inputs.",
+    "predictor_order": [
+      "packet_loss_ratio",
+      "round_trip_latency_ms_p95",
+      "throughput_mbps",
+      "interface_utilization_ratio"
+    ],
+    "predictor_aggregation": {
+      "window_normalization": "Parse finite Decimal values from bound raw observations and normalize each window feature to exactly six decimal places using ROUND_HALF_EVEN before cross-window aggregation, except individual ICMP replies remain unaggregated inputs to the pooled RTT calculation.",
+      "packet_loss_ratio": "Arithmetic mean of the three six-place-normalized target-window packet_loss_ratio values, then normalize the aggregate once to six places using Decimal ROUND_HALF_EVEN.",
+      "round_trip_latency_ms_p95": "Pool all individual retained successful ICMP replies from the three target windows, compute nearest-rank p95 over those replies, then normalize once to six places using Decimal ROUND_HALF_EVEN. Lost probes remain represented only in packet_loss_ratio; window p95 values are not pooled or averaged.",
+      "throughput_mbps": "Median of the three six-place-normalized target-window throughput_mbps values, then normalize the aggregate once to six places using Decimal ROUND_HALF_EVEN.",
+      "interface_utilization_ratio": "Median of the three six-place-normalized target-window interface_utilization_ratio values, then normalize the aggregate once to six places using Decimal ROUND_HALF_EVEN.",
+      "finite_and_cardinality": "Exactly three complete target windows are required for a predictor row. Reject non-finite values, missing individual RTT reply evidence, wrong units, wrong ordering, extra or missing windows, and any alternate aggregation or normalization order. No imputation is allowed."
+    },
+    "row_identity": "One attempt-level target aggregate per scheduled slot. All windows and artifacts remain with their block partition.",
+    "development_fit_label": "Precommitted assignment only, including effective and ineffective F1 slots that otherwise pass the common gate and have complete finite predictors.",
+    "no_imputation": true
+  },
+  "fixed_method_implementations": {
+    "historical_rule": {
+      "implementation": "R_X6_PERFORMANCE_001_UNCHANGED",
+      "input": "Its unchanged six-feature vector and exact accepted frozen manifest.",
+      "mapping": "diagnosed maps to F1_PRESENT; abstained maps to ABSTAIN; insufficient_evidence maps to UNAVAILABLE_EVIDENCE. No result is rewritten as F1_ABSENT."
+    },
+    "machine_learning": {
+      "implementation": "L2_REGULARIZED_BINARY_LOGISTIC_REGRESSION",
+      "feature_order": [
+        "packet_loss_ratio",
+        "round_trip_latency_ms_p95",
+        "throughput_mbps",
+        "interface_utilization_ratio"
+      ],
+      "labels": "N0=0 and F1=1 from precommitted assignment; never effectiveness.",
+      "numeric_conversion": "Require canonical finite six-place Decimal strings, convert directly to numpy.float64, reject non-finite conversion, and retain the canonical strings for audit.",
+      "scaling": "On development fit rows only, population mean mu=sum(x)/n and population variance=sum((x-mu)^2)/n with ddof=0; scale=sqrt(variance), except exact zero variance uses scale=1.0; transform z=(x-mu)/scale.",
+      "estimator": {
+        "library": "scikit-learn",
+        "version": "1.7.2",
+        "class": "sklearn.linear_model.LogisticRegression",
+        "penalty": "l2",
+        "solver": "liblinear",
+        "C": 1.0,
+        "dual": false,
+        "fit_intercept": true,
+        "intercept_scaling": 1.0,
+        "class_weight": null,
+        "sample_weight": "ALL_ROWS_WEIGHT_1",
+        "tol": 1e-10,
+        "max_iter": 1000,
+        "random_state": 20260925,
+        "warm_start": false,
+        "n_jobs": null,
+        "verbose": 0,
+        "l1_ratio": null,
+        "multi_class_argument": "OMITTED"
+      },
+      "decision": "Use the probability for assigned class F1 from frozen classes_ ordering; F1_PRESENT when p>=0.500000, otherwise F1_ABSENT.",
+      "convergence_failure": "Any fit exception, ConvergenceWarning, n_iter_ >= max_iter, non-finite scaler/coefficient/intercept/probability, unexpected classes_, or serialization round-trip mismatch makes ML and hybrid UNUSABLE_MODEL and stops before evaluation collection or access.",
+      "dependencies": {
+        "python": "3.12.3",
+        "numpy": "2.5.1",
+        "joblib": "1.5.3"
+      },
+      "serialization": "Canonical JSON binds schema/method IDs, dependencies/platform, feature order, development inventory, scaler n/mean/variance/scale, classes, coefficient/intercept values as Python float.hex(), every estimator parameter, convergence, implementation identity, and SHA-256. Reload using float.fromhex() and require byte-identical development-matrix predictions and probabilities before freeze; joblib/pickle is not authoritative."
+    },
+    "hybrid": {
+      "implementation": "HISTORICAL_RULE_FIRST_WITH_CONSERVATIVE_ML_FALLBACK",
+      "decision": "After the common gate, historical F1_PRESENT returns F1_PRESENT. If any ML predictor is unavailable or the frozen model is unusable, return UNAVAILABLE_EVIDENCE. Otherwise return F1_PRESENT for p>=0.800000, F1_ABSENT for p<=0.200000, and ABSTAIN for 0.200000<p<0.800000.",
+      "status": "The inclusive 0.20 and 0.80 thresholds are exploratory and unvalidated, but fixed for this design."
+    },
+    "fairness": "All invoked arms use the same reconstructed four-predictor example. The historical rule alone also evaluates its pre-existing queue/rate predicates, while the common gate applies those controls to every arm and hides their values and derivations from ML and hybrid routing."
+  },
+  "stage_and_freeze_contract": {
+    "development_close": "All 60 development slots must be terminal or durably NOT_RUN before sufficiency evaluation.",
+    "development_minimum": "At least 24 common-gate-passing complete rows per assigned class and 48 total fit rows.",
+    "development_failure": "Persist INCONCLUSIVE_INSUFFICIENT_DEVELOPMENT_DATA, mark all 40 evaluation slots NOT_RUN_DEVELOPMENT_INCONCLUSIVE, and stop without model or evaluation access.",
+    "training": "Fit only the accepted development rows using the exact accepted scaling, dependency, logistic-regression, convergence, and serialization specification.",
+    "freeze_artifact": "Canonical development_freeze.json binds development evidence inventory, included/excluded rows and reasons, scaler, model, coefficient/intercept float-hex values, model SHA-256, historical rule source, hybrid policy, dependencies/platform, implementations, test vectors, reporting code, bootstrap specification, and all source hashes.",
+    "unusable_model": "Any accepted unusable-model condition terminalizes INCONCLUSIVE_UNUSABLE_MODEL and marks evaluation slots NOT_RUN_UNUSABLE_MODEL. No alternate solver, parameter, feature, threshold, or search is allowed.",
+    "evaluation_seal": "Evaluation roots cannot exist and evaluation authorizations cannot validate before the development freeze is independently verified. Training and selection APIs reject every EVAL block path and identity.",
+    "evaluation_collection": "After freeze and later per-slot authorization, collect the fixed 40 slots without model-driven stopping or replacement.",
+    "evaluation_access": "Analysis consumes evaluation artifacts only after all 40 slots are terminal or durably NOT_RUN and the evaluation inventory is frozen.",
+    "evaluation_incomplete": "If fewer than 18 complete paired blocks or fewer than 18 common-gate-passing slots per assigned class exist, persist INCONCLUSIVE_INCOMPLETE_EVALUATION while still reporting all fixed full-denominator outcomes."
+  },
+  "action_publication_transitions": {
+    "states": [
+      "AUTHORIZED_UNRESERVED",
+      "RESERVED_UNDECIDED",
+      "ADMITTED",
+      "CONSUMED",
+      "MATERIALIZING",
+      "PUBLISHED",
+      "REJECTED_SPENT",
+      "FAILED_SPENT",
+      "INTERRUPTED_SPENT",
+      "INTEGRITY_UNRESOLVED"
+    ],
+    "legal_transitions": {
+      "AUTHORIZED_UNRESERVED": [
+        "RESERVED_UNDECIDED"
+      ],
+      "RESERVED_UNDECIDED": [
+        "REJECTED_SPENT",
+        "ADMITTED"
+      ],
+      "ADMITTED": [
+        "CONSUMED",
+        "INTERRUPTED_SPENT",
+        "INTEGRITY_UNRESOLVED"
+      ],
+      "CONSUMED": [
+        "MATERIALIZING",
+        "FAILED_SPENT",
+        "INTERRUPTED_SPENT",
+        "INTEGRITY_UNRESOLVED"
+      ],
+      "MATERIALIZING": [
+        "PUBLISHED",
+        "FAILED_SPENT",
+        "INTERRUPTED_SPENT",
+        "INTEGRITY_UNRESOLVED"
+      ],
+      "PUBLISHED": [],
+      "REJECTED_SPENT": [],
+      "FAILED_SPENT": [],
+      "INTERRUPTED_SPENT": [],
+      "INTEGRITY_UNRESOLVED": []
+    },
+    "development_freeze_prerequisites": "Exact development inventory closed, every slot independently reconciled, sufficiency satisfied, no evaluation access, exact action authority admitted and consumed, and canonical output absent.",
+    "evaluation_publication_prerequisites": "Exact immutable development freeze independently verified, evaluation inventory closed and independently reconciled, exact analysis authority admitted and consumed, frozen analysis implementation matched, and canonical output absent.",
+    "commit_last": "Write every candidate artifact below a uniquely bound staging directory, fsync files and directories, independently reconstruct the complete candidate, then atomically publish the canonical bundle and fsync its parent. Publish the action PUBLISHED event last, binding the canonical bundle inventory and hash. Neither a staging directory nor a bundle without its final manifest is authoritative.",
+    "incomplete_detection": "On startup or read-only replay, compare the action ledger, staging inventory, canonical output, final manifest, input hashes and event-chain head. Any missing, extra, mismatched, duplicated or out-of-order element yields INTERRUPTED_SPENT or INTEGRITY_UNRESOLVED. Do not repair by refitting, rerunning analysis, copying staged outputs, changing hashes or consuming another action implicitly.",
+    "recovery_limit": "Recovery may preserve, inventory and classify incomplete publication and remove only independently owned temporary resources when separately permitted. It cannot resume fitting, rerun evaluation, publish the candidate, create observations, or reuse consumed authority."
+  },
+  "deterministic_analysis": {
+    "method_outputs": [
+      "F1_PRESENT",
+      "F1_ABSENT",
+      "ABSTAIN",
+      "UNAVAILABLE_EVIDENCE"
+    ],
+    "negative_vs_abstention": "Only F1_ABSENT is a negative prediction. ABSTAIN is a completed non-decision; operational or NOT_RUN slots have no prediction.",
+    "primary_denominator": "All 40 scheduled evaluation slots under precommitted assignment.",
+    "primary_metrics": [
+      "assignment_accuracy",
+      "assignment_sensitivity",
+      "assignment_specificity",
+      "balanced_accuracy",
+      "decisive_coverage",
+      "abstention_rate",
+      "unavailable_rate"
+    ],
+    "metric_formulas": {
+      "correct_indicator": "1 only for assigned F1 with F1_PRESENT or assigned N0 with F1_ABSENT; every other output or non-output is 0.",
+      "assignment_accuracy": "sum(correct over all 40 scheduled evaluation slots)/40",
+      "assignment_sensitivity": "assigned-F1 slots outputting F1_PRESENT/20",
+      "assignment_specificity": "assigned-N0 slots outputting F1_ABSENT/20",
+      "balanced_accuracy": "(assignment_sensitivity+assignment_specificity)/2",
+      "decisive_coverage": "slots outputting F1_PRESENT or F1_ABSENT/40",
+      "abstention_rate": "slots outputting ABSTAIN/40, also by assigned class",
+      "unavailable_rate": "slots outputting UNAVAILABLE_EVIDENCE or blocked by common control/evidence gate/40, also by reason and class",
+      "effectiveness_rate": "assigned-F1 slots with independently verified effective mutation/20",
+      "secondary_effectiveness_qualified_sensitivity": "Among assigned-F1 slots with independently verified effective mutation, number outputting F1_PRESENT divided by all such effective slots. ABSTAIN, UNAVAILABLE_EVIDENCE, common-control failure and wrong output remain denominator non-successes. If the denominator is zero, report NOT_ESTIMABLE.",
+      "secondary_clean_control_specificity": "Among assigned-N0 slots with independently verified clean no-fault controls, number outputting F1_ABSENT divided by all such clean slots. ABSTAIN, UNAVAILABLE_EVIDENCE and wrong output remain denominator non-successes. If the denominator is zero, report NOT_ESTIMABLE.",
+      "operational_yield": "slots with independently verified target observations/all scheduled slots for the stage",
+      "restoration_rate": "assigned-F1 slots with confirmed restoration/all assigned-F1 slots that entered mutation, with failed, interrupted, unavailable, and not-reached states retained separately",
+      "end_to_end_success": "correct assignment prediction AND independently valid assigned intervention/control AND required terminalization, cleanup, replay, and phase-appropriate restoration/post-target verification; sum(success)/40"
+    },
+    "separate_outcomes": [
+      "effectiveness_rate",
+      "secondary_effectiveness_qualified_sensitivity",
+      "secondary_clean_control_specificity",
+      "operational_yield",
+      "restoration_rate",
+      "end_to_end_success"
+    ],
+    "missing_slot": "Every missing, blocked, failed, interrupted, or NOT_RUN slot contributes a non-success to primary and end-to-end full denominators and retains its exact reason.",
+    "bootstrap": "Exactly 10000 paired-block percentile replicates using numpy 2.5.1 Generator PCG64 seed_uint64 3705850974925186758. Draw 20 evaluation block indices with replacement per replicate; each selected block contributes both original members and statuses. Use the same draw for all methods and paired differences. Report numpy.quantile 0.025 and 0.975 with method=linear.",
+    "conditional_zero_denominator": "Mark the replicate NOT_ESTIMABLE, report its count, and suppress the interval if fewer than 9500 replicates are estimable.",
+    "class_interval": "Optional two-sided 95 percent Clopper-Pearson intervals use one assigned member per block and must disclose the conditional block-independence assumption and shared-host limitation.",
+    "progression_criteria": {
+      "purpose": "Eligibility only for a separately reviewed confirmatory-design proposal; never scientific acceptance.",
+      "F1_correct": "At least 18 of 20 scheduled evaluation F1 slots.",
+      "N0_correct": "At least 18 of 20 scheduled evaluation N0 slots.",
+      "decisive": "At least 36 of 40 scheduled evaluation slots produce F1_PRESENT or F1_ABSENT.",
+      "integrity": "Zero accepted predictions from tampered, contradictory, or unverified evidence.",
+      "historical_rule": "Report regardless of outcome; failure cannot change its predicates or thresholds."
+    },
+    "campaign_terminal_states": [
+      "EXPLORATORY_COMPLETE",
+      "INCONCLUSIVE_INSUFFICIENT_DEVELOPMENT_DATA",
+      "INCONCLUSIVE_UNUSABLE_MODEL",
+      "INCONCLUSIVE_INCOMPLETE_EVALUATION",
+      "INCONCLUSIVE_ENVIRONMENT_DRIFT",
+      "INCONCLUSIVE_INTEGRITY_FAILURE"
+    ],
+    "claim": "Exploratory exact-context results only; no validity, superiority, multiclass, cross-context, or scientific-acceptance claim."
+  },
+  "independent_materialized_verification": {
+    "slot": [
+      "authorization integrity, reservation, ADMITTED and CONSUMED timing",
+      "slot/block/stage/assignment/run/output/environment identities",
+      "source, topology, image, commands, raw timestamps, return codes and stream hashes",
+      "window cardinality, order, timing, controls and four predictors",
+      "separate assignment, effectiveness, provenance and control records",
+      "mutation ownership for F1 and mutation absence for N0",
+      "restoration/post-target behavior independent of diagnosis",
+      "terminal, cleanup, recovery, replay and launcher return code"
+    ],
+    "campaign": [
+      "exact accepted 50-block and 100-slot inventory with no extra, duplicate, renamed or replaced identity",
+      "balanced order and pair sequencing",
+      "environment epoch bindings and blocked-member classifications",
+      "complete durable final accounting for every scheduled slot",
+      "development/evaluation partition and no cross-partition artifact"
+    ],
+    "model": [
+      "development-only row inventory and labels",
+      "four-predictor matrix rebuilt from raw slot evidence",
+      "common-control exclusions and no forbidden metadata",
+      "scaler statistics, estimator parameters, convergence, coefficients, serialization and round-trip test vectors",
+      "evaluation source exclusion from preprocessing, fitting and selection"
+    ],
+    "analysis": [
+      "historical rule result from unchanged six-predicate code",
+      "ML probabilities/predictions from frozen model",
+      "hybrid routing from frozen policy",
+      "all denominators and per-slot outcomes",
+      "paired-block bootstrap draws, point estimates, quantiles, method differences and inconclusive state",
+      "report and evidence inventory hashes"
+    ],
+    "trust": "Persisted summaries, model files, prediction files, status assertions, and reports are comparison targets only and are never reconstruction inputs."
+  },
+  "focused_source_only_acceptance_tests": [
+    "Exact accepted inventory/hash, slot-ID derivation, 15/15 and 10/10 ordering, and rejection of missing, extra, duplicate, renamed, reordered or replacement slots.",
+    "Wrong campaign, block, stage, position, assignment, run, output, source, epoch, freeze or authorization binding; reused and partial reservation; expiry around commitment.",
+    "N0 executes no mutation command; F1 permits only the exact mutation; phase or qdisc metadata never enters the model matrix or hybrid router.",
+    "Ineffective but integrity-valid F1 and diagnostic abstention continue restoration/cooldown/R01-R03 while remaining unsuccessful; unsafe and operational failures stop further windows.",
+    "Verified cleanup before S02, cleanup failure blocks S02, boot change blocks the pair member, permitted new epoch for a later block, and material drift stops remaining slots.",
+    "Interruption never resumes traffic, partial reservation stays spent, recovery is ownership-scoped, and ambiguous resources fail closed.",
+    "Development sufficiency boundary, no evaluation access before freeze, evaluation identity rejected by training APIs, exact scaling including zero variance, Decimal/float conversion, solver parameters, convergence failure, canonical model serialization and round-trip predictions.",
+    "Assignment/effectiveness separation, ineffective and NOT_RUN slots retained, abstention distinct from F1_ABSENT, end-to-end success cannot be created by prediction alone, and every inconclusive terminal.",
+    "Paired-block PCG64 draws, incomplete-block retention, conditional zero denominators, exact metrics/differences/quantiles, and tampered report rejection.",
+    "Independent verifier rejects altered raw observations, controls, effectiveness, predictors, model, predictions, grouping, accounting, cleanup, terminals and hashes.",
+    "Crash and failpoint coverage at raw-record fsync, derived-record fsync, ADMITTED, CONSUMED, staging creation, bundle rename, final-manifest publication and PUBLISHED-event boundaries; every partial state remains spent and is classified without fabricated completion.",
+    "Concurrent and replayed run-slot, freeze-development and evaluate invocations with copied authorization bytes, alternate authorization paths, wrong campaign roots or output paths, stale prior-state hashes and existing reservations; exactly one bound action may proceed and no consumed action can recur.",
+    "Contradictory, skipped, reverse, duplicate and cross-slot state transitions; broken event chains; canonical output without a final manifest; manifest without durable inputs; and staged artifacts presented as published evidence are rejected.",
+    "Every NOT_RUN class and NO_PREDICTION_OPERATIONAL accounting path rejects fabricated run roots, commands, windows, measurements, predictor rows, method outputs and predictions while retaining assignment and full-denominator accounting."
+  ],
+  "required_regression_policy": {
+    "impact_preflight": "Run focused successor tests and semantic review first; freeze final source before exhaustive plans.",
+    "historical_context": "Use exact detached contexts where required. Predecessor receipts remain predecessor evidence only.",
+    "diagnostics": [
+      "tests/unit/test_x6_r1_3_6_gate.py::test_x6_r1_3_6_gate_preserves_disabled_historical_vector",
+      "tests/unit/test_x6_r1_3_6_gate.py::test_historical_r1_3_5_gate_is_validated_only_in_its_exact_snapshot",
+      "tests/unit/test_x6_r1_3_6_gate.py::test_historical_binding_validator_rejects_changed_historical_blob",
+      "tests/unit/test_x6_r1_3_6_gate.py::test_historical_binding_validator_rejects_wrong_predecessor_and_successor_substitution",
+      "tests/unit/test_x6_r1_3_6_gate.py::test_successor_gate_rejects_skipped_historical_gate",
+      "tests/unit/test_x6_r1_3_6_gate.py::test_gate_binds_versioned_successor_decision_and_status_documents"
+    ],
+    "required_only": "Run successor gate/preflight, directly affected R1.5.1 production/recovery/verifier checks, materialized-receipt, clean-checkout, production-subprocess, and complete primary/archive-free source verification only when required by the governing acceptance gate. Introduce no extra exclusion and no automatic extension of prior evidence exceptions.",
+    "source_binding": "Every receipt binds its actual finalized source, modes, context and node inventory; old-source results never verify changed source."
+  },
+  "expected_implementation_scope": {
+    "successor_files": [
+      "plans/expansion/X6_R1_5_2_EXPLORATORY_F1_CAMPAIGN_SOURCE_ONLY_V1.json",
+      "src/orchestration/x6_r1_5_2_campaign.py",
+      "src/orchestration/x6_r1_5_2_contract.py",
+      "src/orchestration/x6_r1_5_2_durable.py",
+      "src/orchestration/x6_r1_5_2_slot.py",
+      "src/orchestration/x6_r1_5_2_recovery.py",
+      "src/expansion/x6_r1_5_2_dataset.py",
+      "src/expansion/x6_r1_5_2_model.py",
+      "src/expansion/x6_r1_5_2_analysis.py",
+      "src/expansion/x6_r1_5_2_materialized_verifier.py",
+      "src/expansion/x6_r1_5_2_gate.py",
+      "tests/fixtures/x6_r1_5_2_external_stub.py",
+      "tests/unit/test_x6_r1_5_2_campaign.py",
+      "docs/DECISION_X6_R1_5_2.md",
+      "docs/STATUS_X6_R1_5_2.md",
+      "docs/HANDOFF_X6_R1_5_2.md"
+    ],
+    "published_files": "UNCHANGED",
+    "central_records": "UNCHANGED_UNLESS_A_LATER_ACCEPTED_IMPLEMENTATION_CONVENTION_EXPLICITLY_REQUIRES_APPEND_ONLY_STATUS",
+    "scope_limit": "No F2-F4, no model search, no threshold change, no API, no multiclass, and no runtime artifact."
+  },
+  "approval_boundaries": {
+    "campaign_contract_accepted": false,
+    "implementation_authorized": false,
+    "source_only_acceptance": false,
+    "campaign_or_slot_authorization_created": false,
+    "runtime_readiness": false,
+    "collection": false,
+    "model_or_dataset": false,
+    "classifier_validity": false,
+    "scientific_acceptance": false,
+    "historical_authorization": "0/10_FALSE"
+  },
+  "next_step": "SEPARATE_REVIEW_AND_EXPLICIT_ACCEPTANCE_REVISION_OR_REJECTION_OF_THIS_EXACT_CAMPAIGN_CONTRACT_PROPOSAL"
+}
