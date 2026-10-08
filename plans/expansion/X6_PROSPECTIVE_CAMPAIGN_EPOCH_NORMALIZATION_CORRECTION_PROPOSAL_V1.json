@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "record_id": "X6_PROSPECTIVE_CAMPAIGN_EPOCH_NORMALIZATION_CORRECTION_PROPOSAL_V1",
+  "status": "REVIEW_ONLY_NOT_ACCEPTED",
+  "published_predecessor": "47b809efa55c9485b37cb73eaf6762d6026a96a6",
+  "authority": "Proposal only; no implementation, campaign continuation, accounting or runtime authority.",
+  "review_binding": {
+    "path": "/home/mesud/x6-r1-5-2-readiness/dev-b01-epoch-continuation-review-v1.json",
+    "sha256": "e7aa1164bde49558c907a8333a8a7bfc67b8e8e213506dbbfd4857b10c367bb4"
+  },
+  "evidence_bindings": [
+    {
+      "path": "/home/mesud/x6-r1-5-2-readiness/dev-b01-epoch-v2/epoch.json",
+      "sha256": "2512c0d062c5d1e0049f9c919ec6a1b314933de94dd95bcab3efcc7172a7cfbe",
+      "epoch_id": "897197954466936f12bd2f36633fc4e214d7b760f78631ca932381949c7810c3"
+    },
+    {
+      "path": "/home/mesud/x6-r1-5-2-readiness/dev-b01-s02-readiness-v1/epoch.json",
+      "sha256": "4b7babd6196abc89472d5f2fafb9d47b3795a882112324321d8a8bd53fe657e6",
+      "epoch_id": "b5b44610eba0b29d2d5b5b468c90a550b8b1b29f4761959d559fee81927ba20f"
+    }
+  ],
+  "governing_references": [
+    {
+      "path": "plans/expansion/X6_PROSPECTIVE_F1_SUCCESSOR_STUDY_DESIGN_PROPOSAL_V1.json",
+      "sha256": "3bce7a8264d059f1dbfb772eafbecc6e1782e7d74ecfe092c6d6eaa8c2ca7388",
+      "lines": [
+        699,
+        701,
+        702,
+        705
+      ]
+    },
+    {
+      "path": "plans/expansion/X6_PROSPECTIVE_F1_EXPLORATORY_CAMPAIGN_CONTRACT_PROPOSAL_V1.json",
+      "sha256": "2e6ea92cb329088c981f03fdebb4a206def53eb8a19321458e531b9641e0e9a3",
+      "lines": [
+        159,
+        174,
+        176,
+        311,
+        312
+      ]
+    },
+    {
+      "path": "plans/expansion/X6_R1_5_2_NOT_RUN_ACCOUNTING_AUTHORITY_DECISION_V1.json",
+      "sha256": "b2fdd294da3ad84ac3fcc78385125c5b65e663d4b7327e7a42594ccbb6e932b1",
+      "lines": []
+    },
+    {
+      "path": "src/orchestration/x6_r1_5_2_contract.py",
+      "sha256": "148837d0c47a38b39bba0d810efc0fe2b28b3a754b21750e1484b9ac3a53eca2",
+      "lines": [
+        171,
+        202,
+        220,
+        245
+      ]
+    },
+    {
+      "path": "src/orchestration/x6_r1_5_2_slot.py",
+      "sha256": "1ccadc80084d27a31c6be7933c83bffd2d5087b5b242de9198cc5af5148e4454",
+      "lines": [
+        26,
+        168
+      ]
+    },
+    {
+      "path": "src/expansion/x6_r1_5_2_materialized_verifier.py",
+      "sha256": "bfa49bebd58b0142b5bd36837d7a0738bb8ff4509fb1ec831b56cb54e14407ce",
+      "lines": [
+        79,
+        118
+      ]
+    },
+    {
+      "path": "src/orchestration/x6_r1_5_2_not_run.py",
+      "sha256": "5785650eb8a81a31a2119be95e511e580266feb6535d98f091c9a755abbdb8af",
+      "lines": [
+        37,
+        50,
+        62,
+        134
+      ]
+    }
+  ],
+  "problem": "Complete lsmod stdout is included in epoch_context; unrelated module additions and usage-count changes become experimental drift. Accepted contract names kernel_and_sch_netem_provenance, but generic module drift and blocked-pair wording require explicit prospective clarification.",
+  "proposed_normalization": {
+    "version": "KERNEL_SCH_NETEM_INVARIANTS_V1",
+    "invariant_fields": [
+      {
+        "field": "running_kernel_release",
+        "raw": "kernel command uname -r stdout",
+        "parse": "Exactly one nonempty line after removing a single line terminator; reject extra lines, leading/trailing whitespace, NUL or empty release. Preserve full release; no suffix removal."
+      },
+      {
+        "field": "kernel_config_net_sch_netem",
+        "raw": "kernel_config command filtered running-kernel config stdout",
+        "parse": "Exactly one CONFIG_NET_SCH_NETEM=m record. Reject missing, duplicate, conflicting, disabled or built-in values; preserve accepted m requirement."
+      },
+      {
+        "field": "required_module_name",
+        "raw": "module command lsmod stdout and module_provenance modinfo sch_netem stdout",
+        "parse": "Exactly one well-formed sch_netem row, and exactly one modinfo name field equal to sch_netem."
+      },
+      {
+        "field": "required_module_loaded",
+        "raw": "module command lsmod stdout",
+        "parse": "True only when the unique sch_netem row exists in successful bound raw evidence; absence is readiness failure. No inference from modinfo availability."
+      },
+      {
+        "field": "required_module_filename",
+        "raw": "module_provenance modinfo filename",
+        "parse": "Exactly one nonempty absolute filename, no dot/dotdot path components or NUL; match retained accepted provenance and /lib/modules/<running_kernel_release>/kernel/net/sched/sch_netem.ko exactly. No alias substitution."
+      },
+      {
+        "field": "required_module_vermagic",
+        "raw": "module_provenance modinfo vermagic",
+        "parse": "Exactly one nonempty field; tokenize ASCII whitespace and rejoin with one space; first token must equal running_kernel_release; compare entire remaining ordered token sequence exactly. Only formatting whitespace normalization is allowed."
+      }
+    ],
+    "raw_record_validation": "Before parsing, validate accepted command identity/argv, shell=False, timeout, source/boot/order/timestamps, return code, stdout/stderr hashes and raw inventory. Nonzero, incomplete, interrupted or contradictory records are not normalized into valid invariants.",
+    "lsmod_grammar": "Require accepted Module Size Used by header, then unique valid Linux module names, nonnegative decimal Size and Used counts, and optional comma-separated Used-by names in the observed lsmod grammar. Reject malformed/truncated lines, duplicate names, invalid integers and inconsistent sch_netem observations. Preserve complete stdout/stderr and every original hash.",
+    "modinfo_grammar": "ASCII textual records separated by LF; an optional single final LF is allowed. Reject CR, NUL, other control characters except horizontal tab, and blank/interior empty lines. A labeled record matches label colon value: label is [A-Za-z_][A-Za-z0-9_]*, starts in column one, and has no whitespace before the colon. After the colon permit zero or more ASCII spaces/tabs as delimiter padding; remove that padding and trailing ASCII spaces/tabs from the parsed value only. Preserve the complete original stdout unchanged. Required labels name, filename and vermagic are case-sensitive and must each occur exactly once with nonempty values. Required scalar continuations are forbidden. A continuation line starts with at least one ASCII space/tab, contains a nonempty printable payload after indentation removal, and follows an optional labeled record; append its payload with a single space to that optional value. Reject orphan continuations and any continuation after a required scalar. Optional empty fields, such as depends, are permitted. Allow repeated alias and parm records, preserving their ordered value lists; reject duplicate occurrences of every other label, including unknown labels. Unknown syntactically valid labels are preserved as optional informational records and cannot substitute for required labels or become comparison keys. Reject any line not fitting these rules. Verify raw command provenance, cardinality and integrity before parsing; do not repair malformed evidence.",
+    "informational_fields": "Other module names, listing order, all module sizes and usage counts, Used-by lists, and optional modinfo description/license/alias/depends/intree/retpoline fields remain auditable observations, not equality keys. This does not establish that unrelated changes are harmless; independently observed unsafe state or any other accepted invariant drift still blocks admission.",
+    "not_added": "No newly invented module binary digest invariant: retained command evidence has no binary digest. A stronger binary-identity requirement would need separate prospective specification and collection.",
+    "other_epoch_fields": "Preserve stage, actual source commit/tree/executable bytes and modes, topology/context/bootstrap, image ID/digests, host, boot, tool outputs/versions, command catalog, thresholds and schedule exactly as accepted. Preserve all epoch raw inventories and hashes; epoch ID remains the hash of its original canonical contents, not the normalized projection.",
+    "identity_assurance": "Filename and complete normalized vermagic establish only the provenance/compatibility assurance specified by accepted contracts. They do not cryptographically identify the currently loaded binary, prove loaded bytes equal the on-disk file, or substitute for a module signature/digest. No new cryptographic requirement is introduced."
+  },
+  "enforcement": {
+    "epoch_creation": "Successor writes its own versioned invariant projection plus parser/version/source binding, derived from fully bound raw observations. It must not rewrite an existing epoch or substitute its ID. Readiness raw files retain complete lsmod.",
+    "admission": "Under campaign lock reconstruct bound and fresh epoch raw evidence and compare the same versioned invariant projection; retain every other context comparison and exact same epoch-ID rule for a pair. Current source identity and one-attempt commitment remain unchanged.",
+    "independent_verifier": "Reparse raw evidence independently rather than trusting persisted projection or status. Verify projection/version/source bindings, original epoch identities, historical authorization/commitment, predecessor cleanup and fresh admission agreement.",
+    "drift_accounting": "Use identical reconstructed invariant projection for classification, with expected and observed epoch files/hash identities preserved. Missing or malformed evidence cannot establish informational-only drift or clean readiness. Accounting still needs separate exact bounded action authority."
+  },
+  "classification_proposal": {
+    "precedence": "First reject integrity/ambiguous evidence without assigning a supported NOT_RUN reason. For independently established non-boot invariant drift, ENVIRONMENT_DRIFT takes precedence over pair epoch-change shorthand and over an accompanying boot change. For boot-only change with every non-boot invariant matching, OPERATIONAL_FAILURE applies to the unstarted paired S02. Independently verified operational/cleanup failure without established invariant drift remains OPERATIONAL_FAILURE. Mere differing readiness record hashes or informational module observations are not drift.",
+    "scope": "ENVIRONMENT_DRIFT stops the stage and accounts all eligible remaining scheduled stage slots, preserving started attempts under their original classifications. OPERATIONAL_FAILURE accounts only the separately authorized slots whose inability to start is independently established; no cleanup-success requirement where cleanup failure is the cause.",
+    "accepted_basis": "Study design environment_change and campaign material_drift govern material non-boot change; pair_rule covers boot-only change; NOT_RUN authority decision requires independent evidence and prohibits started targets.",
+    "explicit_acceptance_needed": "Clarify campaign blocked_pair_member epoch-change wording as boot-only/operational pair interruption; material non-boot drift has stage-wide precedence. Accept the normalized module boundary prospectively. No existing text is silently amended."
+  },
+  "existing_pair": {
+    "raw_sufficiency": "Both epochs retain successful uname/config/lsmod/modinfo and bound inventories sufficient for a separately derived comparison using proposed fields. The recorded required-module properties match. This does not amend either epoch, change their IDs, or prove all environmental equivalence.",
+    "limitations": "No retained post-deployment module snapshot establishes the cause of unrelated module changes. N0 deployment and cleanup succeeded; temporal association is not causation. One host and matched projection do not prove pair independence/comparability.",
+    "source_change": "Implementing normalization changes the executing source commit/tree/inventory, itself an unchanged accepted non-boot invariant. The old N0 epoch binds published R1.5.2; a successor cannot execute S02 under a different source while claiming the same pair epoch. No mixed-source exception is proposed.",
+    "recommended_disposition": "Preserve completed N0 and keep all unstarted slots paused. If corrected execution source is adopted for this campaign, apply the conditional campaign_wide_consequence: propose environment-drift disposition for all 59 remaining DEVELOPMENT slots and, following validated closure, development-inconclusive disposition for all 40 EVALUATION slots. Separate accounting authority and validated prerequisites are mandatory; no states are recorded by this proposal.",
+    "decision_boundary": "A decision permitting any mixed-source continuation would be a separate material methodological/contract change, not this normalization correction. Recommend against it.",
+    "campaign_wide_consequence": {
+      "condition": "Conditional on adopting corrected execution source for this existing campaign; publication alone does not record any accounting outcome.",
+      "source_drift": "The corrected commit/tree/executable inventory differs from the existing DEVELOPMENT epoch, independently of the proposed module normalization. Existing non-boot source invariants remain unchanged; no mixed-source continuation.",
+      "development_disposition": "All 59 unstarted DEVELOPMENT slots, including DEV_B01 S02 and both members of DEV_B02 through DEV_B30, require the applicable NOT_RUN_ENVIRONMENT_DRIFT disposition under the accepted stage-stop rule.",
+      "development_sufficiency": "One completed DEVELOPMENT observation cannot meet 48 total complete eligible rows and 24 per assigned class. Source/environment drift and insufficient development evidence are distinct findings.",
+      "evaluation_disposition": "After independently validated development closure and progression prerequisites, all 40 EVALUATION slots require NOT_RUN_DEVELOPMENT_INCONCLUSIVE. No model fitting, evaluation collection/access or model-failure substitution.",
+      "authority": "These are proposed dispositions, not recorded terminal states. Actual accounting needs separately reviewed bounded single-action authority and independently validated target absence, accounting heads, expected/observed epoch evidence, development closure and accepted prerequisite reconstruction.",
+      "preservation": "N0 remains SLOT_COMPLETE / CLEAN_CONTROL / ABSTAIN with permanently spent authorization. No replay, replacement, silent exclusion, retrospective rewriting or automatic transfer.",
+      "no_expansion": "Normalization acceptance grants no restart, slot replacement, N0 transfer or new campaign authority. Any different prospective campaign would require a separate proposal; none is prepared here."
+    }
+  },
+  "implementation_surface": [
+    "One append-only successor normalization module and versioned source plan/decision/status/handoff following existing convention; no published-file edits.",
+    "Successor actual CLI/admission/epoch-observer adapters and independent verifier use one specified raw parser/projection; retain source/authentication, locks, durability, launcher and recovery components where compatible.",
+    "Successor NOT_RUN prerequisite derivation/reconstruction uses the same drift/boot precedence. Exact names and source bindings finalized only after implementation authorization.",
+    "Recovery never resumes traffic; historical R1.5.2 validation remains in original source context. No normalization override of historical success/terminal."
+  ],
+  "focused_test_requirements": [
+    "Informational unrelated-module additions/removals/order/size/use-count changes produce equal projection while full raw hashes remain distinct.",
+    "Missing sch_netem, disabled/config drift, name/filename/vermagic/kernel changes reject admission or establish supported material drift as appropriate.",
+    "Malformed/truncated lsmod, duplicate required rows/fields, contradictory config/modinfo, nonzero command and tampered raw hashes reject rather than silently normalize.",
+    "Actual successor schema-to-preflight-to-admission and separate verifier agree on invariant equality and rejection using external substitutes only.",
+    "Boot-only pair change versus non-boot drift and both together enforce proposed precedence and scope; ambiguous observations do not fabricate NOT_RUN evidence.",
+    "Source change blocks same-pair continuation even when normalized module invariants match; no caller/environment override.",
+    "Historical epoch and completed N0 files remain byte-identical; independent sidecar analysis preserves original hashes/IDs and ABSTAIN.",
+    "Reservation/commitment/interruption, recovery ownership and known launcher-status requirements remain enforced; no execution or authorization reuse.",
+    "Drift accounting rejects started/consumed/terminal targets and fabricated measurements. Focused checks and semantic review before any required frozen full-suite plans.",
+    "Exact modinfo grammar cases: accepted LF and optional final LF, delimiter spaces/tabs, optional empty depends, repeated alias/parm, unknown valid optional label, optional continuation; reject CR/NUL/control characters, blank/malformed lines, label whitespace/case substitution, missing/duplicate/empty required fields, duplicate nonrepeatable optional/unknown labels, orphan/empty continuation and every required-scalar continuation. Full raw bytes/hashes stay unchanged.",
+    "Source-successor adoption blocks all 59 remaining development slots; independently closed one-observation development is insufficient and all 40 evaluation slots remain unmeasured with prospective NOT_RUN_DEVELOPMENT_INCONCLUSIVE scope. No automatic accounting, replacement or transfer; distinct drift and insufficiency evidence."
+  ],
+  "decisions_for_review": [
+    "Accept six named normalized invariant fields and exact parsing/rejection rules; preserve informational raw module evidence.",
+    "Accept shared comparison semantics across successor creation/admission/verifier/accounting, preserving every other accepted invariant.",
+    "Accept explicit material-drift precedence over pair shorthand; boot-only remains pair operational failure.",
+    "Accept no mixed-source grandfathering; explicitly review conditional 59-development/40-evaluation dispositions without recording them or granting accounting authority.",
+    "Authorize implementation only through a later explicit instruction; proposal acceptance alone grants no runtime/accounting authority."
+  ],
+  "historical_authorization": "0/10_FALSE",
+  "central_records_impact": "No central or accepted document changes in preparation. Later accepted versioned clarification must cite existing contract; any campaign disposition remains separately authorized.",
+  "preservation": "Frozen thresholds, six predicates, study design, X5, consumed-pilot classification, spent attempts, all historical files and four protected stashes unchanged.",
+  "preserved_previous_review": {
+    "path": "/home/mesud/x6-r1-5-2-readiness/epoch-normalization-proposal-review-history-v1",
+    "proposal_sha256": "45829fd1a9915b6117e3f32dc626a4d76dcddf8fc6b8e0f2273f5a279df1baa6",
+    "handoff_sha256": "3d0bffb2ef711e5b57301ab20462a3a4b0881f0bcd274b5fb5dbaccf849aa4cb",
+    "manifest_sha256": "094988b6802dacd6049e3b6e50394f6819fe89dee56be13f63cc57a35214c26a"
+  }
+}

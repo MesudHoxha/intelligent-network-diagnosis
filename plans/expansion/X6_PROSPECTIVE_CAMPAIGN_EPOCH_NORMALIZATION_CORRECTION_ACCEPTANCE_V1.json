@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "record_id": "X6_PROSPECTIVE_CAMPAIGN_EPOCH_NORMALIZATION_CORRECTION_ACCEPTANCE_V1",
+  "status": "ACCEPTED_SPECIFICATION_SOURCE_ONLY_IMPLEMENTATION_AUTHORIZED",
+  "published_predecessor": "47b809efa55c9485b37cb73eaf6762d6026a96a6",
+  "proposal_sha256": "8e8e181d399af552fa5a0aa9d89d10c04d4ca0ded90f9030e210f7c53ef65a76",
+  "handoff_sha256": "8ac1006c4aeaf04ae39be74eda811e75ece993d25bbd940638a6363bd37b0860",
+  "scope": "Strict epoch normalization and consistent admission/verifier/accounting; no real accounting or campaign continuation authority",
+  "conditional_dispositions": "If corrected execution source adopted: 59 remaining DEVELOPMENT environment-drift and, after validated closure, 40 EVALUATION development-inconclusive; not recorded outcomes",
+  "historical_authorization": "0/10_FALSE"
+}
